@@ -520,7 +520,7 @@ footer .logo b{color:var(--band-k)}
         <div class="filters" id="filters" role="group" aria-label="Filter guides"></div>
       </div>
       <div class="grid" id="grid"></div>
-      <div class="sec-head rv" id="bundles" style="margin-top:clamp(48px,7vw,80px)"><div><div class="eyebrow">Bundles</div><h2>Save when you buy together</h2></div><p>Each bundle includes the full PDFs in US Letter and A4, delivered in one download.</p></div>
+      <div class="sec-head rv" id="bundles" style="margin-top:clamp(48px,7vw,80px)"><div><div class="eyebrow">Bundles</div><h2>Save when you buy together</h2></div><p>Each bundle includes every guide's full PDF, in both US Letter and A4 paper sizes, in one download.</p></div>
       <div class="bundles" id="bundleGrid"></div>
     </div>
   </section>
@@ -553,7 +553,7 @@ footer .logo b{color:var(--band-k)}
       <div class="steps">
         <div class="step glass rv"><span class="k">01</span><h3>Choose your guide</h3><p>Start with the stage you are stuck at. Every guide works on its own, and they link together if you want to keep going.</p></div>
         <div class="step glass rv"><span class="k">02</span><h3>Check out securely</h3><p>Payment is handled by a dedicated checkout provider. We never see your card details.</p></div>
-        <div class="step glass rv"><span class="k">03</span><h3>Download your PDF</h3><p>Your download link arrives straight after payment, in US Letter and A4 versions.</p></div>
+        <div class="step glass rv"><span class="k">03</span><h3>Download your PDF</h3><p>Your download arrives straight after payment. You get the same guide in two paper sizes: US Letter for the USA and Canada, A4 for everywhere else. Pick the one that matches your printer paper.</p></div>
         <div class="step glass rv"><span class="k">04</span><h3>Print it or fill it in</h3><p>Print the worksheets, or write on them in any PDF app that lets you annotate.</p></div>
       </div>
     </div>
@@ -712,7 +712,7 @@ const PV = {"career-clarity":["Cover","The six-stage roadmap","Scoring matrix, w
 const CHIPS = [["“I don’t know what I’d do instead.”","career-clarity"],["“Am I too old for this?”","age-calculator"],["“I want to try it before I commit.”","test-drive"],["“Do I need to go back to study?”","retraining-route"],["“Can I afford it?”","money-planner"],["“My CV gets no replies.”","cv-translator"],["“They all want experience.”","foot-in-door"],["“I keep losing momentum.”","planner-90"],["“I’m a teacher.”","teacher-exit"],["“I’m a nurse.”","life-after-ward"]];
 const FAQ = [
  ["Which guide should I start with?","Start where you are stuck. If you don’t know what you want to do, begin with the Career Clarity Workbook. If you have an idea but aren’t sure, try the 30-Day Career Test Drive. If you know the role, the Retraining Route Decision Kit and the Money Planner help you plan it. The map at the top shows the order most people follow."],
- ["What format are the guides?","Each guide is a PDF in two sizes, US Letter and A4. They range from 7 to 58 pages, with worksheets, worked examples and a sources list."],
+ ["What format are the guides?","Each guide is a PDF from 7 to 58 pages, with worksheets, worked examples and a sources list. You get two copies of the same guide, one sized for US Letter paper (USA and Canada) and one for A4 paper (UK, Europe, India and most other countries), so it prints perfectly wherever you are."],
  ["Can I fill them in on screen?","Yes. You can write on them in any PDF app that supports annotation, or on a tablet with a stylus. They also print well in black and white or colour. The worksheets are not fillable forms."],
  ["Do they work outside the UK and US?","The methods work anywhere. Funding schemes, notice rules and statistics are mostly UK and US examples, with some from Canada, Australia, Ireland and New Zealand, and each guide tells you what to check locally."],
  ["How do I receive my guide?","After checkout you receive a download link from the payment provider. The full PDFs are never posted publicly on this site; only the preview pages you see here."],
@@ -818,7 +818,7 @@ function openDetail(slug){
       <div><h3>You’ll finish with</h3><ul class="outcomes">${p.outcomes.map(o=>`<li>${esc(o)}</li>`).join("")}</ul></div>
     </div>
     <aside class="side">
-      <div class="buybox">${priceHTML(p.slug)}${buyHTML(p.slug,true)}<p class="msg">${p.free?"Sent to your inbox when you join the newsletter":"Instant PDF download after checkout · US Letter and A4"}</p>${p.free?"":`<a class="msg" href="#bundles" style="font-weight:700;color:var(--cta)">Or get all 9 guides for ${STORE.currency}${STORE.bundles.find(b=>b.best).price} →</a>`}</div>
+      <div class="buybox">${priceHTML(p.slug)}${buyHTML(p.slug,true)}<p class="msg">${p.free?"Sent to your inbox when you join the newsletter":"Instant PDF download · same guide in 2 paper sizes: US Letter (USA &amp; Canada) and A4 (rest of world)"}</p>${p.free?"":`<a class="msg" href="#bundles" style="font-weight:700;color:var(--cta)">Or get all 9 guides for ${STORE.currency}${STORE.bundles.find(b=>b.best).price} →</a>`}</div>
       <dl class="facts" style="margin:0">
         <div><dt>Pages</dt><dd>${p.pages}</dd></div>
         <div><dt>Worksheets</dt><dd>${p.worksheets}</dd></div>
