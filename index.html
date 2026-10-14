@@ -532,16 +532,9 @@ footer .logo b{color:var(--band-k)}
         <div class="signup-body">
           <span class="pill">Free guide</span>
           <h2>Get “Is It Too Late?” free</h2>
-          <p>A five-minute calculator that counts the working years you have left, compares them with how long people usually stay in a job, and names the real obstacles to a change. Join the newsletter and we’ll email it to you straight away, along with practical career-change tips.</p>
-          <form id="signupForm" novalidate>
-            <label class="sr" for="suEmail">Email address</label>
-            <div class="su-row">
-              <input id="suEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
-              <button class="btn" type="submit" id="suBtn">Send me the guide</button>
-            </div>
-            <label class="su-consent"><input type="checkbox" id="suConsent" required> I agree to receive the newsletter. I can unsubscribe at any time.</label>
-            <p class="su-msg" id="suMsg" role="status" aria-live="polite"></p>
-          </form>
+          <p>A five-minute calculator that counts the working years you have left, compares them with how long people usually stay in a job, and names the real obstacles to a change. It’s completely free: enter your email at checkout and download the PDF instantly, in US Letter and A4.</p>
+          <div class="su-row"><a class="btn" id="freeBtn" href="https://next-chapter.lemonsqueezy.com/checkout/buy/0da79191-6f90-42ea-affd-02f8ff6538b9" target="_blank" rel="noopener">Get the free guide →</a></div>
+          <p class="su-msg ok">Instant download · no payment details needed.</p>
         </div>
       </div>
     </div>
@@ -607,7 +600,7 @@ footer .logo b{color:var(--band-k)}
 const STORE = {
   currency: "$",
   products: {
-    "age-calculator":   { price: 0,  checkout: null },
+    "age-calculator":   { price: 0,  checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/0da79191-6f90-42ea-affd-02f8ff6538b9" },
     "career-clarity":   { price: 24, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/34324cc6-12ea-42e6-81fb-091a7583065a" },
     "test-drive":       { price: 17, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/8737dca2-c4fb-4f19-b720-041abc4083d3" },
     "retraining-route": { price: 17, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/43f2c7bb-bb8b-4c0a-9d16-7dc802dd0222" },
@@ -733,7 +726,7 @@ function priceHTML(slug){
 function buyHTML(slug, big){
   const s = STORE.products[slug]||{}, p = bySlug[slug];
   const label = p.free ? "Get it free" : "Buy now";
-  if (p.free) return `<a class="btn btn-primary" href="#free">Get it free</a>`;
+  if (p.free) return `<a class="btn btn-primary" href="${esc(s.checkout||"#free")}"${s.checkout?' target="_blank" rel="noopener"':""}>Get it free</a>`;
   if (s.checkout) return `<a class="btn btn-primary" href="${esc(s.checkout)}" target="_blank" rel="noopener">${label}${typeof s.price==="number"&&s.price>0?" · "+STORE.currency+s.price:""}</a>`;
   return `<button class="btn btn-primary" data-soon="${slug}">${label}</button>${big?`<p class="msg" id="soon-${slug}" hidden>Checkout for this guide is being set up and opens soon.</p>`:""}`;
 }
@@ -818,7 +811,7 @@ function openDetail(slug){
       <div><h3>You’ll finish with</h3><ul class="outcomes">${p.outcomes.map(o=>`<li>${esc(o)}</li>`).join("")}</ul></div>
     </div>
     <aside class="side">
-      <div class="buybox">${priceHTML(p.slug)}${buyHTML(p.slug,true)}<p class="msg">${p.free?"Sent to your inbox when you join the newsletter":"Instant PDF download · same guide in 2 paper sizes: US Letter (USA &amp; Canada) and A4 (rest of world)"}</p>${p.free?"":`<a class="msg" href="#bundles" style="font-weight:700;color:var(--cta)">Or get all 9 guides for ${STORE.currency}${STORE.bundles.find(b=>b.best).price} →</a>`}</div>
+      <div class="buybox">${priceHTML(p.slug)}${buyHTML(p.slug,true)}<p class="msg">${p.free?"Free instant PDF download · just enter your email at checkout, no card needed":"Instant PDF download · same guide in 2 paper sizes: US Letter (USA &amp; Canada) and A4 (rest of world)"}</p>${p.free?"":`<a class="msg" href="#bundles" style="font-weight:700;color:var(--cta)">Or get all 9 guides for ${STORE.currency}${STORE.bundles.find(b=>b.best).price} →</a>`}</div>
       <dl class="facts" style="margin:0">
         <div><dt>Pages</dt><dd>${p.pages}</dd></div>
         <div><dt>Worksheets</dt><dd>${p.worksheets}</dd></div>
@@ -891,7 +884,7 @@ $("#menu").addEventListener("click", e=>{ if(e.target.closest("a")){ $("#menu").
 const NEWSLETTER = { action: "", field: "email_address" };
 
 (async function setupSignup(){
-  const form = $("#signupForm"), email = $("#suEmail"), consent = $("#suConsent"), msg = $("#suMsg"), btn = $("#suBtn");
+  const form = $("#signupForm"); if (!form) return; const email = $("#suEmail"), consent = $("#suConsent"), msg = $("#suMsg"), btn = $("#suBtn");
   const say = (t, ok) => { msg.textContent = t; msg.classList.toggle("ok", !!ok); };
   if (NEWSLETTER.action) {            // provider mode: a normal form post to the provider
     form.action = NEWSLETTER.action; form.method = "post"; form.target = "_blank"; email.name = NEWSLETTER.field;
