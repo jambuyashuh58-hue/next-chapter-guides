@@ -342,7 +342,7 @@ table.t select{padding:6px 8px;font-size:13px}
       </form>
       <div class="or">membership</div>
       <div class="price-row" id="priceRowA"></div>
-      <p class="msg">Use the same email at checkout and for logging in. Cancel any time from your account.</p>
+      <p class="msg">Choose Monthly or Yearly on the checkout page. Use the same email at checkout and for logging in. Cancel any time.</p>
     </div>
 
     <div class="gate-card" id="payCard" hidden>
@@ -391,8 +391,8 @@ const CFG = {
   supabaseKey: "sb_publishable_WM7az_Nye-qOMmgWDOJRVg_vITL_Zse",   // publishable key: safe in the browser
   currency: "$",
   plans: [
-    { id:"monthly", label:"Monthly", price:9,  per:"/month", note:"Cancel any time", checkout: null },
-    { id:"yearly",  label:"Yearly",  price:79, per:"/year",  note:"2+ months free", checkout: null, best:true }
+    { id:"monthly", label:"Monthly", price:9,  per:"/month", note:"Cancel any time", checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/2f3f119f-90f3-4fe7-9ca5-4781b639e64e" },
+    { id:"yearly",  label:"Yearly",  price:79, per:"/year",  note:"2+ months free", checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/2f3f119f-90f3-4fe7-9ca5-4781b639e64e", best:true }
   ]
 };
 
