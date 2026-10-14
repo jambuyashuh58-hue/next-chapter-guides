@@ -1,10 +1,44 @@
 {
   "cleanUrls": true,
   "headers": [
-    { "source": "/(assets|previews)/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] },
-    { "source": "/(.*)", "headers": [
-      { "key": "X-Content-Type-Options", "value": "nosniff" },
-      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-    ] }
+    {
+      "source": "/(assets|previews)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/crew",
+      "destination": "https://side-quest-crew-rose.vercel.app/",
+      "permanent": false
+    },
+    {
+      "source": "/crew/(.*)",
+      "destination": "https://side-quest-crew-rose.vercel.app/",
+      "permanent": false
+    },
+    {
+      "source": "/side-quest-crew/(.*)",
+      "destination": "https://side-quest-crew-rose.vercel.app/",
+      "permanent": false
+    }
   ]
 }
