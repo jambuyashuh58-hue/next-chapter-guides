@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Side Quest Crew</title>
+<meta name="description" content="One new side quest every month. A crew of doers who help each other, with a monthly Zoom check-in. Free to join.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Side Quest Crew">
+<meta property="og:description" content="One new side quest every month. A crew of doers who help each other. Free to join.">
+<meta property="og:image" content="/og-image.jpg">
+<meta name="theme-color" content="#2563EB">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap">
+<style>
+[hidden]{display:none!important}
+/* Layout: gradient hero with the live quest card, then steps, quest areas, two forms side by side, FAQ */
+:root{
+  --bg:#F4F7FC; --surface:#FFFFFF; --soft:#EEF3FB; --ink:#0F1E3D; --ink-2:#334155; --muted:#5B6478; --line:rgba(15,30,61,.11);
+  --cta:#2563EB; --cta-hover:#1D4ED8; --on-cta:#fff; --accent:#0F766E; --accent-soft:#E6F6F3; --gold:#F5B83D; --gold-soft:#FFF4D6; --discord:#5865F2;
+  --grad:linear-gradient(135deg,#2563EB 0%,#1E88D6 52%,#14B8A6 100%);
+  --shadow:0 18px 44px -26px rgba(15,30,61,.45); --radius:22px;
+  --font:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --serif:"Lora",Georgia,serif; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1322;--surface:#13203A;--soft:#182844;--ink:#F1F5FF;--ink-2:#CBD5E1;--muted:#94A3B8;--line:rgba(255,255,255,.1);--cta:#60A5FA;--cta-hover:#93C5FD;--on-cta:#0B1426;--accent:#5EEAD4;--accent-soft:rgba(94,234,212,.12);--gold:#F5C45E;--gold-soft:rgba(245,196,94,.14);--grad:linear-gradient(135deg,#1E40AF 0%,#1569A8 52%,#0F766E 100%);--shadow:0 18px 44px -24px rgba(0,0,0,.7);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1322;--surface:#13203A;--soft:#182844;--ink:#F1F5FF;--ink-2:#CBD5E1;--muted:#94A3B8;--line:rgba(255,255,255,.1);--cta:#60A5FA;--cta-hover:#93C5FD;--on-cta:#0B1426;--accent:#5EEAD4;--accent-soft:rgba(94,234,212,.12);--gold:#F5C45E;--gold-soft:rgba(245,196,94,.14);--grad:linear-gradient(135deg,#1E40AF 0%,#1569A8 52%,#0F766E 100%);--shadow:0 18px 44px -24px rgba(0,0,0,.7);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--cta)}
+h1,h2,h3{margin:0;line-height:1.15;text-wrap:balance}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 22px;font:700 15px var(--font);cursor:pointer;text-decoration:none;background:var(--cta);color:var(--on-cta);transition:transform .15s,background .15s}
+.btn:hover{background:var(--cta-hover)} .btn:active{transform:translateY(1px)}
+.btn.white{background:#fff;color:#1D4ED8} .btn.white:hover{background:#EEF4FF}
+.btn.discord{background:var(--discord);color:#fff} .btn.discord:hover{filter:brightness(1.08);background:var(--discord)}
+.btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
+.btn[aria-disabled="true"]{opacity:.6;cursor:default}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.sec{padding-block:clamp(48px,7vw,84px)}
+.sec h2{font-family:var(--serif);font-size:clamp(28px,3.6vw,40px);margin:8px 0 12px}
+.lead{color:var(--muted);max-width:60ch;margin:0}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;color:#fff;text-decoration:none}
+.brand img{width:34px;height:34px}
+.top a.small{color:#fff;font-weight:600;font-size:14px;text-decoration:none;opacity:.9}
+
+/* hero */
+.hero{background:var(--grad);color:#fff;padding-bottom:clamp(40px,6vw,72px);border-radius:0 0 36px 36px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,48px);align-items:center;padding-top:clamp(20px,4vw,40px)}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.hero h1{font-family:var(--serif);font-size:clamp(36px,5.4vw,60px);margin:16px 0 14px}
+.hero p{font-size:18px;color:rgba(255,255,255,.9);max-width:34em;margin:0 0 24px}
+.hero .acts{display:flex;gap:12px;flex-wrap:wrap}
+.counter{margin-top:22px;font-size:14px;color:rgba(255,255,255,.85)}
+.counter b{color:#fff;font-size:16px}
+.quest{background:var(--surface);color:var(--ink);border-radius:26px;padding:24px;box-shadow:0 30px 60px -30px rgba(5,15,40,.6)}
+.quest .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7A5300;background:var(--gold-soft);padding:5px 10px;border-radius:999px}
+:root[data-theme="dark"] .quest .tag{color:var(--gold)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .quest .tag{color:var(--gold)}}
+.quest h3{font-size:21px;margin:10px 0 4px}
+.quest .by{font-size:13px;color:var(--muted);margin:0 0 14px}
+.bar{height:10px;border-radius:10px;background:var(--soft);overflow:hidden;margin:6px 0 4px}
+.bar i{display:block;height:100%;background:var(--grad);border-radius:10px}
+.quest .pct{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.steps-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.steps-list li{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.steps-list li::before{content:"";flex:none;width:20px;height:20px;border-radius:50%;margin-top:2px;box-shadow:inset 0 0 0 2px var(--line)}
+.steps-list li.done::before{background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;box-shadow:none}
+.steps-list li.done{color:var(--muted)}
+
+/* how it works */
+.how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:28px}
+.how article{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);min-width:0}
+.how .n{width:38px;height:38px;border-radius:12px;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:12px}
+.how h3{font-size:17px;margin-bottom:6px}
+.how p{margin:0;color:var(--muted);font-size:14.5px}
+
+/* areas */
+.areas{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:28px}
+.area{border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:16px;min-width:0}
+.area b{display:block;font-size:15px;margin:6px 0 6px}
+.area .ico{font-size:22px}
+.area ul{margin:0;padding-left:18px;color:var(--muted);font-size:13.5px;display:grid;gap:3px}
+
+/* forms */
+.forms{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:28px}
+.card{background:var(--surface);border-radius:26px;padding:clamp(20px,3vw,30px);box-shadow:var(--shadow);min-width:0}
+.card h3{font-size:22px;font-family:var(--serif)}
+.card > p{color:var(--muted);margin:6px 0 18px;font-size:14.5px}
+form{display:grid;gap:12px}
+label{display:grid;gap:6px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+input,select,textarea{font:inherit;color:var(--ink);width:100%;border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:11px 13px;min-width:0}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cta);box-shadow:0 0 0 3px color-mix(in srgb,var(--cta) 22%,transparent)}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:500;color:var(--muted);font-size:13px}
+.check input{width:18px;height:18px;margin-top:2px;flex:none}
+input[type=range]{padding:0;accent-color:var(--cta);background:transparent;border:0}
+.rangeval{font-variant-numeric:tabular-nums;color:var(--cta);font-weight:800}
+.msg{margin:0;font-size:14px;color:var(--muted)} .msg.ok{color:var(--accent);font-weight:600} .msg.err{color:#C2410C;font-weight:600}
+.done-box{border-radius:18px;background:var(--accent-soft);padding:18px;display:grid;gap:10px}
+.done-box b{font-size:17px}
+
+/* faq */
+.faq{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.faq details{background:var(--surface);border-radius:16px;padding:16px 18px;border:1px solid var(--line)}
+.faq summary{cursor:pointer;font-weight:700;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";float:right;color:var(--cta);font-weight:800}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:10px 0 0;color:var(--muted)}
+footer{padding-block:36px 50px;color:var(--muted);font-size:14px;text-align:center}
+footer a{color:var(--muted)}
+:focus-visible{outline:2px solid var(--cta);outline-offset:2px}
+
+@media (max-width:900px){
+  .hero-grid,.forms{grid-template-columns:minmax(0,1fr)}
+  .how{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .areas{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:520px){
+  .how,.areas,.row2{grid-template-columns:minmax(0,1fr)}
+  .hero p{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top">
+      <a class="brand" href="/"><img src="/assets/logo.svg" alt="">Next Chapter</a>
+      <a class="small" href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu on Threads →</a>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <span class="pill">🎯 Side Quest Crew · free</span>
+        <h1>One new side quest every month. Done together.</h1>
+        <p>Pick a challenge in any area of life: money, career, fitness, a new skill. Share it with a crew of people doing the same, help each other, and check in together on a monthly Zoom.</p>
+        <div class="acts">
+          <a class="btn white" href="#join">Join the crew</a>
+          <a class="btn ghost" id="discordHero" href="#join">Discord community</a>
+        </div>
+        <div class="counter">Goal: <b>1,000 doers</b> who help each other build a life beyond the 9-to-5.</div>
+      </div>
+
+      <aside class="quest" aria-label="This month's quest">
+        <span class="tag">My quest · October 2026</span>
+        <h3>Launch my career-change guide store</h3>
+        <p class="by">Yashu · building in public on Threads</p>
+        <div class="bar"><i id="myBar"></i></div>
+        <div class="pct"><span>Progress</span><span id="myPct"></span></div>
+        <ul class="steps-list" id="mySteps"></ul>
+      </aside>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow">How it works</div>
+      <h2>Four steps, every month</h2>
+      <p class="lead">Small, public commitments are easier to keep. The crew is there to cheer, share what worked and keep each other going.</p>
+      <div class="how">
+        <article><div class="n">1</div><h3>Pick your quest</h3><p>One goal for the month in any area of life. Make it small enough to finish in 30 days.</p></article>
+        <article><div class="n">2</div><h3>Share it in Discord</h3><p>Post your quest in the crew, follow other people's, and swap tips and resources.</p></article>
+        <article><div class="n">3</div><h3>Log a check-in</h3><p>Use the monthly check-in form below: progress, one win, one blocker, next step.</p></article>
+        <article><div class="n">4</div><h3>Monthly Zoom</h3><p>Once a month we meet on Zoom to share updates and set the next quest. Members get the invite by email.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Quest ideas</div>
+      <h2>Choose an area of life</h2>
+      <div class="areas">
+        <div class="area"><span class="ico">💰</span><b>Money</b><ul><li>Earn your first $100 online</li><li>Build a one-month runway</li><li>Track every rupee or dollar</li></ul></div>
+        <div class="area"><span class="ico">🧭</span><b>Career</b><ul><li>Test a new career in 30 days</li><li>Rewrite your CV</li><li>Have 3 career conversations</li></ul></div>
+        <div class="area"><span class="ico">💪</span><b>Fitness</b><ul><li>Walk 8,000 steps daily</li><li>Train 3 times a week</li><li>Sleep by 11 pm</li></ul></div>
+        <div class="area"><span class="ico">🛠️</span><b>Skills</b><ul><li>Learn a tool or language</li><li>Ship one small project</li><li>Post daily for 30 days</li></ul></div>
+        <div class="area"><span class="ico">🌱</span><b>Mind & life</b><ul><li>Read 2 books</li><li>Phone-free mornings</li><li>Journal 10 minutes a day</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="join" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Join</div>
+      <h2>Join the crew, then check in each month</h2>
+      <div class="forms">
+        <div class="card">
+          <h3>Join the Side Quest Crew</h3>
+          <p>Free. You'll get the Discord link straight away and the monthly Zoom invite by email.</p>
+          <form id="joinForm" novalidate>
+            <div class="row2">
+              <label>First name<input id="jName" name="name" autocomplete="given-name" required maxlength="80"></label>
+              <label>Country<input id="jCountry" name="country" autocomplete="country-name" maxlength="60" placeholder="Optional"></label>
+            </div>
+            <label>Email<input id="jEmail" type="email" name="email" autocomplete="email" inputmode="email" required maxlength="200" placeholder="you@example.com"></label>
+            <label>Area for your first quest
+              <select id="jArea" name="area"><option>Money</option><option>Career</option><option>Fitness</option><option>Skills</option><option>Mind & life</option><option>Not sure yet</option></select>
+            </label>
+            <label>Your first quest<textarea id="jGoal" name="goal" maxlength="400" placeholder="e.g. Earn my first $100 from a side project by 30 November"></textarea></label>
+            <label class="check"><input type="checkbox" id="jConsent" required> I'm happy to get the monthly Zoom invite and quest updates by email. I can leave any time.</label>
+            <button class="btn" type="submit" id="jBtn">Join the crew</button>
+            <p class="msg" id="jMsg" role="status" aria-live="polite"></p>
+          </form>
+          <div class="done-box" id="joinDone" hidden>
+            <b>You're in! 🎯</b>
+            <span>Next step: join the Discord and post your first quest in #introductions.</span>
+            <a class="btn discord" id="discordJoined" href="#">Open the Discord</a>
+          </div>
+        </div>
+
+        <div class="card" id="checkin">
+          <h3>Monthly check-in</h3>
+          <p>Log your progress once a month, before the Zoom. It's how we track the whole crew's quests.</p>
+          <form id="ciForm" novalidate>
+            <div class="row2">
+              <label>Email you joined with<input id="cEmail" type="email" autocomplete="email" inputmode="email" required maxlength="200"></label>
+              <label>Month<input id="cMonth" type="month" required></label>
+            </div>
+            <label>Your quest this month<input id="cQuest" required maxlength="200" placeholder="e.g. Train 3 times a week"></label>
+            <label>Progress: <span class="rangeval" id="cPctOut">50%</span><input id="cPct" type="range" min="0" max="100" step="5" value="50"></label>
+            <label>One win<textarea id="cWin" maxlength="500"></textarea></label>
+            <div class="row2">
+              <label>One blocker<textarea id="cBlock" maxlength="500"></textarea></label>
+              <label>Next step<textarea id="cNext" maxlength="300"></textarea></label>
+            </div>
+            <button class="btn" type="submit" id="cBtn">Log my check-in</button>
+            <p class="msg" id="cMsg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Questions</div>
+      <h2>Good to know</h2>
+      <div class="faq">
+        <details><summary>Is it free?</summary><p>Yes. The crew, the Discord and the monthly Zoom are free.</p></details>
+        <details><summary>When is the monthly Zoom?</summary><p>Once a month. The date and link go out by email and in the Discord a week before.</p></details>
+        <details><summary>Do I need Discord?</summary><p>It's where the crew chats day to day, so it's the best way to take part. If you'd rather not, you can still check in here and join the Zoom.</p></details>
+        <details><summary>What do you do with my email?</summary><p>It's only used for the monthly Zoom invite and crew updates. It's never sold or shared. Reply to any email to leave.</p></details>
+        <details><summary>Where do the career guides fit in?</summary><p>They're my own October quest. If your quest is a career change, the <a href="/">Next Chapter guides</a> and the free "Is It Too Late?" calculator might help.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Side Quest Crew by <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a> · <a href="/">Next Chapter Guides</a></div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+/* ======= SETTINGS: edit these ======= */
+const CREW = {
+  discord: "",   // paste your Discord invite link here, e.g. "https://discord.gg/abc123"
+  myQuest: [     // your own quest this month: [step, done?]
+    ["10 career-change guides written and designed", true],
+    ["Store website live", true],
+    ["Progress tracker app built", true],
+    ["Store verified and switched live", false],
+    ["First sale", false],
+  ],
+};
+const SB_URL = "https://ctezcrglzcjxdkagnoyy.supabase.co", SB_KEY = "sb_publishable_WM7az_Nye-qOMmgWDOJRVg_vITL_Zse";
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const okEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+
+// my quest card
+const done = CREW.myQuest.filter(s => s[1]).length, pct = Math.round(done / CREW.myQuest.length * 100);
+$("#myBar").style.width = pct + "%"; $("#myPct").textContent = pct + "%";
+$("#mySteps").innerHTML = CREW.myQuest.map(([t, d]) => `<li class="${d ? "done" : ""}">${esc(t)}</li>`).join("");
+
+// discord buttons
+function setDiscord(el){
+  if (CREW.discord){ el.href = CREW.discord; el.target = "_blank"; el.rel = "noopener"; }
+  else { el.href = "#join"; el.setAttribute("aria-disabled","true"); el.textContent = "Discord opens soon"; el.onclick = e => { if (el.id === "discordJoined") e.preventDefault(); }; }
+}
+setDiscord($("#discordHero")); setDiscord($("#discordJoined"));
+if (!CREW.discord) $("#discordHero").textContent = "Discord opens soon";
+
+// month default
+const now = new Date(); $("#cMonth").value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+$("#cPct").addEventListener("input", e => $("#cPctOut").textContent = e.target.value + "%");
+
+let sb = null;
+try { sb = window.supabase.createClient(SB_URL, SB_KEY, { auth:{ persistSession:false } }); } catch(e){}
+function say(el, t, cls){ el.textContent = t; el.className = "msg " + (cls||""); }
+
+$("#joinForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const m = $("#jMsg"), name = $("#jName").value.trim(), email = $("#jEmail").value.trim();
+  if (!name) return say(m, "Please add your first name.", "err");
+  if (!okEmail(email)) return say(m, "Please enter a valid email address.", "err");
+  if (!$("#jConsent").checked) return say(m, "Please tick the box so I can send you the Zoom invite.", "err");
+  if (!sb) return say(m, "Couldn't connect. Please refresh and try again.", "err");
+  $("#jBtn").disabled = true; say(m, "Joining…");
+  const { error } = await sb.from("crew_members").insert({ name, email: email.toLowerCase(), quest_area: $("#jArea").value, goal: $("#jGoal").value.trim() || null, country: $("#jCountry").value.trim() || null });
+  $("#jBtn").disabled = false;
+  if (error && error.code !== "23505") return say(m, "Something went wrong. Please try again in a minute.", "err");
+  $("#joinForm").hidden = true; $("#joinDone").hidden = false;
+  $("#cEmail").value = email;
+});
+
+$("#ciForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const m = $("#cMsg"), email = $("#cEmail").value.trim(), quest = $("#cQuest").value.trim();
+  if (!okEmail(email)) return say(m, "Please enter the email you joined with.", "err");
+  if (!quest) return say(m, "Please add your quest for this month.", "err");
+  if (!sb) return say(m, "Couldn't connect. Please refresh and try again.", "err");
+  $("#cBtn").disabled = true; say(m, "Saving…");
+  const { error } = await sb.from("crew_checkins").insert({ email: email.toLowerCase(), month: $("#cMonth").value, quest, progress: +$("#cPct").value, win: $("#cWin").value.trim() || null, blocker: $("#cBlock").value.trim() || null, next_step: $("#cNext").value.trim() || null });
+  $("#cBtn").disabled = false;
+  if (error) return say(m, "Couldn't save your check-in. Please try again.", "err");
+  say(m, "Check-in saved. See you on the Zoom! 🎯", "ok");
+  ["#cQuest","#cWin","#cBlock","#cNext"].forEach(s => $(s).value = "");
+});
+</script>
+</body>
+</html>
