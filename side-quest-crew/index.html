@@ -505,6 +505,30 @@ ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
 .rm-list[data-f]:not([data-f="all"])::before{display:none}
 .rm-list[data-f]:not([data-f="all"]) .rm-wk summary{display:none}
 
+/* mobile dashboard compaction */
+.mob{display:none}
+@media (max-width:760px){
+  .desk{display:none!important}
+  .mob{display:block}
+  .quick.mob{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .quick a{padding:14px;text-decoration:none;color:var(--ink);display:grid;gap:2px}
+  .quick span{font-size:24px}
+  .quick b{font-size:15px}
+  .quick small{font-size:12px;color:var(--muted)}
+  .kpis{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .kpi{padding:10px 8px;text-align:center}
+  .kpi span{font-size:10.5px}
+  .kpi b{font-size:20px}
+  .kpi small{display:none}
+  .dmain{gap:12px}
+  .panel{padding:16px}
+  .dhead h1{font-size:24px}
+  .todaycard .sharebox{display:none}
+  .lvl{gap:12px}
+  .rm-head .rm-pct b{font-size:22px}
+  .rm-tasks .task > span > span{display:none}
+}
+
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(40,64,92,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50}
 .modal .panel{width:min(440px,100%);max-height:92vh;overflow:auto;background:var(--frame)}
@@ -1055,7 +1079,7 @@ function roadmap(q, e, vertical){
   const can = e && q.status === "live";
   const taskRows = wt => wt.map(t => taskRow(t, q, e)).join("");
   const taskRowsOld = wt => wt.map(t => { const on = done.includes(t.id); return `<label class="task ${can?"":"locked"} ${on?"isdone":""}"><input type="checkbox" data-task="${esc(t.id)}" data-slug="${esc(q.slug)}" ${on?"checked":""} ${can?"":"disabled"}><span><b>${esc(t.title)}</b>${t.detail?`<span>${esc(t.detail)}</span>`:""}${t.link?` <a href="${esc(t.link)}" target="_blank" rel="noopener">Open</a>`:""}</span></label>`; }).join("");
-  const defF = e && curIdx >= 1 && curIdx <= wk.length ? String(curIdx) : "all";
+  const defF = e && curIdx >= 1 && curIdx <= wk.length ? String(curIdx) : (window.innerWidth <= 760 ? "1" : "all");
   const F = RMF && (RMF === "all" || +RMF <= wk.length) ? RMF : defF;
   const list = stops.map((st, i) => `<li data-wk="${i}" class="${st.done ? "done" : ""} ${i === curIdx ? "cur" : ""}"><span class="n">${st.n}</span><div class="c"><b>${esc(st.t)}${i === curIdx ? '<span class="you">You are here</span>' : ""}</b><small>${esc(st.s)}${vertical && i > 0 && i <= wk.length ? ` · ${wk[i-1].wt[0].day ? `Days ${wk[i-1].wt[0].day} to ${wk[i-1].wt[wk[i-1].wt.length-1].day}, ` : ""}${wk[i-1].d}/${wk[i-1].wt.length} done` : ""}</small>${i > 0 && i <= wk.length ? (vertical ? `<details class="rm-wk" ${F === String(i) || (F === "all" && ((e ? i === curIdx : i === 1) || wk[i-1].wt.some(t => t.day && t.day === questDay(q)))) ? "open" : ""}><summary>${wk[i-1].wt.length} daily tasks</summary><div class="rm-tasks">${taskRows(wk[i-1].wt)}</div></details>` : `<ul>${wk[i-1].wt.map(t => `<li>${done.includes(t.id) ? "✓ " : ""}${esc(t.title)}</li>`).join("")}</ul>`) : ""}</div></li>`).join("");
   if (vertical){
@@ -1093,7 +1117,7 @@ function streakOf(logs){
   const days = new Set((logs||[]).map(l => l.day)); let s = 0, i = days.has(utcDay(0)) ? 0 : 1;
   while (days.has(utcDay(i))){ s++; i++; } return s;
 }
-const DASH_NAV = [["", "🏠", "Overview"], ["tasks", "✅", "My tasks"], ["checkin", "📝", "Daily check-in"], ["board", "🏆", "Billboard"], ["vote", "🗳️", "Vote"], ["account", "⚙️", "Account"]];
+const DASH_NAV = [["", "🏠", "Overview"], ["tasks", "✅", "My tasks"], ["checkin", "📝", "Daily check-in"], ["board", "🏆", "Billboard"], ["vote", "🗳️", "Vote"], ["guides", "📘", "Guides"], ["badges", "🎖️", "Badges"], ["account", "⚙️", "Account"]];
 function taskList(q, e, slug, filter){
   const tasks = (q.content||{}).tasks || [], live = q.status === "live", done = e ? e.done_tasks : [];
   const list = filter ? tasks.filter(filter) : tasks, weeks = [...new Set(list.map(t => t.week))];
@@ -1147,6 +1171,7 @@ async function vMe(sub){
 
   const joinCard = cur && !enrolled(cur.slug) && cur.status !== "done" && cur.status !== "idea" ? `<div class="panel joincard"><div><b>${esc(cur.emoji||"🎯")} ${esc(cur.title)}</b><p class="muted small" style="margin:4px 0 0">${statusLabel(cur)}${cur.starts_on ? `, ${fmt(cur.starts_on)} to ${fmt(cur.ends_on)}` : ""}. Everyone in the crew does this one together.</p></div><button class="btn" type="button" data-join="${cur.slug}">Join this quest</button></div>` : "";
 
+  const badgesBlock = () => mine.length ? `<div class="panel"><div class="phead"><h3>My badges</h3><span class="small muted">Finish every task to earn the badge</span></div><div class="badges">${foundingMember() ? `<div class="badge-item">${patch({slug:"founding", category:"Wealth", emoji:"⭐", starts_on:null}).replace(">WEALTH<", ">FOUNDING CREW<")}<b>Founding Crew</b><span>Joined before the first quest</span></div>` : ""}${mine.map(({e,q}) => { const n = ((q.content||{}).tasks||[]).length, d = e.done_tasks.length, got = n && d >= n; return `<div class="badge-item ${got?"":"locked"}">${patch(q)}<b>${esc(q.title)}</b><span>${got ? "Earned 🎉" : `${d}/${n} tasks done`}</span>${got ? shareBtn(`I finished the ${q.title} with Side Quest Crew 🎖️ All ${n} tasks done.\n\nNext month's quest is up for a vote. Come do it with us: ${SITE}`, "Share badge") : ""}</div>`; }).join("")}</div></div>` : "";
   let body = "";
   if (!sub){
     const weeks = [...new Set(tasks.map(t => t.week))];
@@ -1169,23 +1194,30 @@ async function vMe(sub){
         <div class="phead"><h3>Today's check-in</h3><a class="small" href="#/me/checkin">History</a></div>
         ${e ? checkinForm(q, e) : `<p class="muted" style="margin:0">Join the quest to log daily check-ins.</p>`}
       </div>
-        ${guidesPanel(q)}
-      <div class="panel">
+        <div class="desk">${guidesPanel(q)}</div>
+      <div class="panel desk">
         <div class="phead"><h3>Billboard</h3><a class="small" href="#/me/board">Full board</a></div>
         ${rows.length ? `<ol class="mini">${rows.slice(0,5).map(r => `<li class="r${r.rank} ${myRow && r.rank===myRow.rank?"me":""}"><span class="rank">${r.rank}</span><b>${esc(r.display_name)}</b><span class="xp tnum">${r.score}</span></li>`).join("")}</ol>${myRow && myRow.rank > 5 ? `<p class="small" style="margin:10px 0 0">You're <b>#${myRow.rank}</b> with ${myRow.score} XP.</p>` : ""}` : `<p class="muted" style="margin:0">No one on the board yet.</p>`}
       </div>
-      <div class="panel">
+      <div class="panel desk">
         <div class="phead"><h3>Next month's vote</h3><a class="small" href="#/me/vote">Vote</a></div>
         ${POLL ? (voteOpt ? `<p style="margin:0">You voted for <b>${esc(voteOpt.emoji)} ${esc(voteOpt.title)}</b>. You can change it until ${fmt(POLL.closes_on)}.</p>` : `<p style="margin:0 0 12px">You haven't voted yet. Voting closes ${fmt(POLL.closes_on)}.</p><a class="btn sm" href="#/me/vote">Cast my vote</a>`) : `<p class="muted" style="margin:0">No vote running right now.</p>`}
       </div>
-      <div class="panel">
+      <div class="panel desk">
         <div class="phead"><h3>Crew hangout</h3></div>
         <p class="small" style="margin:0 0 12px;color:var(--ink-2)">Post your wins in the Discord. ${esc(CFG.zoomNote)}</p>
         ${discordBtn("sm")}
       </div>
       </div>
     </div>` : ""}
-    ${mine.length ? `<div class="panel"><div class="phead"><h3>My badges</h3><span class="small muted">Finish every task to earn the badge</span></div><div class="badges">${foundingMember() ? `<div class="badge-item">${patch({slug:"founding", category:"Wealth", emoji:"⭐", starts_on:null}).replace(">WEALTH<", ">FOUNDING CREW<")}<b>Founding Crew</b><span>Joined before the first quest</span></div>` : ""}${mine.map(({e,q}) => { const n = ((q.content||{}).tasks||[]).length, d = e.done_tasks.length, got = n && d >= n; return `<div class="badge-item ${got?"":"locked"}">${patch(q)}<b>${esc(q.title)}</b><span>${got ? "Earned 🎉" : `${d}/${n} tasks done`}</span>${got ? shareBtn(`I finished the ${q.title} with Side Quest Crew 🎖️ All ${n} tasks done.\n\nNext month's quest is up for a vote. Come do it with us: ${SITE}`, "Share badge") : ""}</div>`; }).join("")}</div></div>` : ""}`;
+    <div class="desk">${badgesBlock()}</div>
+    <div class="mob quick">
+      <a class="glass" href="#/me/board"><span>🏆</span><b>Billboard</b><small>${myRow ? `You're #${myRow.rank}` : "See the top"}</small></a>
+      <a class="glass" href="#/me/vote"><span>🗳️</span><b>Vote</b><small>${voteOpt ? "Voted ✓" : "Not voted yet"}</small></a>
+      <a class="glass" href="#/me/guides"><span>📘</span><b>Guides</b><small>Worksheets for each step</small></a>
+      <a class="glass" href="#/me/badges"><span>🎖️</span><b>Badges</b><small>${mine.length} quest${mine.length===1?"":"s"}</small></a>
+    </div>
+    <div class="mob" style="text-align:center">${discordBtn("sm")}</div>`;
   } else if (sub === "tasks"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>My tasks</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}, ${done.length} of ${tasks.length} done` : ""}</p></div></div>${joinCard}
       <div class="panel">${q && tasks.length ? `<p class="small muted" style="margin:0">${q.status === "live" ? (e ? "Tick tasks off as you go. Each one is 10 XP." : "Join the quest to start ticking these off.") : "Tasks unlock when the quest starts."}</p>${taskList(q, e, q.slug)}` : `<p class="muted" style="margin:0">No tasks yet.</p>`}</div>`;
@@ -1197,6 +1229,10 @@ async function vMe(sub){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>Billboard</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}` : ""} · 10 XP per task, 5 XP per check-in</p></div></div><div class="board glass">${boardTable(rows, q, 0, true)}</div>`;
   } else if (sub === "vote"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>${esc(POLL ? POLL.title : "Vote")}</h1><p class="muted">One vote per member. You can change it until it closes.</p></div></div>${pollBlock()}`;
+  } else if (sub === "guides"){
+    body = `<div class="dhead"><div>${backBtn()}<br><h1>Guides</h1><p class="muted">The Next Chapter guides behind each step of the quest.</p></div></div>${q ? guidesPanel(q) : ""}`;
+  } else if (sub === "badges"){
+    body = `<div class="dhead"><div>${backBtn()}<br><h1>Badges</h1><p class="muted">Finish every task in a quest to earn its badge.</p></div></div>${badgesBlock() || `<div class="panel empty"><b>No badges yet</b>Join a quest to start earning them.</div>`}`;
   } else if (sub === "account"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>Account</h1></div></div>
       <div class="dgrid two"><div class="panel"><h3>Your details</h3><p style="margin:0 0 6px"><b>Name on the billboard:</b> ${esc(first)}</p><p style="margin:0 0 16px"><b>Country:</b> ${esc(ME.country || "Not set")}</p><p class="small muted" style="margin:0 0 16px">Your email is never shown to anyone. To change your name or password, message @yashujambu on Threads or in the Discord.</p><button class="btn ghost" type="button" id="logout">Log out</button></div>
