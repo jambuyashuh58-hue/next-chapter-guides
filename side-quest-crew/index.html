@@ -189,6 +189,25 @@ h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;line-height:1.12;te
 .opt .e{font-size:30px;filter:drop-shadow(0 6px 6px rgba(40,70,100,.25))}
 .opt b{display:block;font-size:15.5px}
 .opt .votes{font-size:13px;color:var(--muted)}
+.qrows{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:14px}
+.qrow{display:grid;grid-template-columns:118px minmax(0,1fr);gap:14px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 26px -14px rgba(20,32,60,.22)}
+.rimg{position:relative;display:block;width:118px;height:118px;border-radius:16px;overflow:hidden;background:var(--glass-solid)}
+.rimg .fb{position:absolute;inset:0;display:grid;place-items:center;font-size:40px}
+.rimg img{position:relative;width:100%;height:100%;object-fit:cover;display:block;max-width:none}
+.rmain{display:flex;flex-direction:column;gap:4px;min-width:0;padding-top:2px}
+.rtop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.rtop .qt{font:700 16.5px/1.25 var(--body);color:var(--ink);text-decoration:none;min-width:0}
+.rchip{flex:none;font:700 11.5px/1 var(--body);padding:6px 10px;border-radius:999px;background:#E5F6EC;color:#1C8048;white-space:nowrap}
+.rchip.warn{background:#FFF1D6;color:#A86410}.rchip.blue{background:#E6EBFF;color:#3451C7}.rchip.muted{background:var(--glass-solid);color:var(--muted)}
+.rdesc{margin:0;font-size:13.5px;line-height:1.4;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rfoot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:6px}
+.rfig{font:800 21px/1 var(--body);color:#3451C7;font-variant-numeric:tabular-nums}
+.rfig small{font:600 12.5px var(--body);color:var(--muted);margin-left:7px;white-space:nowrap}
+.rbtn{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#3451C7;color:#fff;border:0;cursor:pointer;text-decoration:none;box-shadow:0 8px 16px -6px rgba(52,81,199,.6)}
+.rbtn:hover{background:#2A43AB}.rbtn.mine{background:#1C8048;box-shadow:0 8px 16px -6px rgba(28,128,72,.6)}.rbtn.ghost{background:var(--glass-solid);color:var(--ink);box-shadow:none}
+.rbtn svg{width:21px;height:21px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rfig{color:#8EA4FF}}
+@media (max-width:420px){.qrow{grid-template-columns:96px minmax(0,1fr);gap:12px;padding:10px}.rimg{width:96px;height:96px}.rtop{flex-direction:column-reverse;gap:6px}.rchip{align-self:flex-start}}
 .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .vcard{display:flex;flex-direction:column;background:var(--glass-solid);border-radius:20px;overflow:hidden;border:2px solid transparent;box-shadow:0 10px 30px rgba(20,40,70,.08)}
 .vcard.mine{border-color:var(--quest)}
@@ -922,16 +941,9 @@ function boardTable(rows, q, limit, withPodium){
 }
 function pollBlock(){
   if (!POLL) return `<div class="empty glass"><b>No vote running right now</b>The next vote opens near the end of the month.</div>`;
-  const total = Object.values(RESULTS).reduce((a,b)=>a+b,0), mine = ME && ME.votes ? ME.votes[String(POLL.id)] : null;
-  return `<div class="vgrid">${POLL.options.map(o => { const v = RESULTS[o.key]||0, pct = total ? Math.round(v/total*100) : 0, q = QUESTS.find(x => x.slug === o.key);
-    return `<article class="vcard ${mine===o.key?"mine":""}">
-      <a class="qimg" href="#/quest/${esc(o.key)}" aria-label="${esc(o.title)}">${questArt(o.key, o.category)}${mine===o.key?`<span class="qpill status-live">Your pick</span>`:""}</a>
-      <div class="vbody"><a class="qt" href="#/quest/${esc(o.key)}">${esc(o.title)}</a>
-        ${q && q.summary ? `<p>${esc(q.summary)}</p>` : ""}
-        <div class="vbar"><i style="width:${pct}%"></i></div><span class="votes">${showCount(total) ? `<b class="tnum">${v}</b> vote${v===1?"":"s"} · ` : ""}${pct}%</span>
-        <button class="qbtn vote ${mine===o.key?"mine":""}" type="button" data-vote="${esc(o.key)}">${mine===o.key?"Your vote ✓":"Vote for this"}</button></div>
-    </article>`; }).join("")}</div>
-    <div class="poll-meta">${showCount(total) ? `<span>🗳️ ${total} vote${total===1?"":"s"} so far</span>` : ""}${POLL.closes_on?`<span>Closes ${fmt(POLL.closes_on)}</span>`:""}<span>One vote per member. You can change it until it closes.</span></div>`;
+  const total = Object.values(RESULTS).reduce((a,b)=>a+b,0);
+  return `<div class="qrows">${POLL.options.map(o => qrow(QUESTS.find(x => x.slug === o.key) || { slug: o.key, title: o.title, category: o.category, emoji: o.emoji, status: "idea" })).join("")}</div>
+    <div class="poll-meta">${showCount(total) ? `<span>🗳️ ${total} vote${total===1?"":"s"} so far</span>` : ""}${POLL.closes_on?`<span>Closes ${fmt(POLL.closes_on)}</span>`:""}<span>Tap the round button to vote. You can change it until it closes.</span></div>`;
 }
 /* Quest card art: a topographic map with a summit for each quest, the goal set large, and one line icon for the task. */
 const QUEST_HEAD = {
@@ -957,73 +969,63 @@ const QUEST_HEAD = {
   "one-job-skill": ["Want a better job?", ["Learn one job", "skill and get", "certified"]],
   "twenty-applications": ["Job hunt stalled?", ["Send 20 real", "applications", "this month"]]
 };
-const QUEST_ICON = {
-  "career-shift": `<circle r="46"/><circle r="38" stroke-dasharray="1.5 7.4" stroke-width="3"/><path d="M0 -30 L9 0 L0 30 L-9 0 Z"/><path d="M0 -30 L9 0 L-9 0 Z" class="f"/><circle r="2.5" class="f"/>`,
-  "healthy-weight-reset": `<path d="M-46 0 H46 A46 40 0 0 1 -46 0 Z"/><path d="M-26 40 H26"/><path d="M-10 0 C-24 -14 -20 -34 -4 -40 C0 -24 -2 -10 -10 0 Z"/><path d="M8 0 C14 -20 32 -26 42 -18 C34 -6 22 -2 8 0 Z"/><path d="M-28 0 C-34 -10 -32 -22 -24 -26"/>`,
-  "steps-10k": `<path d="M-30 -8 C-44 -10 -44 -46 -30 -50 C-16 -52 -14 -24 -22 -10 Z"/><path d="M-30 4 a8 6 0 1 0 0.1 0"/><path d="M24 22 C38 20 40 -16 26 -20 C12 -22 10 6 18 20 Z"/><path d="M22 34 a8 6 0 1 1 -0.1 0"/><path d="M-46 50 Q0 40 46 52" stroke-dasharray="3 6"/>`,
-  "sleep-reset": `<path d="M10 -44 A40 40 0 1 0 40 18 A32 32 0 1 1 10 -44 Z"/><path d="M36 -40 l4 -9 l4 9 l9 4 l-9 4 l-4 9 l-4 -9 l-9 -4 Z" class="f"/><path d="M-44 -40 l2 -5 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 Z" class="f"/>`,
-  "strength-starter": `<path d="M-30 0 H30"/><rect x="-44" y="-24" width="12" height="48" rx="3"/><rect x="-56" y="-16" width="10" height="32" rx="3"/><rect x="32" y="-24" width="12" height="48" rx="3"/><rect x="46" y="-16" width="10" height="32" rx="3"/>`,
-  "no-added-sugar": `<path d="M-20 -20 L4 -32 L28 -20 L28 10 L4 22 L-20 10 Z"/><path d="M-20 -20 L4 -8 L28 -20 M4 -8 V22"/><circle cx="4" cy="-4" r="46"/><path d="M-28 -36 L36 28"/>`,
-  "earn-1000": `<ellipse cx="-14" cy="34" rx="30" ry="9"/><path d="M-44 34 V20 M16 34 V20"/><ellipse cx="-14" cy="20" rx="30" ry="9"/><path d="M-44 20 V6 M16 20 V6"/><ellipse cx="-14" cy="6" rx="30" ry="9"/><path d="M28 -6 L48 -40 M36 -40 H48 V-28"/>`,
-  "launch-digital-product": `<path d="M0 -50 C18 -34 20 -4 12 22 H-12 C-20 -4 -18 -34 0 -50 Z"/><circle cy="-14" r="8"/><path d="M-12 8 L-26 30 L-12 24 M12 8 L26 30 L12 24"/><path d="M-6 30 Q0 50 6 30" class="f"/>`,
-  "post-daily-30": `<rect x="-26" y="-48" width="52" height="96" rx="10"/><path d="M-6 40 H6"/><path d="M-14 -28 H14 M-14 -16 H6"/><path d="M14 4 c0 -10 -14 -10 -14 0 c0 -10 -14 -10 -14 0 c0 8 14 16 14 18 c0 -2 14 -10 14 -18 Z" class="f"/>`,
-  "investing-habit": `<path d="M-48 40 H48 M-48 40 V-44"/><path d="M-40 26 L-16 8 L4 16 L36 -24"/><path d="M24 -24 H36 V-12"/><path d="M-30 40 V30 M-10 40 V24 M10 40 V26 M30 40 V12" stroke-dasharray="2 4"/>`,
-  "no-spend-month": `<rect x="-46" y="-24" width="92" height="62" rx="10"/><path d="M-46 -8 H46"/><rect x="22" y="2" width="24" height="18" rx="5"/><path d="M-12 -24 V-38 a12 12 0 0 1 24 0 V-24"/>`,
-  "emergency-fund": `<path d="M-48 0 A48 48 0 0 1 48 0 Q36 -10 24 0 Q12 -10 0 0 Q-12 -10 -24 0 Q-36 -10 -48 0 Z"/><path d="M0 -48 V-54 M0 0 V34 a10 10 0 0 1 -20 0"/><path d="M-30 30 l3 8 M30 22 l3 8 M38 -30 l3 8" />`,
-  "debt-snowball": `<path d="M0 -48 V48 M-42 -24 L42 24 M-42 24 L42 -24"/><path d="M-8 -40 L0 -32 L8 -40 M-8 40 L0 32 L8 40 M-38 -12 L-28 -16 L-30 -26 M38 12 L28 16 L30 26 M-38 12 L-28 16 L-30 26 M38 -12 L28 -16 L30 -26"/>`,
-  "track-every-expense": `<path d="M-32 -50 H32 V50 L24 44 L16 50 L8 44 L0 50 L-8 44 L-16 50 L-24 44 L-32 50 Z"/><path d="M-20 -32 H8 M14 -32 H20 M-20 -18 H2 M14 -18 H20 M-20 -4 H6 M14 -4 H20"/><path d="M-20 16 H20" stroke-dasharray="3 3"/><path d="M-20 30 H0 M12 30 H20"/>`,
-  "reconnect-10": `<path d="M-34 -34 C-42 -26 -42 -8 -20 16 C4 40 22 42 30 34 L36 28 L18 12 L8 20 C0 16 -12 4 -16 -4 L-8 -14 L-24 -32 Z"/><path d="M8 -26 a20 20 0 0 1 18 18 M8 -42 a36 36 0 0 1 34 34"/>`,
-  "gratitude-30": `<rect x="-46" y="-30" width="92" height="64" rx="6"/><path d="M-46 -26 L0 8 L46 -26"/><path d="M0 -40 c0 -8 -12 -8 -12 0 c0 6 12 12 12 14 c0 -2 12 -8 12 -14 c0 -8 -12 -8 -12 0 Z" class="f"/>`,
-  "phone-free-evenings": `<path d="M-40 -46 H-8 L0 -18 H-48 Z"/><path d="M-24 -18 V40 M-38 40 H-10"/><path d="M4 40 C14 32 28 32 36 36 V8 C28 4 14 4 4 12 Z M4 40 C-2 34 -8 34 -12 36"/><path d="M28 -44 A16 16 0 1 0 46 -24 A12 12 0 1 1 28 -44 Z"/>`,
-  "weekly-people-night": `<circle r="30"/><circle r="20"/><path d="M-48 -36 V36 M-54 -36 V-16 a6 6 0 0 0 12 0 V-36"/><path d="M48 36 V-36 C40 -30 40 -8 48 -4"/>`,
-  "linkedin-glow-up": `<rect x="-48" y="-34" width="96" height="68" rx="8"/><circle cx="-22" cy="-6" r="11"/><path d="M-38 20 a16 12 0 0 1 32 0"/><path d="M6 -14 H34 M6 0 H28 M6 14 H22"/><path d="M44 -50 l3 -8 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 Z" class="f"/>`,
-  "one-job-skill": `<path d="M-50 -10 L0 -32 L50 -10 L0 12 Z"/><path d="M-28 0 V22 C-28 34 28 34 28 22 V0"/><path d="M42 -6 V26"/><circle cx="42" cy="30" r="4" class="f"/>`,
-  "twenty-applications": `<path d="M-40 4 L46 -40 L22 40 L0 14 Z M0 14 L46 -40 M0 14 V32 L10 22"/><path d="M-50 30 Q-40 44 -22 40" stroke-dasharray="3 5"/>`
+const QUEST_PHOTO = {
+  "career-shift": "photo-1507679799987-c73779587ccf",
+  "healthy-weight-reset": "photo-1512621776951-a57141f2eefd",
+  "steps-10k": "photo-1485660063059-5d44c96d3345",
+  "sleep-reset": "photo-1721815714586-73849a2a163b",
+  "strength-starter": "photo-1562771242-a02d9090c90c",
+  "no-added-sugar": "photo-1709651808265-977ed7ef78c6",
+  "earn-1000": "photo-1713946598392-e8cbcf9e232d",
+  "launch-digital-product": "photo-1517976487492-5750f3195933",
+  "post-daily-30": "photo-1611926653458-09294b3142bf",
+  "investing-habit": "photo-1612178991541-b48cc8e92a4d",
+  "no-spend-month": "photo-1614260938313-a7fc1a7ad0d2",
+  "emergency-fund": "photo-1607863680198-23d4b2565df0",
+  "debt-snowball": "photo-1688149013444-da644d290749",
+  "track-every-expense": "photo-1634733988138-bf2c3a2a13fa",
+  "reconnect-10": "photo-1503324010925-71cfe52dad2a",
+  "gratitude-30": "photo-1549032305-e816fabf0dd2",
+  "phone-free-evenings": "photo-1482952980430-be6f9ff18749",
+  "weekly-people-night": "photo-1562050344-f7ad946cee35",
+  "linkedin-glow-up": "photo-1627161684458-a62da52b51c3",
+  "one-job-skill": "photo-1513258496099-48168024aec0",
+  "twenty-applications": "photo-1653038417332-6db0ff9d4bfb"
 };
-const CAT_TONE = {
-  Career: { bg: ["#0E1A2B", "#1F3550"], accent: "#E8B04B", icon: "career-shift" },
-  Health: { bg: ["#0C211C", "#1D4237"], accent: "#8FD9B0", icon: "steps-10k" },
-  Wealth: { bg: ["#1A1426", "#352A4F"], accent: "#C9B6FF", icon: "earn-1000" },
-  Money: { bg: ["#0A1F26", "#174552"], accent: "#7FDCE8", icon: "no-spend-month" },
-  Relationships: { bg: ["#24120F", "#4E2A24"], accent: "#F2A68B", icon: "gratitude-30" }
+function questKey(slug){ slug = String(slug); return QUEST_HEAD[slug] ? slug : Object.keys(QUEST_HEAD).find(k => slug.startsWith(k.split("-").slice(0, 2).join("-"))); }
+function questPhotoUrl(q, w){
+  const k = questKey(q.slug);
+  if (q.content && q.content.image) return photoOf(q, w);
+  return k && QUEST_PHOTO[k] ? `https://images.unsplash.com/${QUEST_PHOTO[k]}?w=${w}&q=70&auto=format&fit=crop` : photoOf(q, w);
+}
+function questLine(q){ const k = questKey(q.slug); return k ? `${QUEST_HEAD[k][0]} ${QUEST_HEAD[k][1].join(" ")}.` : (q.summary || ""); }
+const IC = {
+  plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`,
+  arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
+  vote: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h16v7H4z"/><path d="M8 13V6.5A1.5 1.5 0 0 1 9.5 5h5A1.5 1.5 0 0 1 16 6.5V13"/><path d="M10 9.5l1.5 1.5L14 8.5"/></svg>`,
+  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`,
+  trophy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/></svg>`
 };
-function questArt(slug, category){
-  slug = String(slug);
-  const tone = CAT_TONE[category] || CAT_TONE.Career;
-  const pre = k => slug.startsWith(k.split("-").slice(0, 2).join("-"));
-  const key = QUEST_HEAD[slug] ? slug : Object.keys(QUEST_HEAD).find(pre);
-  const [hook, lines] = key ? QUEST_HEAD[key] : ["New this month", ["A 30-day quest,", "done together"]];
-  const icon = QUEST_ICON[key] || QUEST_ICON[tone.icon];
-  let h = 2166136261; for (const c of slug) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
-  const rnd = () => { h ^= h << 13; h ^= h >>> 17; h ^= h << 5; return ((h >>> 0) % 10000) / 10000; };
-  const uid = "t" + ((h >>> 0) % 1e7);
-  const cx = 322 + rnd() * 14, cy = 104 + rnd() * 22, p1 = rnd() * 6.28, p2 = rnd() * 6.28, k1 = 2 + Math.floor(rnd() * 3), sq = .85 + rnd() * .3;
-  let topo = "";
-  for (let i = 0; i < 16; i++){
-    const r = 16 + i * 19, pts = [];
-    for (let j = 0; j <= 64; j++){
-      const a = j / 64 * Math.PI * 2;
-      const rr = r * (1 + .14 * Math.sin(k1 * a + p1 + i * .22) + .07 * Math.sin(5 * a + p2 - i * .15));
-      pts.push(`${(cx + rr * Math.cos(a)).toFixed(1)},${(cy + rr * Math.sin(a) * sq).toFixed(1)}`);
-    }
-    topo += `<polyline points="${pts.join(" ")}" opacity="${i % 4 === 3 ? .2 : .09}"/>`;
-  }
-  const [b1, b2] = tone.bg, acc = tone.accent, y0 = lines.length > 2 ? 92 : 106;
-  return `<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(hook + " " + lines.join(" "))}">
-  <defs><linearGradient id="${uid}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${b1}"/><stop offset="1" stop-color="${b2}"/></linearGradient>
-  <radialGradient id="${uid}r" cx="${cx / 4}%" cy="${cy / 2.5}%" r="45%"><stop offset="0" stop-color="${acc}" stop-opacity=".22"/><stop offset="1" stop-color="${acc}" stop-opacity="0"/></radialGradient></defs>
-  <rect width="400" height="250" fill="url(#${uid}g)"/><rect width="400" height="250" fill="url(#${uid}r)"/>
-  <g fill="none" stroke="#fff" stroke-width="1">${topo}</g>
-  <g font-family="Manrope,Arial,sans-serif">
-    <text x="26" y="${y0 - 34}" font-size="14" font-weight="700" font-style="italic" fill="${acc}">${esc(hook)}</text>
-    ${lines.map((l, i) => `<text x="25" y="${y0 + i * 31}" font-size="28" font-weight="800" letter-spacing="-.6" fill="#fff">${esc(l)}</text>`).join("")}
-  </g>
-  <g transform="translate(${cx.toFixed(1)},${cy.toFixed(1)})"><circle r="50" fill="${b1}" fill-opacity=".6" stroke="${acc}" stroke-opacity=".4"/>
-    <g fill="none" stroke="${acc}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" transform="scale(.66)">${icon.replace(/class="f"/g, `fill="${acc}" stroke="none"`)}</g></g>
-  <path d="M26 202 H374" stroke="#fff" stroke-opacity=".16"/>
-  <text x="26" y="220" font-family="Manrope,Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1.8" fill="#fff" fill-opacity=".6">30 DAYS · FREE · DONE TOGETHER</text>
-  <text x="374" y="220" text-anchor="end" font-family="Manrope,Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1.8" fill="${acc}">${esc((category || "").toUpperCase())}</text>
-</svg>`;
+function qrow(q){
+  const e = enrolled(q.slug), onPoll = POLL && POLL.options.some(o => o.key === q.slug);
+  const mine = ME && ME.votes && POLL ? ME.votes[String(POLL.id)] : null, total = Object.values(RESULTS).reduce((a, b) => a + b, 0), v = RESULTS[q.slug] || 0;
+  let chip, btn, sub = "free";
+  if (q.status === "done"){ chip = `<span class="rchip muted">Finished</span>`; btn = `<a class="rbtn" href="#/board/${q.slug}" aria-label="See the billboard" title="See the billboard">${IC.trophy}</a>`; sub = FINISHED[q.slug] ? `${FINISHED[q.slug]} finished` : "done"; }
+  else if (q.status === "live" || q.status === "registration"){
+    chip = q.status === "live" ? `<span class="rchip warn">Live now</span>` : `<span class="rchip">Join open</span>`;
+    btn = e ? `<a class="rbtn mine" href="#/me" aria-label="Open my dashboard" title="Open my dashboard">${IC.check}</a>` : `<button class="rbtn" type="button" data-join="${q.slug}" aria-label="Join this quest" title="Join this quest">${IC.plus}</button>`;
+    if (q.starts_on) sub = `${fmt(q.starts_on)} start`;
+  } else if (onPoll){
+    chip = mine === q.slug ? `<span class="rchip blue">Your vote ✓</span>` : `<span class="rchip">Vote open</span>`;
+    btn = `<button class="rbtn ${mine === q.slug ? "mine" : ""}" type="button" data-vote="${q.slug}" aria-label="${mine === q.slug ? "Your vote" : "Vote for this quest"}" title="${mine === q.slug ? "Your vote" : "Vote for this quest"}">${mine === q.slug ? IC.check : IC.vote}</button>`;
+    if (showCount(total)) sub = `${v} vote${v === 1 ? "" : "s"}`;
+  } else { chip = `<span class="rchip muted">Library</span>`; btn = `<a class="rbtn ghost" href="#/quest/${q.slug}" aria-label="See the quest" title="See the quest">${IC.arrow}</a>`; }
+  return `<article class="qrow">
+    <a class="rimg" href="#/quest/${q.slug}" aria-label="${esc(q.title)}"><span class="fb">${esc(q.emoji || "🎯")}</span><img src="${questPhotoUrl(q, 320)}" alt="" loading="lazy" onerror="this.remove()"></a>
+    <div class="rmain"><div class="rtop"><a class="qt" href="#/quest/${q.slug}">${esc(q.title)}</a>${chip}</div>
+      <p class="rdesc">${esc(questLine(q))}</p>
+      <div class="rfoot"><span class="rfig">30 days<small>${esc(sub)}</small></span>${btn}</div></div>
+  </article>`;
 }
 
 /* (older photo map kept for a quest that sets content.image) */
@@ -1043,7 +1045,7 @@ function questCard(q, big){
     : open ? `<button class="qbtn join" type="button" data-join="${q.slug}">${q.status === "live" ? "Join, it's live" : "Join this quest"}</button>`
     : voteBtn(q.slug);
   return `<article class="qcard ${big ? "big" : ""} cat-${esc(q.category)}">
-    <a class="qimg" href="#/quest/${q.slug}" aria-label="${esc(q.title)}" ${q.content && q.content.image ? `style="background-image:url('${photoOf(q, big ? 1100 : 700)}')"` : ""}>${q.content && q.content.image ? "" : questArt(q.slug, q.category)}<span class="qpill status-${q.status}">${statusLabel(q)}</span></a>
+    <a class="qimg" href="#/quest/${q.slug}" aria-label="${esc(q.title)}" style="background-image:url('${questPhotoUrl(q, big ? 1100 : 700)}')"><span class="qpill status-${q.status}">${statusLabel(q)}</span></a>
     <div class="qbody"><span class="chip cat">${esc(q.category)}</span><a class="qt" href="#/quest/${q.slug}">${esc(q.title)}</a><span class="qd">${dates}${e && e.joined_at ? ` · joined ${fmt(e.joined_at.slice(0,10))}` : ""}</span>${big ? `<p>${esc(q.summary||"")}</p>` : ""}${btn}</div>
   </article>`;
 }
@@ -1056,7 +1058,7 @@ function voteBtn(slug){
 function ideasBlock(){
   const list = QUESTS.filter(q => (ideaTab === "All" || q.category === ideaTab) && (ideaStatus === "any" ? q.status === "idea" : q.status === ideaStatus));
   return `<div class="tabs">${["All",...CATS].map(c => `<button class="tab ${c===ideaTab?"on":""}" type="button" data-tab="${c}">${c}</button>`).join("")}</div>
-  ${list.length ? `<div class="qgridc">${list.map(q => questCard(q)).join("")}</div>`
+  ${list.length ? `<div class="qrows">${list.map(q => qrow(q)).join("")}</div>`
   : `<div class="empty glass"><b>No quests match that search</b>Try another area of life, or set status to "Any".</div>`}`;
 }
 function discordBtn(cls){ return CFG.discord ? `<a class="btn discord ${cls||""}" href="${esc(CFG.discord)}" target="_blank" rel="noopener">Join the Discord</a>` : `<span class="btn discord ${cls||""}" aria-disabled="true" style="opacity:.7;cursor:default">Discord opens soon</span>`; }
@@ -1172,7 +1174,7 @@ async function vHome(scrollTo){
   <section class="sec" style="padding-top:0"><div class="wrap">
     <div class="sec-head"><div><h2>Explore the crew</h2><p>Each part has its own page.</p></div></div>
     <div class="explore">
-      <a class="glass" href="#/vote"><span class="ic">🗳️</span><b>Vote for next month</b><span>${POLL ? esc(POLL.title.replace(/^Vote:\s*/i,"").replace(/^./, c => c.toUpperCase())) : "The next vote opens near the end of the month."}</span><em>Go to the vote</em></a>
+      <a class="glass" href="#/vote"><span class="ic">🗳️</span><b>Vote for next month</b><span>${POLL ? esc(POLL.title.replace(/^Vote:\s*/i,"").replace(/^./, c => c.toUpperCase()).replace(/^./, c => c.toUpperCase())) : "The next vote opens near the end of the month."}</span><em>Go to the vote</em></a>
       <a class="glass" href="#/board"><span class="ic">🏆</span><b>The billboard</b><span>Who's putting in the most work this month.</span><em>See the billboard</em></a>
       <a class="glass" href="#/ideas"><span class="ic">🧭</span><b>Quest ideas</b><span>${QUESTS.length} quests across health, wealth, money, relationships and career.</span><em>Browse quests</em></a>
     </div>
@@ -1250,8 +1252,8 @@ async function vVote(){
 async function vIdeas(){
   $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap">${backBtn()}<h1>Quests</h1><p>Every quest the crew could take on, across health, wealth, money, relationships and career. Want one on the next vote? Suggest it in the Discord.</p></div></section>
   ${(() => { const cur = QUESTS.filter(q => q.status === "live" || q.status === "registration"), past = QUESTS.filter(q => q.status === "done").sort((a,b) => (b.ends_on||"").localeCompare(a.ends_on||""));
-    return `${cur.length ? `<section class="sec" style="padding-top:28px;padding-bottom:0"><div class="wrap"><div class="sec-head"><div><h2>This month</h2></div></div><div class="qgridc">${cur.map(q => questCard(q)).join("")}</div></div></section>` : ""}
-    ${past.length ? `<section class="sec" style="padding-top:40px;padding-bottom:0"><div class="wrap"><div class="sec-head"><div><h2>Past quests</h2><p>Quests the crew has already finished together.</p></div></div><div class="qgridc">${past.map(q => questCard(q)).join("")}</div></div></section>` : ""}`; })()}
+    return `${cur.length ? `<section class="sec" style="padding-top:28px;padding-bottom:0"><div class="wrap"><div class="sec-head"><div><h2>This month</h2></div></div><div class="qrows">${cur.map(q => qrow(q)).join("")}</div></div></section>` : ""}
+    ${past.length ? `<section class="sec" style="padding-top:40px;padding-bottom:0"><div class="wrap"><div class="sec-head"><div><h2>Past quests</h2><p>Quests the crew has already finished together.</p></div></div><div class="qrows">${past.map(q => qrow(q)).join("")}</div></div></section>` : ""}`; })()}
   <section class="sec" style="padding-top:40px"><div class="wrap"><div class="sec-head"><div><h2>Quest library</h2><p>Ideas for future months. The crew votes on what comes next.</p></div></div><div id="ideasBox">${ideasBlock()}</div></div></section>`;
 }
 async function vBoard(slug){
