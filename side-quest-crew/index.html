@@ -1018,7 +1018,7 @@ function qrow(q){
   } else if (onPoll){
     chip = mine === q.slug ? `<span class="rchip blue">Your vote ✓</span>` : `<span class="rchip">Vote open</span>`;
     btn = `<button class="rbtn ${mine === q.slug ? "mine" : ""}" type="button" data-vote="${q.slug}" aria-label="${mine === q.slug ? "Your vote" : "Vote for this quest"}" title="${mine === q.slug ? "Your vote" : "Vote for this quest"}">${mine === q.slug ? IC.check : IC.vote}</button>`;
-    if (showCount(total)) sub = `${v} vote${v === 1 ? "" : "s"}`;
+    sub = v > 0 && showCount(total) ? `${v} vote${v === 1 ? "" : "s"}` : "be the first vote";
   } else { chip = `<span class="rchip muted">Library</span>`; btn = `<a class="rbtn ghost" href="#/quest/${q.slug}" aria-label="See the quest" title="See the quest">${IC.arrow}</a>`; }
   return `<article class="qrow">
     <a class="rimg" href="#/quest/${q.slug}" aria-label="${esc(q.title)}"><span class="fb">${esc(q.emoji || "🎯")}</span><img src="${questPhotoUrl(q, 320)}" alt="" loading="lazy" onerror="this.remove()"></a>
