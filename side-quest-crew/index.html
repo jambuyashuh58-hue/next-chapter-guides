@@ -271,6 +271,57 @@ textarea.i{min-height:64px;resize:vertical}
 .myq{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;padding:16px;text-decoration:none;color:var(--ink)}
 .myq .e{font-size:38px;filter:drop-shadow(0 10px 8px rgba(40,70,100,.28))}
 
+/* dashboard */
+.dash{margin-top:-72px;padding-top:96px;padding-bottom:56px;overflow:clip}
+.dwrap{display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px;align-items:start;max-width:1200px}
+.dside{position:sticky;top:84px;padding:16px;display:grid;gap:14px}
+.dme{display:flex;gap:10px;align-items:center;padding:4px 4px 12px;border-bottom:1px solid var(--line)}
+.dme .av{width:42px;height:42px;flex:none;border-radius:50%;display:grid;place-items:center;font:500 18px var(--display);color:#fff;background:linear-gradient(135deg,var(--flame1),var(--flame2))}
+.dme b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dme span{font-size:12.5px;color:var(--muted)}
+.dnav{display:grid;gap:2px}
+.dnav a{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;color:var(--ink-2);text-decoration:none;font-weight:600;font-size:14.5px;white-space:nowrap}
+.dnav a:hover{background:color-mix(in srgb,var(--surface) 70%,transparent)}
+.dnav a.on{background:var(--knob);color:var(--on-knob)}
+.dcta .btn{width:100%}
+.dmain{min-width:0;display:grid;gap:16px}
+.dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.dhead h1{font-size:clamp(24px,3vw,32px)}
+.dhead p{margin:6px 0 0}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{padding:16px 18px;display:grid;gap:4px;min-width:0}
+.kpi span{font-size:12.5px;font-weight:700;color:var(--muted)}
+.kpi b{font:500 clamp(24px,2.6vw,30px)/1.1 var(--display)}
+.kpi small{font-size:12px;color:var(--muted)}
+.dgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+.phead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:12px}
+.phead h3{margin:0}
+.progress-wrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center}
+.pring{--p:0;width:120px;aspect-ratio:1;border-radius:50%;display:grid;place-content:center;text-align:center;background:radial-gradient(closest-side,var(--glass-solid) 72%,transparent 73% 100%),conic-gradient(var(--flame2) calc(var(--p)*1%),color-mix(in srgb,var(--ink) 10%,transparent) 0)}
+.pring b{font:500 24px var(--display)} .pring span{font-size:12px;color:var(--muted)}
+.wbars{display:grid;gap:10px;min-width:0}
+.wbar .wl{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:4px}
+.wbar small{font-size:11.5px}
+.joincard{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:2px solid color-mix(in srgb,var(--flame2) 45%,transparent)}
+ol.mini{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ol.mini li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:6px 8px;border-radius:12px}
+ol.mini li.me{background:color-mix(in srgb,var(--flame1) 18%,transparent)}
+ol.mini .rank{width:32px;height:32px;font-size:12px}
+ul.loglist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.loglist li{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;font-size:14px;padding:8px 10px;border-radius:10px;background:color-mix(in srgb,var(--surface) 60%,transparent)}
+ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
+.panel .myq{background:color-mix(in srgb,var(--surface) 60%,transparent);margin-top:8px;box-shadow:none}
+@media (max-width:960px){
+  .dwrap{grid-template-columns:minmax(0,1fr)}
+  .dside{position:static;padding:10px}
+  .dme{border-bottom:0;padding-bottom:0}
+  .dnav{display:flex;overflow-x:auto;gap:4px;padding-bottom:2px}
+  .dcta{display:none}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dgrid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){.progress-wrap{grid-template-columns:minmax(0,1fr);justify-items:center}.progress-wrap .wbars{width:100%}}
+
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(40,64,92,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50}
 .modal .panel{width:min(440px,100%);max-height:92vh;overflow:auto;background:var(--frame)}
@@ -639,34 +690,137 @@ async function vBoard(slug){
   <p class="small muted" style="margin-top:14px">XP = 10 per task + 5 per daily check-in. Only first names and countries are shown.</p></div></section>`;
 }
 
-async function vMe(){
+/* =================== MEMBER DASHBOARD =================== */
+const utcDay = (offset=0) => new Date(Date.now() - offset*864e5).toISOString().slice(0,10);
+function streakOf(logs){
+  const days = new Set((logs||[]).map(l => l.day)); let s = 0, i = days.has(utcDay(0)) ? 0 : 1;
+  while (days.has(utcDay(i))){ s++; i++; } return s;
+}
+const DASH_NAV = [["", "🏠", "Overview"], ["tasks", "✅", "My tasks"], ["checkin", "📝", "Daily check-in"], ["board", "🏆", "Billboard"], ["vote", "🗳️", "Vote"], ["account", "⚙️", "Account"]];
+function taskList(q, e, slug, filter){
+  const tasks = (q.content||{}).tasks || [], live = q.status === "live", done = e ? e.done_tasks : [];
+  const list = filter ? tasks.filter(filter) : tasks, weeks = [...new Set(list.map(t => t.week))];
+  return weeks.map(w => `<div class="week"><h4>${esc(w)}</h4>${list.filter(t => t.week === w).map(t => { const on = done.includes(t.id), can = live && e;
+    return `<label class="task ${can?"":"locked"} ${on?"isdone":""}"><input type="checkbox" data-task="${esc(t.id)}" data-slug="${esc(slug)}" ${on?"checked":""} ${can?"":"disabled"}><span><b>${esc(t.title)}</b>${t.detail?`<span>${esc(t.detail)}</span>`:""}${t.link?` <a href="${esc(t.link)}" target="_blank" rel="noopener">Open</a>`:""}</span></label>`; }).join("")}</div>`).join("");
+}
+function checkinForm(q, e){
+  const c = q.content || {};
+  if (q.status !== "live") return `<p class="muted" style="margin:0">Check-ins open on <b>${fmt(q.starts_on) || "the start date"}</b>${q.starts_on && daysTo(q.starts_on) > 0 ? `, in ${daysTo(q.starts_on)} day${daysTo(q.starts_on)===1?"":"s"}` : ""}. Each day you log earns 5 XP.</p>`;
+  return `<form class="f" id="logForm" data-slug="${esc(q.slug)}" novalidate>
+    ${e.logged_today ? '<span class="chip status-live" style="justify-self:start">Done today ✓ You can still update it</span>' : ""}
+    ${c.metric ? `<label class="l">${esc(c.metric.label)}${c.metric.unit?` (${esc(c.metric.unit)})`:""}<input class="i" id="logVal" type="number" inputmode="decimal" min="0" step="any"></label>` : ""}
+    <label class="l">What did you do today?<textarea class="i" id="logNote" maxlength="300" placeholder="One line is enough"></textarea></label>
+    <button class="btn" type="submit" style="justify-self:start">${e.logged_today ? "Update today's check-in" : "Log today (+5 XP)"}</button>
+    <p class="msg" id="logMsg" role="status" aria-live="polite"></p>
+  </form>`;
+}
+function logHistory(q, e){
+  const unit = (q.content||{}).metric?.unit || "";
+  return e.recent_logs && e.recent_logs.length ? `<ul class="loglist">${e.recent_logs.map(l => `<li><span class="d">${fmt(l.day)}</span><span>${l.value!=null?`<b class="tnum">${esc(l.value)} ${esc(unit)}</b> `:""}${esc(l.note||"")}</span></li>`).join("")}</ul>` : `<p class="muted small" style="margin:0">No check-ins yet.</p>`;
+}
+
+async function vMe(sub){
   if (!ME){
-    $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><span class="e">🎯</span><h1>Your dashboard</h1><p>Join the crew or log in to track your quests, XP and rank.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="button" data-auth="join">Join the crew</button><button class="btn ghost" type="button" data-auth="login" style="color:var(--on-night)">Log in</button></div></div></section>`;
+    $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><span class="e">🎯</span><h1>Your dashboard</h1><p>Join the crew or log in to see your quest, XP, rank and daily check-ins.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="button" data-auth="join">Join the crew</button><button class="btn ghost" type="button" data-auth="login">Log in</button></div></div></section>`;
     return;
   }
-  const items = ME.enrollments.map(e => ({ e, q: QUESTS.find(q => q.slug === e.quest_slug) })).filter(x => x.q);
-  const cur = current(), inCur = cur && enrolled(cur.slug);
-  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><span class="e">👋</span><h1>Hi ${esc(ME.name.split(" ")[0])}</h1><p>Total XP: <b style="color:#fff">${items.reduce((a,x)=>a+x.e.score,0)}</b> across ${items.length} quest${items.length===1?"":"s"}.</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">${cur && !inCur && cur.status!=="done" ? `<button class="btn" type="button" data-join="${cur.slug}">Join ${esc(cur.title)}</button>` : ""}${discordBtn()}<button class="btn ghost" type="button" id="logout" style="color:var(--on-night)">Log out</button></div></div></section>
-  <section class="sec" style="padding-top:28px"><div class="wrap" style="display:grid;gap:12px">
-    <h2 style="font-size:28px">My quests</h2>
-    ${items.length ? items.map(({e,q}) => { const n = (q.content.tasks||[]).length; return `<a class="myq glass" href="#/quest/${q.slug}"><span class="e">${esc(q.emoji)}</span><div><b style="font-size:17px">${esc(q.title)}</b><div class="small muted">${statusLabel(q)} · ${e.done_tasks.length}/${n} tasks · ${e.logs} check-ins</div><div class="pbar" style="margin-top:8px;max-width:320px"><i style="width:${n? e.done_tasks.length/n*100:0}%"></i></div></div><span class="btn sm">${e.score} XP</span></a>`; }).join("")
-      : `<div class="panel empty"><b>No quests yet</b>${cur ? `Join ${esc(cur.title)} to get started.` : "The next quest is coming soon."}</div>`}
-    ${POLL ? `<div class="panel" style="margin-top:8px"><h3>${esc(POLL.title)}</h3><p class="muted small" style="margin:0 0 12px">${ME.votes && ME.votes[String(POLL.id)] ? "You've voted. You can change it until it closes." : "You haven't voted yet."}</p><a class="btn ghost sm" href="#/vote">Go to the vote</a></div>` : ""}
-  </div></section>`;
+  const first = ME.name.split(" ")[0];
+  const cur = current();
+  const mine = ME.enrollments.map(e => ({ e, q: QUESTS.find(q => q.slug === e.quest_slug) })).filter(x => x.q);
+  const active = (cur && mine.find(x => x.q.slug === cur.slug)) || mine.find(x => x.q.status === "live") || mine[0] || null;
+  const q = active ? active.q : cur, e = active ? active.e : null;
+  const rows = q ? await board(q.slug) : [];
+  const myRow = e ? rows.find(r => r.display_name === first) : null;
+  const tasks = q ? ((q.content||{}).tasks || []) : [], done = e ? e.done_tasks : [];
+  const pct = tasks.length ? Math.round(done.length / tasks.length * 100) : 0;
+  const totalXP = mine.reduce((a,x) => a + x.e.score, 0);
+  const streak = e ? streakOf(e.recent_logs) : 0;
+  const vote = POLL && ME.votes ? ME.votes[String(POLL.id)] : null;
+  const voteOpt = vote && POLL ? POLL.options.find(o => o.key === vote) : null;
+
+  const side = `<aside class="dside glass">
+    <div class="dme"><span class="av">${esc(first.slice(0,1).toUpperCase())}</span><div style="min-width:0"><b>${esc(first)}</b><span>${totalXP} XP${ME.country ? ` · ${esc(ME.country)}` : ""}</span></div></div>
+    <nav class="dnav" aria-label="Dashboard">${DASH_NAV.map(([k, ic, l]) => `<a href="#/me${k?"/"+k:""}" class="${(sub||"")===k?"on":""}"><span aria-hidden="true">${ic}</span>${l}</a>`).join("")}</nav>
+    <div class="dcta">${discordBtn("sm")}</div>
+  </aside>`;
+
+  const joinCard = cur && !enrolled(cur.slug) && cur.status !== "done" && cur.status !== "idea" ? `<div class="panel joincard"><div><b>${esc(cur.emoji||"🎯")} ${esc(cur.title)}</b><p class="muted small" style="margin:4px 0 0">${statusLabel(cur)}${cur.starts_on ? `, ${fmt(cur.starts_on)} to ${fmt(cur.ends_on)}` : ""}. Everyone in the crew does this one together.</p></div><button class="btn" type="button" data-join="${cur.slug}">Join this quest</button></div>` : "";
+
+  let body = "";
+  if (!sub){
+    const weeks = [...new Set(tasks.map(t => t.week))];
+    const next = tasks.filter(t => !done.includes(t.id)).slice(0, 3);
+    body = `
+    <div class="dhead"><div><h1>Hi ${esc(first)} 👋</h1><p class="muted">${q ? (e ? `You're on the ${esc(q.title)}. ${q.status === "live" ? "Keep the streak going." : q.status === "registration" ? `It starts ${fmt(q.starts_on)}.` : ""}` : `You haven't joined ${esc(q.title)} yet.`) : "The next quest is coming soon."}</p></div>${q && e ? `<span class="chip status-${q.status}">${statusLabel(q)}</span>` : ""}</div>
+    ${joinCard}
+    <div class="kpis">
+      <div class="kpi glass"><span>Total XP</span><b class="tnum">${totalXP}</b><small>10 per task, 5 per check-in</small></div>
+      <div class="kpi glass"><span>Rank</span><b class="tnum">${myRow ? "#" + myRow.rank : "–"}</b><small>${rows.length ? `of ${rows.length} in this quest` : "Join to get ranked"}</small></div>
+      <div class="kpi glass"><span>Tasks done</span><b class="tnum">${done.length}/${tasks.length || "–"}</b><small>${pct}% of the plan</small></div>
+      <div class="kpi glass"><span>Check-in streak</span><b class="tnum">${streak} 🔥</b><small>${e ? `${e.logs} check-in${e.logs===1?"":"s"} in total` : "Starts when you log"}</small></div>
+    </div>
+    ${q ? `<div class="dgrid">
+      <div class="panel">
+        <div class="phead"><h3>Quest progress</h3><a class="small" href="#/quest/${q.slug}">Quest page</a></div>
+        <div class="progress-wrap">
+          <div class="pring" style="--p:${pct}"><b class="tnum">${pct}%</b><span>done</span></div>
+          <div class="wbars">${weeks.map(w => { const wt = tasks.filter(t => t.week === w), wd = wt.filter(t => done.includes(t.id)).length; return `<div class="wbar"><div class="wl"><span>${esc(w.split("·")[0].trim())}</span><span class="tnum muted">${wd}/${wt.length}</span></div><div class="pbar"><i style="width:${wt.length ? wd/wt.length*100 : 0}%"></i></div><small class="muted">${esc((w.split("·")[1]||"").trim())}</small></div>`; }).join("") || `<p class="muted">The week-by-week plan appears here once the quest has tasks.</p>`}</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="phead"><h3>Today's check-in</h3><a class="small" href="#/me/checkin">History</a></div>
+        ${e ? checkinForm(q, e) : `<p class="muted" style="margin:0">Join the quest to log daily check-ins.</p>`}
+      </div>
+      <div class="panel">
+        <div class="phead"><h3>Next up</h3><a class="small" href="#/me/tasks">All tasks</a></div>
+        ${next.length ? taskList(q, e, q.slug, t => next.includes(t)) : `<p class="muted" style="margin:0">${tasks.length ? "Every task done. Brilliant work." : "No tasks yet."}</p>`}
+        ${q.status !== "live" && tasks.length ? `<p class="small muted" style="margin:10px 0 0">Ticking unlocks when the quest goes live.</p>` : ""}
+      </div>
+      <div class="panel">
+        <div class="phead"><h3>Billboard</h3><a class="small" href="#/me/board">Full board</a></div>
+        ${rows.length ? `<ol class="mini">${rows.slice(0,5).map(r => `<li class="r${r.rank} ${myRow && r.rank===myRow.rank?"me":""}"><span class="rank">${r.rank}</span><b>${esc(r.display_name)}</b><span class="xp tnum">${r.score}</span></li>`).join("")}</ol>${myRow && myRow.rank > 5 ? `<p class="small" style="margin:10px 0 0">You're <b>#${myRow.rank}</b> with ${myRow.score} XP.</p>` : ""}` : `<p class="muted" style="margin:0">No one on the board yet.</p>`}
+      </div>
+      <div class="panel">
+        <div class="phead"><h3>Next month's vote</h3><a class="small" href="#/me/vote">Vote</a></div>
+        ${POLL ? (voteOpt ? `<p style="margin:0">You voted for <b>${esc(voteOpt.emoji)} ${esc(voteOpt.title)}</b>. You can change it until ${fmt(POLL.closes_on)}.</p>` : `<p style="margin:0 0 12px">You haven't voted yet. Voting closes ${fmt(POLL.closes_on)}.</p><a class="btn sm" href="#/me/vote">Cast my vote</a>`) : `<p class="muted" style="margin:0">No vote running right now.</p>`}
+      </div>
+      <div class="panel">
+        <div class="phead"><h3>Crew hangout</h3></div>
+        <p class="small" style="margin:0 0 12px;color:var(--ink-2)">Post your wins in the Discord. ${esc(CFG.zoomNote)}</p>
+        ${discordBtn("sm")}
+      </div>
+    </div>` : ""}`;
+  } else if (sub === "tasks"){
+    body = `<div class="dhead"><div><h1>My tasks</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}, ${done.length} of ${tasks.length} done` : ""}</p></div></div>${joinCard}
+      <div class="panel">${q && tasks.length ? `<p class="small muted" style="margin:0">${q.status === "live" ? (e ? "Tick tasks off as you go. Each one is 10 XP." : "Join the quest to start ticking these off.") : "Tasks unlock when the quest starts."}</p>${taskList(q, e, q.slug)}` : `<p class="muted" style="margin:0">No tasks yet.</p>`}</div>`;
+  } else if (sub === "checkin"){
+    body = `<div class="dhead"><div><h1>Daily check-in</h1><p class="muted">Streak: ${streak} 🔥 · ${e ? e.logs : 0} check-ins in total</p></div></div>${joinCard}
+      <div class="dgrid two"><div class="panel"><h3>Today</h3>${q && e ? checkinForm(q, e) : `<p class="muted" style="margin:0">Join the quest to log check-ins.</p>`}</div>
+      <div class="panel"><h3>Last 14 days</h3>${e ? logHistory(q, e) : `<p class="muted small" style="margin:0">No check-ins yet.</p>`}</div></div>`;
+  } else if (sub === "board"){
+    body = `<div class="dhead"><div><h1>Billboard</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}` : ""} · 10 XP per task, 5 XP per check-in</p></div></div><div class="board glass">${boardTable(rows, q)}</div>`;
+  } else if (sub === "vote"){
+    body = `<div class="dhead"><div><h1>${esc(POLL ? POLL.title : "Vote")}</h1><p class="muted">One vote per member. You can change it until it closes.</p></div></div>${pollBlock()}`;
+  } else if (sub === "account"){
+    body = `<div class="dhead"><div><h1>Account</h1></div></div>
+      <div class="dgrid two"><div class="panel"><h3>Your details</h3><p style="margin:0 0 6px"><b>Name on the billboard:</b> ${esc(first)}</p><p style="margin:0 0 16px"><b>Country:</b> ${esc(ME.country || "Not set")}</p><p class="small muted" style="margin:0 0 16px">Your email is never shown to anyone. To change your name or password, message @yashujambu on Threads or in the Discord.</p><button class="btn ghost" type="button" id="logout">Log out</button></div>
+      <div class="panel"><h3>My quests</h3>${mine.length ? mine.map(({e,q}) => { const n = (q.content.tasks||[]).length; return `<a class="myq" href="#/quest/${q.slug}"><span class="e">${esc(q.emoji)}</span><div><b>${esc(q.title)}</b><div class="small muted">${statusLabel(q)}, ${e.done_tasks.length}/${n} tasks, ${e.logs} check-ins</div></div><span class="xp tnum">${e.score} XP</span></a>`; }).join("") : `<p class="muted" style="margin:0">No quests yet.</p>`}</div></div>`;
+  }
+  $("#view").innerHTML = `<section class="dash sky">${clouds([[60,-8,40],[-12,40,40]])}<div class="wrap dwrap">${side}<div class="dmain">${body}</div></div></section>`;
 }
 
 /* =================== ROUTER =================== */
 async function route(){
   const h = location.hash.replace(/^#\/?/, ""), [r, arg] = h.split("/");
   document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("on", a.dataset.r === (r || "home") || (r === "quest" && a.dataset.r === "home")));
-  $("#navMe").textContent = ME ? "My quests" : "Join the crew";
+  $("#navMe").textContent = ME ? "My dashboard" : "Join the crew";
   if (r === "quest") await vQuest(arg);
   else if (r === "board") await vBoard(arg);
-  else if (r === "me") await vMe();
+  else if (r === "me") await vMe(arg);
   else { await vHome(r === "vote" ? "vote" : r === "ideas" ? "ideas" : null); if (r !== "vote" && r !== "ideas") window.scrollTo(0,0); return; }
   window.scrollTo(0,0);
 }
+async function rerender(){ const y = window.scrollY; await loadMe(); await loadPublic(); await route(); window.scrollTo(0, y); }
 async function refresh(){ await Promise.all([loadPublic(), loadMe()]); await route(); }
 
 /* =================== AUTH =================== */
@@ -702,7 +856,8 @@ $("#authForm").addEventListener("submit", async e => {
   if (res.error) return say(errText(res.error), "err");
   if (typeof res.data === "string" && res.data.startsWith("ERR:")) return say(errText(res.data), "err");
   TOKEN = res.data; store.set("sq_token", TOKEN);
-  if (pendingJoin){ const j = await sb.rpc("sq_join", { p_token: TOKEN, p_slug: pendingJoin }); if (!j.error) location.hash = "#/quest/" + pendingJoin; pendingJoin = null; }
+  if (pendingJoin){ await sb.rpc("sq_join", { p_token: TOKEN, p_slug: pendingJoin }); pendingJoin = null; }
+  location.hash = "#/me";
   $("#authModal").hidden = true; $("#authForm").reset();
   await refresh();
 });
@@ -717,30 +872,30 @@ document.addEventListener("click", async e => {
     if (!TOKEN){ pendingJoin = t.dataset.join; openAuth("join"); return; }
     t.disabled = true; const { error } = await sb.rpc("sq_join", { p_token: TOKEN, p_slug: t.dataset.join });
     if (error){ alertInline(t, errText(error)); t.disabled = false; return; }
-    location.hash = "#/quest/" + t.dataset.join; await refresh(); return;
+    location.hash = "#/me"; await refresh(); return;
   }
   if (t.dataset.vote){
     if (!TOKEN){ openAuth("join"); return; }
     t.disabled = true; const { error } = await sb.rpc("sq_vote", { p_token: TOKEN, p_poll: POLL.id, p_option: t.dataset.vote });
     t.disabled = false; if (error){ alertInline(t, errText(error)); return; }
-    await loadPublic(); await loadMe(); await vHome("vote");
+    if (location.hash.startsWith("#/me")) await rerender(); else { await loadPublic(); await loadMe(); await vHome("vote"); }
   }
 });
 function alertInline(el, text){ let m = el.parentElement.querySelector(".msg.inline"); if (!m){ m = document.createElement("p"); m.className = "msg err inline"; el.parentElement.appendChild(m); } m.textContent = text; }
 document.addEventListener("change", async e => {
   const t = e.target; if (!t.dataset.task) return;
-  const slug = location.hash.split("/")[2]; t.disabled = true;
+  const slug = t.dataset.slug || location.hash.split("/")[2]; t.disabled = true;
   const { error } = await sb.rpc("sq_set_task", { p_token: TOKEN, p_slug: slug, p_task: t.dataset.task, p_done: t.checked });
   if (error){ t.checked = !t.checked; t.disabled = false; return; }
-  await loadMe(); await loadPublic(); await vQuest(slug);
+  await rerender();
 });
 document.addEventListener("submit", async e => {
   if (e.target.id !== "logForm") return; e.preventDefault();
-  const slug = location.hash.split("/")[2], msg = $("#logMsg"), v = $("#logVal") ? $("#logVal").value : "", note = $("#logNote").value.trim();
+  const slug = e.target.dataset.slug || location.hash.split("/")[2], msg = $("#logMsg"), v = $("#logVal") ? $("#logVal").value : "", note = $("#logNote").value.trim();
   if (!note && v === ""){ msg.textContent = "Add a number or one line about today."; msg.className = "msg err"; return; }
   const { error } = await sb.rpc("sq_log", { p_token: TOKEN, p_slug: slug, p_value: v === "" ? null : Number(v), p_note: note || null });
   if (error){ msg.textContent = errText(error); msg.className = "msg err"; return; }
-  await loadMe(); await loadPublic(); await vQuest(slug);
+  await rerender();
 });
 document.addEventListener("submit", e => {
   if (e.target.id !== "finder") return; e.preventDefault();
