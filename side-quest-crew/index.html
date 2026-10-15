@@ -470,6 +470,41 @@ ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
 .todaycard{border:2px solid color-mix(in srgb,#F5B83D 60%,transparent)}
 .todaycard .task.today{background:none}
 
+/* urgency + timers + levels */
+.ubar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:10px 16px;background:linear-gradient(95deg,#0F1E3D,#1E3A8A);color:#fff;text-decoration:none;font-size:14px;text-align:center}
+.ubar b{color:#FFD27A}
+.ubar .ugo{background:linear-gradient(95deg,var(--flame1),var(--flame2));color:#fff;font-weight:800;padding:5px 12px;border-radius:999px;font-size:13px;animation:nudge 2.4s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
+.cdbox{margin:-4px 0 22px;padding:14px 16px;border-radius:18px;background:color-mix(in srgb,var(--surface) 72%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);max-width:440px;box-shadow:0 14px 30px -20px rgba(15,30,61,.45)}
+.cdtitle{font-size:13.5px;font-weight:700;color:var(--ink-2);margin-bottom:8px}
+.cdunits{display:flex;gap:10px}
+.cdunits div{flex:1;text-align:center;background:var(--surface);border-radius:12px;padding:8px 6px;box-shadow:inset 0 0 0 1px var(--line)}
+.cdunits b{display:block;font:600 clamp(26px,3.2vw,34px)/1 var(--display);background:linear-gradient(95deg,var(--flame1),var(--flame2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cdunits > div > span{font-size:11.5px;font-weight:700;color:var(--muted)}
+.cdnote{font-size:13px;color:var(--ink-2);margin-top:8px}
+.lvl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center}
+.lvl-a{display:flex;gap:14px;align-items:center}
+.lvl-badge{flex:none;width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font:600 15px var(--display);color:#fff;background:linear-gradient(135deg,#2563EB,#14B8A6);box-shadow:0 12px 22px -12px rgba(37,99,235,.7)}
+.lvl-a b{font:600 20px var(--display)}
+.wdots{display:flex;gap:6px}
+.wd{display:grid;justify-items:center;gap:3px;flex:1}
+.wd i{width:100%;max-width:38px;aspect-ratio:1;border-radius:10px;display:grid;place-items:center;font-style:normal;font-weight:800;color:#fff;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.wd.on i{background:linear-gradient(135deg,var(--flame1),var(--flame2))}
+.wd.today i{box-shadow:0 0 0 2px #F5B83D}
+.wd small{font-size:11px;font-weight:700;color:var(--muted)}
+.unlock{margin-top:10px;font-size:14px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--mint) 12%,transparent)}
+.unlock.warn{background:color-mix(in srgb,#F5B83D 18%,transparent)}
+@media (max-width:760px){.lvl{grid-template-columns:minmax(0,1fr)}.cdbox{max-width:none}}
+
+.rm-filter{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;scrollbar-width:none}
+.rm-filter::-webkit-scrollbar{display:none}
+.rm-filter button{flex:none;border:0;background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink-2);font:700 13px var(--body);padding:8px 13px;border-radius:999px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.rm-filter button small{font-weight:700;font-size:11px;color:var(--muted)}
+.rm-filter button.on{background:var(--knob);color:var(--on-knob)} .rm-filter button.on small{color:inherit;opacity:.75}
+.rm-list[data-f="1"] > li:not([data-wk="1"]),.rm-list[data-f="2"] > li:not([data-wk="2"]),.rm-list[data-f="3"] > li:not([data-wk="3"]),.rm-list[data-f="4"] > li:not([data-wk="4"]){display:none}
+.rm-list[data-f]:not([data-f="all"])::before{display:none}
+.rm-list[data-f]:not([data-f="all"]) .rm-wk summary{display:none}
+
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(40,64,92,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50}
 .modal .panel{width:min(440px,100%);max-height:92vh;overflow:auto;background:var(--frame)}
@@ -518,6 +553,7 @@ footer a{color:var(--muted)}
   </defs>
 </svg>
 <div class="frame">
+<div id="ubarSlot"></div>
 <header class="nav">
   <div class="wrap">
     <a class="logo" href="#/" aria-label="Side Quest Crew home"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="24" fill="none" stroke="#C7372F" stroke-width="5"/><path d="M32 12l6 20-6 20-6-20z" fill="#C7372F"/><path d="M32 32l6 0-6 20-6-20z" fill="#E3BE78"/></svg><span>SIDE QUEST<small>CREW</small></span></a>
@@ -647,10 +683,34 @@ function patch(q){
     <text x="60" y="117" text-anchor="middle" fill="#FFFFFF" style="font:600 10.5px var(--display);letter-spacing:.06em">${esc(label)}</text>
   </svg>`;
 }
+/* live timers: any element with data-cd="ISO" and data-fmt is refreshed every 20 seconds */
+function cdParts(iso){ const ms = Math.max(0, new Date(iso) - Date.now()); return { d: Math.floor(ms/864e5), h: Math.floor(ms/36e5) % 24, m: Math.floor(ms/6e4) % 60, done: ms <= 0 }; }
+function cdText(iso, fmt){ const p = cdParts(iso);
+  if (fmt === "short") return `${p.d}d ${p.h}h`;
+  if (fmt === "dhm") return `${p.d}d ${p.h}h ${p.m}m`;
+  if (fmt === "hm") return `${p.h + p.d*24}h ${p.m}m`;
+  if (fmt === "d") return String(p.d); if (fmt === "h") return String(p.h).padStart(2,"0"); if (fmt === "m") return String(p.m).padStart(2,"0");
+  return `${p.d}d ${p.h}h`; }
+const cd = (iso, fmt) => `<span data-cd="${iso}" data-fmt="${fmt}">${cdText(iso, fmt)}</span>`;
+function tickTimers(){ document.querySelectorAll("[data-cd]").forEach(el => { const t = cdText(el.dataset.cd, el.dataset.fmt); if (el.textContent !== t) el.textContent = t; }); }
+setInterval(tickTimers, 20000);
+const startIso = q => q && q.starts_on ? q.starts_on + "T00:00:00" : null;
+const endIso = q => q && q.ends_on ? q.ends_on + "T23:59:59" : null;
+const nextMidnight = () => { const d = new Date(); d.setHours(24,0,0,0); return d.toISOString(); };
+function urgencyBar(q){
+  if (!q || enrolled(q.slug)) return "";
+  if (q.status === "registration" && q.starts_on && daysTo(q.starts_on) > 0) return `<a class="ubar" href="#/quest/${q.slug}" data-join="${q.slug}"><b>${esc(q.title)}</b> starts in <b class="tnum">${cd(startIso(q), "dhm")}</b>. Join free and start Day 1 with the crew.<span class="ugo">Join now</span></a>`;
+  if (q.status === "live") return `<a class="ubar" href="#/quest/${q.slug}" data-join="${q.slug}"><b>${esc(q.title)}</b> is live: Day ${questDay(q)} of 30. It's not too late to join.<span class="ugo">Jump in</span></a>`;
+  return "";
+}
 function countdownBlock(q){
   if (!q) return "";
-  if (q.status === "registration" && q.starts_on){ const d = daysTo(q.starts_on); if (d > 0) return `<div class="countdown"><span class="big tnum">${d}</span><span class="lbl">day${d===1?"":"s"} until ${esc(q.title)} starts<span>${fmt(q.starts_on)} to ${fmt(q.ends_on)}. Sign-ups are open now.</span></span></div>`; }
-  if (q.status === "live" && q.ends_on){ const d = Math.max(0, daysTo(q.ends_on)); return `<div class="countdown"><span class="big tnum">${d}</span><span class="lbl">day${d===1?"":"s"} left in ${esc(q.title)}<span>You can still join while it's live.</span></span></div>`; }
+  if (q.status === "registration" && q.starts_on){ const d = daysTo(q.starts_on); if (d > 0) return `<div class="cdbox"><div class="cdtitle">${esc(q.title)} starts in</div>
+    <div class="cdunits"><div><b class="tnum">${cd(startIso(q),"d")}</b><span>days</span></div><div><b class="tnum">${cd(startIso(q),"h")}</b><span>hours</span></div><div><b class="tnum">${cd(startIso(q),"m")}</b><span>mins</span></div></div>
+    <div class="cdnote">Join before ${fmt(q.starts_on)} to start Day 1 with everyone and get the <b>Founding Crew</b> badge.</div></div>`; }
+  if (q.status === "live" && q.ends_on){ return `<div class="cdbox"><div class="cdtitle">Day ${questDay(q)} of 30. Time left in ${esc(q.title)}</div>
+    <div class="cdunits"><div><b class="tnum">${cd(endIso(q),"d")}</b><span>days</span></div><div><b class="tnum">${cd(endIso(q),"h")}</b><span>hours</span></div><div><b class="tnum">${cd(endIso(q),"m")}</b><span>mins</span></div></div>
+    <div class="cdnote">You can still join while it's live. Today's task unlocks for you straight away.</div></div>`; }
   return "";
 }
 function podium(rows){
@@ -670,6 +730,16 @@ function goldRing(n, goal, label){
     <circle cx="100" cy="100" r="84" fill="none" stroke="url(#gGold)" stroke-width="16" stroke-linecap="round" stroke-dasharray="${(C*pct).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 100 100)"/>
   </svg><div class="lbl"><b class="tnum" style="color:#5A3D12">${n}</b><span style="color:#7A6040">${label || `of ${goal.toLocaleString()} crew`}</span></div></div>`;
 }
+function timerRing(q){
+  const iso = startIso(q), C = 2*Math.PI*84, total = 30*864e5, left = Math.max(0, new Date(iso) - Date.now()), pct = Math.max(.02, Math.min(1, 1 - left/total));
+  return `<div class="ring"><svg viewBox="0 0 200 200" aria-hidden="true">
+    <defs><linearGradient id="gGold2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF0C4"/><stop offset=".45" stop-color="#E8BF73"/><stop offset="1" stop-color="#B07B32"/></linearGradient>
+    <radialGradient id="gDisc2" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#FFF9EC"/><stop offset="1" stop-color="#EBDDC2"/></radialGradient></defs>
+    <circle cx="100" cy="100" r="96" fill="url(#gGold2)" opacity=".35"/><circle cx="100" cy="100" r="70" fill="url(#gDisc2)"/>
+    <circle cx="100" cy="100" r="84" fill="none" stroke="rgba(176,123,50,.22)" stroke-width="16"/>
+    <circle cx="100" cy="100" r="84" fill="none" stroke="url(#gGold2)" stroke-width="16" stroke-linecap="round" stroke-dasharray="${(C*pct).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 100 100)"/>
+  </svg><div class="lbl"><b class="tnum" style="color:#5A3D12">${cd(iso,"d")}<small style="font-size:.5em"> days</small></b><span style="color:#5A3D12;font-weight:800;font-size:15px" class="tnum">${cd(iso,"h")}h ${cd(iso,"m")}m</span><span style="color:#7A6040">until we start</span></div></div>`;
+}
 
 /* =================== PIECES =================== */
 function broadcastCard(q){
@@ -683,7 +753,7 @@ function broadcastCard(q){
     <div class="facts">
       ${showCount(n) ? `<div class="fact"><b class="tnum">${n}</b><span>joined</span></div>` : `<div class="fact"><b class="tnum">${(q.content.tasks||[]).length || "–"}</b><span>tasks</span></div>`}
       <div class="fact"><b class="tnum">${fmt(q.starts_on)||"TBC"}</b><span>${q.ends_on ? "to " + fmt(q.ends_on) : "start"}</span></div>
-      <div class="fact"><b class="tnum">${third[0]}</b><span>${third[1]}</span></div>
+      ${q.status === "registration" && q.starts_on && daysTo(q.starts_on) > 0 ? `<div class="fact"><b class="tnum">${cd(startIso(q),"short")}</b><span>to start</span></div>` : q.status === "live" && q.ends_on ? `<div class="fact"><b class="tnum">${cd(endIso(q),"short")}</b><span>left</span></div>` : `<div class="fact"><b class="tnum">${third[0]}</b><span>${third[1]}</span></div>`}
     </div>
     <div class="row">
       ${mine ? `<a class="btn done" href="#/quest/${q.slug}">You're in. Open the quest</a>` : `<button class="btn" data-join="${q.slug}" type="button">Join this quest</button>`}
@@ -755,7 +825,7 @@ async function vHome(scrollTo){
       </div>
       <p class="copy">Side Quest Crew started in October 2026 on Threads. One quest each month, everyone on the same plan, progress on a public billboard and a monthly Zoom. The goal is a crew of 1,000.</p>
     </div>
-    ${showCount(totalMembers) || !q || !q.starts_on || daysTo(q.starts_on) <= 0 ? goldRing(totalMembers, CFG.crewGoal) : goldRing(Math.max(0, 30 - daysTo(q.starts_on)), 30, `days to go`).replace(`>${Math.max(0, 30 - daysTo(q.starts_on))}</b>`, `>${daysTo(q.starts_on)}</b>`)}
+    ${showCount(totalMembers) || !q || !q.starts_on || daysTo(q.starts_on) <= 0 ? goldRing(totalMembers, CFG.crewGoal) : timerRing(q)}
     <div class="stack">
       <div class="note glass">Everyone does the same quest, at the same time</div>
       ${broadcastCard(q)}
@@ -938,12 +1008,30 @@ function todayCard(q, e){
   const n = questDay(q), t = n ? tasks.find(x => x.day === Math.min(n, tasks.length)) : tasks[0];
   if (!t) return "";
   const label = n ? (n > tasks.length ? "The quest is complete" : `Today is Day ${t.day}`) : `Day 1 preview, ${dayDate(q, 1)}`;
+  const doneToday = e && e.done_tasks.includes(t.id) && n && n < tasks.length;
   return `<div class="panel todaycard"><div class="phead"><h3>${label}</h3><a class="small" href="#/me/tasks">All 30 days</a></div>${taskRow(t, q, e)}
+    ${doneToday ? `<div class="unlock">✅ Done for today. Day ${t.day + 1} unlocks in <b class="tnum">${cd(nextMidnight(),"hm")}</b>. See you tomorrow.</div>` : n ? `<div class="unlock warn">⏳ Finish today's step in the next <b class="tnum">${cd(nextMidnight(),"hm")}</b> to keep your streak.</div>` : `<div class="unlock">🗓️ Day 1 unlocks in <b class="tnum">${cd(startIso(q),"dhm")}</b>.</div>`}
     ${t.guide && GUIDES[t.guide] ? `<div class="sharebox" style="margin-top:10px"><p>${GUIDES[t.guide].free ? "Use the free" : "Go deeper with the"} <b>${esc(GUIDES[t.guide].t)}</b>${GUIDES[t.guide].free ? " to do this in a minute." : " for the worksheet behind this step."}</p><a class="btn sm" href="${guideLink(t.guide)}" target="_blank" rel="noopener">${GUIDES[t.guide].free ? "Open the free tool" : "See the guide"}</a></div>` : ""}</div>`;
 }
 
+/* =================== LEVELS + HABITS =================== */
+const LEVELS = [[0,"Rookie"],[50,"Explorer"],[120,"Pathfinder"],[200,"Trailblazer"],[300,"Summiter"],[400,"Legend"]];
+function levelOf(xp){ let i = 0; LEVELS.forEach((l, k) => { if (xp >= l[0]) i = k; }); const cur = LEVELS[i], nxt = LEVELS[i+1]; return { n: i+1, name: cur[1], next: nxt, pct: nxt ? Math.round((xp - cur[0]) / (nxt[0] - cur[0]) * 100) : 100, toNext: nxt ? nxt[0] - xp : 0 }; }
+function weekDots(logs){ const days = new Set((logs||[]).map(l => l.day)); return Array.from({length:7}, (_, i) => { const k = 6 - i, iso = utcDay(k), d = new Date(iso+"T00:00"); return `<span class="wd ${days.has(iso)?"on":""} ${k===0?"today":""}" title="${d.toLocaleDateString("en-GB",{weekday:"long"})}"><i>${days.has(iso) ? "✓" : ""}</i><small>${d.toLocaleDateString("en-GB",{weekday:"narrow"})}</small></span>`; }).join(""); }
+function foundingMember(){
+  const first = QUESTS.filter(x => x.starts_on && x.status !== "idea").sort((a,b) => a.starts_on.localeCompare(b.starts_on))[0];
+  return !!(ME && first && ME.enrollments.some(en => en.quest_slug === first.slug && en.joined_at && en.joined_at.slice(0,10) < first.starts_on));
+}
+function levelPanel(totalXP, e, q){
+  const L = levelOf(totalXP), streak = e ? streakOf(e.recent_logs) : 0;
+  return `<div class="panel lvl">
+    <div class="lvl-a"><span class="lvl-badge">Lv ${L.n}</span><div style="min-width:0"><b>${L.name}</b><div class="small muted">${L.next ? `${L.toNext} XP to ${L.next[1]}` : "Top level reached"}</div><div class="pbar" style="height:8px;margin-top:8px"><i style="width:${L.pct}%"></i></div></div></div>
+    <div class="lvl-b"><div class="small" style="font-weight:700;margin-bottom:6px">${streak ? `🔥 ${streak}-day streak. Keep it alive today.` : e && q && q.status === "live" ? "Start a streak: log today's check-in." : "Your streak starts on day 1."}</div><div class="wdots">${weekDots(e ? e.recent_logs : [])}</div></div>
+  </div>`;
+}
+
 /* =================== BACK + ROAD MAP =================== */
-let NAVS = 0;
+let NAVS = 0, RMF = null;
 const backBtn = () => `<button class="back" type="button" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</button>`;
 // stop positions on the Next Chapter map art, in road order: start, week 1-4, finish  [x%, y%, label below "b" / above "a"]
 const RM_SLOTS = [[9,89,"b"],[25,49,"a"],[54,45,"a"],[90,68,"b"],[92,43,"b"],[70,13,"a"]];
@@ -967,14 +1055,17 @@ function roadmap(q, e, vertical){
   const can = e && q.status === "live";
   const taskRows = wt => wt.map(t => taskRow(t, q, e)).join("");
   const taskRowsOld = wt => wt.map(t => { const on = done.includes(t.id); return `<label class="task ${can?"":"locked"} ${on?"isdone":""}"><input type="checkbox" data-task="${esc(t.id)}" data-slug="${esc(q.slug)}" ${on?"checked":""} ${can?"":"disabled"}><span><b>${esc(t.title)}</b>${t.detail?`<span>${esc(t.detail)}</span>`:""}${t.link?` <a href="${esc(t.link)}" target="_blank" rel="noopener">Open</a>`:""}</span></label>`; }).join("");
-  const list = stops.map((st, i) => `<li class="${st.done ? "done" : ""} ${i === curIdx ? "cur" : ""}"><span class="n">${st.n}</span><div class="c"><b>${esc(st.t)}${i === curIdx ? '<span class="you">You are here</span>' : ""}</b><small>${esc(st.s)}${vertical && i > 0 && i <= wk.length ? ` · ${wk[i-1].wt[0].day ? `Days ${wk[i-1].wt[0].day} to ${wk[i-1].wt[wk[i-1].wt.length-1].day}, ` : ""}${wk[i-1].d}/${wk[i-1].wt.length} done` : ""}</small>${i > 0 && i <= wk.length ? (vertical ? `<details class="rm-wk" ${(e ? i === curIdx : i === 1) || wk[i-1].wt.some(t => t.day && t.day === questDay(q)) ? "open" : ""}><summary>${wk[i-1].wt.length} daily tasks</summary><div class="rm-tasks">${taskRows(wk[i-1].wt)}</div></details>` : `<ul>${wk[i-1].wt.map(t => `<li>${done.includes(t.id) ? "✓ " : ""}${esc(t.title)}</li>`).join("")}</ul>`) : ""}</div></li>`).join("");
+  const defF = e && curIdx >= 1 && curIdx <= wk.length ? String(curIdx) : "all";
+  const F = RMF && (RMF === "all" || +RMF <= wk.length) ? RMF : defF;
+  const list = stops.map((st, i) => `<li data-wk="${i}" class="${st.done ? "done" : ""} ${i === curIdx ? "cur" : ""}"><span class="n">${st.n}</span><div class="c"><b>${esc(st.t)}${i === curIdx ? '<span class="you">You are here</span>' : ""}</b><small>${esc(st.s)}${vertical && i > 0 && i <= wk.length ? ` · ${wk[i-1].wt[0].day ? `Days ${wk[i-1].wt[0].day} to ${wk[i-1].wt[wk[i-1].wt.length-1].day}, ` : ""}${wk[i-1].d}/${wk[i-1].wt.length} done` : ""}</small>${i > 0 && i <= wk.length ? (vertical ? `<details class="rm-wk" ${F === String(i) || (F === "all" && ((e ? i === curIdx : i === 1) || wk[i-1].wt.some(t => t.day && t.day === questDay(q)))) ? "open" : ""}><summary>${wk[i-1].wt.length} daily tasks</summary><div class="rm-tasks">${taskRows(wk[i-1].wt)}</div></details>` : `<ul>${wk[i-1].wt.map(t => `<li>${done.includes(t.id) ? "✓ " : ""}${esc(t.title)}</li>`).join("")}</ul>`) : ""}</div></li>`).join("");
   if (vertical){
     const tot = tasks.length, dn = done.length, pc = tot ? Math.round(dn / tot * 100) : 0;
     return `<div class="rm">
       <div class="rm-head"><div><h3>Your road map</h3><p class="small muted" style="margin:6px 0 0">${e ? (can ? "Tick tasks off as you go. Each one is 10 XP." : `Ticking unlocks on ${fmt(q.starts_on)}, when the quest goes live.`) : "Join the quest to start your road map."}</p></div>
         <div class="rm-pct"><b class="tnum">${pc}%</b><span>${dn} of ${tot} tasks</span></div></div>
       <div class="pbar" style="height:8px;margin-bottom:18px"><i style="width:${pc}%"></i></div>
-      <ol class="rm-list always" aria-label="${esc(q.title)} road map">${list}</ol>
+      <div class="rm-filter" role="tablist" aria-label="Filter by week"><button type="button" data-rmf="all" class="${F==="all"?"on":""}">All 30 days</button>${wk.map((x, i) => `<button type="button" data-rmf="${i+1}" class="${F===String(i+1)?"on":""}">Week ${i+1}<small>${x.d}/${x.wt.length}</small></button>`).join("")}</div>
+      <ol class="rm-list always" data-f="${F}" aria-label="${esc(q.title)} road map">${list}</ol>
     </div>`;
   }
   return `<div class="rm">
@@ -1069,6 +1160,7 @@ async function vMe(sub){
       <div class="kpi glass"><span>Tasks done</span><b class="tnum">${done.length}/${tasks.length || "–"}</b><small>${pct}% of the plan</small></div>
       <div class="kpi glass"><span>Check-in streak</span><b class="tnum">${streak} 🔥</b><small>${e ? `${e.logs} check-in${e.logs===1?"":"s"} in total` : "Starts when you log"}</small></div>
     </div>
+    ${levelPanel(totalXP, e, q)}
     ${q && e ? todayCard(q, e) : ""}
     ${q ? `<div class="dcols">
       <div class="panel">${tasks.length ? roadmap(q, e, true) : `<h3>Your road map</h3><p class="muted" style="margin:0">The week-by-week plan appears here once the quest has tasks.</p>`}</div>
@@ -1093,7 +1185,7 @@ async function vMe(sub){
       </div>
       </div>
     </div>` : ""}
-    ${mine.length ? `<div class="panel"><div class="phead"><h3>My badges</h3><span class="small muted">Finish every task to earn the badge</span></div><div class="badges">${mine.map(({e,q}) => { const n = ((q.content||{}).tasks||[]).length, d = e.done_tasks.length, got = n && d >= n; return `<div class="badge-item ${got?"":"locked"}">${patch(q)}<b>${esc(q.title)}</b><span>${got ? "Earned 🎉" : `${d}/${n} tasks done`}</span>${got ? shareBtn(`I finished the ${q.title} with Side Quest Crew 🎖️ All ${n} tasks done.\n\nNext month's quest is up for a vote. Come do it with us: ${SITE}`, "Share badge") : ""}</div>`; }).join("")}</div></div>` : ""}`;
+    ${mine.length ? `<div class="panel"><div class="phead"><h3>My badges</h3><span class="small muted">Finish every task to earn the badge</span></div><div class="badges">${foundingMember() ? `<div class="badge-item">${patch({slug:"founding", category:"Wealth", emoji:"⭐", starts_on:null}).replace(">WEALTH<", ">FOUNDING CREW<")}<b>Founding Crew</b><span>Joined before the first quest</span></div>` : ""}${mine.map(({e,q}) => { const n = ((q.content||{}).tasks||[]).length, d = e.done_tasks.length, got = n && d >= n; return `<div class="badge-item ${got?"":"locked"}">${patch(q)}<b>${esc(q.title)}</b><span>${got ? "Earned 🎉" : `${d}/${n} tasks done`}</span>${got ? shareBtn(`I finished the ${q.title} with Side Quest Crew 🎖️ All ${n} tasks done.\n\nNext month's quest is up for a vote. Come do it with us: ${SITE}`, "Share badge") : ""}</div>`; }).join("")}</div></div>` : ""}`;
   } else if (sub === "tasks"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>My tasks</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}, ${done.length} of ${tasks.length} done` : ""}</p></div></div>${joinCard}
       <div class="panel">${q && tasks.length ? `<p class="small muted" style="margin:0">${q.status === "live" ? (e ? "Tick tasks off as you go. Each one is 10 XP." : "Join the quest to start ticking these off.") : "Tasks unlock when the quest starts."}</p>${taskList(q, e, q.slug)}` : `<p class="muted" style="margin:0">No tasks yet.</p>`}</div>`;
@@ -1118,6 +1210,7 @@ async function route(){
   const h = location.hash.replace(/^#\/?/, ""), [r, arg] = h.split("/");
   document.querySelectorAll("#nav a, #tabbar a").forEach(a => a.classList.toggle("on", a.dataset.r === (r || "home") || (r === "quest" && a.dataset.r === "home")));
   $("#navMe").textContent = ME ? "My dashboard" : "Join the crew";
+  $("#ubarSlot").innerHTML = r === "me" ? "" : urgencyBar(current());
   if (r === "quest") await vQuest(arg);
   else if (r === "board") await vBoard(arg);
   else if (r === "me") await vMe(arg);
@@ -1175,6 +1268,7 @@ document.addEventListener("click", async e => {
   if (t.dataset.tab){ ideaTab = t.dataset.tab; $("#ideasBox").innerHTML = ideasBlock(); return; }
   if (t.id === "logout"){ if (sb && TOKEN) await sb.rpc("sq_logout", { p_token: TOKEN }); TOKEN = null; store.set("sq_token", null); ME = null; location.hash = "#/"; await refresh(); return; }
   if (t.dataset.join){
+    if (t.tagName === "A") e.preventDefault();
     if (!TOKEN){ pendingJoin = t.dataset.join; openAuth("join"); return; }
     t.disabled = true; const { error } = await sb.rpc("sq_join", { p_token: TOKEN, p_slug: t.dataset.join });
     if (error){ alertInline(t, errText(error)); t.disabled = false; return; }
@@ -1211,6 +1305,10 @@ document.addEventListener("submit", e => {
 });
 $("#footDiscord").innerHTML = CFG.discord ? `<a href="${esc(CFG.discord)}" target="_blank" rel="noopener">Discord</a>` : "";
 window.addEventListener("hashchange", () => { NAVS++; route(); });
+document.addEventListener("click", e => { const b = e.target.closest("[data-rmf]"); if (!b) return; RMF = b.dataset.rmf;
+  const box = b.closest(".rm"), ol = box.querySelector(".rm-list"); ol.dataset.f = RMF;
+  box.querySelectorAll("[data-rmf]").forEach(x => x.classList.toggle("on", x === b));
+  if (RMF !== "all"){ const li = ol.querySelector(`li[data-wk="${RMF}"] details`); if (li) li.open = true; } });
 document.addEventListener("click", e => { if (!e.target.closest("[data-back]")) return; if (NAVS > 0) history.back(); else location.hash = location.hash.startsWith("#/me/") ? "#/me" : "#/"; });
 refresh();
 </script>
