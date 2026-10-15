@@ -7,7 +7,7 @@
 <meta name="description" content="One quest. One month. Done together. Vote on the next challenge, join the crew, track your progress and climb the leaderboard.">
 <meta property="og:title" content="Side Quest Crew">
 <meta property="og:description" content="One quest. One month. Done together.">
-<meta name="theme-color" content="#E4EEFF">
+<meta name="theme-color" content="#ECEFF3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231B1433'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23FF6A2A' stroke-width='6'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23FFC23D'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap">
@@ -15,8 +15,8 @@
 [hidden]{display:none!important}
 /* Layout: the whole site sits in a rounded "window" floating on a cloudy sky. Inside: a sky hero with a 3D compass and a glass quest-finder bar, then white content bands with pale-blue glass cards. */
 :root{
-  --page:#E4EEFF; --sky1:#CFE1FF; --sky2:#EAF8F4; --cloud:#FFFFFF;
-  --frame:#FFFFFF; --surface:#FFFFFF; --glass:rgba(239,245,255,.9); --glass-solid:#EAF2FF; --soft:#F2F8FF;
+  --page:#ECEFF3; --sky1:#E1E6ED; --sky2:#F6F7F9; --cloud:#FFFFFF;
+  --frame:#FFFFFF; --surface:#FFFFFF; --glass:rgba(244,246,249,.92); --glass-solid:#EEF1F5; --soft:#F5F7FA;
   --ink:#0F1E3D; --ink-2:#334155; --muted:#5B6478; --line:rgba(18,21,28,.09);
   --on-night:var(--ink); --on-night-2:var(--muted);
   --flame1:#FFB13D; --flame2:#F2483A; --quest:#F2603A; --quest-hover:#D9472A; --on-quest:#FFFFFF;
@@ -363,6 +363,31 @@ ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
 @media (max-width:960px){.get{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:600px){.get{grid-template-columns:minmax(0,1fr)}.founder{grid-template-columns:minmax(0,1fr);justify-items:start}}
 
+/* mobile tab bar, share, explore */
+.tabbar{display:none}
+.btn.threads{background:#101010;color:#fff;box-shadow:0 10px 22px -14px rgba(0,0,0,.7)} .btn.threads:hover{filter:none;background:#2A2A2A}
+:root[data-theme="dark"] .btn.threads{background:#F4F4F4;color:#101010}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.threads{background:#F4F4F4;color:#101010}}
+.btn.threads svg{width:16px;height:16px}
+.sharebox{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--surface) 75%,transparent)}
+.sharebox p{margin:0;font-size:14px;color:var(--ink-2);flex:1;min-width:180px}
+.explore{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.explore a{padding:22px;text-decoration:none;color:var(--ink);display:grid;gap:6px;transition:transform .15s}
+.explore a:hover{transform:translateY(-2px)}
+.explore .ic{font-size:40px;line-height:1;filter:drop-shadow(0 10px 8px rgba(40,70,100,.28))}
+.explore b{font:500 17px var(--display);margin-top:6px}
+.explore span{font-size:14px;color:var(--ink-2)}
+.explore em{font-style:normal;font-weight:700;color:var(--quest);font-size:14px;margin-top:4px}
+@media (max-width:760px){
+  body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  .nav nav a:not(#navMe){display:none!important}
+  .tabbar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:40;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--frame) 88%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+  .tabbar a{display:grid;justify-items:center;gap:3px;padding:6px 2px;border-radius:12px;text-decoration:none;color:var(--muted);font:700 11px var(--body)}
+  .tabbar a svg{width:22px;height:22px}
+  .tabbar a.on{color:var(--quest);background:color-mix(in srgb,var(--quest) 10%,transparent)}
+  .explore{grid-template-columns:minmax(0,1fr)}
+}
+
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(40,64,92,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50}
 .modal .panel{width:min(440px,100%);max-height:92vh;overflow:auto;background:var(--frame)}
@@ -428,6 +453,13 @@ footer a{color:var(--muted)}
 
 <footer><div class="wrap"><span>Side Quest Crew · started by <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a></span><span id="footDiscord"></span></div></footer>
 </div>
+<nav class="tabbar" id="tabbar" aria-label="Main">
+  <a href="#/" data-r="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
+  <a href="#/vote" data-r="vote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Vote</a>
+  <a href="#/board" data-r="board"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>Billboard</a>
+  <a href="#/ideas" data-r="ideas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>Quests</a>
+  <a href="#/me" data-r="me" id="tabMe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Me</a>
+</nav>
 
 <div class="modal" id="authModal" hidden>
   <div class="panel" style="position:relative" role="dialog" aria-modal="true" aria-labelledby="authTitle">
@@ -605,7 +637,7 @@ function discordBtn(cls){ return CFG.discord ? `<a class="btn discord ${cls||""}
 
 /* =================== VIEWS =================== */
 async function vHome(scrollTo){
-  const q = current(), rows = q ? await board(q.slug) : [];
+  const q = current();
   const totalMembers = Object.values(COUNTS).reduce((a,b)=>a+b,0);
   const opt = (v, l, cur) => `<option value="${v}" ${v===cur?"selected":""}>${l}</option>`;
   $("#view").innerHTML = `
@@ -697,19 +729,13 @@ async function vHome(scrollTo){
     </div>
   </div></section>
 
-  <section class="sec" id="vote" style="padding-top:0"><div class="wrap">
-    <div class="sec-head"><div><h2>${esc(POLL ? POLL.title : "Next month's quest")}</h2><p>Members choose what we do next. Log in to vote.</p></div></div>
-    ${pollBlock()}
-  </div></section>
-
-  <section class="sec" id="board" style="padding-top:0"><div class="wrap">
-    <div class="sec-head"><div><h2>Who's putting in the work</h2><p>10 XP per task and 5 XP per daily check-in.</p></div>${q?`<a class="btn ghost sm" href="#/board/${q.slug}">Full billboard</a>`:""}</div>
-    <div class="board glass">${boardTable(rows, q, 10, true)}</div>
-  </div></section>
-
-  <section class="sec" id="ideas" style="padding-top:0">${puff("right:-90px;top:30px")}<div class="wrap">
-    <div class="sec-head"><div><h2>Ideas for future quests</h2><p>Want one on the next vote? Suggest it in the Discord.</p></div></div>
-    <div id="ideasBox">${ideasBlock()}</div>
+  <section class="sec" style="padding-top:0"><div class="wrap">
+    <div class="sec-head"><div><h2>Explore the crew</h2><p>Each part has its own page.</p></div></div>
+    <div class="explore">
+      <a class="glass" href="#/vote"><span class="ic">🗳️</span><b>Vote for next month</b><span>${POLL ? esc(POLL.title.replace(/^Vote:\s*/i,"")) : "The next vote opens near the end of the month."}</span><em>Go to the vote</em></a>
+      <a class="glass" href="#/board"><span class="ic">🏆</span><b>The billboard</b><span>Who's putting in the most work this month.</span><em>See the billboard</em></a>
+      <a class="glass" href="#/ideas"><span class="ic">🧭</span><b>Quest ideas</b><span>${QUESTS.length} quests across health, wealth, money, relationships and career.</span><em>Browse quests</em></a>
+    </div>
   </div></section>
 
   <section class="sec" style="padding-top:0"><div class="wrap community">
@@ -737,7 +763,7 @@ async function vQuest(slug){
   const c = q.content || {}, tasks = c.tasks || [], e = enrolled(slug), live = q.status === "live", rows = await board(slug);
   const done = e ? e.done_tasks : [], weeks = [...new Set(tasks.map(t => t.week))];
   const myRow = e && ME ? rows.find(r => r.display_name === ME.name.split(" ")[0]) : null;
-  const joinBtn = (q.status === "registration" || live) ? (e ? `<span class="btn done">You're in ✓</span>` : `<button class="btn" type="button" data-join="${slug}">Join this quest</button>`) : q.status === "idea" ? `<a class="btn" href="#/vote">Vote for quests</a>` : "";
+  const joinBtn = (q.status === "registration" || live) ? (e ? `<a class="btn done" href="#/me">You're in. Open my dashboard</a>${shareBtn(progressPost(q, e, streakOf(e.recent_logs)), q.status === "live" ? "Share my progress" : "Tell Threads I'm in", " ")}` : `<button class="btn" type="button" data-join="${slug}">Join this quest</button>`) : q.status === "idea" ? `<a class="btn" href="#/vote">Vote for quests</a>` : "";
   $("#view").innerHTML = `
   <section class="qhead sky">${clouds()}<div class="wrap">
     <div class="qtop">${patch(q)}<div style="min-width:0;flex:1"><h1>${esc(q.title)}</h1><p style="margin-bottom:0">${esc(q.summary||"")}</p></div></div>
@@ -773,6 +799,14 @@ async function vQuest(slug){
   </div></section>`;
 }
 
+async function vVote(){
+  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><span class="e">🗳️</span><h1>${esc(POLL ? POLL.title.replace(/^Vote:\s*/i,"") : "Next month's vote")}</h1><p>Members choose what the whole crew does next. ${ME ? "Pick one. You can change it until voting closes." : "Join or log in to vote."}</p>${ME ? "" : `<div class="acts"><button class="btn" type="button" data-auth="join">Join the crew</button><button class="btn ghost" type="button" data-auth="login">Log in</button></div>`}</div></section>
+  <section class="sec" style="padding-top:28px"><div class="wrap">${pollBlock()}</div></section>`;
+}
+async function vIdeas(){
+  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><span class="e">🧭</span><h1>Quest ideas</h1><p>Every quest the crew could take on, across health, wealth, money, relationships and career. Want one on the next vote? Suggest it in the Discord.</p></div></section>
+  <section class="sec" style="padding-top:28px"><div class="wrap"><div id="ideasBox">${ideasBlock()}</div></div></section>`;
+}
 async function vBoard(slug){
   const q = slug ? QUESTS.find(x => x.slug === slug) : current();
   const rows = q ? await board(q.slug) : [];
@@ -781,6 +815,17 @@ async function vBoard(slug){
     <div class="qmeta">${withData.map(x => `<a class="chip" style="text-decoration:none${x.slug===q?.slug?";background:var(--quest);color:#fff":""}" href="#/board/${x.slug}">${esc(x.emoji)} ${esc(x.title)}</a>`).join("")}</div></div></section>
   <section class="sec" style="padding-top:28px"><div class="wrap"><div class="board glass">${boardTable(rows, q, 0, true)}</div>
   <p class="small muted" style="margin-top:14px">XP = 10 per task + 5 per daily check-in. Only first names and countries are shown.</p></div></section>`;
+}
+
+/* =================== SHARE TO THREADS =================== */
+const SITE = "https://sidequestcrew.space";
+const threadsLink = text => "https://www.threads.net/intent/post?text=" + encodeURIComponent(text);
+const TH_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M16.5 11.2c-.4-2.6-2.1-3.9-4.4-3.9-2.6 0-4.2 1.9-4.2 4.7s1.6 4.7 4.2 4.7c2 0 3.4-1.1 3.4-2.8 0-1.6-1.3-2.5-3.1-2.5-1.5 0-2.6.7-2.6 1.9 0 1 .8 1.6 1.9 1.6"/><path d="M19.5 8.5C18.4 5 15.6 3 12 3 6.9 3 4 6.6 4 12s2.9 9 8 9c3.4 0 6.2-1.6 7.2-4.6"/></svg>`;
+function shareBtn(text, label, cls){ return `<a class="btn threads ${cls||"sm"}" href="${threadsLink(text)}" target="_blank" rel="noopener">${TH_ICON}${esc(label || "Share on Threads")}</a>`; }
+function progressPost(q, e, streak){
+  const n = ((q.content||{}).tasks||[]).length;
+  if (q.status !== "live") return `I just joined the ${q.title} with Side Quest Crew.\n\n30 days, ${n} small tasks, a daily check-in and a crew doing it together. We start ${fmt(q.starts_on)}.\n\nWant in? ${SITE}`;
+  return `${streak > 1 ? `🔥 ${streak}-day streak on` : "Showing up for"} the ${q.title}.\n\n${e.done_tasks.length}/${n} tasks done, ${e.score} XP so far. One quest a month, done together with Side Quest Crew.\n\nJoin us: ${SITE}`;
 }
 
 /* =================== MEMBER DASHBOARD =================== */
@@ -805,7 +850,10 @@ function checkinForm(q, e){
     <label class="l">What did you do today?<textarea class="i" id="logNote" maxlength="300" placeholder="One line is enough"></textarea></label>
     <button class="btn" type="submit" style="justify-self:start">${e.logged_today ? "Update today's check-in" : "Log today (+5 XP)"}</button>
     <p class="msg" id="logMsg" role="status" aria-live="polite"></p>
-  </form>`;
+  </form>
+  ${e.logged_today && e.recent_logs && e.recent_logs[0] ? (() => { const l = e.recent_logs[0], st = streakOf(e.recent_logs), unit = c.metric?.unit || "";
+    const txt = `Today's win on the ${q.title}: ${l.note || (l.value != null ? `${l.value} ${unit} on it today` : "showed up")}.\n\n${st > 1 ? `🔥 ${st}-day streak. ` : ""}Doing it with Side Quest Crew: ${SITE}`;
+    return `<div class="sharebox" style="margin-top:14px"><p>Nice work today. Share your win and bring someone with you.</p>${shareBtn(txt, "Share my win")}</div>`; })() : ""}`;
 }
 function logHistory(q, e){
   const unit = (q.content||{}).metric?.unit || "";
@@ -844,7 +892,7 @@ async function vMe(sub){
     const weeks = [...new Set(tasks.map(t => t.week))];
     const next = tasks.filter(t => !done.includes(t.id)).slice(0, 3);
     body = `
-    <div class="dhead"><div><h1>Hi ${esc(first)} 👋</h1><p class="muted">${q ? (e ? `You're on the ${esc(q.title)}. ${q.status === "live" ? "Keep the streak going." : q.status === "registration" ? `It starts ${fmt(q.starts_on)}.` : ""}` : `You haven't joined ${esc(q.title)} yet.`) : "The next quest is coming soon."}</p></div>${q && e ? `<span class="chip status-${q.status}">${statusLabel(q)}</span>` : ""}</div>
+    <div class="dhead"><div><h1>Hi ${esc(first)} 👋</h1><p class="muted">${q ? (e ? `You're on the ${esc(q.title)}. ${q.status === "live" ? "Keep the streak going." : q.status === "registration" ? `It starts ${fmt(q.starts_on)}.` : ""}` : `You haven't joined ${esc(q.title)} yet.`) : "The next quest is coming soon."}</p></div>${q && e ? `<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="chip status-${q.status}">${statusLabel(q)}</span>${shareBtn(progressPost(q, e, streak), q.status === "live" ? "Share my progress" : "Tell Threads I'm in")}</div>` : ""}</div>
     ${joinCard}
     <div class="kpis">
       <div class="kpi glass"><span>Total XP</span><b class="tnum">${totalXP}</b><small>10 per task, 5 per check-in</small></div>
@@ -883,7 +931,7 @@ async function vMe(sub){
         ${discordBtn("sm")}
       </div>
     </div>` : ""}
-    ${mine.length ? `<div class="panel"><div class="phead"><h3>My badges</h3><span class="small muted">Finish every task to earn the badge</span></div><div class="badges">${mine.map(({e,q}) => { const n = ((q.content||{}).tasks||[]).length, d = e.done_tasks.length, got = n && d >= n; return `<div class="badge-item ${got?"":"locked"}">${patch(q)}<b>${esc(q.title)}</b><span>${got ? "Earned 🎉" : `${d}/${n} tasks done`}</span></div>`; }).join("")}</div></div>` : ""}`;
+    ${mine.length ? `<div class="panel"><div class="phead"><h3>My badges</h3><span class="small muted">Finish every task to earn the badge</span></div><div class="badges">${mine.map(({e,q}) => { const n = ((q.content||{}).tasks||[]).length, d = e.done_tasks.length, got = n && d >= n; return `<div class="badge-item ${got?"":"locked"}">${patch(q)}<b>${esc(q.title)}</b><span>${got ? "Earned 🎉" : `${d}/${n} tasks done`}</span>${got ? shareBtn(`I finished the ${q.title} with Side Quest Crew 🎖️ All ${n} tasks done.\n\nNext month's quest is up for a vote. Come do it with us: ${SITE}`, "Share badge") : ""}</div>`; }).join("")}</div></div>` : ""}`;
   } else if (sub === "tasks"){
     body = `<div class="dhead"><div><h1>My tasks</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}, ${done.length} of ${tasks.length} done` : ""}</p></div></div>${joinCard}
       <div class="panel">${q && tasks.length ? `<p class="small muted" style="margin:0">${q.status === "live" ? (e ? "Tick tasks off as you go. Each one is 10 XP." : "Join the quest to start ticking these off.") : "Tasks unlock when the quest starts."}</p>${taskList(q, e, q.slug)}` : `<p class="muted" style="margin:0">No tasks yet.</p>`}</div>`;
@@ -906,12 +954,14 @@ async function vMe(sub){
 /* =================== ROUTER =================== */
 async function route(){
   const h = location.hash.replace(/^#\/?/, ""), [r, arg] = h.split("/");
-  document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("on", a.dataset.r === (r || "home") || (r === "quest" && a.dataset.r === "home")));
+  document.querySelectorAll("#nav a, #tabbar a").forEach(a => a.classList.toggle("on", a.dataset.r === (r || "home") || (r === "quest" && a.dataset.r === "home")));
   $("#navMe").textContent = ME ? "My dashboard" : "Join the crew";
   if (r === "quest") await vQuest(arg);
   else if (r === "board") await vBoard(arg);
   else if (r === "me") await vMe(arg);
-  else { await vHome(r === "vote" ? "vote" : r === "ideas" ? "ideas" : null); if (r !== "vote" && r !== "ideas") window.scrollTo(0,0); return; }
+  else if (r === "vote") await vVote();
+  else if (r === "ideas") await vIdeas();
+  else await vHome();
   window.scrollTo(0,0);
 }
 async function rerender(){ const y = window.scrollY; await loadMe(); await loadPublic(); await route(); window.scrollTo(0, y); }
@@ -972,7 +1022,7 @@ document.addEventListener("click", async e => {
     if (!TOKEN){ openAuth("join"); return; }
     t.disabled = true; const { error } = await sb.rpc("sq_vote", { p_token: TOKEN, p_poll: POLL.id, p_option: t.dataset.vote });
     t.disabled = false; if (error){ alertInline(t, errText(error)); return; }
-    if (location.hash.startsWith("#/me")) await rerender(); else { await loadPublic(); await loadMe(); await vHome("vote"); }
+    await rerender();
   }
 });
 function alertInline(el, text){ let m = el.parentElement.querySelector(".msg.inline"); if (!m){ m = document.createElement("p"); m.className = "msg err inline"; el.parentElement.appendChild(m); } m.textContent = text; }
@@ -995,7 +1045,7 @@ document.addEventListener("submit", e => {
   if (e.target.id !== "finder") return; e.preventDefault();
   const qs = $("#fQuest").value; if (qs){ location.hash = "#/quest/" + qs; return; }
   ideaTab = $("#fArea").value; ideaStatus = $("#fStatus").value;
-  $("#ideasBox").innerHTML = ideasBlock(); document.getElementById("ideas").scrollIntoView({ behavior:"smooth", block:"start" });
+  if (location.hash === "#/ideas") route(); else location.hash = "#/ideas";
 });
 $("#footDiscord").innerHTML = CFG.discord ? `<a href="${esc(CFG.discord)}" target="_blank" rel="noopener">Discord</a>` : "";
 window.addEventListener("hashchange", route);
