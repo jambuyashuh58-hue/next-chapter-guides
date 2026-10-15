@@ -1021,14 +1021,14 @@ function questArt(slug, category){
   const b1 = "#1E40AF", acc = "#FFD27A", y0 = lines.length > 2 ? 92 : 106;
   return `<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(hook + " " + lines.join(" "))}">
   <defs><linearGradient id="${uid}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset=".52" stop-color="#1E88D6"/><stop offset="1" stop-color="#14B8A6"/></linearGradient>
-  <linearGradient id="${uid}d" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0B1630" stop-opacity=".88"/><stop offset=".55" stop-color="#0B1630" stop-opacity=".62"/><stop offset="1" stop-color="#0B1630" stop-opacity=".25"/></linearGradient><linearGradient id="${uid}b" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#0B1630" stop-opacity="0"/><stop offset="1" stop-color="#0B1630" stop-opacity=".7"/></linearGradient><radialGradient id="${uid}r" cx="${cx / 4}%" cy="${cy / 2.5}%" r="45%"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+  <linearGradient id="${uid}d" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0B1630" stop-opacity=".6"/><stop offset=".55" stop-color="#0B1630" stop-opacity=".32"/><stop offset="1" stop-color="#0B1630" stop-opacity=".04"/></linearGradient><linearGradient id="${uid}b" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#0B1630" stop-opacity="0"/><stop offset="1" stop-color="#0B1630" stop-opacity=".5"/></linearGradient><filter id="${uid}t" x="-10%" y="-30%" width="120%" height="160%"><feDropShadow dx="0" dy="1.5" stdDeviation="2.2" flood-color="#0B1630" flood-opacity=".75"/></filter><radialGradient id="${uid}r" cx="${cx / 4}%" cy="${cy / 2.5}%" r="45%"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
   <rect width="400" height="250" fill="url(#${uid}g)"/>${photo ? `<image href="https://images.unsplash.com/${photo}?w=800&q=70&auto=format&fit=crop" width="400" height="250" preserveAspectRatio="xMidYMid slice"/>` : ""}
   <rect width="400" height="250" fill="url(#${uid}d)"/><rect width="400" height="250" fill="url(#${uid}b)"/>
-  <g font-family="Manrope,Arial,sans-serif">
+  <g font-family="Manrope,Arial,sans-serif" filter="url(#${uid}t)">
     <text x="26" y="${y0 - 34}" font-size="14" font-weight="700" font-style="italic" fill="${acc}">${esc(hook)}</text>
     ${lines.map((l, i) => `<text x="25" y="${y0 + i * 31}" font-size="28" font-weight="800" letter-spacing="-.6" fill="#fff">${esc(l)}</text>`).join("")}
   </g>
-  <g transform="translate(${cx.toFixed(1)},${cy.toFixed(1)})"><circle r="50" fill="#0B1630" fill-opacity=".55" stroke="${acc}" stroke-opacity=".4"/>
+  <g transform="translate(${cx.toFixed(1)},${cy.toFixed(1)})"><circle r="50" fill="#0B1630" fill-opacity=".35" stroke="${acc}" stroke-opacity=".4"/>
     <g fill="none" stroke="${acc}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" transform="scale(.66)">${icon.replace(/class="f"/g, `fill="${acc}" stroke="none"`)}</g></g>
   <path d="M26 202 H374" stroke="#fff" stroke-opacity=".16"/>
   <text x="26" y="220" font-family="Manrope,Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1.8" fill="#fff" fill-opacity=".6">30 DAYS · FREE · DONE TOGETHER</text>
