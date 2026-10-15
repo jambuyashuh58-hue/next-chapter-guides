@@ -438,6 +438,16 @@ ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
 .rm-list .c ul{margin:6px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
 .rm-list .c ul li{display:list-item;margin:2px 0}
 .rm-list .you{display:inline-block;margin-left:6px;background:#F5B83D;color:#3A2A00;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;vertical-align:middle}
+.rm-list.always{display:block}
+.rm-list .c{min-width:0}
+.rm-tasks{margin-top:6px}
+.rm-tasks .task{padding:8px 6px}
+.rm-pct{text-align:right}
+.rm-pct b{display:block;font:600 30px/1 var(--display)}
+.rm-pct span{font-size:12.5px;color:var(--muted)}
+.dcols{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+.dstack{display:grid;gap:16px;min-width:0}
+@media (max-width:960px){.dcols{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:760px){.map-shell{display:none}.rm-list{display:block}}
 .qtop h1{overflow-wrap:anywhere}
 
@@ -877,7 +887,7 @@ let NAVS = 0;
 const backBtn = () => `<button class="back" type="button" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</button>`;
 // stop positions on the Next Chapter map art, in road order: start, week 1-4, finish  [x%, y%, label below "b" / above "a"]
 const RM_SLOTS = [[9,89,"b"],[25,49,"a"],[54,45,"a"],[90,68,"b"],[92,43,"b"],[70,13,"a"]];
-function roadmap(q, e){
+function roadmap(q, e, vertical){
   const tasks = (q.content||{}).tasks || []; if (!tasks.length) return "";
   const weeks = [...new Set(tasks.map(t => t.week))].slice(0, 4), done = e ? e.done_tasks : [];
   const wk = weeks.map(w => { const wt = tasks.filter(t => t.week === w); return { w, wt, d: wt.filter(t => done.includes(t.id)).length }; });
@@ -894,7 +904,18 @@ function roadmap(q, e){
   let you = "";
   if (e){ const [x, y, side] = slots[Math.min(curIdx, slots.length - 1)], ty = side === "a" ? y - 16 : y - 6;
     you = `<img class="balloon" src="assets/balloon.svg" alt="" style="left:${x}%;top:${Math.max(8, ty)}%"><span class="you-tag" style="left:${x}%;top:${Math.max(8, ty) - 9}%">You${allDone ? " made it!" : ""}</span>`; }
-  const list = stops.map((st, i) => `<li class="${st.done ? "done" : ""} ${i === curIdx ? "cur" : ""}"><span class="n">${st.n}</span><div class="c"><b>${esc(st.t)}${i === curIdx ? '<span class="you">You are here</span>' : ""}</b><small>${esc(st.s)}</small>${i > 0 && i <= wk.length ? `<ul>${wk[i-1].wt.map(t => `<li>${done.includes(t.id) ? "✓ " : ""}${esc(t.title)}</li>`).join("")}</ul>` : ""}</div></li>`).join("");
+  const can = e && q.status === "live";
+  const taskRows = wt => wt.map(t => { const on = done.includes(t.id); return `<label class="task ${can?"":"locked"} ${on?"isdone":""}"><input type="checkbox" data-task="${esc(t.id)}" data-slug="${esc(q.slug)}" ${on?"checked":""} ${can?"":"disabled"}><span><b>${esc(t.title)}</b>${t.detail?`<span>${esc(t.detail)}</span>`:""}${t.link?` <a href="${esc(t.link)}" target="_blank" rel="noopener">Open</a>`:""}</span></label>`; }).join("");
+  const list = stops.map((st, i) => `<li class="${st.done ? "done" : ""} ${i === curIdx ? "cur" : ""}"><span class="n">${st.n}</span><div class="c"><b>${esc(st.t)}${i === curIdx ? '<span class="you">You are here</span>' : ""}</b><small>${esc(st.s)}${vertical && i > 0 && i <= wk.length && e ? ` · ${wk[i-1].d}/${wk[i-1].wt.length} done` : ""}</small>${i > 0 && i <= wk.length ? (vertical ? `<div class="rm-tasks">${taskRows(wk[i-1].wt)}</div>` : `<ul>${wk[i-1].wt.map(t => `<li>${done.includes(t.id) ? "✓ " : ""}${esc(t.title)}</li>`).join("")}</ul>`) : ""}</div></li>`).join("");
+  if (vertical){
+    const tot = tasks.length, dn = done.length, pc = tot ? Math.round(dn / tot * 100) : 0;
+    return `<div class="rm">
+      <div class="rm-head"><div><h3>Your road map</h3><p class="small muted" style="margin:6px 0 0">${e ? (can ? "Tick tasks off as you go. Each one is 10 XP." : `Ticking unlocks on ${fmt(q.starts_on)}, when the quest goes live.`) : "Join the quest to start your road map."}</p></div>
+        <div class="rm-pct"><b class="tnum">${pc}%</b><span>${dn} of ${tot} tasks</span></div></div>
+      <div class="pbar" style="height:8px;margin-bottom:18px"><i style="width:${pc}%"></i></div>
+      <ol class="rm-list always" aria-label="${esc(q.title)} road map">${list}</ol>
+    </div>`;
+  }
   return `<div class="rm">
     <div class="rm-head"><div><h3>Your road map</h3><p class="small muted" style="margin:6px 0 0">${e ? "Hover or tap a stop to see its tasks. The balloon shows where you are." : "Four weekly stops from the start line to the finish. Hover or tap a stop to see its tasks."}</p></div>
       <div class="legend" aria-hidden="true"><span><i></i>The road</span><span><i class="ok"></i>Done</span>${e ? '<span><i class="you"></i>You</span>' : ""}</div></div>
@@ -986,23 +1007,12 @@ async function vMe(sub){
       <div class="kpi glass"><span>Tasks done</span><b class="tnum">${done.length}/${tasks.length || "–"}</b><small>${pct}% of the plan</small></div>
       <div class="kpi glass"><span>Check-in streak</span><b class="tnum">${streak} 🔥</b><small>${e ? `${e.logs} check-in${e.logs===1?"":"s"} in total` : "Starts when you log"}</small></div>
     </div>
-    ${q && ((q.content||{}).tasks||[]).length ? `<div class="panel">${roadmap(q, e)}</div>` : ""}
-    ${q ? `<div class="dgrid">
-      <div class="panel">
-        <div class="phead"><h3>Quest progress</h3><a class="small" href="#/quest/${q.slug}">Quest page</a></div>
-        <div class="progress-wrap">
-          <div class="pring" style="--p:${pct}"><b class="tnum">${pct}%</b><span>done</span></div>
-          <div class="wbars">${weeks.map(w => { const wt = tasks.filter(t => t.week === w), wd = wt.filter(t => done.includes(t.id)).length; return `<div class="wbar"><div class="wl"><span>${esc(w.split("·")[0].trim())}</span><span class="tnum muted">${wd}/${wt.length}</span></div><div class="pbar"><i style="width:${wt.length ? wd/wt.length*100 : 0}%"></i></div><small class="muted">${esc((w.split("·")[1]||"").trim())}</small></div>`; }).join("") || `<p class="muted">The week-by-week plan appears here once the quest has tasks.</p>`}</div>
-        </div>
-      </div>
+    ${q ? `<div class="dcols">
+      <div class="panel">${tasks.length ? roadmap(q, e, true) : `<h3>Your road map</h3><p class="muted" style="margin:0">The week-by-week plan appears here once the quest has tasks.</p>`}</div>
+      <div class="dstack">
       <div class="panel">
         <div class="phead"><h3>Today's check-in</h3><a class="small" href="#/me/checkin">History</a></div>
         ${e ? checkinForm(q, e) : `<p class="muted" style="margin:0">Join the quest to log daily check-ins.</p>`}
-      </div>
-      <div class="panel">
-        <div class="phead"><h3>Next up</h3><a class="small" href="#/me/tasks">All tasks</a></div>
-        ${next.length ? taskList(q, e, q.slug, t => next.includes(t)) : `<p class="muted" style="margin:0">${tasks.length ? "Every task done. Brilliant work." : "No tasks yet."}</p>`}
-        ${q.status !== "live" && tasks.length ? `<p class="small muted" style="margin:10px 0 0">Ticking unlocks when the quest goes live.</p>` : ""}
       </div>
       <div class="panel">
         <div class="phead"><h3>Billboard</h3><a class="small" href="#/me/board">Full board</a></div>
@@ -1016,6 +1026,7 @@ async function vMe(sub){
         <div class="phead"><h3>Crew hangout</h3></div>
         <p class="small" style="margin:0 0 12px;color:var(--ink-2)">Post your wins in the Discord. ${esc(CFG.zoomNote)}</p>
         ${discordBtn("sm")}
+      </div>
       </div>
     </div>` : ""}
     ${mine.length ? `<div class="panel"><div class="phead"><h3>My badges</h3><span class="small muted">Finish every task to earn the badge</span></div><div class="badges">${mine.map(({e,q}) => { const n = ((q.content||{}).tasks||[]).length, d = e.done_tasks.length, got = n && d >= n; return `<div class="badge-item ${got?"":"locked"}">${patch(q)}<b>${esc(q.title)}</b><span>${got ? "Earned 🎉" : `${d}/${n} tasks done`}</span>${got ? shareBtn(`I finished the ${q.title} with Side Quest Crew 🎖️ All ${n} tasks done.\n\nNext month's quest is up for a vote. Come do it with us: ${SITE}`, "Share badge") : ""}</div>`; }).join("")}</div></div>` : ""}`;
