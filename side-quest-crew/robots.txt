@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sidequestcrew.space/sitemap.xml

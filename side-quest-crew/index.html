@@ -3,10 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Side Quest Crew</title>
+<title>Side Quest Crew: one challenge a month, done together</title>
+<link rel="canonical" href="https://sidequestcrew.space/">
 <meta name="description" content="One quest. One month. Done together. Vote on the next challenge, join the crew, track your progress and climb the leaderboard.">
-<meta property="og:title" content="Side Quest Crew">
-<meta property="og:description" content="One quest. One month. Done together.">
+<meta property="og:title" content="Side Quest Crew: one challenge a month, done together">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sidequestcrew.space/">
+<meta property="og:image" content="https://sidequestcrew.space/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sidequestcrew.space/assets/og.png">
+<meta property="og:description" content="Free. One small step a day for 30 days, with a crew doing the same quest. November: the Career Shift Quest.">
 <meta name="theme-color" content="#ECEFF3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231B1433'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23FF6A2A' stroke-width='6'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23FFC23D'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -529,6 +536,26 @@ ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
   .rm-tasks .task > span > span{display:none}
 }
 
+/* v2: forms, warm-up, calendar, promise, legal, icons */
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--ink-2);cursor:pointer}
+.chk input{margin-top:3px;width:16px;height:16px;accent-color:var(--quest)}
+.linkbtn{border:0;background:none;color:var(--quest);font:700 13.5px var(--body);cursor:pointer;justify-self:start;padding:0;text-decoration:underline}
+.cal{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px;font-size:13.5px;font-weight:700;color:var(--ink-2)}
+.warm{border:2px dashed color-mix(in srgb,var(--quest) 35%,transparent)}
+.promise{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.promise .glass{padding:16px;display:grid;gap:4px}
+.promise b{font:500 15px var(--display)}
+.promise span{font-size:13.5px;color:var(--ink-2)}
+.legal{max-width:760px}
+.legal h1{font-size:32px;margin-bottom:6px}
+.legal h3{margin:22px 0 6px;font-size:18px}
+.legal p{margin:0;color:var(--ink-2)}
+.dnav a svg{width:18px;height:18px;flex:none;opacity:.85}
+@media (max-width:960px){.promise{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.promise{grid-template-columns:minmax(0,1fr)}}
+
+.ring .lbl span span,.ring .lbl b span{font-size:inherit;color:inherit;display:inline}
+
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(40,64,92,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50}
 .modal .panel{width:min(440px,100%);max-height:92vh;overflow:auto;background:var(--frame)}
@@ -593,7 +620,7 @@ footer a{color:var(--muted)}
 
 <main id="view"></main>
 
-<footer><div class="wrap"><span>Side Quest Crew · started by <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a> · Photo by <a href="https://unsplash.com/photos/misty-mountain-peaks-at-sunrise-with-warm-light-sizw4cX8Sds" target="_blank" rel="noopener">Julien Riedel on Unsplash</a></span><span id="footDiscord"></span></div></footer>
+<footer><div class="wrap"><span>Side Quest Crew · started by <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a> · Photo by <a href="https://unsplash.com/photos/misty-mountain-peaks-at-sunrise-with-warm-light-sizw4cX8Sds" target="_blank" rel="noopener">Julien Riedel on Unsplash</a></span><span><a href="#/privacy">Privacy</a> · <a href="#/terms">Terms</a> · <span id="footDiscord"></span></span></div><div class="wrap"><p class="small" style="margin:10px 0 0;opacity:.8">Quests share general steps for personal challenges, not medical, financial or career advice.</p></div></footer>
 </div>
 <nav class="tabbar" id="tabbar" aria-label="Main">
   <a href="#/" data-r="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
@@ -614,12 +641,17 @@ footer a{color:var(--muted)}
       <label class="l">Email<input class="i" id="aEmail" type="email" autocomplete="email" inputmode="email" maxlength="200"></label>
       <label class="l">Password<input class="i" id="aPass" type="password" autocomplete="new-password" minlength="6" placeholder="At least 6 characters"></label>
       <label class="l" id="fCountry">Country<input class="i" id="aCountry" autocomplete="country-name" maxlength="40" placeholder="Optional"></label>
+      <label class="chk" id="fOpt"><input type="checkbox" id="aOpt" checked><span>Email me a short reminder on quest days (8am my time). Turn it off any time.</span></label>
+      <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Leave this empty<input id="aHp" tabindex="-1" autocomplete="off"></label></div>
       <button class="btn" type="submit" id="aBtn">Join the crew</button>
+      <button class="linkbtn" type="button" id="aForgot" hidden>Forgot your password?</button>
+      <p class="small muted" id="aLegal" style="margin:0">By joining you agree to the <a href="#/terms" data-close>terms</a> and <a href="#/privacy" data-close>privacy policy</a>. We never sell your data.</p>
       <p class="msg" id="aMsg" role="status" aria-live="polite"></p>
     </form>
   </div>
 </div>
 
+<script defer src="/_vercel/insights/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 /* =================== SETTINGS =================== */
@@ -627,8 +659,8 @@ const CFG = {
   supabaseUrl: "https://ctezcrglzcjxdkagnoyy.supabase.co",
   supabaseKey: "sb_publishable_WM7az_Nye-qOMmgWDOJRVg_vITL_Zse",
   discord: "https://discord.gg/SCAuThpTB",                 // paste the Discord invite link, e.g. "https://discord.gg/abc123"
-  crewGoal: 1000,
-  showCountsFrom: 25,           // member and vote counts stay hidden until this many people have joined
+  crewGoal: 0,
+  showCountsFrom: 1,            // show real member counts
   founderPhoto: "",            // paste an image URL for the "Started by Yashu" photo              // "1,000 true fans"
   zoomNote: "Once a month, on a Sunday. The link is posted in the Discord a week before.",
 };
@@ -641,8 +673,8 @@ const fmt = d => d ? new Date(d+"T00:00").toLocaleDateString(undefined,{day:"num
 const daysTo = d => Math.ceil((new Date(d+"T00:00") - new Date(new Date().toDateString())) / 864e5);
 const store = { get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}} };
 let sb = null; try { sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey, { auth:{ persistSession:false } }); } catch(e){}
-let TOKEN = store.get("sq_token"), ME = null, QUESTS = [], POLL = null, RESULTS = {}, COUNTS = {}, pendingJoin = null, ideaTab = "All", ideaStatus = "any";
-const ERR = { email_taken:"That email already has an account. Log in instead.", password_short:"Password needs at least 6 characters.", "ERR:bad_login":"Email or password is wrong.", "ERR:locked":"Too many tries. Please wait 15 minutes.", not_logged_in:"Please log in again.", not_open:"This quest isn't open for sign-ups.", not_live:"Tasks unlock when the quest starts.", not_enrolled:"Join the quest first.", poll_closed:"Voting has closed." };
+let MEMBERS = 0, TOKEN = store.get("sq_token"), ME = null, QUESTS = [], POLL = null, RESULTS = {}, COUNTS = {}, pendingJoin = null, ideaTab = "All", ideaStatus = "any";
+const ERR = { bot:"Something went wrong. Please try again.", too_many:"Too many sign-ups from this network. Please try again in an hour.", bad_email:"Please enter a valid email.", bad_name:"Please add your first name (up to 40 characters).", not_yet:"That day hasn't unlocked yet. Come back on the day.", "ERR:bad_reset":"This reset link has expired or was already used. Ask for a new one.", "ERR:password_short":"Password needs at least 6 characters.", email_taken:"That email already has an account. Log in instead.", password_short:"Password needs at least 6 characters.", "ERR:bad_login":"Email or password is wrong.", "ERR:locked":"Too many tries. Please wait 15 minutes.", not_logged_in:"Please log in again.", not_open:"This quest isn't open for sign-ups.", not_live:"Tasks unlock when the quest starts.", not_enrolled:"Join the quest first.", poll_closed:"Voting has closed." };
 const errText = e => { const m = (e && (e.message || e)) + ""; for (const k in ERR) if (m.includes(k)) return ERR[k]; return "Something went wrong. Please try again."; };
 
 const current = () => QUESTS.find(q => q.status === "live") || QUESTS.find(q => q.status === "registration") || QUESTS.filter(q => q.status === "done").sort((a,b)=>(b.ends_on||"").localeCompare(a.ends_on||""))[0];
@@ -655,8 +687,9 @@ async function loadPublic(){
   const [q, p, c] = await Promise.all([
     sb.from("sq_quests").select("*").order("starts_on", { ascending:true, nullsFirst:false }),
     sb.from("sq_polls").select("*").eq("status","open").order("id",{ascending:false}).limit(1),
-    sb.rpc("sq_quest_counts")
-  ]);
+    sb.rpc("sq_quest_counts"),
+    sb.rpc("sq_member_count")
+  ]).then(a => { MEMBERS = Number((a[3] && a[3].data) || 0); return a; });
   QUESTS = q.data || []; POLL = (p.data || [])[0] || null;
   COUNTS = Object.fromEntries((c.data || []).map(r => [r.quest_slug, Number(r.members)]));
   if (POLL){ const r = await sb.rpc("sq_poll_results", { p_poll: POLL.id }); RESULTS = Object.fromEntries((r.data || []).map(x => [x.option_key, Number(x.votes)])); }
@@ -666,8 +699,9 @@ async function loadMe(){
   const { data, error } = await sb.rpc("sq_me", { p_token: TOKEN });
   if (error){ TOKEN = null; store.set("sq_token", null); ME = null; return; }
   ME = data;
+  if (ME && ME.tz !== TZ) sb.rpc("sq_set_prefs", { p_token: TOKEN, p_tz: TZ });
 }
-async function board(slug){ if (!sb) return []; const { data } = await sb.rpc("sq_leaderboard", { p_slug: slug }); return data || []; }
+async function board(slug){ if (!sb) return []; const { data } = await sb.rpc("sq_board", { p_slug: slug, p_token: TOKEN || null }); return data || []; }
 
 /* =================== ART =================== */
 const clouds = (set) => `<div class="clouds" aria-hidden="true">${(set || [[-8,58,46],[62,64,52],[30,-6,30],[78,6,26]]).map(([x,y,w]) => `<svg style="left:${x}%;top:${y}%;width:${w}%;height:auto;aspect-ratio:2/1"><use href="#cloud"/></svg>`).join("")}</div>`;
@@ -789,7 +823,7 @@ function boardTable(rows, q, limit, withPodium){
   if (!rows.length) return `<div class="empty"><b>No one on the board yet</b>Join the quest and be the first name up here.</div>`;
   const myName = ME && ME.name ? ME.name.split(" ")[0] : null;
   return `${withPodium ? podium(rows) : ""}<div class="board-scroll"><table class="b"><thead><tr><th>Rank</th><th>Crew member</th><th>XP</th><th>Tasks</th><th>Check-ins</th><th>Last active</th></tr></thead><tbody>
-    ${rows.slice(0, limit || 100).map(r => `<tr class="r${r.rank}"><td><span class="rank">${r.rank}</span></td><td><b>${esc(r.display_name)}</b>${r.country?` <span class="muted small">${esc(r.country)}</span>`:""}${myName && r.display_name === myName ? ' <span class="chip" style="padding:2px 8px">you</span>':""}</td>
+    ${rows.slice(0, limit || 100).map(r => `<tr class="r${r.rank}"><td><span class="rank">${r.rank}</span></td><td><b>${esc(r.display_name)}</b>${r.country?` <span class="muted small">${esc(r.country)}</span>`:""}${r.is_me ? ' <span class="chip" style="padding:2px 8px">you</span>':""}</td>
       <td class="xp tnum">${r.score}</td><td><div class="pbar" title="${r.tasks_done}/${r.total_tasks}"><i style="width:${r.total_tasks? r.tasks_done/r.total_tasks*100:0}%"></i></div><span class="small muted tnum">${r.tasks_done}/${r.total_tasks}</span></td>
       <td class="tnum">${r.logs}</td><td class="small muted">${r.last_active ? fmt(r.last_active) : "–"}</td></tr>`).join("")}
   </tbody></table></div>`;
@@ -814,7 +848,7 @@ function discordBtn(cls){ return CFG.discord ? `<a class="btn discord ${cls||""}
 /* =================== VIEWS =================== */
 async function vHome(scrollTo){
   const q = current();
-  const totalMembers = Object.values(COUNTS).reduce((a,b)=>a+b,0);
+  const totalMembers = MEMBERS;
   const opt = (v, l, cur) => `<option value="${v}" ${v===cur?"selected":""}>${l}</option>`;
   $("#view").innerHTML = `
   <section class="hero sky">${clouds([[-10,62,50],[58,70,56],[18,4,28],[70,-4,34],[40,40,22]])}<div class="wrap">
@@ -844,12 +878,12 @@ async function vHome(scrollTo){
     <div>
       <h2>The crew</h2>
       <div class="stats">
-        ${showCount(totalMembers) ? `<div class="stat"><b class="tnum">${totalMembers}</b><span>people have joined a quest so far</span></div>` : `<div class="stat"><b class="tnum">$0</b><span>to join, every quest is free</span></div>`}
+        <div class="stat"><b class="tnum">${totalMembers}</b><span>${totalMembers === 1 ? "member" : "members"} in the crew so far</span></div>
         <div class="stat"><b class="tnum">${QUESTS.length}</b><span>quests in the library to vote on</span></div>
       </div>
-      <p class="copy">Side Quest Crew started in October 2026 on Threads. One quest each month, everyone on the same plan, progress on a public billboard and a monthly Zoom. The goal is a crew of 1,000.</p>
+      <p class="copy">Side Quest Crew started in October 2026 on Threads. One quest each month, everyone on the same plan, progress on a public billboard and a monthly Zoom.</p>
     </div>
-    ${showCount(totalMembers) || !q || !q.starts_on || daysTo(q.starts_on) <= 0 ? goldRing(totalMembers, CFG.crewGoal) : timerRing(q)}
+    ${q && q.starts_on && daysTo(q.starts_on) > 0 ? timerRing(q) : goldRing(totalMembers, Math.max(totalMembers, 1), "members")}
     <div class="stack">
       <div class="note glass">Everyone does the same quest, at the same time</div>
       ${broadcastCard(q)}
@@ -888,8 +922,8 @@ async function vHome(scrollTo){
     <div class="sec-head"><div><h2>A simple, open system</h2><p>Four steps every month. Everything is visible on the billboard.</p></div></div>
     <div class="steps">
       <div class="step glass"><span class="n">1</span><h3>Vote</h3><p>Near the end of each month the crew votes on next month's quest.</p></div>
-      <div class="step glass"><span class="n">2</span><h3>Register</h3><p>The winner gets dates and a week-by-week plan. Sign up before it starts.</p></div>
-      <div class="step glass"><span class="n">3</span><h3>Do it together</h3><p>Tick off weekly tasks, log a daily check-in and share wins in the Discord.</p></div>
+      <div class="step glass"><span class="n">2</span><h3>Register</h3><p>The winner gets dates and a 30-day plan. Sign up, do the warm-up and get the Founding badge.</p></div>
+      <div class="step glass"><span class="n">3</span><h3>Do it together</h3><p>One small task a day, about 20 minutes, plus a one-line check-in. Share wins in the Discord.</p></div>
       <div class="step glass"><span class="n">4</span><h3>Billboard and Zoom</h3><p>Earn XP for effort, climb the billboard and meet the crew on the monthly Zoom.</p></div>
     </div>
   </div></section>
@@ -900,8 +934,15 @@ async function vHome(scrollTo){
       <div>
         <h2>Started by Yashu</h2>
         <p>I work a full-time job and build side projects in public on Threads. Most of us quit hard things by week two because we try them alone, so I started a crew instead. Every month I do the same quest as you, on the same billboard.</p>
+        <p>I'm not a guru and I don't have it all figured out. I'm building this in public, sharing what works and what doesn't, and I'll be on the billboard with you.</p>
         <p class="sig">See you on the quest. <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a></p>
       </div>
+    </div>
+    <div class="promise">
+      <div class="glass"><b>Free, for real</b><span>Every quest, the Discord and the Zoom. No card, no trial.</span></div>
+      <div class="glass"><b>Your data stays yours</b><span>First name only on the billboard. We never sell or share your email.</span></div>
+      <div class="glass"><b>Small daily steps</b><span>About 20 minutes a day. Built for people with a full-time job.</span></div>
+      <div class="glass"><b>Leave any time</b><span>One click turns reminders off. Ask and your account is deleted.</span></div>
     </div>
   </div></section>
 
@@ -938,7 +979,7 @@ async function vQuest(slug){
   if (!q){ $("#view").innerHTML = `<section class="sec"><div class="wrap"><h2>Quest not found</h2><p><a href="#/">Back home</a></p></div></section>`; return; }
   const c = q.content || {}, tasks = c.tasks || [], e = enrolled(slug), live = q.status === "live", rows = await board(slug);
   const done = e ? e.done_tasks : [], weeks = [...new Set(tasks.map(t => t.week))];
-  const myRow = e && ME ? rows.find(r => r.display_name === ME.name.split(" ")[0]) : null;
+  const myRow = e && ME ? rows.find(r => r.is_me) : null;
   const joinBtn = (q.status === "registration" || live) ? (e ? `<a class="btn done" href="#/me">You're in. Open my dashboard</a>${shareBtn(progressPost(q, e, streakOf(e.recent_logs)), q.status === "live" ? "Share my progress" : "Tell Threads I'm in", " ")}` : `<button class="btn" type="button" data-join="${slug}">Join this quest</button>`) : q.status === "idea" ? `<a class="btn" href="#/vote">Vote for quests</a>` : "";
   $("#view").innerHTML = `
   <section class="qhead sky">${clouds()}<div class="wrap">
@@ -946,6 +987,7 @@ async function vQuest(slug){
     <div class="qtop">${patch(q)}<div style="min-width:0;flex:1"><h1>${esc(q.title)}</h1><p style="margin-bottom:0">${esc(q.summary||"")}</p></div></div>
     <div class="qmeta"><span class="chip">${esc(q.category)}</span><span class="chip">${statusLabel(q)}</span>${q.starts_on?`<span class="chip">${fmt(q.starts_on)} – ${fmt(q.ends_on)}</span>`:""}${showCount(COUNTS[slug]||0) ? `<span class="chip">${COUNTS[slug]} crew</span>` : ""}${tasks.length?`<span class="chip">${tasks.length} tasks</span>`:""}</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">${joinBtn}${discordBtn()}</div>
+    ${e && q.status === "registration" ? calLinks(q) : ""}
   </div></section>
   ${tasks.length ? `<section class="sec" style="padding-top:28px;padding-bottom:0"><div class="wrap"><div class="panel">${roadmap(q, e)}</div></div></section>` : ""}
   <section class="sec" style="padding-top:28px"><div class="wrap qgrid">
@@ -1015,8 +1057,28 @@ const guideChip = slug => GUIDES[slug] ? `<a class="gchip" href="${guideLink(slu
 function dayDate(q, day){ if (!q.starts_on || !day) return ""; const d = new Date(new Date(q.starts_on+"T00:00").getTime() + (day-1)*864e5); return d.toLocaleDateString("en-GB",{weekday:"short", day:"numeric", month:"short"}); }
 function questDay(q){ if (q.status !== "live" || !q.starts_on) return 0; const n = Math.floor((new Date(new Date().toDateString()) - new Date(q.starts_on+"T00:00")) / 864e5) + 1; return Math.max(1, n); }
 function taskRow(t, q, e){
-  const done = e ? e.done_tasks : [], on = done.includes(t.id), can = e && q.status === "live", today = t.day && t.day === questDay(q);
+  const done = e ? e.done_tasks : [], on = done.includes(t.id), isPrep = /^p\d/.test(t.id), qd = questDay(q), today = t.day && t.day === qd;
+  const can = e && (isPrep ? (q.status === "registration" || q.status === "live") : q.status === "live" && (!t.day || t.day <= qd));
   return `<label class="task ${can?"":"locked"} ${on?"isdone":""} ${today?"today":""}"><input type="checkbox" data-task="${esc(t.id)}" data-slug="${esc(q.slug)}" ${on?"checked":""} ${can?"":"disabled"}><span>${t.day ? `<em class="dlabel">Day ${t.day}${q.starts_on ? `, ${dayDate(q, t.day)}` : ""}${today ? ' <i class="tday">Today</i>' : ""}</em>` : ""}<b>${esc(t.title)}</b>${t.detail?`<span>${esc(t.detail)}</span>`:""}${t.link?` <a href="${esc(t.link)}" target="_blank" rel="noopener">Open</a>`:""}${t.guide ? guideChip(t.guide) : ""}</span></label>`;
+}
+/* calendar: Google link + .ics file for Apple/Outlook */
+function calLinks(q){
+  if (!q || !q.starts_on) return "";
+  const d = q.starts_on.replace(/-/g,""), nd = new Date(q.starts_on+"T00:00"); nd.setDate(nd.getDate()+1);
+  const d2 = nd.toLocaleDateString("en-CA").replace(/-/g,"");
+  const title = `Day 1: ${q.title} (Side Quest Crew)`, details = `Day 1 of the ${q.title}. Open your dashboard: https://sidequestcrew.space/#/me`;
+  const g = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${d}/${d2}&details=${encodeURIComponent(details)}`;
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Side Quest Crew//EN","BEGIN:VEVENT",`UID:${q.slug}-day1@sidequestcrew.space`,`DTSTAMP:${new Date().toISOString().replace(/[-:]/g,"").slice(0,15)}Z`,`DTSTART;VALUE=DATE:${d}`,`DTEND;VALUE=DATE:${d2}`,`SUMMARY:${title}`,`DESCRIPTION:${details}`,"BEGIN:VALARM","TRIGGER:PT8H","ACTION:DISPLAY","DESCRIPTION:Day 1 of your quest","END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
+  return `<div class="cal"><span>📅 Add Day 1 to your calendar:</span><a class="btn ghost sm" href="${g}" target="_blank" rel="noopener">Google</a><a class="btn ghost sm" href="data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}" download="${esc(q.slug)}-day-1.ics">Apple / Outlook</a></div>`;
+}
+function warmupPanel(q, e){
+  const prep = (q.content||{}).prep || []; if (!prep.length || !e || (q.status !== "registration" && q.status !== "live")) return "";
+  const done = prep.filter(t => e.done_tasks.includes(t.id)).length;
+  if (q.status === "live" && done === prep.length) return "";
+  return `<div class="panel warm"><div class="phead"><h3>Warm-up before Day 1</h3><span class="small muted tnum">${done}/${prep.length} done · 5 XP each</span></div>
+    <p class="small muted" style="margin:0 0 6px">Small things that make Day 1 easy. They also put you on the billboard early.</p>
+    ${prep.map(t => taskRow(t, q, e)).join("")}
+    ${calLinks(q)}</div>`;
 }
 function guidesPanel(q){
   const used = [...new Set(((q.content||{}).tasks||[]).map(t => t.guide).filter(Boolean))];
@@ -1112,11 +1174,22 @@ function progressPost(q, e, streak){
 }
 
 /* =================== MEMBER DASHBOARD =================== */
-const utcDay = (offset=0) => new Date(Date.now() - offset*864e5).toISOString().slice(0,10);
+const utcDay = (offset=0) => { const d = new Date(); d.setDate(d.getDate() - offset); return d.toLocaleDateString("en-CA"); };
 function streakOf(logs){
   const days = new Set((logs||[]).map(l => l.day)); let s = 0, i = days.has(utcDay(0)) ? 0 : 1;
   while (days.has(utcDay(i))){ s++; i++; } return s;
 }
+const ICONS = {
+  "": '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  tasks: '<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',
+  checkin: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  board: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+  vote: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 12l2 2 4-4"/>',
+  guides: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',
+  badges: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/>',
+  account: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'
+};
+const ico = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ""}</svg>`;
 const DASH_NAV = [["", "🏠", "Overview"], ["tasks", "✅", "My tasks"], ["checkin", "📝", "Daily check-in"], ["board", "🏆", "Billboard"], ["vote", "🗳️", "Vote"], ["guides", "📘", "Guides"], ["badges", "🎖️", "Badges"], ["account", "⚙️", "Account"]];
 function taskList(q, e, slug, filter){
   const tasks = (q.content||{}).tasks || [], live = q.status === "live", done = e ? e.done_tasks : [];
@@ -1155,7 +1228,7 @@ async function vMe(sub){
   const active = (cur && mine.find(x => x.q.slug === cur.slug)) || mine.find(x => x.q.status === "live") || mine[0] || null;
   const q = active ? active.q : cur, e = active ? active.e : null;
   const rows = q ? await board(q.slug) : [];
-  const myRow = e ? rows.find(r => r.display_name === first) : null;
+  const myRow = e ? rows.find(r => r.is_me) : null;
   const tasks = q ? ((q.content||{}).tasks || []) : [], done = e ? e.done_tasks : [];
   const pct = tasks.length ? Math.round(done.length / tasks.length * 100) : 0;
   const totalXP = mine.reduce((a,x) => a + x.e.score, 0);
@@ -1165,7 +1238,7 @@ async function vMe(sub){
 
   const side = `<aside class="dside glass">
     <div class="dme"><span class="av">${esc(first.slice(0,1).toUpperCase())}</span><div style="min-width:0"><b>${esc(first)}</b><span>${totalXP} XP${ME.country ? ` · ${esc(ME.country)}` : ""}</span></div></div>
-    <nav class="dnav" aria-label="Dashboard">${DASH_NAV.map(([k, ic, l]) => `<a href="#/me${k?"/"+k:""}" class="${(sub||"")===k?"on":""}"><span aria-hidden="true">${ic}</span>${l}</a>`).join("")}</nav>
+    <nav class="dnav" aria-label="Dashboard">${DASH_NAV.map(([k, ic, l]) => `<a href="#/me${k?"/"+k:""}" class="${(sub||"")===k?"on":""}">${ico(k)}${l}</a>`).join("")}</nav>
     <div class="dcta">${discordBtn("sm")}</div>
   </aside>`;
 
@@ -1186,6 +1259,7 @@ async function vMe(sub){
       <div class="kpi glass"><span>Check-in streak</span><b class="tnum">${streak} 🔥</b><small>${e ? `${e.logs} check-in${e.logs===1?"":"s"} in total` : "Starts when you log"}</small></div>
     </div>
     ${levelPanel(totalXP, e, q)}
+    ${q && e ? warmupPanel(q, e) : ""}
     ${q && e ? todayCard(q, e) : ""}
     ${q ? `<div class="dcols">
       <div class="panel">${tasks.length ? roadmap(q, e, true) : `<h3>Your road map</h3><p class="muted" style="margin:0">The week-by-week plan appears here once the quest has tasks.</p>`}</div>
@@ -1220,7 +1294,8 @@ async function vMe(sub){
     <div class="mob" style="text-align:center">${discordBtn("sm")}</div>`;
   } else if (sub === "tasks"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>My tasks</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}, ${done.length} of ${tasks.length} done` : ""}</p></div></div>${joinCard}
-      <div class="panel">${q && tasks.length ? `<p class="small muted" style="margin:0">${q.status === "live" ? (e ? "Tick tasks off as you go. Each one is 10 XP." : "Join the quest to start ticking these off.") : "Tasks unlock when the quest starts."}</p>${taskList(q, e, q.slug)}` : `<p class="muted" style="margin:0">No tasks yet.</p>`}</div>`;
+      ${q && e ? warmupPanel(q, e) : ""}
+      <div class="panel">${q && tasks.length ? `<p class="small muted" style="margin:0">${q.status === "live" ? (e ? "Each day's task unlocks on that day. Each one is 10 XP." : "Join the quest to start ticking these off.") : "Daily tasks unlock one by one from Day 1."}</p>${taskList(q, e, q.slug)}` : `<p class="muted" style="margin:0">No tasks yet.</p>`}</div>`;
   } else if (sub === "checkin"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>Daily check-in</h1><p class="muted">Streak: ${streak} 🔥 · ${e ? e.logs : 0} check-ins in total</p></div></div>${joinCard}
       <div class="dgrid two"><div class="panel"><h3>Today</h3>${q && e ? checkinForm(q, e) : `<p class="muted" style="margin:0">Join the quest to log check-ins.</p>`}</div>
@@ -1235,10 +1310,38 @@ async function vMe(sub){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>Badges</h1><p class="muted">Finish every task in a quest to earn its badge.</p></div></div>${badgesBlock() || `<div class="panel empty"><b>No badges yet</b>Join a quest to start earning them.</div>`}`;
   } else if (sub === "account"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>Account</h1></div></div>
-      <div class="dgrid two"><div class="panel"><h3>Your details</h3><p style="margin:0 0 6px"><b>Name on the billboard:</b> ${esc(first)}</p><p style="margin:0 0 16px"><b>Country:</b> ${esc(ME.country || "Not set")}</p><p class="small muted" style="margin:0 0 16px">Your email is never shown to anyone. To change your name or password, message @yashujambu on Threads or in the Discord.</p><button class="btn ghost" type="button" id="logout">Log out</button></div>
+      <div class="dgrid two"><div class="panel"><h3>Your details</h3><p style="margin:0 0 6px"><b>Name on the billboard:</b> ${esc(first)}</p><p style="margin:0 0 16px"><b>Country:</b> ${esc(ME.country || "Not set")}</p><label class="chk" style="margin:0 0 14px"><input type="checkbox" id="optToggle" ${ME.opt_in ? "checked" : ""}><span>Email me a short reminder on quest days (8am, ${esc(ME.tz || "UTC")} time)</span></label>
+<p class="small muted" style="margin:0 0 16px">Your email is never shown to anyone and never sold. Forgot your password? Log out and use "Forgot your password?". To delete your account, message @yashujambu and it's removed within 7 days.</p><button class="btn ghost" type="button" id="logout">Log out</button></div>
       <div class="panel"><h3>My quests</h3>${mine.length ? mine.map(({e,q}) => { const n = (q.content.tasks||[]).length; return `<a class="myq" href="#/quest/${q.slug}"><span class="e">${esc(q.emoji)}</span><div><b>${esc(q.title)}</b><div class="small muted">${statusLabel(q)}, ${e.done_tasks.length}/${n} tasks, ${e.logs} check-ins</div></div><span class="xp tnum">${e.score} XP</span></a>`; }).join("") : `<p class="muted" style="margin:0">No quests yet.</p>`}</div></div>`;
   }
   $("#view").innerHTML = `<section class="dash sky">${clouds([[60,-8,40],[-12,40,40]])}<div class="wrap dwrap">${side}<div class="dmain">${body}</div></div></section>`;
+}
+
+/* =================== RESET + LEGAL PAGES =================== */
+async function vReset(tok){
+  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><h1>Choose a new password</h1><p>Pick something with at least 6 characters.</p>
+    <form class="f" id="resetForm" style="max-width:420px" novalidate><label class="l">New password<input class="i" id="rPass" type="password" autocomplete="new-password" minlength="6"></label>
+    <button class="btn" type="submit">Save and log in</button><p class="msg" id="rMsg" role="status" aria-live="polite"></p></form></div></section>`;
+  $("#resetForm").addEventListener("submit", async ev => { ev.preventDefault(); const m = $("#rMsg");
+    const r = await sb.rpc("sq_reset_password", { p_reset: tok, p_password: $("#rPass").value });
+    if (r.error || (typeof r.data === "string" && r.data.startsWith("ERR:"))){ m.textContent = errText(r.error || r.data); m.className = "msg err"; return; }
+    TOKEN = r.data; store.set("sq_token", TOKEN); location.hash = "#/me"; await refresh(); });
+}
+async function vLegal(which){
+  const updated = "15 October 2026";
+  const privacy = `<h1>Privacy policy</h1><p class="muted">Last updated ${updated}</p>
+    <h3>What we collect</h3><p>When you join: your first name, email, password (stored only as a one-way hash), optional country, and your time zone so daily tasks unlock at the right time. When you take part: the tasks you tick, your daily check-ins and your votes.</p>
+    <h3>What is public</h3><p>Only your first name (plus a last initial if you gave one), your country if you added it, your XP and your progress appear on the billboard. Your email is never shown.</p>
+    <h3>Emails</h3><p>We send a welcome email, password reset emails you ask for, and, if you opt in, one short reminder on quest days. Turn reminders off any time in your account.</p>
+    <h3>Who we share it with</h3><p>Nobody, and we never sell it. We use Supabase (database), Vercel (hosting and anonymous page analytics) and Resend (email delivery) to run the site.</p>
+    <h3>Your choices</h3><p>Ask us to export or delete your data any time by messaging <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a> on Threads or in the Discord. We act within 7 days.</p>`;
+  const terms = `<h1>Terms</h1><p class="muted">Last updated ${updated}</p>
+    <h3>The deal</h3><p>Side Quest Crew is free. You can join quests, tick tasks, log check-ins, vote and join the Discord and Zoom. Be kind; we may remove accounts that spam, harass or game the billboard.</p>
+    <h3>Not professional advice</h3><p>Quests share general, publicly available steps for personal challenges. They are not medical, financial, legal or career advice. Check with a doctor before starting a health or fitness challenge, and with a qualified adviser before money decisions.</p>
+    <h3>Your responsibility</h3><p>You choose what to do with each step. Take part at your own pace and stop if something doesn't feel right for you.</p>
+    <h3>Links</h3><p>Some steps link to the Next Chapter guides, which are sold separately by the same founder. Buying them is never required to take part.</p>
+    <h3>Changes</h3><p>We may update these terms and will post the date above.</p>`;
+  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap">${backBtn()}</div></section><section class="sec" style="padding-top:8px"><div class="wrap"><div class="panel legal">${which === "privacy" ? privacy : terms}</div></div></section>`;
 }
 
 /* =================== ROUTER =================== */
@@ -1247,6 +1350,9 @@ async function route(){
   document.querySelectorAll("#nav a, #tabbar a").forEach(a => a.classList.toggle("on", a.dataset.r === (r || "home") || (r === "quest" && a.dataset.r === "home")));
   $("#navMe").textContent = ME ? "My dashboard" : "Join the crew";
   $("#ubarSlot").innerHTML = r === "me" ? "" : urgencyBar(current());
+  if (r === "reset") { await vReset(arg); return; }
+  if (r === "privacy" || r === "terms") { await vLegal(r); window.scrollTo(0,0); return; }
+  document.title = ({ "": "Side Quest Crew: one challenge a month, done together", vote:"Vote · Side Quest Crew", board:"Billboard · Side Quest Crew", ideas:"Quest ideas · Side Quest Crew", me:"My dashboard · Side Quest Crew" })[r || ""] || "Side Quest Crew";
   if (r === "quest") await vQuest(arg);
   else if (r === "board") await vBoard(arg);
   else if (r === "me") await vMe(arg);
@@ -1265,13 +1371,19 @@ function openAuth(mode){
 }
 function setMode(m){
   authMode = m; $("#segJoin").classList.toggle("on", m==="join"); $("#segLogin").classList.toggle("on", m==="login");
-  $("#fName").hidden = $("#fCountry").hidden = m !== "join";
-  $("#authTitle").textContent = m === "join" ? "Join the crew" : "Welcome back";
-  $("#aBtn").textContent = m === "join" ? (pendingJoin ? "Join and enter the quest" : "Join the crew") : "Log in";
+  $("#fName").hidden = $("#fCountry").hidden = $("#fOpt").hidden = $("#aLegal").hidden = m !== "join";
+  $("#aForgot").hidden = m !== "login";
+  $("#aPass").closest("label").hidden = m === "forgot";
+  $(".seg").hidden = m === "forgot";
+  $("#authTitle").textContent = m === "join" ? "Join the crew" : m === "forgot" ? "Reset your password" : "Welcome back";
+  $("#aBtn").textContent = m === "join" ? (pendingJoin ? "Join and enter the quest" : "Join the crew") : m === "forgot" ? "Email me a reset link" : "Log in";
   $("#aPass").autocomplete = m === "join" ? "new-password" : "current-password";
   $("#aMsg").textContent = "";
 }
-$("#segJoin").onclick = () => setMode("join"); $("#segLogin").onclick = () => setMode("login");
+$("#segJoin").onclick = () => setMode("join"); $("#segLogin").onclick = () => setMode("login"); $("#aForgot").onclick = () => setMode("forgot");
+document.addEventListener("click", e => { if (e.target.closest("[data-close]")) $("#authModal").hidden = true; });
+const TZ = (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"; } catch(e){ return "UTC"; } })();
+async function mail(action, extra){ try { const r = await fetch(CFG.supabaseUrl + "/functions/v1/sq-mail", { method:"POST", headers:{ "Content-Type":"application/json", apikey: CFG.supabaseKey, Authorization: "Bearer " + CFG.supabaseKey }, body: JSON.stringify({ action, ...extra }) }); return await r.json(); } catch(e){ return { ok:false }; } }
 $("#authClose").onclick = () => { $("#authModal").hidden = true; pendingJoin = null; };
 $("#authModal").addEventListener("click", e => { if (e.target.id === "authModal"){ $("#authModal").hidden = true; pendingJoin = null; } });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#authModal").hidden){ $("#authModal").hidden = true; pendingJoin = null; } });
@@ -1281,16 +1393,23 @@ $("#authForm").addEventListener("submit", async e => {
   const say = (t, c) => { msg.textContent = t; msg.className = "msg " + (c||""); };
   if (authMode === "join" && !name) return say("Please add your first name.", "err");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return say("Please enter a valid email.", "err");
+  if (authMode === "forgot"){
+    $("#aBtn").disabled = true; say("Sending…");
+    const r = await mail("reset", { email }); $("#aBtn").disabled = false;
+    if (r && r.ok && r.email_enabled) return say("If that email has an account, a reset link is on its way. Check your inbox and spam folder.", "ok");
+    return say("Email resets aren't switched on yet. Message @yashujambu on Threads or in the Discord and we'll reset it for you.", "err");
+  }
   if (pass.length < 6) return say("Password needs at least 6 characters.", "err");
   if (!sb) return say("Couldn't connect. Please refresh.", "err");
   $("#aBtn").disabled = true; say(authMode === "join" ? "Creating your account…" : "Logging in…");
   const res = authMode === "join"
-    ? await sb.rpc("sq_register", { p_name: name, p_email: email, p_password: pass, p_country: $("#aCountry").value.trim() || null })
-    : await sb.rpc("sq_login", { p_email: email, p_password: pass });
+    ? await sb.rpc("sq_signup", { p_name: name, p_email: email, p_password: pass, p_country: $("#aCountry").value.trim() || null, p_tz: TZ, p_opt_in: $("#aOpt").checked, p_hp: $("#aHp").value })
+    : await sb.rpc("sq_signin", { p_email: email, p_password: pass, p_tz: TZ });
   $("#aBtn").disabled = false;
   if (res.error) return say(errText(res.error), "err");
   if (typeof res.data === "string" && res.data.startsWith("ERR:")) return say(errText(res.data), "err");
   TOKEN = res.data; store.set("sq_token", TOKEN);
+  if (authMode === "join") mail("welcome", { token: TOKEN });
   if (pendingJoin){ await sb.rpc("sq_join", { p_token: TOKEN, p_slug: pendingJoin }); pendingJoin = null; }
   location.hash = "#/me";
   $("#authModal").hidden = true; $("#authForm").reset();
@@ -1319,6 +1438,7 @@ document.addEventListener("click", async e => {
 });
 function alertInline(el, text){ let m = el.parentElement.querySelector(".msg.inline"); if (!m){ m = document.createElement("p"); m.className = "msg err inline"; el.parentElement.appendChild(m); } m.textContent = text; }
 document.addEventListener("change", async e => {
+  if (e.target.id === "optToggle"){ await sb.rpc("sq_set_prefs", { p_token: TOKEN, p_opt_in: e.target.checked }); await loadMe(); return; }
   const t = e.target; if (!t.dataset.task) return;
   const slug = t.dataset.slug || location.hash.split("/")[2]; t.disabled = true;
   const { error } = await sb.rpc("sq_set_task", { p_token: TOKEN, p_slug: slug, p_task: t.dataset.task, p_done: t.checked });
