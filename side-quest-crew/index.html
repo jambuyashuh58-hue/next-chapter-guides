@@ -15,7 +15,7 @@
 [hidden]{display:none!important}
 /* Layout: the whole site sits in a rounded "window" floating on a cloudy sky. Inside: a sky hero with a 3D compass and a glass quest-finder bar, then white content bands with pale-blue glass cards. */
 :root{
-  --page:#ECEFF3; --sky1:#E1E6ED; --sky2:#F6F7F9; --cloud:#FFFFFF;
+  --page:#ECEFF3; --sky1:#E1E6ED; --sky2:#F6F7F9; --cloud:#FFFFFF; --photo-tint:rgba(246,247,250,.35); --hero-tint-1:rgba(250,251,253,.94); --hero-tint-2:rgba(250,251,253,.78); --hero-tint-3:rgba(250,251,253,.2);
   --frame:#FFFFFF; --surface:#FFFFFF; --glass:rgba(244,246,249,.92); --glass-solid:#EEF1F5; --soft:#F5F7FA;
   --ink:#0F1E3D; --ink-2:#334155; --muted:#5B6478; --line:rgba(18,21,28,.09);
   --on-night:var(--ink); --on-night-2:var(--muted);
@@ -26,8 +26,8 @@
   --display:"Unbounded","Arial Black",system-ui,sans-serif; --body:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0A1320;--sky1:#14263D;--sky2:#1D3554;--cloud:rgba(190,212,240,.16);--frame:#0E1828;--surface:#13213A;--glass:rgba(30,48,76,.78);--glass-solid:#1B2C47;--soft:#18273F;--ink:#EEF3FA;--ink-2:#CDD7E5;--muted:#93A2B8;--line:rgba(255,255,255,.09);--quest:#FF7650;--quest-hover:#FF8F6E;--gold:#D9B46A;--gold-2:#B88A3E;--mint:#2DD4A8;--knob:#EEF3FA;--on-knob:#0E1116;--health:#4ADE80;--wealth:#F5C45E;--money:#2DD4BF;--rel:#F472B6;--career:#60A5FA;--shadow:0 24px 50px -28px rgba(0,0,0,.8);--rim:rgba(255,255,255,.06);color-scheme:dark}}
-:root[data-theme="dark"]{--page:#0A1320;--sky1:#14263D;--sky2:#1D3554;--cloud:rgba(190,212,240,.16);--frame:#0E1828;--surface:#13213A;--glass:rgba(30,48,76,.78);--glass-solid:#1B2C47;--soft:#18273F;--ink:#EEF3FA;--ink-2:#CDD7E5;--muted:#93A2B8;--line:rgba(255,255,255,.09);--quest:#FF7650;--quest-hover:#FF8F6E;--gold:#D9B46A;--gold-2:#B88A3E;--mint:#2DD4A8;--knob:#EEF3FA;--on-knob:#0E1116;--health:#4ADE80;--wealth:#F5C45E;--money:#2DD4BF;--rel:#F472B6;--career:#60A5FA;--shadow:0 24px 50px -28px rgba(0,0,0,.8);--rim:rgba(255,255,255,.06);color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0A1320;--photo-tint:rgba(8,14,26,.7);--hero-tint-1:rgba(10,18,32,.94);--hero-tint-2:rgba(10,18,32,.8);--hero-tint-3:rgba(10,18,32,.35);--sky1:#14263D;--sky2:#1D3554;--cloud:rgba(190,212,240,.16);--frame:#0E1828;--surface:#13213A;--glass:rgba(30,48,76,.78);--glass-solid:#1B2C47;--soft:#18273F;--ink:#EEF3FA;--ink-2:#CDD7E5;--muted:#93A2B8;--line:rgba(255,255,255,.09);--quest:#FF7650;--quest-hover:#FF8F6E;--gold:#D9B46A;--gold-2:#B88A3E;--mint:#2DD4A8;--knob:#EEF3FA;--on-knob:#0E1116;--health:#4ADE80;--wealth:#F5C45E;--money:#2DD4BF;--rel:#F472B6;--career:#60A5FA;--shadow:0 24px 50px -28px rgba(0,0,0,.8);--rim:rgba(255,255,255,.06);color-scheme:dark}}
+:root[data-theme="dark"]{--page:#0A1320;--photo-tint:rgba(8,14,26,.7);--hero-tint-1:rgba(10,18,32,.94);--hero-tint-2:rgba(10,18,32,.8);--hero-tint-3:rgba(10,18,32,.35);--sky1:#14263D;--sky2:#1D3554;--cloud:rgba(190,212,240,.16);--frame:#0E1828;--surface:#13213A;--glass:rgba(30,48,76,.78);--glass-solid:#1B2C47;--soft:#18273F;--ink:#EEF3FA;--ink-2:#CDD7E5;--muted:#93A2B8;--line:rgba(255,255,255,.09);--quest:#FF7650;--quest-hover:#FF8F6E;--gold:#D9B46A;--gold-2:#B88A3E;--mint:#2DD4A8;--knob:#EEF3FA;--on-knob:#0E1116;--health:#4ADE80;--wealth:#F5C45E;--money:#2DD4BF;--rel:#F472B6;--career:#60A5FA;--shadow:0 24px 50px -28px rgba(0,0,0,.8);--rim:rgba(255,255,255,.06);color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{color:var(--ink);font:15.5px/1.6 var(--body);-webkit-font-smoothing:antialiased;padding-block:clamp(10px,3vw,40px);padding-inline:clamp(8px,3vw,40px);
@@ -36,8 +36,10 @@ body{color:var(--ink);font:15.5px/1.6 var(--body);-webkit-font-smoothing:antiali
     radial-gradient(ellipse 30% 16% at 88% 22%, var(--cloud), transparent 70%),
     radial-gradient(ellipse 40% 20% at 20% 62%, var(--cloud), transparent 72%),
     radial-gradient(ellipse 36% 18% at 85% 88%, var(--cloud), transparent 72%),
-    linear-gradient(180deg,var(--sky1),var(--page) 60%,var(--sky2));
+    linear-gradient(180deg,var(--photo-tint),var(--photo-tint)),
+    url("https://images.unsplash.com/photo-1761995912979-c3646524391b?auto=format&fit=crop&w=2000&q=70") center/cover no-repeat;
   background-color:var(--page);background-attachment:fixed}
+@media (max-width:760px){body{background-attachment:scroll}}
 a{color:var(--quest)}
 h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;line-height:1.12;text-wrap:balance;letter-spacing:-.005em}
 .frame{max-width:1240px;margin:0 auto;background:var(--frame);border-radius:clamp(26px,4vw,48px);overflow:clip;box-shadow:0 40px 90px -50px rgba(30,60,90,.55),inset 0 0 0 1.5px var(--rim)}
@@ -76,7 +78,8 @@ h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;line-height:1.12;te
 @media (max-width:760px){.nav nav a.hide-sm{display:none}.nav .wrap{gap:10px;height:62px}}
 
 /* sky + clouds */
-.sky{position:relative;isolation:isolate;background:linear-gradient(180deg,var(--sky1),var(--sky2) 78%,var(--frame))}
+.sky{position:relative;isolation:isolate;background:linear-gradient(100deg,var(--hero-tint-1) 0%,var(--hero-tint-2) 48%,var(--hero-tint-3) 100%),linear-gradient(180deg,transparent 70%,var(--frame) 100%),url("https://images.unsplash.com/photo-1761995912979-c3646524391b?auto=format&fit=crop&w=1800&q=70") center 35%/cover no-repeat}
+.sky .clouds{opacity:.55}
 .clouds{position:absolute;inset:0;z-index:-1;pointer-events:none;color:var(--cloud)}
 .clouds svg{position:absolute;width:auto;max-width:none}
 .puff{position:absolute;pointer-events:none;z-index:0;width:min(420px,70vw);aspect-ratio:2/1;max-width:100%;color:var(--cloud);opacity:.95}
@@ -388,6 +391,56 @@ ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
   .explore{grid-template-columns:minmax(0,1fr)}
 }
 
+/* back link */
+.back{display:inline-flex;align-items:center;gap:6px;border:0;background:color-mix(in srgb,var(--surface) 70%,transparent);backdrop-filter:blur(8px);color:var(--ink);font:700 14px var(--body);padding:8px 14px 8px 10px;border-radius:999px;cursor:pointer;margin-bottom:18px;box-shadow:0 6px 16px -10px rgba(15,30,61,.4)}
+.back svg{width:18px;height:18px}
+.back:hover{background:var(--surface)}
+/* road map (same art as Next Chapter) */
+.rm-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.rm-head h3{margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{display:inline-block;width:26px;height:0;border-top:4px dotted #2563EB}
+.legend i.ok{width:14px;height:14px;border:0;border-radius:50%;background:var(--mint)}
+.legend i.you{width:14px;height:14px;border:3px solid #fff;border-radius:50%;background:#F5B83D;box-shadow:0 0 0 1px var(--line)}
+.map-shell{border-radius:22px;overflow:hidden;position:relative;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.9)}
+.map{position:relative;aspect-ratio:16/10}
+.map-art{position:absolute;inset:0}
+.map-art img{width:100%;height:100%;display:block}
+.balloon{position:absolute;width:4.4%;transform:translate(-50%,-100%);animation:floaty 7s ease-in-out infinite;z-index:3}
+.you-tag{position:absolute;transform:translate(-50%,-100%);z-index:4;background:#0F1E3D;color:#fff;font:800 11px var(--body);padding:4px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 6px 14px -6px rgba(0,0,0,.5)}
+@keyframes floaty{0%,100%{margin-top:0}50%{margin-top:-10px}}
+.stopl{position:absolute;transform:translate(-50%,0);z-index:2;display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:14px;text-decoration:none;color:#0F1E3D;background:rgba(255,255,255,.95);box-shadow:0 8px 20px -12px rgba(15,30,61,.5);font-weight:700;font-size:13px;width:max-content;outline:none;transition:box-shadow .2s}
+.stopl .n{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#2563EB,#14B8A6);color:#fff;font-size:12px}
+.stopl.done .n{background:var(--mint)} .stopl.cur{box-shadow:0 0 0 3px #F5B83D,0 8px 20px -12px rgba(15,30,61,.5)}
+.stopl .lt{display:block;white-space:normal;max-width:180px;line-height:1.25}
+.stopl .lt small{display:block;font-weight:500;font-size:11.5px;color:#4B5874;margin-top:2px}
+.stopl.up{transform:translate(-50%,-100%)}
+.stopl.l{transform:translate(-34px,0)} .stopl.l.up{transform:translate(-34px,-100%)}
+.stopl.r{transform:translate(calc(-100% + 34px),0)} .stopl.r.up{transform:translate(calc(-100% + 34px),-100%)}
+.stopl .pop{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);width:250px;white-space:normal;background:#0F1E3D;color:#F1F5FF;border-radius:14px;padding:12px 14px;font-weight:500;font-size:13px;line-height:1.45;opacity:0;pointer-events:none;transition:opacity .2s;box-shadow:0 18px 40px -16px rgba(0,0,0,.6);z-index:6}
+.stopl.up .pop{bottom:auto;top:calc(100% + 10px)}
+.stopl.l .pop{left:0;transform:none} .stopl.r .pop{left:auto;right:0;transform:none}
+.stopl .pop b{display:block;font-size:14px;margin-bottom:6px;color:#fff}
+.stopl .pop span{display:block}
+.stopl:hover .pop,.stopl:focus-visible .pop,.stopl:focus .pop{opacity:1}
+.stopl:hover,.stopl:focus{z-index:5}
+.sign{position:absolute;z-index:1;transform:translate(-50%,-50%) rotate(-3deg);background:#8B5E3C;color:#FFF7EC;font:800 11px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border-radius:6px;box-shadow:0 6px 14px -8px rgba(0,0,0,.5);white-space:nowrap}
+.sign::after{content:"";position:absolute;left:50%;top:100%;width:5px;height:20px;background:#6B4429;transform:translateX(-50%);z-index:-1}
+.rm-list{display:none;list-style:none;margin:0;padding:0;position:relative}
+.rm-list::before{content:"";position:absolute;left:21px;top:18px;bottom:18px;border-left:4px dotted #2563EB}
+.rm-list > li{position:relative;display:grid;grid-template-columns:46px minmax(0,1fr);gap:10px;align-items:start;margin-bottom:10px}
+.rm-list .n{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#2563EB,#14B8A6);color:#fff;font:800 14px var(--body);border:4px solid var(--frame);position:relative}
+.rm-list > li.done .n{background:var(--mint)} .rm-list > li.cur .n{box-shadow:0 0 0 3px #F5B83D}
+.rm-list .c{background:var(--glass);border-radius:14px;padding:10px 14px;min-width:0}
+.rm-list .c b{display:block;font-size:15px}
+.rm-list .c small{display:block;color:var(--muted);font-size:13px}
+.rm-list .c ul{margin:6px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
+.rm-list .c ul li{display:list-item;margin:2px 0}
+.rm-list .you{display:inline-block;margin-left:6px;background:#F5B83D;color:#3A2A00;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;vertical-align:middle}
+@media (max-width:760px){.map-shell{display:none}.rm-list{display:block}}
+.qtop h1{overflow-wrap:anywhere}
+
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(40,64,92,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50}
 .modal .panel{width:min(440px,100%);max-height:92vh;overflow:auto;background:var(--frame)}
@@ -451,7 +504,7 @@ footer a{color:var(--muted)}
 
 <main id="view"></main>
 
-<footer><div class="wrap"><span>Side Quest Crew · started by <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a></span><span id="footDiscord"></span></div></footer>
+<footer><div class="wrap"><span>Side Quest Crew · started by <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a> · Photo by <a href="https://unsplash.com/photos/misty-mountain-peaks-at-sunrise-with-warm-light-sizw4cX8Sds" target="_blank" rel="noopener">Julien Riedel on Unsplash</a></span><span id="footDiscord"></span></div></footer>
 </div>
 <nav class="tabbar" id="tabbar" aria-label="Main">
   <a href="#/" data-r="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
@@ -766,10 +819,12 @@ async function vQuest(slug){
   const joinBtn = (q.status === "registration" || live) ? (e ? `<a class="btn done" href="#/me">You're in. Open my dashboard</a>${shareBtn(progressPost(q, e, streakOf(e.recent_logs)), q.status === "live" ? "Share my progress" : "Tell Threads I'm in", " ")}` : `<button class="btn" type="button" data-join="${slug}">Join this quest</button>`) : q.status === "idea" ? `<a class="btn" href="#/vote">Vote for quests</a>` : "";
   $("#view").innerHTML = `
   <section class="qhead sky">${clouds()}<div class="wrap">
+    ${backBtn()}
     <div class="qtop">${patch(q)}<div style="min-width:0;flex:1"><h1>${esc(q.title)}</h1><p style="margin-bottom:0">${esc(q.summary||"")}</p></div></div>
     <div class="qmeta"><span class="chip">${esc(q.category)}</span><span class="chip">${statusLabel(q)}</span>${q.starts_on?`<span class="chip">${fmt(q.starts_on)} – ${fmt(q.ends_on)}</span>`:""}${showCount(COUNTS[slug]||0) ? `<span class="chip">${COUNTS[slug]} crew</span>` : ""}${tasks.length?`<span class="chip">${tasks.length} tasks</span>`:""}</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">${joinBtn}${discordBtn()}</div>
   </div></section>
+  ${tasks.length ? `<section class="sec" style="padding-top:28px;padding-bottom:0"><div class="wrap"><div class="panel">${roadmap(q, e)}</div></div></section>` : ""}
   <section class="sec" style="padding-top:28px"><div class="wrap qgrid">
     <div style="display:grid;gap:20px">
       ${c.why ? `<div class="panel"><h3>Why this quest</h3><p style="margin:0;color:var(--ink-2)">${esc(c.why)}</p>${c.note?`<p class="small" style="margin:12px 0 0;color:var(--muted)">⚠️ ${esc(c.note)}</p>`:""}</div>` : (c.note ? `<div class="panel"><p style="margin:0">⚠️ ${esc(c.note)}</p></div>` : "")}
@@ -800,21 +855,52 @@ async function vQuest(slug){
 }
 
 async function vVote(){
-  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><span class="e">🗳️</span><h1>${esc(POLL ? POLL.title.replace(/^Vote:\s*/i,"") : "Next month's vote")}</h1><p>Members choose what the whole crew does next. ${ME ? "Pick one. You can change it until voting closes." : "Join or log in to vote."}</p>${ME ? "" : `<div class="acts"><button class="btn" type="button" data-auth="join">Join the crew</button><button class="btn ghost" type="button" data-auth="login">Log in</button></div>`}</div></section>
+  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap">${backBtn()}<span class="e">🗳️</span><h1>${esc(POLL ? POLL.title.replace(/^Vote:\s*/i,"") : "Next month's vote")}</h1><p>Members choose what the whole crew does next. ${ME ? "Pick one. You can change it until voting closes." : "Join or log in to vote."}</p>${ME ? "" : `<div class="acts"><button class="btn" type="button" data-auth="join">Join the crew</button><button class="btn ghost" type="button" data-auth="login">Log in</button></div>`}</div></section>
   <section class="sec" style="padding-top:28px"><div class="wrap">${pollBlock()}</div></section>`;
 }
 async function vIdeas(){
-  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><span class="e">🧭</span><h1>Quest ideas</h1><p>Every quest the crew could take on, across health, wealth, money, relationships and career. Want one on the next vote? Suggest it in the Discord.</p></div></section>
+  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap">${backBtn()}<span class="e">🧭</span><h1>Quest ideas</h1><p>Every quest the crew could take on, across health, wealth, money, relationships and career. Want one on the next vote? Suggest it in the Discord.</p></div></section>
   <section class="sec" style="padding-top:28px"><div class="wrap"><div id="ideasBox">${ideasBlock()}</div></div></section>`;
 }
 async function vBoard(slug){
   const q = slug ? QUESTS.find(x => x.slug === slug) : current();
   const rows = q ? await board(q.slug) : [];
   const withData = QUESTS.filter(x => x.status !== "idea");
-  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><span class="e">🏆</span><h1>Billboard</h1><p>${q ? `${esc(q.emoji)} ${esc(q.title)} · ${statusLabel(q)}` : "No quest yet"}</p>
+  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap">${backBtn()}<span class="e">🏆</span><h1>Billboard</h1><p>${q ? `${esc(q.emoji)} ${esc(q.title)} · ${statusLabel(q)}` : "No quest yet"}</p>
     <div class="qmeta">${withData.map(x => `<a class="chip" style="text-decoration:none${x.slug===q?.slug?";background:var(--quest);color:#fff":""}" href="#/board/${x.slug}">${esc(x.emoji)} ${esc(x.title)}</a>`).join("")}</div></div></section>
   <section class="sec" style="padding-top:28px"><div class="wrap"><div class="board glass">${boardTable(rows, q, 0, true)}</div>
   <p class="small muted" style="margin-top:14px">XP = 10 per task + 5 per daily check-in. Only first names and countries are shown.</p></div></section>`;
+}
+
+/* =================== BACK + ROAD MAP =================== */
+let NAVS = 0;
+const backBtn = () => `<button class="back" type="button" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</button>`;
+// stop positions on the Next Chapter map art, in road order: start, week 1-4, finish  [x%, y%, label below "b" / above "a"]
+const RM_SLOTS = [[9,89,"b"],[25,49,"a"],[54,45,"a"],[90,68,"b"],[92,43,"b"],[70,13,"a"]];
+function roadmap(q, e){
+  const tasks = (q.content||{}).tasks || []; if (!tasks.length) return "";
+  const weeks = [...new Set(tasks.map(t => t.week))].slice(0, 4), done = e ? e.done_tasks : [];
+  const wk = weeks.map(w => { const wt = tasks.filter(t => t.week === w); return { w, wt, d: wt.filter(t => done.includes(t.id)).length }; });
+  const curIdx = e ? (() => { const i = wk.findIndex(x => x.d < x.wt.length); return i < 0 ? wk.length + 1 : i + 1; })() : -1;   // 0 start, 1..4 weeks, 5 finish
+  const allDone = e && curIdx === wk.length + 1;
+  const stops = [
+    { n:"GO", t:"Start", s: q.starts_on ? fmt(q.starts_on) : "Day 1", pop:`<b>The start line</b><span>${q.starts_on ? `We all set off on ${fmt(q.starts_on)}.` : "Everyone sets off together."} Join before then to start on day one.</span>`, done: !!e },
+    ...wk.map((x, i) => { const [a, b] = x.w.split("·").map(z => z.trim()); return { n: x.d === x.wt.length && e ? "✓" : String(i+1).padStart(2,"0"), t: a, s: b || `${x.wt.length} tasks`, pop:`<b>${esc(a)}${b ? `: ${esc(b)}` : ""}</b>${x.wt.map(t => `<span>${done.includes(t.id) ? "✓" : "○"} ${esc(t.title)}</span>`).join("")}${e ? `<span style="margin-top:6px;color:#5EEAD4;font-weight:700">${x.d} of ${x.wt.length} done</span>` : ""}`, done: e && x.d === x.wt.length }; }),
+    { n:"🏁", t:"Finish line", s: q.ends_on ? fmt(q.ends_on) : "Day 30", pop:`<b>The finish line</b><span>Finish every task to earn the ${esc(q.title)} badge. We celebrate on the monthly Zoom.</span>`, done: allDone }
+  ];
+  const slots = stops.length === 6 ? RM_SLOTS : RM_SLOTS.slice(0, stops.length - 1).concat([RM_SLOTS[5]]);
+  const pins = stops.map((st, i) => { const [x, y, side] = slots[i], edge = x < 16 ? " l" : x > 80 ? " r" : "";
+    return `<a class="stopl${edge}${side === "a" ? " up" : ""}${st.done ? " done" : ""}${i === curIdx ? " cur" : ""}" href="${e ? "#/me/tasks" : `#/quest/${q.slug}`}" style="left:${x}%;top:${y}%"><span class="n">${st.n}</span><span class="lt">${esc(st.t)}<small>${esc(st.s)}</small></span><span class="pop" role="tooltip">${st.pop}</span></a>`; }).join("");
+  let you = "";
+  if (e){ const [x, y, side] = slots[Math.min(curIdx, slots.length - 1)], ty = side === "a" ? y - 16 : y - 6;
+    you = `<img class="balloon" src="assets/balloon.svg" alt="" style="left:${x}%;top:${Math.max(8, ty)}%"><span class="you-tag" style="left:${x}%;top:${Math.max(8, ty) - 9}%">You${allDone ? " made it!" : ""}</span>`; }
+  const list = stops.map((st, i) => `<li class="${st.done ? "done" : ""} ${i === curIdx ? "cur" : ""}"><span class="n">${st.n}</span><div class="c"><b>${esc(st.t)}${i === curIdx ? '<span class="you">You are here</span>' : ""}</b><small>${esc(st.s)}</small>${i > 0 && i <= wk.length ? `<ul>${wk[i-1].wt.map(t => `<li>${done.includes(t.id) ? "✓ " : ""}${esc(t.title)}</li>`).join("")}</ul>` : ""}</div></li>`).join("");
+  return `<div class="rm">
+    <div class="rm-head"><div><h3>Your road map</h3><p class="small muted" style="margin:6px 0 0">${e ? "Hover or tap a stop to see its tasks. The balloon shows where you are." : "Four weekly stops from the start line to the finish. Hover or tap a stop to see its tasks."}</p></div>
+      <div class="legend" aria-hidden="true"><span><i></i>The road</span><span><i class="ok"></i>Done</span>${e ? '<span><i class="you"></i>You</span>' : ""}</div></div>
+    <div class="map-shell"><div class="map"><div class="map-art"><img src="assets/hero-map.svg" alt=""></div><span class="sign" style="left:9%;top:58%">Start here</span>${pins}${you}</div></div>
+    <ol class="rm-list" aria-label="${esc(q.title)} road map">${list}</ol>
+  </div>`;
 }
 
 /* =================== SHARE TO THREADS =================== */
@@ -862,7 +948,7 @@ function logHistory(q, e){
 
 async function vMe(sub){
   if (!ME){
-    $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap"><span class="e">🎯</span><h1>Your dashboard</h1><p>Join the crew or log in to see your quest, XP, rank and daily check-ins.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="button" data-auth="join">Join the crew</button><button class="btn ghost" type="button" data-auth="login">Log in</button></div></div></section>`;
+    $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap">${backBtn()}<span class="e">🎯</span><h1>Your dashboard</h1><p>Join the crew or log in to see your quest, XP, rank and daily check-ins.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="button" data-auth="join">Join the crew</button><button class="btn ghost" type="button" data-auth="login">Log in</button></div></div></section>`;
     return;
   }
   const first = ME.name.split(" ")[0];
@@ -900,6 +986,7 @@ async function vMe(sub){
       <div class="kpi glass"><span>Tasks done</span><b class="tnum">${done.length}/${tasks.length || "–"}</b><small>${pct}% of the plan</small></div>
       <div class="kpi glass"><span>Check-in streak</span><b class="tnum">${streak} 🔥</b><small>${e ? `${e.logs} check-in${e.logs===1?"":"s"} in total` : "Starts when you log"}</small></div>
     </div>
+    ${q && ((q.content||{}).tasks||[]).length ? `<div class="panel">${roadmap(q, e)}</div>` : ""}
     ${q ? `<div class="dgrid">
       <div class="panel">
         <div class="phead"><h3>Quest progress</h3><a class="small" href="#/quest/${q.slug}">Quest page</a></div>
@@ -933,18 +1020,18 @@ async function vMe(sub){
     </div>` : ""}
     ${mine.length ? `<div class="panel"><div class="phead"><h3>My badges</h3><span class="small muted">Finish every task to earn the badge</span></div><div class="badges">${mine.map(({e,q}) => { const n = ((q.content||{}).tasks||[]).length, d = e.done_tasks.length, got = n && d >= n; return `<div class="badge-item ${got?"":"locked"}">${patch(q)}<b>${esc(q.title)}</b><span>${got ? "Earned 🎉" : `${d}/${n} tasks done`}</span>${got ? shareBtn(`I finished the ${q.title} with Side Quest Crew 🎖️ All ${n} tasks done.\n\nNext month's quest is up for a vote. Come do it with us: ${SITE}`, "Share badge") : ""}</div>`; }).join("")}</div></div>` : ""}`;
   } else if (sub === "tasks"){
-    body = `<div class="dhead"><div><h1>My tasks</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}, ${done.length} of ${tasks.length} done` : ""}</p></div></div>${joinCard}
+    body = `<div class="dhead"><div>${backBtn()}<br><h1>My tasks</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}, ${done.length} of ${tasks.length} done` : ""}</p></div></div>${joinCard}
       <div class="panel">${q && tasks.length ? `<p class="small muted" style="margin:0">${q.status === "live" ? (e ? "Tick tasks off as you go. Each one is 10 XP." : "Join the quest to start ticking these off.") : "Tasks unlock when the quest starts."}</p>${taskList(q, e, q.slug)}` : `<p class="muted" style="margin:0">No tasks yet.</p>`}</div>`;
   } else if (sub === "checkin"){
-    body = `<div class="dhead"><div><h1>Daily check-in</h1><p class="muted">Streak: ${streak} 🔥 · ${e ? e.logs : 0} check-ins in total</p></div></div>${joinCard}
+    body = `<div class="dhead"><div>${backBtn()}<br><h1>Daily check-in</h1><p class="muted">Streak: ${streak} 🔥 · ${e ? e.logs : 0} check-ins in total</p></div></div>${joinCard}
       <div class="dgrid two"><div class="panel"><h3>Today</h3>${q && e ? checkinForm(q, e) : `<p class="muted" style="margin:0">Join the quest to log check-ins.</p>`}</div>
       <div class="panel"><h3>Last 14 days</h3>${e ? logHistory(q, e) : `<p class="muted small" style="margin:0">No check-ins yet.</p>`}</div></div>`;
   } else if (sub === "board"){
-    body = `<div class="dhead"><div><h1>Billboard</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}` : ""} · 10 XP per task, 5 XP per check-in</p></div></div><div class="board glass">${boardTable(rows, q, 0, true)}</div>`;
+    body = `<div class="dhead"><div>${backBtn()}<br><h1>Billboard</h1><p class="muted">${q ? `${esc(q.emoji)} ${esc(q.title)}` : ""} · 10 XP per task, 5 XP per check-in</p></div></div><div class="board glass">${boardTable(rows, q, 0, true)}</div>`;
   } else if (sub === "vote"){
-    body = `<div class="dhead"><div><h1>${esc(POLL ? POLL.title : "Vote")}</h1><p class="muted">One vote per member. You can change it until it closes.</p></div></div>${pollBlock()}`;
+    body = `<div class="dhead"><div>${backBtn()}<br><h1>${esc(POLL ? POLL.title : "Vote")}</h1><p class="muted">One vote per member. You can change it until it closes.</p></div></div>${pollBlock()}`;
   } else if (sub === "account"){
-    body = `<div class="dhead"><div><h1>Account</h1></div></div>
+    body = `<div class="dhead"><div>${backBtn()}<br><h1>Account</h1></div></div>
       <div class="dgrid two"><div class="panel"><h3>Your details</h3><p style="margin:0 0 6px"><b>Name on the billboard:</b> ${esc(first)}</p><p style="margin:0 0 16px"><b>Country:</b> ${esc(ME.country || "Not set")}</p><p class="small muted" style="margin:0 0 16px">Your email is never shown to anyone. To change your name or password, message @yashujambu on Threads or in the Discord.</p><button class="btn ghost" type="button" id="logout">Log out</button></div>
       <div class="panel"><h3>My quests</h3>${mine.length ? mine.map(({e,q}) => { const n = (q.content.tasks||[]).length; return `<a class="myq" href="#/quest/${q.slug}"><span class="e">${esc(q.emoji)}</span><div><b>${esc(q.title)}</b><div class="small muted">${statusLabel(q)}, ${e.done_tasks.length}/${n} tasks, ${e.logs} check-ins</div></div><span class="xp tnum">${e.score} XP</span></a>`; }).join("") : `<p class="muted" style="margin:0">No quests yet.</p>`}</div></div>`;
   }
@@ -1048,7 +1135,8 @@ document.addEventListener("submit", e => {
   if (location.hash === "#/ideas") route(); else location.hash = "#/ideas";
 });
 $("#footDiscord").innerHTML = CFG.discord ? `<a href="${esc(CFG.discord)}" target="_blank" rel="noopener">Discord</a>` : "";
-window.addEventListener("hashchange", route);
+window.addEventListener("hashchange", () => { NAVS++; route(); });
+document.addEventListener("click", e => { if (!e.target.closest("[data-back]")) return; if (NAVS > 0) history.back(); else location.hash = location.hash.startsWith("#/me/") ? "#/me" : "#/"; });
 refresh();
 </script>
 </body>
