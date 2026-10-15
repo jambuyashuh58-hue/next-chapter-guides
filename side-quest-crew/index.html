@@ -189,6 +189,17 @@ h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;line-height:1.12;te
 .opt .e{font-size:30px;filter:drop-shadow(0 6px 6px rgba(40,70,100,.25))}
 .opt b{display:block;font-size:15.5px}
 .opt .votes{font-size:13px;color:var(--muted)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.vcard{display:flex;flex-direction:column;background:var(--glass-solid);border-radius:20px;overflow:hidden;border:2px solid transparent;box-shadow:0 10px 30px rgba(20,40,70,.08)}
+.vcard.mine{border-color:var(--quest)}
+.vbody{display:flex;flex-direction:column;gap:8px;padding:14px 16px 16px;flex:1}
+.vbody .qt{font:800 16.5px var(--body);color:var(--ink);text-decoration:none}
+.vbody p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.vbar{height:6px;border-radius:6px;background:color-mix(in srgb,var(--ink) 8%,transparent);overflow:hidden;margin-top:auto}
+.vbar i{display:block;height:100%;background:linear-gradient(90deg,var(--flame1),var(--flame2));border-radius:6px;transition:width .5s}
+.vbody .votes{font-size:12.5px;color:var(--muted)}
+.qbtn.vote{background:var(--ink);color:var(--frame)}
+.qbtn.vote.mine{background:var(--quest);color:#fff}
 .poll-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:13.5px;margin-top:12px}
 
 /* board */
@@ -634,7 +645,7 @@ table.ws th{background:color-mix(in srgb,var(--ink) 5%,transparent)}
   .panel{box-shadow:none!important;background:#fff!important}
 }
 @media (max-width:960px){.hm{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:600px){.lrow{grid-template-columns:28px minmax(0,1fr)}.lrow .ltag{display:none}.lrow .btn{grid-column:2;justify-self:start}.qgridc{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){.vgrid{grid-template-columns:minmax(0,1fr)}.lrow{grid-template-columns:28px minmax(0,1fr)}.lrow .ltag{display:none}.lrow .btn{grid-column:2;justify-self:start}.qgridc{grid-template-columns:minmax(0,1fr)}}
 
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(40,64,92,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50}
@@ -753,7 +764,7 @@ const fmt = d => d ? new Date(d+"T00:00").toLocaleDateString(undefined,{day:"num
 const daysTo = d => Math.ceil((new Date(d+"T00:00") - new Date(new Date().toDateString())) / 864e5);
 const store = { get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}} };
 let sb = null; try { sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey, { auth:{ persistSession:false } }); } catch(e){}
-let FINISHED = {}, MEMBERS = 0, TOKEN = store.get("sq_token"), ME = null, QUESTS = [], POLL = null, RESULTS = {}, COUNTS = {}, pendingJoin = null, ideaTab = "All", ideaStatus = "any";
+let FINISHED = {}, MEMBERS = 0, TOKEN = store.get("sq_token"), ME = null, QUESTS = [], POLL = null, RESULTS = {}, COUNTS = {}, pendingJoin = null, pendingVote = null, ideaTab = "All", ideaStatus = "any";
 const ERR = { bot:"Something went wrong. Please try again.", too_many:"Too many sign-ups from this network. Please try again in an hour.", bad_email:"Please enter a valid email.", bad_name:"Please add your first name (up to 40 characters).", not_yet:"That day hasn't unlocked yet. Come back on the day.", "ERR:bad_reset":"This reset link has expired or was already used. Ask for a new one.", "ERR:password_short":"Password needs at least 6 characters.", email_taken:"That email already has an account. Log in instead.", password_short:"Password needs at least 6 characters.", "ERR:bad_login":"Email or password is wrong.", "ERR:locked":"Too many tries. Please wait 15 minutes.", not_logged_in:"Please log in again.", not_open:"This quest isn't open for sign-ups.", not_live:"Tasks unlock when the quest starts.", not_enrolled:"Join the quest first.", poll_closed:"Voting has closed." };
 const errText = e => { const m = (e && (e.message || e)) + ""; for (const k in ERR) if (m.includes(k)) return ERR[k]; return "Something went wrong. Please try again."; };
 
@@ -912,36 +923,39 @@ function boardTable(rows, q, limit, withPodium){
 function pollBlock(){
   if (!POLL) return `<div class="empty glass"><b>No vote running right now</b>The next vote opens near the end of the month.</div>`;
   const total = Object.values(RESULTS).reduce((a,b)=>a+b,0), mine = ME && ME.votes ? ME.votes[String(POLL.id)] : null;
-  return `<div class="poll">${POLL.options.map(o => { const v = RESULTS[o.key]||0, pct = total ? Math.round(v/total*100) : 0;
-    return `<div class="opt glass cat-${esc(o.category)} ${mine===o.key?"mine":""}"><span class="fill" style="width:${pct}%"></span>
-      <span class="e">${esc(o.emoji||"🎯")}</span><div><b>${esc(o.title)}</b><span class="votes"><span class="chip cat" style="padding:2px 8px;font-size:11px">${esc(o.category)}</span>&nbsp; ${showCount(total) ? `<span class="tnum">${v}</span> vote${v===1?"":"s"}, ` : ""}${pct}%</span></div>
-      <button class="btn sm ${mine===o.key?"done":""}" type="button" data-vote="${esc(o.key)}">${mine===o.key?"Your vote ✓":"Vote"}</button></div>`; }).join("")}</div>
+  return `<div class="vgrid">${POLL.options.map(o => { const v = RESULTS[o.key]||0, pct = total ? Math.round(v/total*100) : 0, q = QUESTS.find(x => x.slug === o.key);
+    return `<article class="vcard ${mine===o.key?"mine":""}">
+      <a class="qimg" href="#/quest/${esc(o.key)}" aria-label="${esc(o.title)}">${questArt(o.key, o.category)}${mine===o.key?`<span class="qpill status-live">Your pick</span>`:""}</a>
+      <div class="vbody"><a class="qt" href="#/quest/${esc(o.key)}">${esc(o.title)}</a>
+        ${q && q.summary ? `<p>${esc(q.summary)}</p>` : ""}
+        <div class="vbar"><i style="width:${pct}%"></i></div><span class="votes">${showCount(total) ? `<b class="tnum">${v}</b> vote${v===1?"":"s"} · ` : ""}${pct}%</span>
+        <button class="qbtn vote ${mine===o.key?"mine":""}" type="button" data-vote="${esc(o.key)}">${mine===o.key?"Your vote ✓":"Vote for this"}</button></div>
+    </article>`; }).join("")}</div>
     <div class="poll-meta">${showCount(total) ? `<span>🗳️ ${total} vote${total===1?"":"s"} so far</span>` : ""}${POLL.closes_on?`<span>Closes ${fmt(POLL.closes_on)}</span>`:""}<span>One vote per member. You can change it until it closes.</span></div>`;
 }
-/* original anime-style illustration generator: one unique character + scene per quest (seeded by slug) */
 /* Quest card art: a topographic map with a summit for each quest, the goal set large, and one line icon for the task. */
 const QUEST_HEAD = {
-  "career-shift": ["NEW", "chapter in 30 days"],
-  "healthy-weight-reset": ["30", "days of real food"],
-  "steps-10k": ["10K", "steps every day"],
-  "sleep-reset": ["8h", "of sleep a night"],
-  "strength-starter": ["3×", "workouts a week"],
-  "no-added-sugar": ["0g", "added sugar"],
-  "earn-1000": ["$1K", "extra this month"],
-  "launch-digital-product": ["01", "product, launched"],
-  "post-daily-30": ["30", "posts in 30 days"],
-  "investing-habit": ["5%", "of pay, invested"],
-  "no-spend-month": ["$0", "on extras"],
-  "emergency-fund": ["3mo", "safety net saved"],
-  "debt-snowball": ["−1", "debt at a time"],
-  "track-every-expense": ["100%", "of spending logged"],
-  "reconnect-10": ["10", "old friends, called"],
-  "gratitude-30": ["30", "thank-you notes"],
-  "phone-free-evenings": ["9pm", "the phone goes away"],
-  "weekly-people-night": ["04", "friend dinners"],
-  "linkedin-glow-up": ["NEW", "profile in 30 days"],
-  "one-job-skill": ["01", "skill, certified"],
-  "twenty-applications": ["20", "applications sent"]
+  "career-shift": ["Stuck in the wrong job?", ["Find your next", "career in", "30 days"]],
+  "healthy-weight-reset": ["Want to feel lighter?", ["Eat real food", "for 30 days"]],
+  "steps-10k": ["Sitting all day?", ["Walk 10,000", "steps a day"]],
+  "sleep-reset": ["Always tired?", ["Fix your sleep", "in 30 days"]],
+  "strength-starter": ["Never lifted before?", ["Get strong with", "3 workouts", "a week"]],
+  "no-added-sugar": ["Sugar cravings?", ["Quit added", "sugar for", "30 days"]],
+  "earn-1000": ["Need extra income?", ["Earn your", "first $1,000", "on the side"]],
+  "launch-digital-product": ["Sitting on an idea?", ["Launch your", "first digital", "product"]],
+  "post-daily-30": ["Want an audience?", ["Post every day", "for 30 days"]],
+  "investing-habit": ["Money just sitting?", ["Start investing", "every week"]],
+  "no-spend-month": ["Where did it all go?", ["30 days of", "no extra", "spending"]],
+  "emergency-fund": ["One bad month away?", ["Build your", "emergency", "fund"]],
+  "debt-snowball": ["Buried in debt?", ["Pay it off,", "one debt", "at a time"]],
+  "track-every-expense": ["No idea what you spend?", ["Track every", "expense for", "30 days"]],
+  "reconnect-10": ["Lost touch with people?", ["Call 10 old", "friends this", "month"]],
+  "gratitude-30": ["Never say it enough?", ["Send 30", "thank-you", "notes"]],
+  "phone-free-evenings": ["Scrolling till midnight?", ["Phone-free", "evenings for", "30 days"]],
+  "weekly-people-night": ["Too busy for friends?", ["Host a friends'", "night every", "week"]],
+  "linkedin-glow-up": ["Profile getting ignored?", ["Rebuild your", "LinkedIn in", "30 days"]],
+  "one-job-skill": ["Want a better job?", ["Learn one job", "skill and get", "certified"]],
+  "twenty-applications": ["Job hunt stalled?", ["Send 20 real", "applications", "this month"]]
 };
 const QUEST_ICON = {
   "career-shift": `<circle r="46"/><circle r="38" stroke-dasharray="1.5 7.4" stroke-width="3"/><path d="M0 -30 L9 0 L0 30 L-9 0 Z"/><path d="M0 -30 L9 0 L-9 0 Z" class="f"/><circle r="2.5" class="f"/>`,
@@ -978,12 +992,12 @@ function questArt(slug, category){
   const tone = CAT_TONE[category] || CAT_TONE.Career;
   const pre = k => slug.startsWith(k.split("-").slice(0, 2).join("-"));
   const key = QUEST_HEAD[slug] ? slug : Object.keys(QUEST_HEAD).find(pre);
-  const [big, small] = key ? QUEST_HEAD[key] : ["30", "days, together"];
+  const [hook, lines] = key ? QUEST_HEAD[key] : ["New this month", ["A 30-day quest,", "done together"]];
   const icon = QUEST_ICON[key] || QUEST_ICON[tone.icon];
   let h = 2166136261; for (const c of slug) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
   const rnd = () => { h ^= h << 13; h ^= h >>> 17; h ^= h << 5; return ((h >>> 0) % 10000) / 10000; };
   const uid = "t" + ((h >>> 0) % 1e7);
-  const cx = 290 + rnd() * 40, cy = 100 + rnd() * 40, p1 = rnd() * 6.28, p2 = rnd() * 6.28, k1 = 2 + Math.floor(rnd() * 3), sq = .85 + rnd() * .3;
+  const cx = 322 + rnd() * 14, cy = 104 + rnd() * 22, p1 = rnd() * 6.28, p2 = rnd() * 6.28, k1 = 2 + Math.floor(rnd() * 3), sq = .85 + rnd() * .3;
   let topo = "";
   for (let i = 0; i < 16; i++){
     const r = 16 + i * 19, pts = [];
@@ -994,21 +1008,21 @@ function questArt(slug, category){
     }
     topo += `<polyline points="${pts.join(" ")}" opacity="${i % 4 === 3 ? .2 : .09}"/>`;
   }
-  const size = big.length <= 2 ? 78 : big.length === 3 ? 62 : 50;
-  const [b1, b2] = tone.bg, acc = tone.accent;
-  return `<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(big + " " + small)}">
+  const [b1, b2] = tone.bg, acc = tone.accent, y0 = lines.length > 2 ? 92 : 106;
+  return `<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(hook + " " + lines.join(" "))}">
   <defs><linearGradient id="${uid}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${b1}"/><stop offset="1" stop-color="${b2}"/></linearGradient>
   <radialGradient id="${uid}r" cx="${cx / 4}%" cy="${cy / 2.5}%" r="45%"><stop offset="0" stop-color="${acc}" stop-opacity=".22"/><stop offset="1" stop-color="${acc}" stop-opacity="0"/></radialGradient></defs>
   <rect width="400" height="250" fill="url(#${uid}g)"/><rect width="400" height="250" fill="url(#${uid}r)"/>
   <g fill="none" stroke="#fff" stroke-width="1">${topo}</g>
-  <g font-family="Manrope,Arial,sans-serif" fill="#fff">
-    <text x="25" y="${128 + size * .12}" font-family="Unbounded,Manrope,Arial,sans-serif" font-size="${size}" font-weight="700" letter-spacing="-3">${esc(big)}</text>
-    <text x="28" y="${156 + size * .12}" font-size="13.5" font-weight="600" fill-opacity=".78">${esc(small)}</text>
+  <g font-family="Manrope,Arial,sans-serif">
+    <text x="26" y="${y0 - 34}" font-size="14" font-weight="700" font-style="italic" fill="${acc}">${esc(hook)}</text>
+    ${lines.map((l, i) => `<text x="25" y="${y0 + i * 31}" font-size="28" font-weight="800" letter-spacing="-.6" fill="#fff">${esc(l)}</text>`).join("")}
   </g>
-  <g transform="translate(${cx.toFixed(1)},${cy.toFixed(1)})"><circle r="64" fill="${b1}" fill-opacity=".55" stroke="${acc}" stroke-opacity=".35"/>
-    <g fill="none" stroke="${acc}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="scale(.82)">${icon.replace(/class="f"/g, `fill="${acc}" stroke="none"`)}</g></g>
-  <path d="M28 214 H372" stroke="#fff" stroke-opacity=".14"/><text x="28" y="232" font-family="Manrope,Arial,sans-serif" font-size="9.5" font-weight="700" letter-spacing="2" fill="#fff" fill-opacity=".45">SIDE QUEST CREW</text>
-  <text x="372" y="232" text-anchor="end" font-family="Manrope,Arial,sans-serif" font-size="9.5" font-weight="700" letter-spacing="2" fill="#fff" fill-opacity=".45">${(cy / 3).toFixed(1)}°N ${(cx / 6).toFixed(1)}°E</text>
+  <g transform="translate(${cx.toFixed(1)},${cy.toFixed(1)})"><circle r="50" fill="${b1}" fill-opacity=".6" stroke="${acc}" stroke-opacity=".4"/>
+    <g fill="none" stroke="${acc}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" transform="scale(.66)">${icon.replace(/class="f"/g, `fill="${acc}" stroke="none"`)}</g></g>
+  <path d="M26 202 H374" stroke="#fff" stroke-opacity=".16"/>
+  <text x="26" y="220" font-family="Manrope,Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1.8" fill="#fff" fill-opacity=".6">30 DAYS · FREE · DONE TOGETHER</text>
+  <text x="374" y="220" text-anchor="end" font-family="Manrope,Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1.8" fill="${acc}">${esc((category || "").toUpperCase())}</text>
 </svg>`;
 }
 
@@ -1027,11 +1041,17 @@ function questCard(q, big){
   const btn = q.status === "done" ? `<span class="qbtn ended">Ended${FINISHED[q.slug] ? ` · ${FINISHED[q.slug]} finished` : ""}</span>`
     : e ? `<a class="qbtn joined" href="#/me">Joined · open dashboard</a>`
     : open ? `<button class="qbtn join" type="button" data-join="${q.slug}">${q.status === "live" ? "Join, it's live" : "Join this quest"}</button>`
-    : `<a class="qbtn idea" href="#/vote">Vote for quests</a>`;
+    : voteBtn(q.slug);
   return `<article class="qcard ${big ? "big" : ""} cat-${esc(q.category)}">
     <a class="qimg" href="#/quest/${q.slug}" aria-label="${esc(q.title)}" ${q.content && q.content.image ? `style="background-image:url('${photoOf(q, big ? 1100 : 700)}')"` : ""}>${q.content && q.content.image ? "" : questArt(q.slug, q.category)}<span class="qpill status-${q.status}">${statusLabel(q)}</span></a>
     <div class="qbody"><span class="chip cat">${esc(q.category)}</span><a class="qt" href="#/quest/${q.slug}">${esc(q.title)}</a><span class="qd">${dates}${e && e.joined_at ? ` · joined ${fmt(e.joined_at.slice(0,10))}` : ""}</span>${big ? `<p>${esc(q.summary||"")}</p>` : ""}${btn}</div>
   </article>`;
+}
+function voteBtn(slug){
+  const onPoll = POLL && POLL.options.some(o => o.key === slug);
+  if (!onPoll) return `<a class="qbtn idea" href="#/vote">Not on this vote · see what is</a>`;
+  const mine = ME && ME.votes ? ME.votes[String(POLL.id)] : null, total = Object.values(RESULTS).reduce((a, b) => a + b, 0), v = RESULTS[slug] || 0;
+  return `<button class="qbtn vote ${mine === slug ? "mine" : ""}" type="button" data-vote="${esc(slug)}">${mine === slug ? "Your vote ✓" : "Vote for this"}${showCount(total) ? ` · ${v} vote${v === 1 ? "" : "s"}` : ""}</button>`;
 }
 function ideasBlock(){
   const list = QUESTS.filter(q => (ideaTab === "All" || q.category === ideaTab) && (ideaStatus === "any" ? q.status === "idea" : q.status === ideaStatus));
@@ -1152,7 +1172,7 @@ async function vHome(scrollTo){
   <section class="sec" style="padding-top:0"><div class="wrap">
     <div class="sec-head"><div><h2>Explore the crew</h2><p>Each part has its own page.</p></div></div>
     <div class="explore">
-      <a class="glass" href="#/vote"><span class="ic">🗳️</span><b>Vote for next month</b><span>${POLL ? esc(POLL.title.replace(/^Vote:\s*/i,"")) : "The next vote opens near the end of the month."}</span><em>Go to the vote</em></a>
+      <a class="glass" href="#/vote"><span class="ic">🗳️</span><b>Vote for next month</b><span>${POLL ? esc(POLL.title.replace(/^Vote:\s*/i,"").replace(/^./, c => c.toUpperCase())) : "The next vote opens near the end of the month."}</span><em>Go to the vote</em></a>
       <a class="glass" href="#/board"><span class="ic">🏆</span><b>The billboard</b><span>Who's putting in the most work this month.</span><em>See the billboard</em></a>
       <a class="glass" href="#/ideas"><span class="ic">🧭</span><b>Quest ideas</b><span>${QUESTS.length} quests across health, wealth, money, relationships and career.</span><em>Browse quests</em></a>
     </div>
@@ -1712,6 +1732,7 @@ $("#authForm").addEventListener("submit", async e => {
   TOKEN = res.data; store.set("sq_token", TOKEN);
   if (authMode === "join") mail("welcome", { token: TOKEN });
   if (pendingJoin){ await sb.rpc("sq_join", { p_token: TOKEN, p_slug: pendingJoin }); pendingJoin = null; }
+  if (pendingVote && POLL){ await sb.rpc("sq_vote", { p_token: TOKEN, p_poll: POLL.id, p_option: pendingVote }); pendingVote = null; }
   location.hash = "#/me";
   $("#authModal").hidden = true; $("#authForm").reset();
   await refresh();
@@ -1731,7 +1752,7 @@ document.addEventListener("click", async e => {
     location.hash = "#/me"; await refresh(); return;
   }
   if (t.dataset.vote){
-    if (!TOKEN){ openAuth("join"); return; }
+    if (!TOKEN){ pendingVote = t.dataset.vote; openAuth("join"); return; }
     t.disabled = true; const { error } = await sb.rpc("sq_vote", { p_token: TOKEN, p_poll: POLL.id, p_option: t.dataset.vote });
     t.disabled = false; if (error){ alertInline(t, errText(error)); return; }
     await rerender();
