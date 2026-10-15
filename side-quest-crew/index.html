@@ -418,7 +418,7 @@ ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
 .stopl.up{transform:translate(-50%,-100%)}
 .stopl.l{transform:translate(-34px,0)} .stopl.l.up{transform:translate(-34px,-100%)}
 .stopl.r{transform:translate(calc(-100% + 34px),0)} .stopl.r.up{transform:translate(calc(-100% + 34px),-100%)}
-.stopl .pop{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);width:250px;white-space:normal;background:#0F1E3D;color:#F1F5FF;border-radius:14px;padding:12px 14px;font-weight:500;font-size:13px;line-height:1.45;opacity:0;pointer-events:none;transition:opacity .2s;box-shadow:0 18px 40px -16px rgba(0,0,0,.6);z-index:6}
+.stopl .pop{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);width:300px;white-space:normal;background:#0F1E3D;color:#F1F5FF;border-radius:14px;padding:12px 14px;font-weight:500;font-size:13px;line-height:1.45;opacity:0;pointer-events:none;transition:opacity .2s;box-shadow:0 18px 40px -16px rgba(0,0,0,.6);z-index:6}
 .stopl.up .pop{bottom:auto;top:calc(100% + 10px)}
 .stopl.l .pop{left:0;transform:none} .stopl.r .pop{left:auto;right:0;transform:none}
 .stopl .pop b{display:block;font-size:14px;margin-bottom:6px;color:#fff}
@@ -450,6 +450,25 @@ ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
 @media (max-width:960px){.dcols{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:760px){.map-shell{display:none}.rm-list{display:block}}
 .qtop h1{overflow-wrap:anywhere}
+
+/* day plan + guides */
+.dlabel{display:flex;align-items:center;gap:6px;font-style:normal;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:2px}
+.tday{font-style:normal;background:#F5B83D;color:#3A2A00;font-size:10.5px;font-weight:800;padding:1px 7px;border-radius:999px}
+.task.today{background:color-mix(in srgb,#F5B83D 14%,transparent);border-radius:12px}
+.gchip{display:inline-flex!important;align-items:center;gap:4px;margin-top:6px;font-size:12.5px!important;font-weight:700;color:#1D4ED8!important;text-decoration:none;background:color-mix(in srgb,#2563EB 9%,transparent);padding:3px 9px;border-radius:999px;width:max-content;max-width:100%}
+.gchip:hover{background:color-mix(in srgb,#2563EB 16%,transparent)}
+.rm-wk summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--quest);margin-top:4px;list-style:none}
+.rm-wk summary::-webkit-details-marker{display:none}
+.rm-wk summary::before{content:"Show ";}
+.rm-wk[open] summary::before{content:"Hide ";}
+.glist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.glist a{display:block;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--surface) 70%,transparent);text-decoration:none;color:var(--ink)}
+.glist a:hover{background:var(--surface)}
+.glist b{display:block;font-size:14.5px}
+.glist span{font-size:13px;color:var(--muted)}
+.glist .free{display:inline-block;margin-left:6px;font-size:10.5px;font-weight:800;color:#fff;background:var(--mint);padding:1px 7px;border-radius:999px;vertical-align:middle}
+.todaycard{border:2px solid color-mix(in srgb,#F5B83D 60%,transparent)}
+.todaycard .task.today{background:none}
 
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(40,64,92,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50}
@@ -859,7 +878,8 @@ async function vQuest(slug){
         : `<p class="small muted" style="margin:14px 0 0">Check-ins open on ${fmt(q.starts_on)}.</p>`}
       </div>` : ""}
       ${c.rules ? `<div class="panel"><h3>Quest rules</h3><ul class="rules">${c.rules.map(r => `<li>${esc(r)}</li>`).join("")}</ul></div>` : ""}
-      ${c.resources ? `<div class="panel"><h3>Helpful resources</h3><ul class="reslist">${c.resources.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)} →</a></li>`).join("")}</ul></div>` : ""}
+      ${guidesPanel(q) || ""}
+      ${c.resources && !guidesPanel(q) ? `<div class="panel"><h3>Helpful resources</h3><ul class="reslist">${c.resources.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)} →</a></li>`).join("")}</ul></div>` : ""}
     </div>
   </div></section>`;
 }
@@ -882,6 +902,46 @@ async function vBoard(slug){
   <p class="small muted" style="margin-top:14px">XP = 10 per task + 5 per daily check-in. Only first names and countries are shown.</p></div></section>`;
 }
 
+/* =================== NEXT CHAPTER GUIDES =================== */
+const GUIDE_URL = "https://next-chapter-guides.vercel.app/";
+const GUIDES = {
+  "age-calculator":   { t:"Is It Too Late?", s:"Free calculator: how many working years you really have.", free:true },
+  "career-clarity":   { t:"Career Clarity Workbook", s:"Find directions that fit you, then score them side by side." },
+  "test-drive":       { t:"30-Day Career Test Drive", s:"Test a new career for real before you retrain for it." },
+  "retraining-route": { t:"Retraining Route Decision Kit", s:"Course, degree or nothing? Choose the right route." },
+  "money-planner":    { t:"Career Change Money Planner", s:"Work out your runway and a bridge-income plan." },
+  "cv-translator":    { t:"CV & LinkedIn Translator", s:"Rewrite your CV in your new field's language." },
+  "foot-in-door":     { t:"Foot in the Door Playbook", s:"Get experience when every job wants experience." },
+  "planner-90":       { t:"90-Day Career Change Planner", s:"Keep the momentum going after the quest ends." },
+  "teacher-exit":     { t:"Teacher Exit Kit", s:"Leaving teaching: where teachers go and how." },
+  "life-after-ward":  { t:"Life After the Ward", s:"Nursing roles beyond the bedside." }
+};
+const guideLink = slug => GUIDE_URL + "#guide-" + slug;
+const guideChip = slug => GUIDES[slug] ? `<a class="gchip" href="${guideLink(slug)}" target="_blank" rel="noopener">📘 ${esc(GUIDES[slug].t)}${GUIDES[slug].free ? " (free)" : ""}</a>` : "";
+function dayDate(q, day){ if (!q.starts_on || !day) return ""; const d = new Date(new Date(q.starts_on+"T00:00").getTime() + (day-1)*864e5); return d.toLocaleDateString("en-GB",{weekday:"short", day:"numeric", month:"short"}); }
+function questDay(q){ if (q.status !== "live" || !q.starts_on) return 0; const n = Math.floor((new Date(new Date().toDateString()) - new Date(q.starts_on+"T00:00")) / 864e5) + 1; return Math.max(1, n); }
+function taskRow(t, q, e){
+  const done = e ? e.done_tasks : [], on = done.includes(t.id), can = e && q.status === "live", today = t.day && t.day === questDay(q);
+  return `<label class="task ${can?"":"locked"} ${on?"isdone":""} ${today?"today":""}"><input type="checkbox" data-task="${esc(t.id)}" data-slug="${esc(q.slug)}" ${on?"checked":""} ${can?"":"disabled"}><span>${t.day ? `<em class="dlabel">Day ${t.day}${q.starts_on ? `, ${dayDate(q, t.day)}` : ""}${today ? ' <i class="tday">Today</i>' : ""}</em>` : ""}<b>${esc(t.title)}</b>${t.detail?`<span>${esc(t.detail)}</span>`:""}${t.link?` <a href="${esc(t.link)}" target="_blank" rel="noopener">Open</a>`:""}${t.guide ? guideChip(t.guide) : ""}</span></label>`;
+}
+function guidesPanel(q){
+  const used = [...new Set(((q.content||{}).tasks||[]).map(t => t.guide).filter(Boolean))];
+  if (!used.length) return "";
+  if (used.includes("teacher-exit") && !used.includes("life-after-ward")) used.push("life-after-ward");
+  return `<div class="panel"><div class="phead"><h3>The guides behind this quest</h3></div>
+    <p class="small muted" style="margin:0 0 12px">Every step follows the Next Chapter guides. The quest works without them; they give you the worksheets, examples and scripts for each step.</p>
+    <ul class="glist">${used.map(g => `<li><a href="${guideLink(g)}" target="_blank" rel="noopener"><b>${esc(GUIDES[g].t)}${GUIDES[g].free ? ' <span class="free">Free</span>' : ""}</b><span>${esc(GUIDES[g].s)}</span></a></li>`).join("")}</ul>
+    <a class="btn sm" style="margin-top:14px" href="${GUIDE_URL}#bundles" target="_blank" rel="noopener">See the guide bundles</a></div>`;
+}
+function todayCard(q, e){
+  const tasks = (q.content||{}).tasks || []; if (!tasks.length || !tasks[0].day) return "";
+  const n = questDay(q), t = n ? tasks.find(x => x.day === Math.min(n, tasks.length)) : tasks[0];
+  if (!t) return "";
+  const label = n ? (n > tasks.length ? "The quest is complete" : `Today is Day ${t.day}`) : `Day 1 preview, ${dayDate(q, 1)}`;
+  return `<div class="panel todaycard"><div class="phead"><h3>${label}</h3><a class="small" href="#/me/tasks">All 30 days</a></div>${taskRow(t, q, e)}
+    ${t.guide && GUIDES[t.guide] ? `<div class="sharebox" style="margin-top:10px"><p>${GUIDES[t.guide].free ? "Use the free" : "Go deeper with the"} <b>${esc(GUIDES[t.guide].t)}</b>${GUIDES[t.guide].free ? " to do this in a minute." : " for the worksheet behind this step."}</p><a class="btn sm" href="${guideLink(t.guide)}" target="_blank" rel="noopener">${GUIDES[t.guide].free ? "Open the free tool" : "See the guide"}</a></div>` : ""}</div>`;
+}
+
 /* =================== BACK + ROAD MAP =================== */
 let NAVS = 0;
 const backBtn = () => `<button class="back" type="button" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</button>`;
@@ -895,7 +955,7 @@ function roadmap(q, e, vertical){
   const allDone = e && curIdx === wk.length + 1;
   const stops = [
     { n:"GO", t:"Start", s: q.starts_on ? fmt(q.starts_on) : "Day 1", pop:`<b>The start line</b><span>${q.starts_on ? `We all set off on ${fmt(q.starts_on)}.` : "Everyone sets off together."} Join before then to start on day one.</span>`, done: !!e },
-    ...wk.map((x, i) => { const [a, b] = x.w.split("·").map(z => z.trim()); return { n: x.d === x.wt.length && e ? "✓" : String(i+1).padStart(2,"0"), t: a, s: b || `${x.wt.length} tasks`, pop:`<b>${esc(a)}${b ? `: ${esc(b)}` : ""}</b>${x.wt.map(t => `<span>${done.includes(t.id) ? "✓" : "○"} ${esc(t.title)}</span>`).join("")}${e ? `<span style="margin-top:6px;color:#5EEAD4;font-weight:700">${x.d} of ${x.wt.length} done</span>` : ""}`, done: e && x.d === x.wt.length }; }),
+    ...wk.map((x, i) => { const [a, b] = x.w.split("·").map(z => z.trim()); return { n: x.d === x.wt.length && e ? "✓" : String(i+1).padStart(2,"0"), t: a, s: b || `${x.wt.length} tasks`, pop:`<b>${esc(a)}${b ? `: ${esc(b)}` : ""}</b>${x.wt.map(t => `<span>${done.includes(t.id) ? "✓" : "○"} ${t.day ? `Day ${t.day}: ` : ""}${esc(t.title)}</span>`).join("")}${e ? `<span style="margin-top:6px;color:#5EEAD4;font-weight:700">${x.d} of ${x.wt.length} done</span>` : ""}`, done: e && x.d === x.wt.length }; }),
     { n:"🏁", t:"Finish line", s: q.ends_on ? fmt(q.ends_on) : "Day 30", pop:`<b>The finish line</b><span>Finish every task to earn the ${esc(q.title)} badge. We celebrate on the monthly Zoom.</span>`, done: allDone }
   ];
   const slots = stops.length === 6 ? RM_SLOTS : RM_SLOTS.slice(0, stops.length - 1).concat([RM_SLOTS[5]]);
@@ -905,8 +965,9 @@ function roadmap(q, e, vertical){
   if (e){ const [x, y, side] = slots[Math.min(curIdx, slots.length - 1)], ty = side === "a" ? y - 16 : y - 6;
     you = `<img class="balloon" src="assets/balloon.svg" alt="" style="left:${x}%;top:${Math.max(8, ty)}%"><span class="you-tag" style="left:${x}%;top:${Math.max(8, ty) - 9}%">You${allDone ? " made it!" : ""}</span>`; }
   const can = e && q.status === "live";
-  const taskRows = wt => wt.map(t => { const on = done.includes(t.id); return `<label class="task ${can?"":"locked"} ${on?"isdone":""}"><input type="checkbox" data-task="${esc(t.id)}" data-slug="${esc(q.slug)}" ${on?"checked":""} ${can?"":"disabled"}><span><b>${esc(t.title)}</b>${t.detail?`<span>${esc(t.detail)}</span>`:""}${t.link?` <a href="${esc(t.link)}" target="_blank" rel="noopener">Open</a>`:""}</span></label>`; }).join("");
-  const list = stops.map((st, i) => `<li class="${st.done ? "done" : ""} ${i === curIdx ? "cur" : ""}"><span class="n">${st.n}</span><div class="c"><b>${esc(st.t)}${i === curIdx ? '<span class="you">You are here</span>' : ""}</b><small>${esc(st.s)}${vertical && i > 0 && i <= wk.length && e ? ` · ${wk[i-1].d}/${wk[i-1].wt.length} done` : ""}</small>${i > 0 && i <= wk.length ? (vertical ? `<div class="rm-tasks">${taskRows(wk[i-1].wt)}</div>` : `<ul>${wk[i-1].wt.map(t => `<li>${done.includes(t.id) ? "✓ " : ""}${esc(t.title)}</li>`).join("")}</ul>`) : ""}</div></li>`).join("");
+  const taskRows = wt => wt.map(t => taskRow(t, q, e)).join("");
+  const taskRowsOld = wt => wt.map(t => { const on = done.includes(t.id); return `<label class="task ${can?"":"locked"} ${on?"isdone":""}"><input type="checkbox" data-task="${esc(t.id)}" data-slug="${esc(q.slug)}" ${on?"checked":""} ${can?"":"disabled"}><span><b>${esc(t.title)}</b>${t.detail?`<span>${esc(t.detail)}</span>`:""}${t.link?` <a href="${esc(t.link)}" target="_blank" rel="noopener">Open</a>`:""}</span></label>`; }).join("");
+  const list = stops.map((st, i) => `<li class="${st.done ? "done" : ""} ${i === curIdx ? "cur" : ""}"><span class="n">${st.n}</span><div class="c"><b>${esc(st.t)}${i === curIdx ? '<span class="you">You are here</span>' : ""}</b><small>${esc(st.s)}${vertical && i > 0 && i <= wk.length ? ` · ${wk[i-1].wt[0].day ? `Days ${wk[i-1].wt[0].day} to ${wk[i-1].wt[wk[i-1].wt.length-1].day}, ` : ""}${wk[i-1].d}/${wk[i-1].wt.length} done` : ""}</small>${i > 0 && i <= wk.length ? (vertical ? `<details class="rm-wk" ${(e ? i === curIdx : i === 1) || wk[i-1].wt.some(t => t.day && t.day === questDay(q)) ? "open" : ""}><summary>${wk[i-1].wt.length} daily tasks</summary><div class="rm-tasks">${taskRows(wk[i-1].wt)}</div></details>` : `<ul>${wk[i-1].wt.map(t => `<li>${done.includes(t.id) ? "✓ " : ""}${esc(t.title)}</li>`).join("")}</ul>`) : ""}</div></li>`).join("");
   if (vertical){
     const tot = tasks.length, dn = done.length, pc = tot ? Math.round(dn / tot * 100) : 0;
     return `<div class="rm">
@@ -945,6 +1006,7 @@ const DASH_NAV = [["", "🏠", "Overview"], ["tasks", "✅", "My tasks"], ["chec
 function taskList(q, e, slug, filter){
   const tasks = (q.content||{}).tasks || [], live = q.status === "live", done = e ? e.done_tasks : [];
   const list = filter ? tasks.filter(filter) : tasks, weeks = [...new Set(list.map(t => t.week))];
+  return weeks.map(w => `<div class="week"><h4>${esc(w)}</h4>${list.filter(t => t.week === w).map(t => taskRow(t, q, e)).join("")}</div>`).join("");
   return weeks.map(w => `<div class="week"><h4>${esc(w)}</h4>${list.filter(t => t.week === w).map(t => { const on = done.includes(t.id), can = live && e;
     return `<label class="task ${can?"":"locked"} ${on?"isdone":""}"><input type="checkbox" data-task="${esc(t.id)}" data-slug="${esc(slug)}" ${on?"checked":""} ${can?"":"disabled"}><span><b>${esc(t.title)}</b>${t.detail?`<span>${esc(t.detail)}</span>`:""}${t.link?` <a href="${esc(t.link)}" target="_blank" rel="noopener">Open</a>`:""}</span></label>`; }).join("")}</div>`).join("");
 }
@@ -1007,6 +1069,7 @@ async function vMe(sub){
       <div class="kpi glass"><span>Tasks done</span><b class="tnum">${done.length}/${tasks.length || "–"}</b><small>${pct}% of the plan</small></div>
       <div class="kpi glass"><span>Check-in streak</span><b class="tnum">${streak} 🔥</b><small>${e ? `${e.logs} check-in${e.logs===1?"":"s"} in total` : "Starts when you log"}</small></div>
     </div>
+    ${q && e ? todayCard(q, e) : ""}
     ${q ? `<div class="dcols">
       <div class="panel">${tasks.length ? roadmap(q, e, true) : `<h3>Your road map</h3><p class="muted" style="margin:0">The week-by-week plan appears here once the quest has tasks.</p>`}</div>
       <div class="dstack">
@@ -1014,6 +1077,7 @@ async function vMe(sub){
         <div class="phead"><h3>Today's check-in</h3><a class="small" href="#/me/checkin">History</a></div>
         ${e ? checkinForm(q, e) : `<p class="muted" style="margin:0">Join the quest to log daily check-ins.</p>`}
       </div>
+        ${guidesPanel(q)}
       <div class="panel">
         <div class="phead"><h3>Billboard</h3><a class="small" href="#/me/board">Full board</a></div>
         ${rows.length ? `<ol class="mini">${rows.slice(0,5).map(r => `<li class="r${r.rank} ${myRow && r.rank===myRow.rank?"me":""}"><span class="rank">${r.rank}</span><b>${esc(r.display_name)}</b><span class="xp tnum">${r.score}</span></li>`).join("")}</ol>${myRow && myRow.rank > 5 ? `<p class="small" style="margin:10px 0 0">You're <b>#${myRow.rank}</b> with ${myRow.score} XP.</p>` : ""}` : `<p class="muted" style="margin:0">No one on the board yet.</p>`}
