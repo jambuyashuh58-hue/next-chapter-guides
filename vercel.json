@@ -27,17 +27,17 @@
   "redirects": [
     {
       "source": "/crew",
-      "destination": "https://side-quest-crew-rose.vercel.app/",
+      "destination": "https://sidequestcrew.space/",
       "permanent": false
     },
     {
       "source": "/crew/(.*)",
-      "destination": "https://side-quest-crew-rose.vercel.app/",
+      "destination": "https://sidequestcrew.space/",
       "permanent": false
     },
     {
       "source": "/side-quest-crew/(.*)",
-      "destination": "https://side-quest-crew-rose.vercel.app/",
+      "destination": "https://sidequestcrew.space/",
       "permanent": false
     }
   ]
