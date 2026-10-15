@@ -1004,7 +1004,7 @@ const QUEST_ART = {
       <g transform="translate(-2,-6)" fill="#FCD34D" stroke="#D97706" stroke-width="2.5"><ellipse rx="12" ry="12"/><text y="5" text-anchor="middle" font-size="13" font-weight="800" fill="#B45309" stroke="none" font-family="Manrope,Arial,sans-serif">$</text></g>` },
 
   "debt-snowball": { sky: ["#E0F2FE", "#F8FAFC"],
-    bg: `<path d="M0 120 L400 230 L400 250 L0 250 Z" fill="#fff"/><path d="M0 120 L400 230" stroke="#BAE6FD" stroke-width="4"/><g fill="#fff">${[[30,30],[90,70],[160,20],[240,60],[320,30],[380,90],[200,110]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3"/>`).join("")}</g>`,
+    bg: `<path d="M0 196 L400 232 L400 250 L0 250 Z" fill="#fff"/><path d="M0 196 L400 232" stroke="#BAE6FD" stroke-width="4"/><g fill="#fff">${[[30,30],[90,70],[160,20],[240,60],[320,30],[380,90],[200,110]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3"/>`).join("")}</g>`,
     prop: `<g transform="translate(-30,0)"><circle r="40" fill="#fff" stroke="#BAE6FD" stroke-width="4"/><path d="M-26 -14 a30 30 0 0 1 22 -20" stroke="#E0F2FE" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M-6 30 a30 30 0 0 0 30 -20" stroke="#BAE6FD" stroke-width="5" fill="none" stroke-linecap="round"/></g>
       <path d="M-84 -14 h-20 M-82 4 h-28 M-84 22 h-18" stroke="#7DD3FC" stroke-width="4" stroke-linecap="round"/>
       ${[[38,40,-18],[62,48,24],[50,14,-6]].map(([x,y,r],i)=>`<g transform="translate(${x},${y}) rotate(${r})"><rect x="-17" y="-12" width="34" height="24" rx="3" fill="${["#FCA5A5","#FDBA74","#FDE047"][i]}" stroke="#9A3412" stroke-width="1.5"/><text y="5" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-size="11" font-weight="800" fill="#7C2D12">$</text></g>`).join("")}
@@ -1075,81 +1075,44 @@ const QUEST_ART = {
       <g transform="translate(58,62)"><circle r="22" fill="#4F46E5"/><text y="5" text-anchor="middle" font-family="Unbounded,Manrope,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">20</text></g>` }
 };
 
-function animeArt(slug, category, emoji){
-  const QA = QUEST_ART[slug] || QUEST_ART[Object.keys(QUEST_ART).find(k => String(slug).startsWith(k.split("-").slice(0, 2).join("-")))];
-  let h = 2166136261; for (const c of String(slug)) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
-  const rnd = () => { h ^= h << 13; h ^= h >>> 17; h ^= h << 5; return ((h >>> 0) % 10000) / 10000; };
-  const pick = a => a[Math.floor(rnd() * a.length)];
-  const uid = "a" + (Math.abs(h) % 1e7);
-  const skin = pick([["#FFE3D3","#F5C3AC"],["#F6D2B8","#E3AE90"],["#E9B894","#D0946F"],["#C98F67","#A9714C"],["#8F5E3E","#744A30"]]);
-  const hair = pick([["#2B2340","#4B3F6B"],["#5B3A29","#8A5A3C"],["#1F2A44","#3D5A8C"],["#E8B04B","#F7D27E"],["#B23A48","#E06C75"],["#3E7C59","#6FB38A"],["#6C4AB6","#9C7FE0"],["#14141C","#3A3A4A"],["#C46B3D","#E89A63"],["#F2EEE8","#FFFFFF"]]);
-  const eye = pick([["#3B82F6","#93C5FD"],["#7C3AED","#C4B5FD"],["#059669","#6EE7B7"],["#B45309","#FCD34D"],["#DB2777","#F9A8D4"],["#0F766E","#5EEAD4"]]);
-  const outfit = pick([["#F97316","#FDBA74"],["#2563EB","#93C5FD"],["#16A34A","#86EFAC"],["#9333EA","#D8B4FE"],["#E11D48","#FDA4AF"],["#0EA5E9","#7DD3FC"],["#334155","#94A3B8"],["#CA8A04","#FDE047"]]);
-  const style = Math.floor(rnd() * 5), mood = Math.floor(rnd() * 3), tod = Math.floor(rnd() * 3);
-  const sky = {
-    Career: [["#C7D2FE","#FDE68A"],["#A5B4FC","#F9A8D4"],["#1E1B4B","#6366F1"]],
-    Health: [["#BAE6FD","#FEF3C7"],["#FDBA74","#FDE68A"],["#7DD3FC","#BBF7D0"]],
-    Wealth: [["#FDE68A","#FCA5A5"],["#C4B5FD","#FBCFE8"],["#FCD34D","#FDBA74"]],
-    Money: [["#BBF7D0","#FEF9C3"],["#A7F3D0","#BFDBFE"],["#CCFBF1","#FDE68A"]],
-    Relationships: [["#FBCFE8","#FDE68A"],["#F9A8D4","#C4B5FD"],["#FECDD3","#FED7AA"]]
-  }[category] || [["#C7D2FE","#FDE68A"]];
-  const [s1, s2] = QA ? QA.sky : sky[tod % sky.length], night = !QA && s1 === "#1E1B4B";
-  const scene = {
-    Career: `<g opacity=".9"><rect x="250" y="40" width="130" height="150" rx="10" fill="#fff" opacity=".35"/><line x1="315" y1="40" x2="315" y2="190" stroke="#fff" stroke-width="4" opacity=".6"/><line x1="250" y1="115" x2="380" y2="115" stroke="#fff" stroke-width="4" opacity=".6"/>
-      <g fill="${night ? "#312E81" : "#6366F1"}" opacity=".45"><rect x="258" y="130" width="18" height="60"/><rect x="280" y="110" width="24" height="80"/><rect x="322" y="125" width="20" height="65"/><rect x="346" y="100" width="26" height="90"/></g>
-      ${night ? `<g fill="#FDE68A"><circle cx="300" cy="60" r="2"/><circle cx="350" cy="75" r="1.5"/><circle cx="270" cy="85" r="1.5"/></g>` : ""}</g>`,
-    Health: `<circle cx="330" cy="70" r="34" fill="#FFF7AE" opacity=".9"/><path d="M0 205 C80 175 160 200 240 182 S360 170 400 185 L400 250 L0 250 Z" fill="#86EFAC" opacity=".8"/><path d="M0 225 C100 205 220 230 400 210 L400 250 L0 250 Z" fill="#4ADE80" opacity=".7"/>`,
-    Wealth: `<g opacity=".55"><rect x="250" y="60" width="140" height="10" rx="3" fill="#fff"/><rect x="250" y="120" width="140" height="10" rx="3" fill="#fff"/><rect x="262" y="34" width="22" height="26" rx="4" fill="#F472B6"/><rect x="292" y="40" width="18" height="20" rx="4" fill="#60A5FA"/><rect x="340" y="30" width="26" height="30" rx="4" fill="#34D399"/><rect x="270" y="94" width="26" height="26" rx="13" fill="#FBBF24"/><rect x="320" y="98" width="30" height="22" rx="4" fill="#A78BFA"/></g>`,
-    Money: `<g opacity=".7"><rect x="270" y="40" width="96" height="84" rx="8" fill="#fff" opacity=".7"/><rect x="270" y="40" width="96" height="18" rx="8" fill="#F87171"/>${Array.from({length:12},(_,i)=>`<rect x="${278+(i%4)*22}" y="${66+Math.floor(i/4)*18}" width="14" height="12" rx="2" fill="${i<7?"#34D399":"#E5E7EB"}"/>`).join("")}</g><g fill="#FCD34D" stroke="#D97706" stroke-width="2"><ellipse cx="330" cy="215" rx="22" ry="7"/><ellipse cx="330" cy="207" rx="22" ry="7"/><ellipse cx="330" cy="199" rx="22" ry="7"/></g>`,
-    Relationships: `<path d="M0 40 Q100 70 200 40 T400 40" fill="none" stroke="#fff" stroke-width="2" opacity=".7"/>${Array.from({length:9},(_,i)=>`<circle cx="${20+i*46}" cy="${48+(i%2?8:0)}" r="6" fill="${["#FDE68A","#FBCFE8","#BFDBFE"][i%3]}"/>`).join("")}<path d="M300 150 C300 132 324 132 324 148 C324 132 348 132 348 150 C348 170 324 182 324 188 C324 182 300 170 300 150 Z" fill="#FB7185" opacity=".55"/>`
-  }[category] || "";
-  const bgArt = QA ? QA.bg : scene;
-  const [sk, skS] = skin, [hc, hl] = hair, [ec, el] = eye, [oc, ol] = outfit;
-  const backHair = [
-    `<path d="M88 100 C80 40 220 40 212 100 L222 230 C190 245 110 245 78 230 Z" fill="${hc}"/>`,
-    `<path d="M90 100 C84 40 216 40 210 100 L214 170 C190 182 110 182 86 170 Z" fill="${hc}"/>`,
-    `<path d="M96 100 C92 48 208 48 204 100 L200 130 L100 130 Z" fill="${hc}"/>`,
-    `<path d="M94 100 C90 44 210 44 206 100 L204 140 L96 140 Z" fill="${hc}"/><path d="M200 70 C250 80 250 170 222 205 C236 160 226 110 200 100 Z" fill="${hc}"/>`,
-    `<path d="M94 100 C90 44 210 44 206 100 L204 150 L96 150 Z" fill="${hc}"/><circle cx="150" cy="38" r="22" fill="${hc}"/><circle cx="144" cy="32" r="7" fill="${hl}" opacity=".5"/>`
-  ][style];
-  const bangs = [
-    `M94 104 C88 36 212 36 206 104 L198 92 L190 70 L178 96 L166 66 L154 94 L142 64 L130 94 L118 70 L106 98 Z`,
-    `M92 106 C86 34 214 34 208 106 L200 86 L184 92 L172 64 L150 90 L132 62 L118 92 L102 86 Z`,
-    `M96 98 C90 30 210 30 204 98 L196 74 L186 84 L180 58 L164 80 L156 50 L142 78 L132 52 L122 80 L110 64 L104 88 Z`,
-    `M94 102 C88 36 212 36 206 102 L196 80 L170 90 L182 62 L150 84 L156 56 L128 84 L132 60 L110 88 Z`,
-    `M94 102 C90 40 210 40 206 102 L200 84 C186 70 166 68 150 80 C134 68 114 70 100 84 Z`
-  ][style];
-  const mouth = [`<path d="M140 146 Q150 154 160 146" fill="none" stroke="#7A3B2E" stroke-width="2.6" stroke-linecap="round"/>`,
-    `<path d="M140 144 Q150 160 160 144 Z" fill="#9F1239"/><path d="M144 150 Q150 155 156 150" fill="#FDA4AF"/>`,
-    `<path d="M143 147 Q150 151 157 147" fill="none" stroke="#7A3B2E" stroke-width="2.4" stroke-linecap="round"/>`][mood];
-  const eyeG = (x, wink) => wink ? `<path d="M${x-12} 118 Q${x} 110 ${x+12} 118" fill="none" stroke="#1F1A2E" stroke-width="3.2" stroke-linecap="round"/>` : `
-    <ellipse cx="${x}" cy="118" rx="11.5" ry="13.5" fill="#fff"/>
-    <ellipse cx="${x}" cy="120" rx="9" ry="12" fill="url(#${uid}e)"/>
-    <ellipse cx="${x}" cy="122" rx="4.5" ry="6.5" fill="#1F1A2E"/>
-    <circle cx="${x+3.5}" cy="113" r="3.4" fill="#fff"/><circle cx="${x-3.5}" cy="125" r="1.6" fill="#fff"/>
-    <path d="M${x-13} 108 Q${x} 99 ${x+13} 107" fill="none" stroke="#1F1A2E" stroke-width="3.4" stroke-linecap="round"/>`;
-  return `<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration for ${esc(slug.replace(/-/g, ' '))}">
-  <defs><linearGradient id="${uid}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s1}"/><stop offset="1" stop-color="${s2}"/></linearGradient>
-  <linearGradient id="${uid}e" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${ec}"/><stop offset="1" stop-color="${el}"/></linearGradient>
-  <linearGradient id="${uid}h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${hl}"/><stop offset=".55" stop-color="${hc}"/></linearGradient></defs>
-  <rect width="400" height="250" fill="url(#${uid}s)"/>${bgArt}
-  ${Array.from({length:5},()=>{const x=20+rnd()*360,y=15+rnd()*120,r=2+rnd()*3;return `<path d="M${x} ${y-r*2} L${x+r*.6} ${y-r*.6} L${x+r*2} ${y} L${x+r*.6} ${y+r*.6} L${x} ${y+r*2} L${x-r*.6} ${y+r*.6} L${x-r*2} ${y} L${x-r*.6} ${y-r*.6} Z" fill="#fff" opacity=".8"/>`}).join("")}
-  <g transform="translate(-10,8)">
-    ${backHair}
-    <path d="M70 250 C74 205 106 188 150 186 C194 188 226 205 230 250 Z" fill="${oc}"/>
-    <path d="M128 188 L150 214 L172 188" fill="${ol}"/>
-    <rect x="138" y="158" width="24" height="34" rx="8" fill="${skS}"/>
-    <path d="M98 96 C98 52 202 52 202 96 C202 140 176 170 150 174 C124 170 98 140 98 96 Z" fill="${sk}"/>
-    <ellipse cx="97" cy="118" rx="7" ry="11" fill="${sk}"/><ellipse cx="203" cy="118" rx="7" ry="11" fill="${sk}"/>
-    ${eyeG(128, false)}${eyeG(172, mood === 2 && style % 2 === 0)}
-    <path d="M114 96 Q128 90 140 95" fill="none" stroke="${hc}" stroke-width="2.6" stroke-linecap="round"/><path d="M160 95 Q172 90 186 96" fill="none" stroke="${hc}" stroke-width="2.6" stroke-linecap="round"/>
-    <ellipse cx="118" cy="138" rx="9" ry="5" fill="#FB7185" opacity=".35"/><ellipse cx="182" cy="138" rx="9" ry="5" fill="#FB7185" opacity=".35"/>
-    <path d="M150 128 l-2 6" stroke="${skS}" stroke-width="2" stroke-linecap="round"/>
-    ${mouth}
-    <path d="${bangs}" fill="url(#${uid}h)"/>
-    <path d="M118 58 Q140 46 160 52" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".45"/>
-  </g>
-  ${QA ? `<g transform="translate(304,130) scale(.9)">${QA.prop}</g>` : `<g transform="translate(300,${night ? 170 : 165})"><circle r="44" fill="#fff" opacity=".88"/><circle r="44" fill="none" stroke="#fff" stroke-width="3"/><text y="17" text-anchor="middle" font-size="46">${emoji || "✨"}</text></g>`}
+const QUEST_HEAD = {
+  "career-shift": ["NEW", "chapter in 30 days", "#7C2D12"],
+  "healthy-weight-reset": ["30", "days of real food", "#166534"],
+  "steps-10k": ["10K", "steps every day", "#0C4A6E"],
+  "sleep-reset": ["8h", "of sleep a night", "#E0E7FF"],
+  "strength-starter": ["3×", "workouts a week", "#7F1D1D"],
+  "no-added-sugar": ["0g", "added sugar", "#9D174D"],
+  "earn-1000": ["$1K", "extra this month", "#14532D"],
+  "launch-digital-product": ["1", "product, launched", "#FCE7F3"],
+  "post-daily-30": ["30", "posts in 30 days", "#4C1D95"],
+  "investing-habit": ["5%", "of pay, invested", "#115E59"],
+  "no-spend-month": ["$0", "on extras", "#991B1B"],
+  "emergency-fund": ["3mo", "safety net saved", "#1E3A8A"],
+  "debt-snowball": ["−1", "debt at a time", "#0C4A6E"],
+  "track-every-expense": ["100%", "of spending logged", "#581C87"],
+  "reconnect-10": ["10", "old friends, called", "#9A3412"],
+  "gratitude-30": ["30", "thank-you notes", "#9F1239"],
+  "phone-free-evenings": ["9pm", "the phone goes away", "#FEF3C7"],
+  "weekly-people-night": ["4", "friend dinners", "#FFF7ED"],
+  "linkedin-glow-up": ["NEW", "profile in 30 days", "#312E81"],
+  "one-job-skill": ["1", "skill, certified", "#4C1D95"],
+  "twenty-applications": ["20", "applications sent", "#1E1B4B"]
+};
+const CAT_ART = { Career: "career-shift", Health: "steps-10k", Wealth: "earn-1000", Money: "emergency-fund", Relationships: "weekly-people-night" };
+function questArt(slug, category){
+  slug = String(slug);
+  const key = QUEST_ART[slug] ? slug : (Object.keys(QUEST_ART).find(k => slug.startsWith(k.split("-").slice(0, 2).join("-"))) || CAT_ART[category] || "career-shift");
+  const A = QUEST_ART[key], exact = key === slug || slug.startsWith(key.split("-").slice(0, 2).join("-"));
+  const [big, small, ink] = exact ? QUEST_HEAD[key] : ["30", "days, together", QUEST_HEAD[key][2]];
+  let h = 2166136261; for (const c of slug) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
+  const uid = "q" + (Math.abs(h) % 1e7), size = big.length <= 2 ? 72 : big.length === 3 ? 58 : 46;
+  return `<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: ${esc(big + " " + small)}">
+  <defs><linearGradient id="${uid}s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${A.sky[0]}"/><stop offset="1" stop-color="${A.sky[1]}"/></linearGradient></defs>
+  <rect width="400" height="250" fill="url(#${uid}s)"/>${A.bg}
+  <g font-family="Unbounded,Manrope,Arial,sans-serif" fill="${ink}"><text x="26" y="${118 + size * .1}" font-size="${size}" font-weight="800" letter-spacing="-2">${esc(big)}</text>
+  <text x="28" y="${146 + size * .1}" font-family="Manrope,Arial,sans-serif" font-size="13" font-weight="800" letter-spacing="1.2">${esc(small.toUpperCase())}</text>
+  <rect x="28" y="${158 + size * .1}" width="34" height="4" rx="2" opacity=".7"/></g>
+  <g transform="translate(292,128) scale(.98)">${A.prop}</g>
 </svg>`;
 }
 
@@ -1170,7 +1133,7 @@ function questCard(q, big){
     : open ? `<button class="qbtn join" type="button" data-join="${q.slug}">${q.status === "live" ? "Join, it's live" : "Join this quest"}</button>`
     : `<a class="qbtn idea" href="#/vote">Vote for quests</a>`;
   return `<article class="qcard ${big ? "big" : ""} cat-${esc(q.category)}">
-    <a class="qimg" href="#/quest/${q.slug}" aria-label="${esc(q.title)}" ${q.content && q.content.image ? `style="background-image:url('${photoOf(q, big ? 1100 : 700)}')"` : ""}>${q.content && q.content.image ? "" : animeArt(q.slug, q.category, q.emoji)}<span class="qpill status-${q.status}">${statusLabel(q)}</span></a>
+    <a class="qimg" href="#/quest/${q.slug}" aria-label="${esc(q.title)}" ${q.content && q.content.image ? `style="background-image:url('${photoOf(q, big ? 1100 : 700)}')"` : ""}>${q.content && q.content.image ? "" : questArt(q.slug, q.category)}<span class="qpill status-${q.status}">${statusLabel(q)}</span></a>
     <div class="qbody"><span class="chip cat">${esc(q.category)}</span><a class="qt" href="#/quest/${q.slug}">${esc(q.title)}</a><span class="qd">${dates}${e && e.joined_at ? ` · joined ${fmt(e.joined_at.slice(0,10))}` : ""}</span>${big ? `<p>${esc(q.summary||"")}</p>` : ""}${btn}</div>
   </article>`;
 }
