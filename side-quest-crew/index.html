@@ -16,7 +16,7 @@
 <meta property="og:description" content="Free. One small step a day for 30 days, with a crew doing the same quest. November: the Career Shift Quest.">
 <meta name="theme-color" content="#ECEFF3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231B1433'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23FF6A2A' stroke-width='6'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23FFC23D'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://ctezcrglzcjxdkagnoyy.supabase.co" crossorigin><link rel="preconnect" href="https://images.unsplash.com"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap">
 <style>
 [hidden]{display:none!important}
@@ -44,7 +44,7 @@ body{color:var(--ink);font:15.5px/1.6 var(--body);-webkit-font-smoothing:antiali
     radial-gradient(ellipse 40% 20% at 20% 62%, var(--cloud), transparent 72%),
     radial-gradient(ellipse 36% 18% at 85% 88%, var(--cloud), transparent 72%),
     linear-gradient(180deg,var(--photo-tint),var(--photo-tint)),
-    url("https://images.unsplash.com/photo-1761995912979-c3646524391b?auto=format&fit=crop&w=2000&q=70") center/cover no-repeat;
+    url("https://images.unsplash.com/photo-1761995912979-c3646524391b?auto=format&fit=crop&w=1600&q=60") center/cover no-repeat;
   background-color:var(--page);background-attachment:fixed}
 @media (max-width:760px){body{background-attachment:scroll}}
 a{color:var(--quest)}
@@ -85,7 +85,7 @@ h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;line-height:1.12;te
 @media (max-width:760px){.nav nav a.hide-sm{display:none}.nav .wrap{gap:10px;height:62px}}
 
 /* sky + clouds */
-.sky{position:relative;isolation:isolate;background:linear-gradient(100deg,var(--hero-tint-1) 0%,var(--hero-tint-2) 48%,var(--hero-tint-3) 100%),linear-gradient(180deg,transparent 70%,var(--frame) 100%),url("https://images.unsplash.com/photo-1761995912979-c3646524391b?auto=format&fit=crop&w=1800&q=70") center 35%/cover no-repeat}
+.sky{position:relative;isolation:isolate;background:linear-gradient(100deg,var(--hero-tint-1) 0%,var(--hero-tint-2) 48%,var(--hero-tint-3) 100%),linear-gradient(180deg,transparent 70%,var(--frame) 100%),url("https://images.unsplash.com/photo-1761995912979-c3646524391b?auto=format&fit=crop&w=1400&q=60") center 35%/cover no-repeat}
 .sky .clouds{opacity:.55}
 .clouds{position:absolute;inset:0;z-index:-1;pointer-events:none;color:var(--cloud)}
 .clouds svg{position:absolute;width:auto;max-width:none}
@@ -793,7 +793,24 @@ async function loadMe(){
   ME = data;
   if (ME && ME.tz !== TZ) sb.rpc("sq_set_prefs", { p_token: TOKEN, p_tz: TZ });
 }
-async function board(slug){ if (!sb) return []; const { data } = await sb.rpc("sq_board", { p_slug: slug, p_token: TOKEN || null }); return data || []; }
+let BOARDS = {};
+async function board(slug){ if (!sb || !slug) return []; if (BOARDS[slug]) return BOARDS[slug]; const { data } = await sb.rpc("sq_board", { p_slug: slug, p_token: TOKEN || null }); return (BOARDS[slug] = data || []); }
+/* One round trip for everything a page needs; the last result is kept on this device so repeat visits draw instantly. */
+function applyHome(d){
+  QUESTS = d.quests || []; POLL = d.poll || null; RESULTS = d.results || {}; COUNTS = d.counts || {};
+  MEMBERS = Number(d.members || 0); FINISHED = d.finished || {}; ME = d.me || null;
+  BOARDS = {}; if (d.board_slug) BOARDS[d.board_slug] = d.board || [];
+}
+async function loadAll(){
+  if (!sb) return false;
+  const { data, error } = await sb.rpc("sq_home", { p_token: TOKEN || null });
+  if (error || !data){ BOARDS = {}; await Promise.all([loadPublic(), loadMe()]); return true; }
+  if (TOKEN && !data.me_ok){ TOKEN = null; store.set("sq_token", null); data.me = null; }
+  applyHome(data);
+  if (ME && ME.tz !== TZ) sb.rpc("sq_set_prefs", { p_token: TOKEN, p_tz: TZ });
+  const snap = JSON.stringify(data); const changed = snap !== store.get("sq_home"); store.set("sq_home", snap);
+  return changed;
+}
 
 /* =================== ART =================== */
 const clouds = (set) => `<div class="clouds" aria-hidden="true">${(set || [[-8,58,46],[62,64,52],[30,-6,30],[78,6,26]]).map(([x,y,w]) => `<svg style="left:${x}%;top:${y}%;width:${w}%;height:auto;aspect-ratio:2/1"><use href="#cloud"/></svg>`).join("")}</div>`;
@@ -1692,8 +1709,13 @@ async function route(){
   else await vHome();
   window.scrollTo(0,0);
 }
-async function rerender(){ const y = window.scrollY; await loadMe(); await loadPublic(); await route(); window.scrollTo(0, y); }
-async function refresh(){ await Promise.all([loadPublic(), loadMe()]); await route(); }
+async function rerender(){ const y = window.scrollY; await loadAll(); await route(); window.scrollTo(0, y); }
+async function refresh(){
+  let cached = null; try { cached = JSON.parse(store.get("sq_home") || "null"); } catch(e){}
+  if (cached){ applyHome(cached); if (!TOKEN) ME = null; await route(); }
+  const changed = await loadAll();
+  if (!cached || changed){ const y = window.scrollY; await route(); if (cached) window.scrollTo(0, y); }
+}
 
 /* =================== AUTH =================== */
 let authMode = "join";
