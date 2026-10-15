@@ -556,6 +556,84 @@ ul.loglist .d{color:var(--muted);font-weight:700;font-size:13px}
 
 .ring .lbl span span,.ring .lbl b span{font-size:inherit;color:inherit;display:inline}
 
+/* photo quest cards */
+.qgridc{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.qcard{background:var(--surface);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:0;border:1px solid var(--line)}
+.qimg{display:block;aspect-ratio:16/10;background:#dde3ea center/cover no-repeat;position:relative}
+.qpill{position:absolute;top:10px;left:10px;font:800 11.5px var(--body);padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.92);color:#0F1E3D}
+.qpill.status-live{background:#14B892;color:#fff} .qpill.status-registration{background:#F5B83D;color:#3A2A00} .qpill.status-done{background:#0F1E3D;color:#fff}
+.qbody{padding:14px 16px 16px;display:grid;gap:6px;flex:1;align-content:start}
+.qbody .chip{justify-self:start}
+.qt{font:600 17px/1.25 var(--display);color:var(--ink);text-decoration:none}
+.qt:hover{color:var(--quest)}
+.qd{font-size:13px;color:var(--muted)}
+.qbody p{margin:2px 0 4px;color:var(--ink-2);font-size:14.5px}
+.qbtn{margin-top:auto;display:block;text-align:center;padding:10px 12px;border-radius:12px;font:800 13.5px var(--body);text-decoration:none;border:0;cursor:pointer;width:100%}
+.qbtn.join{background:linear-gradient(95deg,var(--flame1),var(--flame2));color:#fff}
+.qbtn.joined{background:#3B5BDB;color:#fff}
+.qbtn.ended{background:#7CB342;color:#fff}
+.qbtn.idea{background:var(--glass-solid);color:var(--ink-2)}
+.qcard.big .qimg{aspect-ratio:16/9}
+.qcard.big .qt{font-size:22px}
+.hm{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.hmb{padding:20px}
+ol.lbm{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+ol.lbm li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:9px 10px;border-radius:12px}
+ol.lbm li:nth-child(odd){background:color-mix(in srgb,var(--surface) 70%,transparent)}
+ol.lbm li.me{background:color-mix(in srgb,var(--xp) 22%,transparent)}
+ol.lbm b{font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ol.lbm b small{font-weight:600;color:var(--muted);margin-left:6px;font-size:12px}
+ol.lbm .rank{width:32px;height:32px;font-size:12px}
+/* next steps */
+.steps-list .srow{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 4px;border-top:1px solid var(--line)}
+.steps-list .si{font-size:18px}
+.steps-list .st{font-weight:600;font-size:14.5px;min-width:0}
+.sp{font:800 12.5px var(--body);padding:6px 12px;border-radius:10px;text-decoration:none;white-space:nowrap;border:1.5px solid transparent;cursor:pointer;background:none}
+.sp.done{color:#0F8A68;border-color:color-mix(in srgb,#0F8A68 40%,transparent);background:color-mix(in srgb,#14B892 10%,transparent)}
+.sp.todo{color:var(--quest);border-color:var(--quest)}
+.sp.prog{background:#3B5BDB;color:#fff}
+.sp.locked{color:var(--muted);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+/* month calendar */
+.cgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.ch{text-align:center;font-size:11.5px;font-weight:800;color:var(--muted);padding-bottom:2px}
+.cd{aspect-ratio:1;display:grid;place-items:center;border-radius:10px;font:700 13px var(--body);font-variant-numeric:tabular-nums;color:var(--ink-2);background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.cd.blank,.cd.out{background:none;color:color-mix(in srgb,var(--ink) 28%,transparent)}
+.cd.done{background:linear-gradient(135deg,#34D399,#0F9F7A);color:#fff}
+.cd.miss{background:color-mix(in srgb,#EF4444 14%,transparent);color:#B42318}
+.cd.today{background:color-mix(in srgb,var(--xp) 25%,transparent)}
+.cd.now{box-shadow:0 0 0 2px #F5B83D inset}
+.clegend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted);font-weight:600}
+.clegend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.clegend i.done{background:#14B892} .clegend i.miss{background:#F8B4B4} .clegend i.today{background:#F5D27A} .clegend i.future{background:color-mix(in srgb,var(--ink) 10%,transparent)}
+/* library */
+.ltabs{display:flex;gap:22px;border-bottom:1px solid var(--line);margin:-4px 0 14px;overflow-x:auto}
+.ltabs button{border:0;background:none;padding:10px 0;font:700 14.5px var(--body);color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.ltabs button.on{color:var(--ink);border-bottom-color:#3B5BDB}
+.lsearch{max-width:320px;margin-bottom:10px}
+.lhead{font-size:12px;color:var(--muted);font-weight:700;padding:6px 4px;border-bottom:1px solid var(--line)}
+.lrow{display:grid;grid-template-columns:32px minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:14px 4px;border-bottom:1px solid var(--line)}
+.lrow .lic{font-size:20px}
+.lrow b{display:block;font-size:15px}
+.lrow div > span{font-size:13px;color:var(--muted)}
+.lrow .ltag{font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap}
+.lrow .free{display:inline-block;margin-left:6px;font-size:10.5px;font-weight:800;color:#fff;background:var(--mint);padding:1px 7px;border-radius:999px;vertical-align:middle}
+/* worksheets */
+.sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sheet h1{font-size:28px}
+.sheet h3{margin:20px 0 8px}
+table.ws{width:100%;border-collapse:collapse;margin-top:8px}
+table.ws th,table.ws td{border:1px solid color-mix(in srgb,var(--ink) 25%,transparent);padding:8px 10px;text-align:left;font-size:13.5px;vertical-align:top}
+table.ws td{height:34px}
+table.ws th{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+@media print{
+  body{background:#fff!important;padding:0!important}
+  .nav,.tabbar,footer,#ubarSlot,.noprint,.back{display:none!important}
+  .frame{box-shadow:none!important;border-radius:0!important}
+  .panel{box-shadow:none!important;background:#fff!important}
+}
+@media (max-width:960px){.hm{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){.lrow{grid-template-columns:28px minmax(0,1fr)}.lrow .ltag{display:none}.lrow .btn{grid-column:2;justify-self:start}.qgridc{grid-template-columns:minmax(0,1fr)}}
+
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(40,64,92,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:50}
 .modal .panel{width:min(440px,100%);max-height:92vh;overflow:auto;background:var(--frame)}
@@ -620,7 +698,7 @@ footer a{color:var(--muted)}
 
 <main id="view"></main>
 
-<footer><div class="wrap"><span>Side Quest Crew · started by <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a> · Photo by <a href="https://unsplash.com/photos/misty-mountain-peaks-at-sunrise-with-warm-light-sizw4cX8Sds" target="_blank" rel="noopener">Julien Riedel on Unsplash</a></span><span><a href="#/privacy">Privacy</a> · <a href="#/terms">Terms</a> · <span id="footDiscord"></span></span></div><div class="wrap"><p class="small" style="margin:10px 0 0;opacity:.8">Quests share general steps for personal challenges, not medical, financial or career advice.</p></div></footer>
+<footer><div class="wrap"><span>Side Quest Crew · started by <a href="https://www.threads.com/@yashujambu" target="_blank" rel="noopener">@yashujambu</a> · Photos from <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a></span><span><a href="#/privacy">Privacy</a> · <a href="#/terms">Terms</a> · <span id="footDiscord"></span></span></div><div class="wrap"><p class="small" style="margin:10px 0 0;opacity:.8">Quests share general steps for personal challenges, not medical, financial or career advice.</p></div></footer>
 </div>
 <nav class="tabbar" id="tabbar" aria-label="Main">
   <a href="#/" data-r="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
@@ -673,7 +751,7 @@ const fmt = d => d ? new Date(d+"T00:00").toLocaleDateString(undefined,{day:"num
 const daysTo = d => Math.ceil((new Date(d+"T00:00") - new Date(new Date().toDateString())) / 864e5);
 const store = { get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}} };
 let sb = null; try { sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey, { auth:{ persistSession:false } }); } catch(e){}
-let MEMBERS = 0, TOKEN = store.get("sq_token"), ME = null, QUESTS = [], POLL = null, RESULTS = {}, COUNTS = {}, pendingJoin = null, ideaTab = "All", ideaStatus = "any";
+let FINISHED = {}, MEMBERS = 0, TOKEN = store.get("sq_token"), ME = null, QUESTS = [], POLL = null, RESULTS = {}, COUNTS = {}, pendingJoin = null, ideaTab = "All", ideaStatus = "any";
 const ERR = { bot:"Something went wrong. Please try again.", too_many:"Too many sign-ups from this network. Please try again in an hour.", bad_email:"Please enter a valid email.", bad_name:"Please add your first name (up to 40 characters).", not_yet:"That day hasn't unlocked yet. Come back on the day.", "ERR:bad_reset":"This reset link has expired or was already used. Ask for a new one.", "ERR:password_short":"Password needs at least 6 characters.", email_taken:"That email already has an account. Log in instead.", password_short:"Password needs at least 6 characters.", "ERR:bad_login":"Email or password is wrong.", "ERR:locked":"Too many tries. Please wait 15 minutes.", not_logged_in:"Please log in again.", not_open:"This quest isn't open for sign-ups.", not_live:"Tasks unlock when the quest starts.", not_enrolled:"Join the quest first.", poll_closed:"Voting has closed." };
 const errText = e => { const m = (e && (e.message || e)) + ""; for (const k in ERR) if (m.includes(k)) return ERR[k]; return "Something went wrong. Please try again."; };
 
@@ -688,8 +766,9 @@ async function loadPublic(){
     sb.from("sq_quests").select("*").order("starts_on", { ascending:true, nullsFirst:false }),
     sb.from("sq_polls").select("*").eq("status","open").order("id",{ascending:false}).limit(1),
     sb.rpc("sq_quest_counts"),
-    sb.rpc("sq_member_count")
-  ]).then(a => { MEMBERS = Number((a[3] && a[3].data) || 0); return a; });
+    sb.rpc("sq_member_count"),
+    sb.rpc("sq_quest_finishers")
+  ]).then(a => { MEMBERS = Number((a[3] && a[3].data) || 0); FINISHED = Object.fromEntries(((a[4] && a[4].data) || []).map(r => [r.quest_slug, Number(r.finished)])); return a; });
   QUESTS = q.data || []; POLL = (p.data || [])[0] || null;
   COUNTS = Object.fromEntries((c.data || []).map(r => [r.quest_slug, Number(r.members)]));
   if (POLL){ const r = await sb.rpc("sq_poll_results", { p_poll: POLL.id }); RESULTS = Object.fromEntries((r.data || []).map(x => [x.option_key, Number(x.votes)])); }
@@ -837,17 +916,38 @@ function pollBlock(){
       <button class="btn sm ${mine===o.key?"done":""}" type="button" data-vote="${esc(o.key)}">${mine===o.key?"Your vote ✓":"Vote"}</button></div>`; }).join("")}</div>
     <div class="poll-meta">${showCount(total) ? `<span>🗳️ ${total} vote${total===1?"":"s"} so far</span>` : ""}${POLL.closes_on?`<span>Closes ${fmt(POLL.closes_on)}</span>`:""}<span>One vote per member. You can change it until it closes.</span></div>`;
 }
+/* real photos per area of life (free Unsplash licence); a quest can override with content.image */
+const PHOTOS = {
+  Career: "https://images.unsplash.com/photo-1765648636199-5209ecbaf9a8",
+  Health: "https://images.unsplash.com/photo-1744060204728-f68e434a3edf",
+  Wealth: "https://images.unsplash.com/photo-1687293233211-6b0cc3beba70",
+  Money: "https://images.unsplash.com/photo-1622219999459-ab5b14e5f45a",
+  Relationships: "https://images.unsplash.com/photo-1762392633652-fa8ce811da3e"
+};
+const photoOf = (q, w) => ((q.content && q.content.image) || PHOTOS[q.category] || PHOTOS.Career) + `?auto=format&fit=crop&w=${w || 800}&q=70`;
+function questCard(q, big){
+  const e = enrolled(q.slug), open = q.status === "registration" || q.status === "live";
+  const dates = q.starts_on ? `${fmt(q.starts_on)} – ${fmt(q.ends_on)}` : "Not scheduled yet";
+  const btn = q.status === "done" ? `<span class="qbtn ended">Ended${FINISHED[q.slug] ? ` · ${FINISHED[q.slug]} finished` : ""}</span>`
+    : e ? `<a class="qbtn joined" href="#/me">Joined · open dashboard</a>`
+    : open ? `<button class="qbtn join" type="button" data-join="${q.slug}">${q.status === "live" ? "Join, it's live" : "Join this quest"}</button>`
+    : `<a class="qbtn idea" href="#/vote">Vote for quests</a>`;
+  return `<article class="qcard ${big ? "big" : ""} cat-${esc(q.category)}">
+    <a class="qimg" href="#/quest/${q.slug}" style="background-image:url('${photoOf(q, big ? 1100 : 700)}')" aria-label="${esc(q.title)}"><span class="qpill status-${q.status}">${statusLabel(q)}</span></a>
+    <div class="qbody"><span class="chip cat">${esc(q.category)}</span><a class="qt" href="#/quest/${q.slug}">${esc(q.title)}</a><span class="qd">${dates}${e && e.joined_at ? ` · joined ${fmt(e.joined_at.slice(0,10))}` : ""}</span>${big ? `<p>${esc(q.summary||"")}</p>` : ""}${btn}</div>
+  </article>`;
+}
 function ideasBlock(){
-  const list = QUESTS.filter(q => (ideaTab === "All" || q.category === ideaTab) && (ideaStatus === "any" || q.status === ideaStatus));
+  const list = QUESTS.filter(q => (ideaTab === "All" || q.category === ideaTab) && (ideaStatus === "any" ? q.status === "idea" : q.status === ideaStatus));
   return `<div class="tabs">${["All",...CATS].map(c => `<button class="tab ${c===ideaTab?"on":""}" type="button" data-tab="${c}">${c}</button>`).join("")}</div>
-  ${list.length ? `<div class="ideas">${list.map(q => `<a class="idea glass cat-${esc(q.category)}" href="#/quest/${q.slug}"><span class="e">${esc(q.emoji||"🎯")}</span><b>${esc(q.title)}</b><p>${esc(q.summary||"")}</p><span class="tags"><span class="chip cat">${esc(q.category)}</span>${q.status!=="idea"?`<span class="chip status-${q.status}">${statusLabel(q)}</span>`:""}</span></a>`).join("")}</div>`
+  ${list.length ? `<div class="qgridc">${list.map(q => questCard(q)).join("")}</div>`
   : `<div class="empty glass"><b>No quests match that search</b>Try another area of life, or set status to "Any".</div>`}`;
 }
 function discordBtn(cls){ return CFG.discord ? `<a class="btn discord ${cls||""}" href="${esc(CFG.discord)}" target="_blank" rel="noopener">Join the Discord</a>` : `<span class="btn discord ${cls||""}" aria-disabled="true" style="opacity:.7;cursor:default">Discord opens soon</span>`; }
 
 /* =================== VIEWS =================== */
 async function vHome(scrollTo){
-  const q = current();
+  const q = current(), rows = q ? await board(q.slug) : [];
   const totalMembers = MEMBERS;
   const opt = (v, l, cur) => `<option value="${v}" ${v===cur?"selected":""}>${l}</option>`;
   $("#view").innerHTML = `
@@ -873,6 +973,13 @@ async function vHome(scrollTo){
       <button class="go" type="submit" aria-label="Find quests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.6-4.6"/></svg></button>
     </form>
   </div></section>
+
+  ${q ? `<section class="sec" style="padding-bottom:0"><div class="wrap"><div class="sec-head"><div><h2>This month's quest</h2><p>Everyone does the same quest, at the same time. Here's who's putting in the work.</p></div><a class="btn ghost sm" href="#/board">Full billboard</a></div>
+    <div class="hm">${questCard(q, true)}
+      <div class="glass hmb"><div class="phead"><h3>Billboard</h3><span class="small muted">10 XP per task · 5 per check-in</span></div>
+        ${rows.length ? `<ol class="lbm">${rows.slice(0,6).map(r => `<li class="r${r.rank} ${r.is_me?"me":""}"><span class="rank">${r.rank}</span><b>${esc(r.display_name)}${r.country ? `<small>${esc(r.country)}</small>` : ""}</b><span class="xp tnum">${r.score}</span></li>`).join("")}</ol>`
+        : `<div class="empty"><b>Be the first name here</b>Join and do the warm-up tasks to get on the board before Day 1.</div>`}
+      </div></div></div></section>` : ""}
 
   <section class="sec"><div class="wrap about">
     <div>
@@ -1025,8 +1132,11 @@ async function vVote(){
   <section class="sec" style="padding-top:28px"><div class="wrap">${pollBlock()}</div></section>`;
 }
 async function vIdeas(){
-  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap">${backBtn()}<span class="e">🧭</span><h1>Quest ideas</h1><p>Every quest the crew could take on, across health, wealth, money, relationships and career. Want one on the next vote? Suggest it in the Discord.</p></div></section>
-  <section class="sec" style="padding-top:28px"><div class="wrap"><div id="ideasBox">${ideasBlock()}</div></div></section>`;
+  $("#view").innerHTML = `<section class="qhead sky">${clouds()}<div class="wrap">${backBtn()}<h1>Quests</h1><p>Every quest the crew could take on, across health, wealth, money, relationships and career. Want one on the next vote? Suggest it in the Discord.</p></div></section>
+  ${(() => { const cur = QUESTS.filter(q => q.status === "live" || q.status === "registration"), past = QUESTS.filter(q => q.status === "done").sort((a,b) => (b.ends_on||"").localeCompare(a.ends_on||""));
+    return `${cur.length ? `<section class="sec" style="padding-top:28px;padding-bottom:0"><div class="wrap"><div class="sec-head"><div><h2>This month</h2></div></div><div class="qgridc">${cur.map(q => questCard(q)).join("")}</div></div></section>` : ""}
+    ${past.length ? `<section class="sec" style="padding-top:40px;padding-bottom:0"><div class="wrap"><div class="sec-head"><div><h2>Past quests</h2><p>Quests the crew has already finished together.</p></div></div><div class="qgridc">${past.map(q => questCard(q)).join("")}</div></div></section>` : ""}`; })()}
+  <section class="sec" style="padding-top:40px"><div class="wrap"><div class="sec-head"><div><h2>Quest library</h2><p>Ideas for future months. The crew votes on what comes next.</p></div></div><div id="ideasBox">${ideasBlock()}</div></div></section>`;
 }
 async function vBoard(slug){
   const q = slug ? QUESTS.find(x => x.slug === slug) : current();
@@ -1080,6 +1190,57 @@ function warmupPanel(q, e){
     ${prep.map(t => taskRow(t, q, e)).join("")}
     ${calLinks(q)}</div>`;
 }
+/* =================== LIBRARY (tabs) + WORKSHEETS =================== */
+let LIBTAB = "guides", LIBQ = "";
+const SHEETS = [
+  { id:"energy-log", t:"Drains and energy log", s:"14-day log: what drained you and what gave you energy. Used on Day 4.", day:4 },
+  { id:"strengths", t:"Transferable strengths list", s:"10 strengths plus what 3 people say they come to you for. Days 5 to 6.", day:5 },
+  { id:"decision-matrix", t:"Decision matrix", s:"Score 10 directions on pay, hours, interest and time to switch. Day 10.", day:10 },
+  { id:"conversations", t:"Career conversation notes", s:"Questions and notes for your 3 conversations. Days 15 to 17.", day:15 },
+  { id:"runway", t:"Runway calculator", s:"How many months you can fund the switch. Works on the page. Day 21.", day:21 },
+  { id:"plan-90", t:"90-day plan", s:"Your goal, 3 monthly milestones and a weekly slot. Days 29 to 30.", day:29 }
+];
+function libraryBlock(q){
+  const used = q ? [...new Set(((q.content||{}).tasks||[]).map(t => t.guide).filter(Boolean))] : [];
+  if (used.includes("teacher-exit") && !used.includes("life-after-ward")) used.push("life-after-ward");
+  const match = (a, b) => !LIBQ || (a + " " + b).toLowerCase().includes(LIBQ.toLowerCase());
+  const tabs = [["guides","Guides"],["sheets","Worksheets"],["pack","Quest Pack"]];
+  let rows = "";
+  if (LIBTAB === "guides") rows = used.filter(g => match(GUIDES[g].t, GUIDES[g].s)).map(g => `<div class="lrow"><span class="lic">📘</span><div><b>${esc(GUIDES[g].t)}${GUIDES[g].free ? ' <span class="free">Free</span>' : ""}</b><span>${esc(GUIDES[g].s)}</span></div><span class="ltag">Next Chapter guide</span><a class="btn ghost sm" href="${guideLink(g)}" target="_blank" rel="noopener">View guide</a></div>`).join("");
+  if (LIBTAB === "sheets") rows = SHEETS.filter(x => match(x.t, x.s)).map(x => `<div class="lrow"><span class="lic">📄</span><div><b>${esc(x.t)}</b><span>${esc(x.s)}</span></div><span class="ltag">Free worksheet</span><a class="btn ghost sm" href="#/sheet/${x.id}">Open</a></div>`).join("");
+  if (LIBTAB === "pack") rows = `<div class="lrow"><span class="lic">🎒</span><div><b>Quest Pack</b><span>A printable workbook, wall tracker and templates for each month's quest. Coming soon. Tell us in the Discord if you'd want one.</span></div><span class="ltag">Coming soon</span>${discordBtn("sm")}</div>`;
+  return `<div class="panel lib"><div class="ltabs" role="tablist">${tabs.map(([k, l]) => `<button type="button" class="${LIBTAB===k?"on":""}" data-lib="${k}">${l}</button>`).join("")}</div>
+    ${LIBTAB !== "pack" ? `<input class="i lsearch" id="libSearch" type="search" placeholder="Search the library" value="${esc(LIBQ)}">` : ""}
+    <div class="lhead"><span>Title</span></div>${rows || `<div class="empty"><b>Nothing matches</b>Try a different word.</div>`}
+    ${LIBTAB === "guides" ? `<a class="btn sm" style="margin-top:14px" href="${GUIDE_URL}#bundles" target="_blank" rel="noopener">See the guide bundles</a>` : ""}</div>`;
+}
+function sheetPage(id){
+  const sh = SHEETS.find(x => x.id === id); if (!sh) return `<h1>Worksheet not found</h1>`;
+  const lines = (n, cols) => `<table class="ws"><thead><tr>${cols.map(c => `<th>${c}</th>`).join("")}</tr></thead><tbody>${Array.from({length:n}, (_, i) => `<tr>${cols.map((c, k) => `<td>${k === 0 && /Day|#/.test(cols[0]) ? i + 1 : ""}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+  const body = {
+    "energy-log": `<p>One line a day. Patterns show up after about a week.</p>${lines(14, ["Day","What drained me","What gave me energy"])}`,
+    "strengths": `<p>List 10 things you're good at, then ask 3 people what they come to you for.</p>${lines(10, ["#","Strength","Where I've used it"])}<h3>What 3 people said</h3>${lines(3, ["#","Name","What they come to me for"])}`,
+    "decision-matrix": `<p>Score each direction 1 (low) to 5 (high). Add the total. Shortlist your top 3.</p>${lines(10, ["#","Direction","Pay","Hours","Interest","Time to switch","Total"])}`,
+    "conversations": `<p>Ask each person: What does a normal week look like? What surprised you? What do you wish you'd known? How did you get in?</p>${lines(3, ["#","Person and role","What I learned","Go / adjust / drop"])}`,
+    "runway": `<p>How many months can you fund the switch?</p><form class="f" id="runwayForm" style="max-width:460px" onsubmit="return false">
+      <label class="l">Savings you can use<input class="i rw" id="rwS" type="number" min="0" placeholder="e.g. 300000"></label>
+      <label class="l">One-off costs (course, equipment)<input class="i rw" id="rwC" type="number" min="0" placeholder="e.g. 40000"></label>
+      <label class="l">Monthly essentials<input class="i rw" id="rwE" type="number" min="0" placeholder="e.g. 35000"></label>
+      <label class="l">Monthly income during the switch<input class="i rw" id="rwI" type="number" min="0" placeholder="e.g. 10000"></label>
+      <div class="sharebox"><p id="rwOut">Fill in the numbers to see your runway.</p></div></form>`,
+    "plan-90": `<p>Pick a goal inside your control, not just "get a job".</p><table class="ws"><tbody><tr><th>My 90-day goal</th><td style="height:60px"></td></tr><tr><th>Month 1 milestone</th><td style="height:44px"></td></tr><tr><th>Month 2 milestone</th><td style="height:44px"></td></tr><tr><th>Month 3 milestone</th><td style="height:44px"></td></tr><tr><th>My weekly planning slot</th><td style="height:44px"></td></tr><tr><th>First step this week</th><td style="height:44px"></td></tr></tbody></table>`
+  }[id];
+  return `<div class="sheet-head"><div><h1>${esc(sh.t)}</h1><p class="muted">Side Quest Crew worksheet · ${esc(sh.s)}</p></div><button class="btn sm noprint" type="button" onclick="window.print()">Print or save as PDF</button></div>${body}`;
+}
+document.addEventListener("input", e => {
+  if (e.target.id === "libSearch"){ LIBQ = e.target.value; const pos = e.target.selectionStart; const box = e.target.closest(".lib"); box.outerHTML = libraryBlock(current()); const ni = $("#libSearch"); if (ni){ ni.focus(); ni.setSelectionRange(pos, pos); } }
+  if (e.target.classList && e.target.classList.contains("rw")){
+    const v = id => Number($(id).value || 0), net = v("#rwE") - v("#rwI"), pot = v("#rwS") - v("#rwC");
+    $("#rwOut").innerHTML = !$("#rwE").value ? "Fill in the numbers to see your runway." : net <= 0 ? "Your income covers your essentials, so your runway is open-ended. Nice." : `Your runway is <b>${Math.max(0, pot / net).toFixed(1)} months</b>.`;
+  }
+});
+document.addEventListener("click", e => { const b = e.target.closest("[data-lib]"); if (!b) return; LIBTAB = b.dataset.lib; LIBQ = ""; b.closest(".lib").outerHTML = libraryBlock(current()); });
+
 function guidesPanel(q){
   const used = [...new Set(((q.content||{}).tasks||[]).map(t => t.guide).filter(Boolean))];
   if (!used.length) return "";
@@ -1098,6 +1259,46 @@ function todayCard(q, e){
   return `<div class="panel todaycard"><div class="phead"><h3>${label}</h3><a class="small" href="#/me/tasks">All 30 days</a></div>${taskRow(t, q, e)}
     ${doneToday ? `<div class="unlock">✅ Done for today. Day ${t.day + 1} unlocks in <b class="tnum">${cd(nextMidnight(),"hm")}</b>. See you tomorrow.</div>` : n ? `<div class="unlock warn">⏳ Finish today's step in the next <b class="tnum">${cd(nextMidnight(),"hm")}</b> to keep your streak.</div>` : `<div class="unlock">🗓️ Day 1 unlocks in <b class="tnum">${cd(startIso(q),"dhm")}</b>.</div>`}
     ${t.guide && GUIDES[t.guide] ? `<div class="sharebox" style="margin-top:10px"><p>${GUIDES[t.guide].free ? "Use the free" : "Go deeper with the"} <b>${esc(GUIDES[t.guide].t)}</b>${GUIDES[t.guide].free ? " to do this in a minute." : " for the worksheet behind this step."}</p><a class="btn sm" href="${guideLink(t.guide)}" target="_blank" rel="noopener">${GUIDES[t.guide].free ? "Open the free tool" : "See the guide"}</a></div>` : ""}</div>`;
+}
+
+/* =================== NEXT STEPS + CALENDAR =================== */
+function nextSteps(q, e){
+  if (!q) return "";
+  const live = q.status === "live", prep = (q.content||{}).prep || [], pd = e ? prep.filter(t => e.done_tasks.includes(t.id)).length : 0;
+  const tasks = (q.content||{}).tasks || [], n = questDay(q), tt = n ? tasks.find(t => t.day === n) : null;
+  const vote = POLL && ME && ME.votes ? ME.votes[String(POLL.id)] : null;
+  const pill = (state, label, href, extra) => state === "done" ? `<span class="sp done">✓ Done</span>`
+    : state === "locked" ? `<span class="sp locked">🔒 ${esc(label)}</span>`
+    : state === "prog" ? `<a class="sp prog" href="${href}" ${extra||""}>${esc(label)} →</a>`
+    : `<a class="sp todo" href="${href}" ${extra||""}>${esc(label)} →</a>`;
+  const rows = [
+    ["🧭", `Join the ${q.title}`, e ? pill("done") : `<button class="sp todo" type="button" data-join="${q.slug}">Join →</button>`],
+    prep.length ? ["🔥", `Warm-up tasks (${pd}/${prep.length})`, !e ? pill("locked","Join first") : pd === prep.length ? pill("done") : pill(pd ? "prog" : "todo", pd ? "In progress" : "Get started", "#/me/tasks")] : null,
+    ["📅", tt ? `Day ${n}: ${tt.title}` : `Day 1 task`, !e ? pill("locked","Join first") : !live ? pill("locked", `Opens ${fmt(q.starts_on)}`) : tt && e.done_tasks.includes(tt.id) ? pill("done") : pill("todo","Get started","#/me/tasks")],
+    ["📝", "Today's check-in", !e ? pill("locked","Join first") : !live ? pill("locked", `Opens ${fmt(q.starts_on)}`) : e.logged_today ? pill("done") : pill("todo","Log it","#/me/checkin")],
+    POLL ? ["🗳️", "Vote for next month's quest", vote ? pill("done") : pill("todo","Vote","#/me/vote")] : null,
+    CFG.discord ? ["💬", "Say hi in the Discord", pill("todo","Open", CFG.discord, 'target="_blank" rel="noopener"')] : null
+  ].filter(Boolean);
+  return `<div class="panel steps-list"><div class="phead"><h3>Next steps</h3><span class="small muted">Status</span></div>${rows.map(r => `<div class="srow"><span class="si" aria-hidden="true">${r[0]}</span><span class="st">${esc(r[1])}</span>${r[2]}</div>`).join("")}</div>`;
+}
+function monthCalendar(q, e){
+  if (!q || !q.starts_on || !q.ends_on) return "";
+  const start = new Date(q.starts_on+"T00:00"), end = new Date(q.ends_on+"T00:00"), today = new Date(new Date().toDateString());
+  const logged = new Set((e && e.log_days) || []), done = e ? e.done_tasks : [], tasks = (q.content||{}).tasks || [];
+  const first = new Date(start.getFullYear(), start.getMonth(), 1), last = new Date(end.getFullYear(), end.getMonth() + 1, 0);
+  const lead = (first.getDay() + 6) % 7, cells = [];
+  for (let i = 0; i < lead; i++) cells.push(`<span class="cd blank"></span>`);
+  let doneCount = 0;
+  for (let d = new Date(first); d <= last; d.setDate(d.getDate() + 1)){
+    const key = d.toLocaleDateString("en-CA"), inQ = d >= start && d <= end, dayN = Math.round((d - start) / 864e5) + 1;
+    const t = tasks.find(x => x.day === dayN), isDone = inQ && (logged.has(key) || (t && done.includes(t.id)));
+    if (isDone) doneCount++;
+    const cls = !inQ ? "out" : isDone ? "done" : d < today ? "miss" : +d === +today ? "today" : "future";
+    cells.push(`<span class="cd ${cls} ${+d === +today ? "now" : ""}" title="${inQ ? `Day ${dayN}${t ? ": " + esc(t.title) : ""}` : ""}">${d.getDate()}</span>`);
+  }
+  return `<div class="panel cal-panel"><div class="phead"><h3>My ${start.toLocaleDateString("en-GB",{month:"long"})}</h3><span class="small muted tnum">${doneCount} of ${Math.round((end - start) / 864e5) + 1} days</span></div>
+    <div class="cgrid">${["M","T","W","T","F","S","S"].map(x => `<span class="ch">${x}</span>`).join("")}${cells.join("")}</div>
+    <div class="clegend"><span><i class="done"></i>Done</span><span><i class="miss"></i>Missed</span><span><i class="today"></i>Today</span><span><i class="future"></i>Coming up</span></div></div>`;
 }
 
 /* =================== LEVELS + HABITS =================== */
@@ -1190,7 +1391,7 @@ const ICONS = {
   account: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'
 };
 const ico = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ""}</svg>`;
-const DASH_NAV = [["", "🏠", "Overview"], ["tasks", "✅", "My tasks"], ["checkin", "📝", "Daily check-in"], ["board", "🏆", "Billboard"], ["vote", "🗳️", "Vote"], ["guides", "📘", "Guides"], ["badges", "🎖️", "Badges"], ["account", "⚙️", "Account"]];
+const DASH_NAV = [["", "🏠", "Overview"], ["tasks", "✅", "My tasks"], ["checkin", "📝", "Daily check-in"], ["board", "🏆", "Billboard"], ["vote", "🗳️", "Vote"], ["guides", "📘", "Library"], ["badges", "🎖️", "Badges"], ["account", "⚙️", "Account"]];
 function taskList(q, e, slug, filter){
   const tasks = (q.content||{}).tasks || [], live = q.status === "live", done = e ? e.done_tasks : [];
   const list = filter ? tasks.filter(filter) : tasks, weeks = [...new Set(list.map(t => t.week))];
@@ -1258,12 +1459,14 @@ async function vMe(sub){
       <div class="kpi glass"><span>Tasks done</span><b class="tnum">${done.length}/${tasks.length || "–"}</b><small>${pct}% of the plan</small></div>
       <div class="kpi glass"><span>Check-in streak</span><b class="tnum">${streak} 🔥</b><small>${e ? `${e.logs} check-in${e.logs===1?"":"s"} in total` : "Starts when you log"}</small></div>
     </div>
+    ${nextSteps(q, e)}
     ${levelPanel(totalXP, e, q)}
     ${q && e ? warmupPanel(q, e) : ""}
     ${q && e ? todayCard(q, e) : ""}
     ${q ? `<div class="dcols">
       <div class="panel">${tasks.length ? roadmap(q, e, true) : `<h3>Your road map</h3><p class="muted" style="margin:0">The week-by-week plan appears here once the quest has tasks.</p>`}</div>
       <div class="dstack">
+        ${monthCalendar(q, e)}
       <div class="panel">
         <div class="phead"><h3>Today's check-in</h3><a class="small" href="#/me/checkin">History</a></div>
         ${e ? checkinForm(q, e) : `<p class="muted" style="margin:0">Join the quest to log daily check-ins.</p>`}
@@ -1288,7 +1491,7 @@ async function vMe(sub){
     <div class="mob quick">
       <a class="glass" href="#/me/board"><span>🏆</span><b>Billboard</b><small>${myRow ? `You're #${myRow.rank}` : "See the top"}</small></a>
       <a class="glass" href="#/me/vote"><span>🗳️</span><b>Vote</b><small>${voteOpt ? "Voted ✓" : "Not voted yet"}</small></a>
-      <a class="glass" href="#/me/guides"><span>📘</span><b>Guides</b><small>Worksheets for each step</small></a>
+      <a class="glass" href="#/me/guides"><span>📘</span><b>Library</b><small>Guides and worksheets</small></a>
       <a class="glass" href="#/me/badges"><span>🎖️</span><b>Badges</b><small>${mine.length} quest${mine.length===1?"":"s"}</small></a>
     </div>
     <div class="mob" style="text-align:center">${discordBtn("sm")}</div>`;
@@ -1298,6 +1501,7 @@ async function vMe(sub){
       <div class="panel">${q && tasks.length ? `<p class="small muted" style="margin:0">${q.status === "live" ? (e ? "Each day's task unlocks on that day. Each one is 10 XP." : "Join the quest to start ticking these off.") : "Daily tasks unlock one by one from Day 1."}</p>${taskList(q, e, q.slug)}` : `<p class="muted" style="margin:0">No tasks yet.</p>`}</div>`;
   } else if (sub === "checkin"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>Daily check-in</h1><p class="muted">Streak: ${streak} 🔥 · ${e ? e.logs : 0} check-ins in total</p></div></div>${joinCard}
+      ${monthCalendar(q, e)}
       <div class="dgrid two"><div class="panel"><h3>Today</h3>${q && e ? checkinForm(q, e) : `<p class="muted" style="margin:0">Join the quest to log check-ins.</p>`}</div>
       <div class="panel"><h3>Last 14 days</h3>${e ? logHistory(q, e) : `<p class="muted small" style="margin:0">No check-ins yet.</p>`}</div></div>`;
   } else if (sub === "board"){
@@ -1305,7 +1509,7 @@ async function vMe(sub){
   } else if (sub === "vote"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>${esc(POLL ? POLL.title : "Vote")}</h1><p class="muted">One vote per member. You can change it until it closes.</p></div></div>${pollBlock()}`;
   } else if (sub === "guides"){
-    body = `<div class="dhead"><div>${backBtn()}<br><h1>Guides</h1><p class="muted">The Next Chapter guides behind each step of the quest.</p></div></div>${q ? guidesPanel(q) : ""}`;
+    body = `<div class="dhead"><div>${backBtn()}<br><h1>Library</h1><p class="muted">Guides, worksheets and downloads for this month's quest, all in one place.</p></div></div>${libraryBlock(q)}`;
   } else if (sub === "badges"){
     body = `<div class="dhead"><div>${backBtn()}<br><h1>Badges</h1><p class="muted">Finish every task in a quest to earn its badge.</p></div></div>${badgesBlock() || `<div class="panel empty"><b>No badges yet</b>Join a quest to start earning them.</div>`}`;
   } else if (sub === "account"){
@@ -1351,6 +1555,7 @@ async function route(){
   $("#navMe").textContent = ME ? "My dashboard" : "Join the crew";
   $("#ubarSlot").innerHTML = r === "me" ? "" : urgencyBar(current());
   if (r === "reset") { await vReset(arg); return; }
+  if (r === "sheet") { $("#view").innerHTML = `<section class="sec" style="padding-top:28px"><div class="wrap"><div class="noprint">${backBtn()}</div><div class="panel sheet">${sheetPage(arg)}</div></div></section>`; window.scrollTo(0,0); return; }
   if (r === "privacy" || r === "terms") { await vLegal(r); window.scrollTo(0,0); return; }
   document.title = ({ "": "Side Quest Crew: one challenge a month, done together", vote:"Vote · Side Quest Crew", board:"Billboard · Side Quest Crew", ideas:"Quest ideas · Side Quest Crew", me:"My dashboard · Side Quest Crew" })[r || ""] || "Side Quest Crew";
   if (r === "quest") await vQuest(arg);
