@@ -3,7 +3,7 @@
 // Google indexes. Run by Vercel as the build command (see vercel.json).
 // No dependencies: Node 18+ (fetch, fs/promises).
 
-import { mkdir, writeFile, readdir, rm, cp } from "node:fs/promises";
+import { mkdir, writeFile, readFile, readdir, rm, cp } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -434,6 +434,21 @@ ${urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.lastmod}</lastmod>${u.
 </urlset>
 `;
   await writeFile(path.join(ROOT, "sitemap.xml"), sitemap);
+
+  // menu/About links use long topic names (e.g. changing-careers-by-age);
+  // point them at the real category slugs (e.g. by-age)
+  const alias = new Map();
+  for (const [cs, c] of cats) alias.set(slugify(c.name), cs);
+  const fixLinks = (html) =>
+    html.replace(/\/blog\/category\/([a-z0-9-]+)/g, (m, slug) => (cats.has(slug) ? m : alias.has(slug) ? `/blog/category/${alias.get(slug)}` : "/blog"));
+  const walk = async (dir) => {
+    for (const ent of await readdir(dir, { withFileTypes: true })) {
+      const f = path.join(dir, ent.name);
+      if (ent.isDirectory()) { if (ent.name !== "img") await walk(f); }
+      else if (f.endsWith(".html")) await writeFile(f, fixLinks(await readFile(f, "utf8")));
+    }
+  };
+  await walk(OUT);
 
   // Vercel serves the "public" folder once a build command is set:
   // copy the whole static site (with the new blog and sitemap) into it.
