@@ -13,6 +13,7 @@ const ROOT = process.cwd();
 const OUT = path.join(ROOT, "blog");
 const IMG_DIR = path.join(OUT, "img");
 const AUTHOR = "Yashu Jambu";
+const BRAND = { name: "Next Chapter Guides", logo: "/assets/logo.svg", icon: "/favicon.svg", iconType: "image/svg+xml" };
 
 // ---------- helpers ----------
 const esc = (s = "") =>
@@ -114,14 +115,14 @@ a{color:var(--cta)}img{max-width:100%;height:auto}
 .wrap{max-width:1200px;margin:0 auto;padding-inline:20px}
 .top{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
-.logo{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-weight:800;font-size:1.15rem;letter-spacing:-.01em}
-.logo img{width:30px;height:30px}.logo b{color:var(--cta)}
-.links{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.links a{color:var(--ink);text-decoration:none;font-weight:500;font-size:.95rem}
+.logo{display:flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;font-weight:800;font-size:24px;line-height:1.3;letter-spacing:-.01em}
+.logo img{width:40px;height:40px;border-radius:8px}
+.links{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.links a{color:var(--ink);text-decoration:none;font-weight:400;font-size:15px}.links .btn{padding:12px 22px}
 .links a.on{color:var(--cta)}
 .btn{display:inline-block;background:var(--cta);color:#fff!important;padding:10px 18px;border-radius:10px;font-weight:600;text-decoration:none;font-family:var(--ui)}
 .btn:hover{background:var(--cta-h)}.btn.ghost{background:#fff;color:var(--ink)!important;border:1px solid var(--line)}
-@media(max-width:760px){.links a:not(.btn){display:none}}
+@media(max-width:900px){.links a:not(.btn){display:none}.logo{font-size:20px}}
 .layout{display:grid;grid-template-columns:250px minmax(0,860px);gap:48px;justify-content:center;padding-block:48px 64px}
 .side{position:sticky;top:90px;align-self:start;max-height:calc(100vh - 110px);overflow:auto;scrollbar-width:none;font-size:.9rem}
 .side h4{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin:0 0 10px}
@@ -146,18 +147,33 @@ h1.title{font-family:var(--serif);color:var(--head);font-size:clamp(2.1rem,4.4vw
 .endcta{background:var(--soft);border-radius:14px;padding:28px;margin-top:40px}
 .endcta h2{font-family:var(--serif);color:var(--ink);margin:0 0 8px;font-size:1.5rem}
 .endcta p{margin:0 0 18px;color:var(--muted)}.endcta .row{display:flex;gap:10px;flex-wrap:wrap}
-footer{background:var(--soft);padding-block:40px;font-size:.92rem;color:var(--muted)}
-footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
-footer a{color:var(--ink);margin-right:16px}
+footer{background:var(--soft);padding-block:48px;font-size:.95rem;color:var(--ink)}
+footer .wrap{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+footer p{margin:6px 0 0}.flogo{font-weight:800;font-size:1.25rem;color:var(--ink);text-decoration:none}
+.flinks{display:flex;gap:22px;flex-wrap:wrap}.flinks a{color:var(--ink)}
+footer .fine{flex-basis:100%;color:var(--muted);font-size:.85rem;margin-top:12px}
 @media(max-width:1040px){.layout{grid-template-columns:minmax(0,1fr);gap:20px;padding-block:28px 48px}
 .side{position:static;max-height:none;background:var(--soft);border-radius:12px;padding:14px 16px}
 .topics,.topics-h,.side .btn{display:none}.toc{border-left:0;margin:0}.toc a{border-left:0;padding-left:0;margin-left:0}}
-.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px}
-.card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit}
-.card img{aspect-ratio:16/9;object-fit:cover;width:100%;display:block}
-.card .b{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px}
-.card h3{font-family:var(--serif);color:var(--head);font-size:1.25rem;line-height:1.3;margin:0}
-.card p{margin:0;color:var(--muted);font-size:.95rem}
+.list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px 24px}
+@media(max-width:900px){.list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.list{grid-template-columns:minmax(0,1fr)}}
+.card{display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.card img{aspect-ratio:4/3;object-fit:cover;width:100%;display:block}
+.card .b{padding-top:20px;display:flex;flex-direction:column;gap:14px}
+.card h3{font-family:var(--ui);color:var(--cta);font-size:1.25rem;font-weight:600;line-height:1.3;margin:0}
+.card:hover h3{text-decoration:underline}
+.card p{margin:0;color:var(--ink);font-size:.95rem;line-height:1.7}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.pagehead{padding-block:48px 8px}.pagehead h1{font-family:var(--serif);color:var(--head);font-size:clamp(2rem,4vw,2.8rem);margin:.2em 0 .3em}.pagehead p{color:var(--muted);margin:0}
+.page{max-width:860px;margin:0 auto;padding-block:40px 64px}
+.page .wp-block-group.has-background{padding:44px 36px;border-radius:14px;margin:0 0 32px}
+.page .has-theme-2-background-color{background:var(--soft)}.page .has-teal-color{color:var(--teal)}
+.page .has-small-font-size{font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.page .has-medium-font-size{font-size:1.15rem}.page h1,.page h2,.page h3{color:var(--ink);line-height:1.2}
+.page h1{font-size:clamp(2rem,4vw,2.8rem)}.page p,.page li{font-size:17px;line-height:1.7}
+.page .wp-block-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.page .wp-block-button__link{display:inline-block;background:var(--cta);color:#fff;padding:12px 22px;border-radius:10px;font-weight:600;text-decoration:none}
+.page .is-style-outline .wp-block-button__link{background:transparent;color:var(--cta);border:2px solid var(--cta)}
 .bloghead{padding-block:56px 32px;max-width:760px}
 .bloghead h1{font-family:var(--serif);color:var(--head);font-size:clamp(2.2rem,4.6vw,3.2rem);line-height:1.1;margin:.2em 0 .4em}
 .bloghead p{color:var(--muted);font-size:1.1rem;margin:0}
@@ -172,7 +188,8 @@ const head = ({ title, desc, canonical, image, type = "article", jsonld = [] }) 
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${canonical}">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="${BRAND.icon}" type="${BRAND.iconType}">
+<link rel="apple-touch-icon" href="${BRAND.icon}">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="${type}">
 <meta property="og:site_name" content="Next Chapter Guides">
@@ -190,20 +207,26 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).repl
 </head>
 <body>`;
 
-const topbar = (on) => `<header class="top"><div class="wrap">
-<a class="logo" href="/"><img src="/assets/logo.svg" alt=""><span>Next<b>Chapter.</b></span></a>
+const NAV = [
+  ["Blog", "/blog"],
+  ["By age", "/blog/category/changing-careers-by-age"],
+  ["Teachers & nurses", "/blog/category/teachers-and-nurses"],
+  ["Guides", "/#guides"],
+  ["About", "/blog/about"],
+];
+const topbar = (on = "") => `<header class="top"><div class="wrap">
+<a class="logo" href="/blog"><img src="${BRAND.logo}" alt="" width="40" height="40"><span>${BRAND.name}</span></a>
 <nav class="links" aria-label="Main">
-<a href="/">Home</a><a href="/#guides">Guides</a><a href="/blog"${on ? ' class="on"' : ""}>Blog</a>
+${NAV.map(([t, h]) => `<a href="${h}"${on === h ? ' class="on"' : ""}>${esc(t)}</a>`).join("")}
 <a class="btn" href="/#guide-age-calculator">Free calculator</a>
 </nav></div></header>`;
 
 const footer = () => `<footer><div class="wrap">
-<div><a class="logo" href="/"><img src="/assets/logo.svg" alt=""><span>Next<b>Chapter.</b></span></a>
+<div><a class="flogo" href="/blog">${BRAND.name}</a>
 <p>Honest, practical help for changing careers at any age.</p></div>
-<div><a href="/blog">Blog</a><a href="/#guides">Guides</a><a href="/#guide-age-calculator">Free calculator</a></div>
-<p style="flex-basis:100%;margin:0">General information only, not legal, financial or career advice. © ${new Date().getUTCFullYear()} Next Chapter Guides.</p>
+<nav class="flinks"><a href="/blog">Blog</a><a href="/#guides">Guides</a><a href="/#guide-age-calculator">Free calculator</a><a href="https://www.threads.com/@yashujambu" rel="noopener" target="_blank">Threads @yashujambu</a></nav>
+<p class="fine">Articles give general information, not financial, legal or medical advice. © ${new Date().getUTCFullYear()} ${BRAND.name}.</p>
 </div></footer>`;
-
 const TOC_JS = `<script>(function(){var l=[].slice.call(document.querySelectorAll('.toc a'));if(!l.length)return;
 var h=l.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))});
 function u(){var y=window.scrollY+120,i=0;h.forEach(function(e,k){if(e&&e.offsetTop<=y)i=k});l.forEach(function(a,k){a.classList.toggle('on',k===i)})}
@@ -225,6 +248,22 @@ async function main() {
 
   if (existsSync(OUT)) await rm(OUT, { recursive: true, force: true });
   await mkdir(IMG_DIR, { recursive: true });
+
+  // site logo and icon from WordPress (keeps the current look if they fail)
+  try {
+    const { data: site } = await getJSON(`${WP}/wp-json/?_fields=name,site_logo,site_icon_url`);
+    if (site.name) BRAND.name = decode(site.name);
+    if (site.site_logo) {
+      const { data: m } = await getJSON(`${WP}/wp-json/wp/v2/media/${site.site_logo}?_fields=source_url`);
+      if (m.source_url) BRAND.logo = await localImage(m.source_url);
+    }
+    if (site.site_icon_url) {
+      BRAND.icon = await localImage(site.site_icon_url);
+      BRAND.iconType = BRAND.icon.endsWith(".png") ? "image/png" : BRAND.icon.endsWith(".svg") ? "image/svg+xml" : "image/jpeg";
+    }
+  } catch (e) {
+    console.warn("Brand assets skipped:", e.message);
+  }
 
   const postLinks = new Set(posts.map((p) => p.slug));
   const cats = new Map(); // slug -> {name, posts:[]}
@@ -254,7 +293,7 @@ async function main() {
         datePublished: p.date_gmt + "Z",
         dateModified: p.modified_gmt + "Z",
         author: { "@type": "Person", name: AUTHOR },
-        publisher: { "@type": "Organization", name: "Next Chapter Guides", logo: { "@type": "ImageObject", url: `${SITE}/assets/logo.svg` } },
+        publisher: { "@type": "Organization", name: "Next Chapter Guides", logo: { "@type": "ImageObject", url: `${SITE}${BRAND.logo}` } },
         mainEntityOfPage: url,
       },
       {
@@ -275,7 +314,7 @@ async function main() {
       });
 
     const page = `${head({ title: seoTitle, desc, canonical: url, image: hero, jsonld })}
-${topbar(true)}
+${topbar("/blog")}
 <main class="wrap layout">
 <aside class="side">
 ${toc.length ? `<h4>On this page</h4><ol class="toc">${toc.map((t) => `<li><a href="#${t.id}">${esc(t.text)}</a></li>`).join("")}</ol>` : ""}
@@ -283,7 +322,7 @@ ${toc.length ? `<h4>On this page</h4><ol class="toc">${toc.map((t) => `<li><a hr
 <a class="btn" href="/#guide-age-calculator">Free: am I too old? →</a>
 </aside>
 <article>
-<a class="cat" href="/blog#${cat.slug}">${esc(cat.name)}</a>
+<a class="cat" href="/blog/category/${cat.slug}">${esc(cat.name)}</a>
 <h1 class="title">${esc(title)}</h1>
 <div class="by">By ${AUTHOR} · <time datetime="${p.date_gmt}Z">${fmtDate(p.date_gmt + "Z")}</time></div>
 ${hero ? `<img class="hero" src="${hero}" alt="${esc(heroAlt)}" fetchpriority="high">` : ""}
@@ -301,18 +340,19 @@ ${footer()}
 ${TOC_JS}
 </body></html>`;
 
-    built.push({ slug: p.slug, title, desc, hero, heroAlt, cat, date: p.date_gmt, modified: p.modified_gmt, page });
+    const short = (() => { const w = strip(p.excerpt.rendered).split(" "); return w.length > 18 ? w.slice(0, 18).join(" ") + "…" : w.join(" "); })();
+    built.push({ slug: p.slug, title, desc, short, hero, heroAlt, cat, date: p.date_gmt, modified: p.modified_gmt, page });
     if (!cats.has(cat.slug)) cats.set(cat.slug, { name: cat.name, posts: [] });
     cats.get(cat.slug).posts.push(built[built.length - 1]);
   }
 
-  const topicsHTML = [...cats.entries()].map(([s, c]) => `<a href="/blog#${s}">${esc(c.name)}</a>`).join("");
+  const topicsHTML = [...cats.entries()].map(([s, c]) => `<a href="/blog/category/${s}">${esc(c.name)}</a>`).join("");
   for (const b of built) {
     await writeFile(path.join(OUT, `${b.slug}.html`), b.page.replace("__TOPICS__", topicsHTML));
   }
 
   // blog index
-  const card = (b) => `<a class="card" href="/blog/${b.slug}">${b.hero ? `<img src="${b.hero}" alt="${esc(b.heroAlt)}" loading="lazy">` : ""}<div class="b"><span class="cat" style="text-decoration:none">${esc(b.cat.name)}</span><h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p></div></a>`;
+  const card = (b) => `<a class="card" href="/blog/${b.slug}">${b.hero ? `<img src="${b.hero}" alt="${esc(b.heroAlt)}" loading="lazy">` : ""}<div class="b"><h3>${esc(b.title)}</h3><p>${esc(b.short)}</p></div></a>`;
   const indexDesc = "Honest, practical articles for changing careers at any age: finding your direction, changing careers by age, money and retraining, CVs and job search.";
   const index = `${head({
     title: "Career Change Blog | Next Chapter Guides",
@@ -322,22 +362,55 @@ ${TOC_JS}
     jsonld: [{ "@context": "https://schema.org", "@type": "Blog", name: "Next Chapter Guides Blog", url: `${SITE}/blog`,
       blogPost: built.map((b) => ({ "@type": "BlogPosting", headline: b.title, url: `${SITE}/blog/${b.slug}`, datePublished: b.date + "Z" })) }],
   })}
-${topbar(true)}
-<main class="wrap">
-<div class="bloghead"><span class="cat" style="text-decoration:none">The blog</span><h1>Career change, planned like a project</h1><p>${esc(indexDesc)}</p></div>
-<h2 style="font-family:var(--serif);color:var(--head);font-size:1.6rem;margin:0 0 18px">Latest articles</h2>
+${topbar("/blog")}
+<main class="wrap" style="padding-block:56px 72px">
+<h1 class="sr">${BRAND.name} blog</h1>
 <div class="list">${[...built].sort((a, b) => (a.date < b.date ? 1 : -1)).map(card).join("")}</div>
-<div style="height:40px"></div>
-${[...cats.entries()].map(([s, c]) => `<section class="group" id="${s}"><h2>${esc(c.name)}</h2><div class="list">${c.posts.map(card).join("")}</div></section>`).join("")}
 </main>
 ${footer()}
 </body></html>`;
   await writeFile(path.join(OUT, "index.html"), index);
 
+  // category pages
+  await mkdir(path.join(OUT, "category"), { recursive: true });
+  for (const [cs, c] of cats) {
+    const cdesc = `Articles about ${c.name.toLowerCase()} from ${BRAND.name}: practical, honest help for changing careers.`;
+    const html = `${head({ title: `${c.name} | ${BRAND.name}`, desc: cdesc, canonical: `${SITE}/blog/category/${cs}`, type: "website" })}
+${topbar(`/blog/category/${cs}`)}
+<main class="wrap" style="padding-bottom:72px">
+<div class="pagehead"><span class="cat" style="text-decoration:none">Topic</span><h1>${esc(c.name)}</h1></div>
+<div class="list" style="margin-top:32px">${[...c.posts].sort((a, b) => (a.date < b.date ? 1 : -1)).map(card).join("")}</div>
+</main>
+${footer()}
+</body></html>`;
+    await writeFile(path.join(OUT, "category", `${cs}.html`), html);
+  }
+
+  // About page from WordPress
+  let aboutOk = false;
+  try {
+    const { data } = await getJSON(`${WP}/wp-json/wp/v2/pages?slug=about&_fields=title,content,excerpt,modified_gmt`);
+    if (data[0]) {
+      const { html } = await rewriteContent(data[0].content.rendered, postLinks);
+      const adesc = strip(data[0].excerpt?.rendered || "").slice(0, 160) || `About ${BRAND.name}: who writes it and how the articles are checked.`;
+      const page = `${head({ title: `About | ${BRAND.name}`, desc: adesc, canonical: `${SITE}/blog/about`, type: "website" })}
+${topbar("/blog/about")}
+<main class="wrap"><div class="page">${html}</div></main>
+${footer()}
+</body></html>`;
+      await writeFile(path.join(OUT, "about.html"), page);
+      aboutOk = true;
+    }
+  } catch (e) {
+    console.warn("About page skipped:", e.message);
+  }
+
   // sitemap.xml (home, blog, articles, guide preview pages if any)
   const urls = [
     { loc: `${SITE}/`, lastmod: new Date().toISOString() },
     { loc: `${SITE}/blog`, lastmod: new Date().toISOString() },
+    ...(aboutOk ? [{ loc: `${SITE}/blog/about`, lastmod: new Date().toISOString() }] : []),
+    ...[...cats.keys()].map((cs) => ({ loc: `${SITE}/blog/category/${cs}`, lastmod: new Date().toISOString() })),
     ...built.map((b) => ({ loc: `${SITE}/blog/${b.slug}`, lastmod: b.modified + "Z", img: b.hero ? `${SITE}${b.hero}` : null })),
   ];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
