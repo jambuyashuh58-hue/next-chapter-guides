@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://next-chapter-guides.vercel.app/sitemap.xml

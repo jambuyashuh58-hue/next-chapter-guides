@@ -1,16 +1,6 @@
 {
-  "buildCommand": "node scripts/build-blog.mjs",
   "cleanUrls": true,
   "headers": [
-    {
-      "source": "/blog/img/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800"
-        }
-      ]
-    },
     {
       "source": "/(assets|previews)/(.*)",
       "headers": [
@@ -35,6 +25,16 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/blog",
+      "destination": "https://nextchaptergide.site/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "https://nextchaptergide.site/",
+      "permanent": true
+    },
     {
       "source": "/crew",
       "destination": "https://sidequestcrew.space/",

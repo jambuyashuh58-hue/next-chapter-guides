@@ -1,6 +1,2 @@
 .DS_Store
 *.pdf
-# generated at deploy time by scripts/build-blog.mjs
-/blog/
-/sitemap.xml
-/public/
