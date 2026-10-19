@@ -81,6 +81,11 @@ async function rewriteContent(html, postLinks) {
   // links to other WordPress posts -> /blog/<slug>
   out = out.replace(/https?:\/\/nextchapterguides\.wpcomstaging\.com\/(?:\d{4}\/\d{2}\/\d{2}\/)?([a-z0-9-]+)\/?(?=["#])/g,
     (m, slug) => (postLinks.has(slug) ? `/blog/${slug}` : m));
+  // category, about and home links on the WordPress site -> same pages here
+  out = out
+    .replace(/https?:\/\/nextchapterguides\.wpcomstaging\.com\/category\/([a-z0-9-]+)\/?(?=["#])/g, "/blog/category/$1")
+    .replace(/https?:\/\/nextchapterguides\.wpcomstaging\.com\/about\/?(?=["#])/g, "/blog/about")
+    .replace(/https?:\/\/nextchapterguides\.wpcomstaging\.com\/?(?=["#])/g, "/blog");
   // ids on h2 for the table of contents
   const toc = [];
   const used = new Set();
@@ -346,6 +351,13 @@ ${TOC_JS}
     cats.get(cat.slug).posts.push(built[built.length - 1]);
   }
 
+  // every WordPress category gets a page, even before it has articles
+  try {
+    const { data: allCats } = await getJSON(`${WP}/wp-json/wp/v2/categories?per_page=100&hide_empty=false&_fields=slug,name`);
+    for (const c of allCats) if (c.slug !== "uncategorized" && !cats.has(c.slug)) cats.set(c.slug, { name: decode(c.name), posts: [] });
+  } catch (e) {
+    console.warn("Category list skipped:", e.message);
+  }
   const topicsHTML = [...cats.entries()].map(([s, c]) => `<a href="/blog/category/${s}">${esc(c.name)}</a>`).join("");
   for (const b of built) {
     await writeFile(path.join(OUT, `${b.slug}.html`), b.page.replace("__TOPICS__", topicsHTML));
@@ -379,6 +391,7 @@ ${footer()}
 ${topbar(`/blog/category/${cs}`)}
 <main class="wrap" style="padding-bottom:72px">
 <div class="pagehead"><span class="cat" style="text-decoration:none">Topic</span><h1>${esc(c.name)}</h1></div>
+${c.posts.length ? "" : `<p style="margin-top:24px;color:var(--muted)">New articles on this topic are on the way. Meanwhile, <a href="/blog">see all articles</a> or <a href="/#guides">browse the guides</a>.</p>`}
 <div class="list" style="margin-top:32px">${[...c.posts].sort((a, b) => (a.date < b.date ? 1 : -1)).map(card).join("")}</div>
 </main>
 ${footer()}
