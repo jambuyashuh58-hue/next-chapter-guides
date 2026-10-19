@@ -3,7 +3,7 @@
 // Google indexes. Run by Vercel as the build command (see vercel.json).
 // No dependencies: Node 18+ (fetch, fs/promises).
 
-import { mkdir, writeFile, readFile, readdir, rm } from "node:fs/promises";
+import { mkdir, writeFile, readdir, rm, cp } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -346,6 +346,17 @@ ${urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.lastmod}</lastmod>${u.
 </urlset>
 `;
   await writeFile(path.join(ROOT, "sitemap.xml"), sitemap);
+
+  // Vercel serves the "public" folder once a build command is set:
+  // copy the whole static site (with the new blog and sitemap) into it.
+  const PUB = path.join(ROOT, "public");
+  if (existsSync(PUB)) await rm(PUB, { recursive: true, force: true });
+  await mkdir(PUB);
+  const skip = new Set([".git", ".github", ".gitignore", ".vercel", "public", "scripts", "node_modules", "README.md", "NEWSLETTER-SETUP.md", "vercel.json"]);
+  for (const name of await readdir(ROOT)) {
+    if (skip.has(name)) continue;
+    await cp(path.join(ROOT, name), path.join(PUB, name), { recursive: true });
+  }
 
   console.log(`Blog built: ${built.length} articles, ${downloaded.size} images, sitemap with ${urls.length} URLs.`);
 }
