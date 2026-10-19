@@ -85,7 +85,9 @@ async function rewriteContent(html, postLinks) {
   out = out
     .replace(/https?:\/\/nextchapterguides\.wpcomstaging\.com\/category\/([a-z0-9-]+)\/?(?=["#])/g, "/blog/category/$1")
     .replace(/https?:\/\/nextchapterguides\.wpcomstaging\.com\/about\/?(?=["#])/g, "/blog/about")
-    .replace(/https?:\/\/nextchapterguides\.wpcomstaging\.com\/?(?=["#])/g, "/blog");
+    .replace(/https?:\/\/nextchapterguides\.wpcomstaging\.com\/?(?=["#])/g, "/blog")
+    .replace(/href="\/category\/([a-z0-9-]+)\/?"/g, 'href="/blog/category/$1"')
+    .replace(/href="\/about\/?"/g, 'href="/blog/about"');
   // ids on h2 for the table of contents
   const toc = [];
   const used = new Set();
