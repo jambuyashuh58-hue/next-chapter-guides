@@ -1,6 +1,16 @@
 {
+  "buildCommand": "node scripts/build-blog.mjs",
   "cleanUrls": true,
   "headers": [
+    {
+      "source": "/blog/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
     {
       "source": "/(assets|previews)/(.*)",
       "headers": [
