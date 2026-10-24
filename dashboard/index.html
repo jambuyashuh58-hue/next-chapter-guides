@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Funnel dashboard · Next Chapter</title>
+<style>
+:root{--bg:#F5F8FD;--card:#fff;--ink:#0F1E3D;--ink2:#52607A;--line:#D7DEEA;--blue:#2563EB;--teal:#0F766E;--amber:#BE7800;--red:#C2362F;--pale:#EFF5FF;--redbg:#FDECEA;--ambbg:#FFF4DD;--grnbg:#E4F5F1;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0B1220;--card:#121C30;--ink:#E7ECF6;--ink2:#9AA8C2;--line:#26324A;--blue:#6C9BFF;--teal:#37C2B1;--amber:#E8B24A;--red:#FF7A70;--pale:#16233D;--redbg:#3A1C1E;--ambbg:#3A2E14;--grnbg:#12332F;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 64px}
+h1{font-size:1.35rem;margin:0}h2{font-size:1.02rem;margin:0 0 4px}
+.sub{color:var(--ink2);font-size:.86rem}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select,button,input{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:9px;padding:7px 12px}
+button{cursor:pointer;font-weight:600}button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:14px}
+.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr))}
+.kpi .n{font-size:1.7rem;font-weight:750;font-variant-numeric:tabular-nums;line-height:1.15}.kpi .l{color:var(--ink2);font-size:.8rem;margin-top:2px}
+section{margin-top:14px}
+.gaps{display:grid;gap:8px;margin-top:10px}
+.gap{border-radius:10px;padding:10px 12px;font-size:.9rem;border-left:4px solid var(--amber);background:var(--ambbg)}
+.gap.bad{border-color:var(--red);background:var(--redbg)}.gap.ok{border-color:var(--teal);background:var(--grnbg)}.gap b{display:block}
+.fn{display:grid;gap:6px;margin-top:10px}
+.step{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:10px;align-items:center}
+.step .name{font-size:.85rem}.bar{position:relative;height:30px;background:var(--pale);border-radius:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--blue);border-radius:8px;min-width:2px}
+.bar span{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-weight:700;font-size:.82rem;font-variant-numeric:tabular-nums;color:var(--ink);text-shadow:0 0 6px var(--card)}
+.drop{font-size:.76rem;color:var(--ink2);padding-left:200px;margin:-2px 0 0}.drop.leak{color:var(--red);font-weight:700}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.84rem;font-variant-numeric:tabular-nums}
+th{text-align:left;color:var(--ink2);font-weight:600;border-bottom:2px solid var(--line);padding:7px 8px;white-space:nowrap}
+td{border-bottom:1px solid var(--line);padding:7px 8px;vertical-align:top}td.n,th.n{text-align:right}
+.chip{display:inline-block;border-radius:99px;padding:1px 8px;font-size:.72rem;font-weight:700;margin-right:4px;white-space:nowrap}
+.c-red{background:var(--redbg);color:var(--red)}.c-amb{background:var(--ambbg);color:var(--amber)}.c-grn{background:var(--grnbg);color:var(--teal)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--ink2);margin:6px 0}.legend b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+svg text{fill:var(--ink2);font-size:10px}
+.lock{max-width:380px;margin:12vh auto;text-align:center}.lock input{width:100%;margin:12px 0}
+.err{color:var(--red);font-size:.86rem;min-height:1.2em}
+.mini{display:grid;gap:6px}.mini div{display:flex;justify-content:space-between;gap:8px;font-size:.86rem;border-bottom:1px dashed var(--line);padding:3px 0}
+.pill{font-size:.72rem;border-radius:99px;padding:2px 9px;background:var(--pale);color:var(--ink2)}
+.empty{color:var(--ink2);font-size:.88rem;padding:8px 0}
+@media (max-width:560px){.step{grid-template-columns:1fr}.drop{padding-left:0}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app" hidden>
+  <header>
+    <div><h1>Funnel dashboard</h1><div class="sub" id="status">Loading…</div></div>
+    <div class="ctl">
+      <select id="range" aria-label="Date range"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option><option value="0">All time</option></select>
+      <button id="refresh" class="pri">Refresh</button><button id="lockbtn">Lock</button>
+    </div>
+  </header>
+  <div class="grid kpis" id="kpis"></div>
+  <div class="card"><h2>Where the gaps are</h2><div class="sub">Worked out automatically from the numbers below. Fix the red ones first.</div><div class="gaps" id="gaps"></div></div>
+  <section class="grid two">
+    <div class="card"><h2>Blog funnel</h2><div class="sub">From a blog visit to the store</div><div class="fn" id="fnBlog"></div></div>
+    <div class="card"><h2>Store funnel</h2><div class="sub">From the store to a sale</div><div class="fn" id="fnStore"></div></div>
+  </section>
+  <section class="card"><h2>Daily trend</h2><div class="legend"><span><b style="background:var(--blue)"></b>Visitors</span><span><b style="background:var(--teal)"></b>Store link clicks</span><span><b style="background:var(--amber)"></b>Buy clicks</span><span><b style="background:var(--red)"></b>Orders</span></div><div id="trend"></div></section>
+  <section class="card"><h2>Traffic sources</h2><div class="sub">Where each visitor first came from, and how far they got</div><div class="tw" id="sources"></div></section>
+  <section class="card"><h2>Articles</h2><div class="sub">Which articles pull people in, and which send them to the store</div><div class="tw" id="articles"></div></section>
+  <section class="grid two">
+    <div class="card"><h2>Which link on the page gets clicked</h2><div class="sub">Store links from blog articles, by position</div><div id="cta"></div></div>
+    <div class="card"><h2>Guides</h2><div class="sub">Views, Buy clicks and sales per guide</div><div class="tw" id="products"></div></div>
+  </section>
+  <section class="grid two">
+    <div class="card"><h2>Countries</h2><div class="mini" id="countries"></div></div>
+    <div class="card"><h2>Devices</h2><div class="mini" id="devices"></div></div>
+  </section>
+  <section class="card"><h2>Every click, latest first</h2><div class="sub">The newest 120 events. The last 5 letters identify one visitor.</div><div class="tw" id="feed"></div></section>
+  <p class="sub" style="margin-top:18px" id="health"></p>
+</div>
+<div class="lock card" id="lock" hidden>
+  <h1>Funnel dashboard</h1><p class="sub">Enter your dashboard key.</p>
+  <input id="key" type="password" placeholder="Dashboard key" autocomplete="current-password"><div class="err" id="err"></div>
+  <button class="pri" id="go" style="width:100%">Open dashboard</button>
+</div>
+<script>
+const API="https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/nc-stats";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nf=n=>new Intl.NumberFormat("en-US").format(Math.round(n||0));
+const pct=(a,b)=>b>0?(100*a/b).toFixed(a/b<0.1?1:0)+"%":"–";
+const money=(n,c)=>{try{return new Intl.NumberFormat("en-US",{style:"currency",currency:c||"USD"}).format(n||0)}catch(e){return "$"+(n||0).toFixed(2)}};
+const PN={"age-calculator":"Is It Too Late? (free)","career-clarity":"Career Clarity Workbook","test-drive":"30-Day Career Test Drive","retraining-route":"Retraining Route Kit","money-planner":"Money Planner","cv-translator":"CV & LinkedIn Translator","foot-in-door":"Foot in the Door Playbook","planner-90":"90-Day Planner","teacher-exit":"Teacher Exit Kit","life-after-ward":"Life After the Ward","bundle-direction":"Bundle: Find your direction","bundle-everything":"Bundle: Complete library","bundle-land":"Bundle: Land the role"};
+const pn=s=>PN[s]||s;
+const ago=t=>{if(!t)return "never";const m=Math.round((Date.now()-new Date(t))/60000);return m<1?"just now":m<60?m+" min ago":m<1440?Math.round(m/60)+" h ago":Math.round(m/1440)+" days ago"};
+const title=s=>s.replace(/-/g," ").replace(/^./,c=>c.toUpperCase());
+let key=null;
+try{key=sessionStorage.getItem("nc_dash_key")}catch(e){}
+
+async function load(){
+  const days=$("#range").value;
+  $("#status").textContent="Loading…";
+  let r;
+  try{r=await fetch(API+"?days="+days,{headers:{"x-dash-key":key}});}catch(e){return fail("Could not reach the server. Check your connection and try again.")}
+  if(r.status===401){try{sessionStorage.removeItem("nc_dash_key")}catch(e){};key=null;return showLock("That key is not right.")}
+  if(r.status===500){return fail("The dashboard key is not set up yet. Add NC_DASH_KEY in Supabase → Edge Functions → Secrets.")}
+  if(!r.ok)return fail("Something went wrong ("+r.status+").");
+  render(await r.json());
+}
+function fail(m){$("#app").hidden=false;$("#lock").hidden=true;$("#status").textContent=m}
+function showLock(m){$("#app").hidden=true;$("#lock").hidden=false;$("#err").textContent=m||"";$("#key").focus()}
+
+function funnel(el,steps){
+  const max=Math.max(1,steps[0].n);let worst=-1,worstRate=2;
+  for(let i=1;i<steps.length;i++){if(steps[i-1].n>0){const r=steps[i].n/steps[i-1].n;if(r<worstRate){worstRate=r;worst=i}}}
+  el.innerHTML=steps.map((s,i)=>{
+    const w=Math.max(0.5,100*s.n/max);let d="";
+    if(i>0){const p=steps[i-1].n,lost=Math.max(0,p-s.n);d=`<div class="drop${i===worst&&p>0?" leak":""}">${p>0?`${pct(s.n,p)} continue · ${nf(lost)} drop off${i===worst?" ← biggest leak":""}`:"no one reached the step before"}</div>`}
+    return `<div class="step"><div class="name">${esc(s.k)}</div><div class="bar"><i style="width:${w}%;background:${i===worst?"var(--red)":"var(--blue)"}"></i><span>${nf(s.n)}</span></div></div>${d}`}).join("");
+  return {worst,worstRate,steps};
+}
+
+function trend(days){
+  if(!days.length){$("#trend").innerHTML='<div class="empty">No data yet.</div>';return}
+  const W=1000,H=210,L=34,B=24,T=8,R=8,n=days.length;
+  const max=Math.max(3,...days.map(d=>Math.max(d.visitors,d.cta,d.buy,d.orders)));
+  const x=i=>L+(n===1?(W-L-R)/2:i*(W-L-R)/(n-1)),y=v=>T+(H-T-B)*(1-v/max);
+  const line=(k,c)=>`<polyline fill="none" stroke="${c}" stroke-width="2" stroke-linejoin="round" points="${days.map((d,i)=>x(i)+","+y(d[k])).join(" ")}"/>`+days.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d[k])}" r="2.6" fill="${c}"/>`).join("");
+  const bw=Math.max(3,Math.min(28,(W-L-R)/n*0.6));
+  const step=Math.ceil(n/8);
+  let g="";for(let i=0;i<=4;i++){const v=max*i/4;g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${Math.round(v)}</text>`}
+  const xl=days.map((d,i)=>i%step===0?`<text x="${x(i)}" y="${H-6}" text-anchor="middle">${d.day.slice(5)}</text>`:"").join("");
+  $("#trend").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Daily trend">${g}${days.map((d,i)=>`<rect x="${x(i)-bw/2}" y="${y(d.visitors)}" width="${bw}" height="${H-B-y(d.visitors)}" fill="var(--blue)" opacity=".28" rx="3"/>`).join("")}${line("cta","var(--teal)")}${line("buy","var(--amber)")}${line("orders","var(--red)")}${xl}</svg>`;
+}
+
+function table(cols,rows,empty){
+  if(!rows.length)return `<div class="empty">${empty}</div>`;
+  return `<table><thead><tr>${cols.map(c=>`<th class="${c.n?"n":""}">${esc(c.h)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td class="${c.n?"n":""}">${c.f(r)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+
+function render(d){
+  $("#lock").hidden=true;$("#app").hidden=false;
+  const t=d.totals,cur=d.currency;
+  $("#status").textContent=`${nf(d.events)} events · last one ${ago(d.lastEvent)} · ${d.days?("last "+d.days+" days"):"all time"}`;
+  const toStore=d.funnel.blog[3].n, storeV=d.funnel.store[0].n;
+  $("#kpis").innerHTML=[[t.visitors,"Visitors"],[toStore,"Clicked to the store"],[t.buyers,"Clicked Buy"],[t.orders,"Orders"],[money(t.revenue,cur),"Revenue"],[pct(t.orders,t.visitors),"Visitor → order"]]
+    .map(k=>`<div class="card kpi"><div class="n">${typeof k[0]==="number"?nf(k[0]):k[0]}</div><div class="l">${k[1]}</div></div>`).join("");
+  const fb=funnel($("#fnBlog"),d.funnel.blog),fs=funnel($("#fnStore"),d.funnel.store);
+  trend(d.daily);
+
+  // sources
+  $("#sources").innerHTML=table([
+    {h:"Source",f:r=>`<b>${esc(r.source)}</b>`},{h:"Visitors",n:1,f:r=>nf(r.visitors)},{h:"Read half",n:1,f:r=>pct(r.read,r.visitors)},
+    {h:"To store",n:1,f:r=>nf(r.toStore)+" · "+pct(r.toStore,r.visitors)},{h:"Clicked Buy",n:1,f:r=>nf(r.buyers)},
+    {h:"Orders",n:1,f:r=>nf(r.orders||0)},{h:"Revenue",n:1,f:r=>money(r.revenue||0,cur)},{h:"Visitor → order",n:1,f:r=>pct(r.orders||0,r.visitors)}
+  ],d.sources,"No visits recorded yet.");
+
+  // articles
+  const arts=d.articles.map(a=>{const flags=[];const ctr=a.visitors?a.ctaVisitors/a.visitors:0,rd=a.visitors?a.read50/a.visitors:0;
+    if(a.visitors>=5&&a.ctaVisitors===0)flags.push(["c-red","No store clicks"]);
+    else if(a.visitors>=10&&ctr<0.02)flags.push(["c-amb","Weak CTA"]);
+    if(a.visitors>=10&&rd<0.3)flags.push(["c-amb","People leave early"]);
+    if(a.ctaVisitors>0&&ctr>=0.05)flags.push(["c-grn","Converts"]);
+    return {...a,flags}});
+  $("#articles").innerHTML=table([
+    {h:"Article",f:r=>`<a href="https://nextchaptergide.site/?name=${encodeURIComponent(r.slug)}" target="_blank" rel="noopener" style="color:var(--blue)">${esc(title(r.slug))}</a>`},
+    {h:"Visitors",n:1,f:r=>nf(r.visitors)},{h:"Read half",n:1,f:r=>pct(r.read50,r.visitors)},{h:"Read end",n:1,f:r=>pct(r.read90,r.visitors)},
+    {h:"Store clicks",n:1,f:r=>nf(r.ctaVisitors)+" · "+pct(r.ctaVisitors,r.visitors)},{h:"Buy clicks",n:1,f:r=>nf(r.buyVisitors)},{h:"Orders",n:1,f:r=>nf(r.orders)},
+    {h:"Flags",f:r=>r.flags.map(f=>`<span class="chip ${f[0]}">${f[1]}</span>`).join("")}
+  ],arts,"No article visits recorded yet.");
+
+  // cta
+  const ct=Object.entries(d.ctaTotals).sort((a,b)=>b[1]-a[1]),cm=Math.max(1,...ct.map(x=>x[1]));
+  const CN={cta_box_1:"Top blue box (before the first section)",cta_box_2:"Second blue box (before the conclusion)",conclusion:"Link in the conclusion",faq:"Link in the FAQ",inline:"Link inside the text",menu:"Menu",footer:"Footer"};
+  $("#cta").innerHTML=ct.length?`<div class="fn">${ct.map(([k,v])=>`<div class="step"><div class="name">${esc(CN[k]||k)}</div><div class="bar"><i style="width:${100*v/cm}%;background:var(--teal)"></i><span>${nf(v)}</span></div></div>`).join("")}</div>`:'<div class="empty">No clicks to the store yet.</div>';
+
+  // products
+  $("#products").innerHTML=table([
+    {h:"Guide",f:r=>esc(pn(r.product))},{h:"Viewed",n:1,f:r=>nf(r.views)},{h:"Clicked Buy",n:1,f:r=>nf(r.buyers)+" · "+pct(r.buyers,r.views)},{h:"Orders",n:1,f:r=>nf(r.orders)},{h:"Revenue",n:1,f:r=>money(r.revenue,cur)}
+  ],d.products,"No guide views yet.");
+
+  const mini=(el,a)=>$(el).innerHTML=a.length?a.map(x=>`<div><span>${esc(x.k)}</span><b>${nf(x.n)}</b></div>`).join(""):'<div class="empty">No data yet.</div>';
+  mini("#countries",d.countries);mini("#devices",d.devices);
+
+  const EV={pageview:"Page view",scroll_50:"Read half",scroll_90:"Read to end",cta_click:"Store link click",guide_view:"Opened a guide",buy_click:"Clicked Buy",purchase:"PURCHASE",free_claim:"Free guide claimed",refund:"Refund"};
+  $("#feed").innerHTML=table([
+    {h:"When",f:r=>new Date(r.ts).toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})},
+    {h:"What",f:r=>`<b>${esc(EV[r.event]||r.event)}</b>`},{h:"Where",f:r=>esc((r.host||"")+(r.post?" · "+title(r.post):r.path?" · "+r.path:""))},
+    {h:"Source",f:r=>esc(r.source||"")},{h:"Detail",f:r=>esc([r.cta,r.product?pn(r.product):"",r.value!=null?money(r.value,cur):""].filter(Boolean).join(" · "))},
+    {h:"Country",f:r=>esc(r.country||"")},{h:"Device",f:r=>esc(r.device||"")},{h:"Who",f:r=>esc(r.who)}
+  ],d.recent,"Nothing recorded yet. Visit the blog in a private window to see the first click appear here.");
+
+  // gaps
+  const G=[];
+  if(d.events===0)G.push(["bad","No data yet","Nothing has been recorded. Open the blog and store in a private window and click around, then press Refresh."]);
+  else{
+    if(fb.worst>0&&fb.steps[fb.worst-1].n>0){const p=fb.steps[fb.worst-1].n,s=fb.steps[fb.worst];G.push([p>=20?"bad":"",`Biggest blog leak: "${fb.steps[fb.worst-1].k}" → "${s.k}"`,`${nf(p-s.n)} of ${nf(p)} visitors (${pct(p-s.n,p)}) stop here.${p<20?" Small numbers so far, so treat this as a hint, not a verdict.":""}`])}
+    if(fs.worst>0&&fs.steps[fs.worst-1].n>0){const p=fs.steps[fs.worst-1].n,s=fs.steps[fs.worst];G.push([p>=20?"bad":"",`Biggest store leak: "${fs.steps[fs.worst-1].k}" → "${s.k}"`,`${nf(p-s.n)} of ${nf(p)} (${pct(p-s.n,p)}) stop here.${p<20?" Small numbers so far.":""}`])}
+    const dead=arts.filter(a=>a.flags.some(f=>f[1]==="No store clicks"));
+    if(dead.length)G.push(["bad",`${dead.length} article${dead.length>1?"s have":" has"} readers but no store clicks`,dead.slice(0,5).map(a=>`${title(a.slug)} (${a.visitors} visitors)`).join(" · ")+". Add a stronger link or a clearer offer in the first screen of these."]);
+    const weak=arts.filter(a=>a.flags.some(f=>f[1]==="People leave early"));
+    if(weak.length)G.push(["",`${weak.length} article${weak.length>1?"s lose":" loses"} people before halfway`,weak.slice(0,5).map(a=>title(a.slug)).join(" · ")+". Tighten the introduction, or check the search keyword matches what the page delivers."]);
+    const nb=d.sources.filter(s=>s.visitors>=10&&s.toStore===0);
+    if(nb.length)G.push(["bad","Traffic that never reaches the store",nb.map(s=>`${s.source} (${s.visitors} visitors)`).join(" · ")+". These visitors read but never click through."]);
+    const nv=d.products.filter(p=>p.views>=10&&p.buyers===0);
+    if(nv.length)G.push(["",`${nv.length} guide${nv.length>1?"s are":" is"} viewed but never bought`,nv.slice(0,5).map(p=>pn(p.product)+" ("+p.views+" views)").join(" · ")+". Look at its page: price, promise, preview."]);
+    if(t.buyers>0&&t.orders===0)G.push(["bad","People click Buy but no sale is recorded",`${nf(t.buyers)} visitors clicked Buy and there are 0 orders. Either checkout is failing or Lemon Squeezy is not connected to this dashboard yet. Test a checkout yourself.`]);
+    else if(t.buyers>t.orders&&t.orders>0)G.push(["",`${nf(t.buyers-t.orders)} Buy clicks did not turn into an order`,`That is ${pct(t.buyers-t.orders,t.buyers)} of Buy clicks lost at checkout. Look at the checkout page: price, payment methods, trust.`]);
+    if(t.unattributed>0)G.push(["",`${t.unattributed} order${t.unattributed>1?"s have":" has"} no source`,"The buyer did not come through a tracked Buy button, so the source is unknown."]);
+  }
+  if(!G.length)G.push(["ok","No obvious leak yet","Keep collecting data. The picture gets clearer after a few hundred visitors."]);
+  $("#gaps").innerHTML=G.map(g=>`<div class="gap ${g[0]}"><b>${esc(g[1])}</b>${esc(g[2])}</div>`).join("");
+
+  $("#health").innerHTML=`Data health: last event ${ago(d.lastEvent)} · last paid order ${d.lastPurchase?ago(d.lastPurchase):"none yet (Lemon Squeezy webhook not connected or no sales)"} · free-guide claims ${nf(t.free)} · refunds ${nf(t.refunds)}. Your own visits are excluded if you open any page once with <code>?nc_off=1</code> on the end of its address.`;
+}
+
+$("#go").onclick=()=>{key=$("#key").value.trim();if(!key)return;try{sessionStorage.setItem("nc_dash_key",key)}catch(e){};$("#key").value="";load()};
+$("#key").addEventListener("keydown",e=>{if(e.key==="Enter")$("#go").click()});
+$("#refresh").onclick=load;$("#range").onchange=load;
+$("#lockbtn").onclick=()=>{try{sessionStorage.removeItem("nc_dash_key")}catch(e){};key=null;showLock("")};
+setInterval(()=>{if(key&&!document.hidden&&!$("#app").hidden)load()},60000);
+if(key)load();else showLock("");
+</script>
+</body>
+</html>
