@@ -89,7 +89,7 @@
     function track(ev, extra, now_) { queue.push(base(ev, extra || {})); if (now_) flush(); else if (!timer) timer = setTimeout(flush, 800); }
     window.addEventListener("pagehide", flush);
     document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") flush(); });
-    window.NCTrack = { cid: cid, source: ft.src };
+    window.NCTrack = { cid: cid, source: ft.src, track: function (ev) { track(ev); } };
 
     function withParams(href, extra) {
       try {

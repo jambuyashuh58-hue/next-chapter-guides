@@ -2,7 +2,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
 const H = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "content-type", "Access-Control-Allow-Methods": "POST, OPTIONS" };
 const J = { ...H, "content-type": "application/json" };
-const OK = new Set(["pageview", "scroll_50", "scroll_90", "cta_click", "guide_view", "buy_click"]);
+const OK = new Set(["pageview", "scroll_50", "scroll_90", "cta_click", "guide_view", "buy_click", "quiz_start", "quiz_complete", "lead"]);
 const HOSTS = new Set(["blog", "store"]);
 const BOT = /bot|crawl|spider|slurp|headless|preview|lighthouse|facebookexternalhit|monitor|curl|wget|python|node-fetch|go-http/i;
 const s = (v: unknown, n = 120) => (typeof v === "string" && v ? v.slice(0, n) : null);
