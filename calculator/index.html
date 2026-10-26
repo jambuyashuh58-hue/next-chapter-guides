@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Is It Too Late to Change Careers? Free calculator | Next Chapter Guides</title>
+<meta name="description" content="A free 7-page calculator that counts your working years, compares them with typical job tenure and answers the real age worries about changing careers.">
+<link rel="canonical" href="https://next-chapter-guides.vercel.app/calculator">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F1E3D">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@600;700&display=swap">
+<link rel="stylesheet" href="/funnel.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="/">Next Chapter</a>
+  <a class="back" href="/">All guides</a>
+</header>
+
+<main class="wrap">
+  <ol class="steps"><li>1. Quiz</li><li class="on">2. Free calculator</li><li>3. Your next step</li></ol>
+  <section class="card">
+    <div class="eyebrow">Free tool</div>
+    <h1 style="margin:8px 0 12px">Is it too late to change careers?</h1>
+    <p class="lead">The Career Change Age Calculator counts how many working years you really have left, compares them with how long people usually stay in a job, and answers the age worries that hold people back.</p>
+    <img class="thumb" src="/previews/age-calculator-1.jpg" alt="A page from the Is It Too Late career change calculator" width="800" height="600" loading="lazy" style="margin:16px 0">
+    <ul style="color:var(--ink-2);padding-left:20px;margin:0 0 18px">
+      <li>Count your working years to age 67</li>
+      <li>Compare them with typical job tenure</li>
+      <li>Name the real age obstacles, and answer them</li>
+      <li>7 pages and 3 worksheets, printable</li>
+    </ul>
+    <div style="display:grid;gap:10px">
+      <a class="btn block" id="dl-a4" href="/downloads/Is-It-Too-Late-Calculator-A4.pdf" download>Download the calculator (A4)</a>
+      <a class="btn ghost block" id="dl-letter" href="/downloads/Is-It-Too-Late-Calculator-Letter.pdf" download>Download the calculator (US Letter)</a>
+    </div>
+    <p class="fine">Free. No payment and no extra sign-up. Print it or fill it in on screen.</p>
+  </section>
+  <section class="card sec" style="text-align:center">
+    <h2 style="margin-bottom:8px">Done with the calculator?</h2>
+    <p>There is one more page. It shows the three ways to take your next step, from one guide to personal help. Look when you are ready, with no pressure.</p>
+    <a class="btn" id="next" href="/choose?src=calculator">See my next-step options</a>
+  </section>
+</main>
+<script>
+(function(){
+  function t(ev,x){try{if(window.NCTrack&&NCTrack.track)NCTrack.track(ev,x)}catch(e){}}
+  window.addEventListener("load",function(){setTimeout(function(){t("calculator_view")},300)});
+  ["dl-a4","dl-letter"].forEach(function(id){document.getElementById(id).addEventListener("click",function(){t("calculator_download",{target:id==="dl-a4"?"a4":"letter"})})});
+})();
+</script>
+<script src="/nc.js" data-site="store" defer></script>
+</body>
+</html>

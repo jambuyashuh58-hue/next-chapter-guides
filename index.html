@@ -126,7 +126,7 @@ p{margin:0}
 
 /* HERO */
 .hero{padding-block:clamp(24px,5vw,56px) 0}
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(20px,4vw,48px);align-items:center}
+.hero-grid{display:grid;grid-template-columns:minmax(0,760px);gap:clamp(20px,4vw,48px);align-items:center}
 .hero h1{font-size:clamp(2.3rem,5.2vw,3.9rem);font-weight:700;color:var(--ink);margin-top:12px}
 .hero h1 em{display:block;font-style:italic;font-weight:500;color:var(--accent)}
 .hero .lede{margin-top:18px;font-size:1.08rem;color:var(--ink-2);max-width:56ch}
@@ -475,19 +475,14 @@ footer .logo b{color:var(--band-k)}
   <div class="wrap nav-in">
     <a class="logo" href="#top" aria-label="Next Chapter home"><img src="assets/logo.svg" alt="">Next<b>Chapter.</b></a>
     <nav class="menu glass" id="menu" aria-label="Main">
-      <a href="#top" class="on">Home</a>
-      <a href="#journey">Journey map</a>
+      <a href="/quiz?src=menu" class="on">Free quiz</a>
       <a href="#guides">Guides</a>
-      <a href="#bundles">Bundles</a>
-      <a href="#tracker">Tracker</a>
-      <a href="https://sidequestcrew.space/" target="_blank" rel="noopener">Crew</a>
-      <a href="#inside">Look inside</a>
       <a href="#faq">FAQ</a>
       <a href="https://nextchaptergide.site/">Blog</a>
     </nav>
     <div class="nav-cta">
       <button class="icon-btn" id="theme" aria-label="Switch light or dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <a class="btn btn-primary" href="#guide-age-calculator">Start free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-primary" href="/quiz?src=nav">Take the quiz <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <button class="icon-btn burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
@@ -499,19 +494,14 @@ footer .logo b{color:var(--band-k)}
       <div class="hero-panel">
       <div class="hero-grid">
         <div class="rv">
-          <span class="pill">Career change guides</span>
-          <h1>Change careers, <em>one clear step at a time.</em></h1>
-          <p class="lede">Ten printable PDF guides for adults leaving a job that no longer fits. Work out what to do next, test it before you commit, check what retraining really costs, and land the first role in your new field.</p>
+          <span class="pill">Free 3-minute quiz</span>
+          <h1>Hate your job and <em>not sure what to do?</em></h1>
+          <p class="lede">Twenty yes or no questions show what is really wrong: the people, the work, the pay and hours, or plain exhaustion. You get your result straight away, with the first thing to do about it.</p>
           <div class="hero-ctas">
-            <a class="btn btn-primary" href="#guides">Find my guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
-            <a class="btn btn-ghost" href="#guide-age-calculator">Free: “Is it too late?” calculator</a>
+            <a class="btn btn-primary" href="/quiz?src=hero">Take the 3-minute quiz <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn-ghost" href="#guides">Browse the guides</a>
           </div>
         </div>
-        <aside class="quest glass rv" aria-labelledby="qh">
-          <h3 id="qh"><span aria-hidden="true">🧭</span> Where are you right now?</h3>
-          <p>Pick the sentence that sounds most like you. We’ll point you to the right guide.</p>
-          <div class="chips" id="chips"></div>
-        </aside>
       </div>
       </div>
 
@@ -535,6 +525,14 @@ footer .logo b{color:var(--band-k)}
 
   <section class="sec" id="guides">
     <div class="wrap">
+      <div class="rv" style="margin-bottom:28px">
+                <aside class="quest glass" aria-labelledby="qh">
+          <h3 id="qh"><span aria-hidden="true">🧭</span> Where are you right now?</h3>
+          <p>Pick the sentence that sounds most like you. We’ll point you to the right guide.</p>
+          <div class="chips" id="chips"></div>
+        </aside>
+
+      </div>
       <div class="sec-head rv">
         <div><div class="eyebrow">The collection</div><h2>Ten guides for every stage of the change</h2></div>
         <div class="filters" id="filters" role="group" aria-label="Filter guides"></div>

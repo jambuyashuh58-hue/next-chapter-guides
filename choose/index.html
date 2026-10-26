@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your next step | Next Chapter Guides</title>
+<meta name="description" content="Three ways to take your next step in changing careers: one guide, the full program, or personal guidance.">
+<link rel="canonical" href="https://next-chapter-guides.vercel.app/choose">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F1E3D">
+<meta name="robots" content="noindex,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@600;700&display=swap">
+<link rel="stylesheet" href="/funnel.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="/">Next Chapter</a>
+  <a class="back" href="/">All guides</a>
+</header>
+
+<main class="wrap">
+  <ol class="steps"><li>1. Quiz</li><li>2. Free calculator</li><li class="on">3. Your next step</li></ol>
+  <section class="card">
+    <div class="eyebrow">Your next step</div>
+    <h1 style="margin:8px 0 12px">Three ways to go from here</h1>
+    <p class="lead" style="margin:0">You have done the free part. If you want more help, here are three options, from smallest to biggest. Pick one, or none. The free articles stay free.</p>
+  </section>
+
+  <div class="opts">
+    <article class="opt best" id="opt-guide">
+      <span class="badge">Best place to start</span>
+      <h2>Career Clarity Workbook</h2>
+      <div class="price">$24 <small>one-time, instant PDF</small></div>
+      <p style="margin:0">For the question the quiz leaves open: &ldquo;I want out, but what would I do instead?&rdquo;</p>
+      <ul><li>A way to compare directions before you commit</li><li>One clear next step</li><li>Worksheets you fill in yourself</li></ul>
+      <a class="btn block" id="go-guide" href="/?src=choose#guide-career-clarity">See the guide</a>
+    </article>
+
+    <article class="opt" id="opt-program">
+      <span class="badge">Coming soon</span>
+      <h2>The Complete Career Change Program</h2>
+      <div class="price">$97 <small>one-time</small></div>
+      <p style="margin:0">The whole path in order, with a 12-week plan to follow.</p>
+      <ul><li>All 9 guides, from first idea to first offer</li><li>A 12-week roadmap: what to do each week</li><li>Win log and weekly review sheets</li></ul>
+      <form class="wl" data-list="waitlist-bundle" novalidate>
+        <label class="hp" aria-hidden="true">Leave blank <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+        <label for="e1" style="font-weight:600">Email me when it opens</label>
+        <input class="in" id="e1" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <label class="chk"><input type="checkbox" name="ok" required><span>Yes, email me once when this opens. I can unsubscribe at any time.</span></label>
+        <div class="err" role="alert"></div>
+        <button class="btn" type="submit">Join the waitlist</button>
+      </form>
+    </article>
+
+    <article class="opt" id="opt-help">
+      <span class="badge">3 places a month</span>
+      <h2>Guided help</h2>
+      <div class="price">$150 <small>once, or 3 payments of $55</small></div>
+      <p style="margin:0">Work through the program with a person alongside you.</p>
+      <ul><li>2 calls a week for 12 weeks</li><li>The complete program and all the guides</li><li>After each call: what to do, and what to bring to the next one</li></ul>
+      <p class="fine" style="margin:0">Career guidance only. It does not promise a job, and it is not counselling or therapy.</p>
+      <form class="wl" data-list="waitlist-consulting" novalidate>
+        <label class="hp" aria-hidden="true">Leave blank <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+        <label for="e2" style="font-weight:600">Email me when places open</label>
+        <input class="in" id="e2" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <label class="chk"><input type="checkbox" name="ok" required><span>Yes, email me once when places open. I can unsubscribe at any time.</span></label>
+        <div class="err" role="alert"></div>
+        <button class="btn ghost" type="submit">Join the waitlist</button>
+      </form>
+    </article>
+  </div>
+  <p class="fine" style="margin-top:22px">Prices are in US dollars. The guide is sold through Lemon Squeezy. See our <a href="/privacy">privacy policy</a>.</p>
+</main>
+<script>
+(function(){
+  var URL="https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/nc-lead";
+  function t(ev,x){try{if(window.NCTrack&&NCTrack.track)NCTrack.track(ev,x)}catch(e){}}
+  window.addEventListener("load",function(){setTimeout(function(){t("options_view")},300)});
+  document.getElementById("go-guide").addEventListener("click",function(){t("cta_click",{cta:"options_guide",product:"career-clarity"})});
+  document.querySelectorAll("form.wl").forEach(function(f){
+    f.addEventListener("submit",function(e){
+      e.preventDefault();
+      var err=f.querySelector(".err"),em=f.email.value.trim(),btn=f.querySelector("button");
+      err.textContent="";
+      if(f.company.value)return;
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||em.length>120){err.textContent="Please enter a valid email address.";return}
+      if(!f.ok.checked){err.textContent="Please tick the box so we know you want the email.";return}
+      btn.disabled=true;btn.textContent="Saving...";
+      var list=f.getAttribute("data-list");
+      fetch(URL,{method:"POST",headers:{"content-type":"text/plain"},body:JSON.stringify({email:em,quiz:list,tips:true,cid:(window.NCTrack&&NCTrack.cid)||null,source:(window.NCTrack&&NCTrack.source)||null})})
+        .then(function(r){if(!r.ok)throw 0;return r.json()})
+        .then(function(){t("waitlist",{product:list});f.innerHTML='<p class="ok" style="margin:6px 0 0">You are on the list. We will email you once, when it opens.</p>'})
+        .catch(function(){err.textContent="Sorry, that did not go through. Please try again.";btn.disabled=false;btn.textContent="Join the waitlist"});
+    });
+  });
+})();
+</script>
+<script src="/nc.js" data-site="store" defer></script>
+</body>
+</html>

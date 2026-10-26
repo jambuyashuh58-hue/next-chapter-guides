@@ -139,21 +139,21 @@ p{margin:0 0 12px}
 
     <div class="card sec" id="lead-card">
       <h2 style="margin-bottom:8px">Get your personal result sheet</h2>
-      <p class="lead" style="font-size:1rem">A one-page PDF with your scores, your first move and your next step, to keep or print. Enter your email and it downloads straight away. We will not send you anything else unless you tick the box below.</p>
+      <p class="lead" style="font-size:1rem">A one-page PDF with your scores, your first move and your next step, to keep or print. Enter your email and it downloads straight away. We will also email you your result, then a free calculator and a few helpful articles over the next weeks.</p>
       <form class="form" id="lead" novalidate>
         <label class="hp" aria-hidden="true">Leave blank <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
         <label for="email" style="font-weight:600">Email address</label>
         <input class="in" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
-        <label class="chk"><input type="checkbox" id="tips"><span>Also send me occasional career-change tips by email. You can unsubscribe at any time.</span></label>
+        <label class="chk"><input type="checkbox" id="tips" required><span>Yes, email me my result and a short series of free career-change help. I can unsubscribe at any time.</span></label>
         <div class="err" id="err" role="alert"></div>
-        <button class="btn" id="go" type="submit">Download my result sheet</button>
+        <button class="btn" id="go" type="submit">Email me my result and download the sheet</button>
       </form>
-      <p class="fine">We store your email, your scores and the page you came from, so we can send you what you asked for. We never sell your details. This quiz is general career guidance, not medical, legal or counselling advice, and it cannot diagnose any health condition. <a href="/privacy">Privacy policy</a>.</p>
+      <p class="fine">We store your email, your scores and the page you came from, so we can send you the emails you asked for. Every email has an unsubscribe link. We never sell your details. This quiz is general career guidance, not medical, legal or counselling advice, and it cannot diagnose any health condition. <a href="/privacy">Privacy policy</a>.</p>
     </div>
 
     <div class="card sec" id="done" hidden>
       <h2 class="ok" style="margin-bottom:8px">Your sheet has downloaded.</h2>
-      <p>If it did not open, <a href="#" id="again">download it again</a>. Want to answer differently? <a href="#" id="retake">Retake the quiz</a>.</p>
+      <p>If it did not open, <a href="#" id="again">download it again</a>. We are also emailing you your result. If you do not see it in a few minutes, check your spam folder.</p><p style="margin-top:14px"><strong>Your next step:</strong> the free calculator that answers &ldquo;is it too late for me?&rdquo;</p><a class="btn" id="to-calc" href="/calculator?src=quiz">Get the free calculator</a><p class="fine" style="margin-top:14px">Want to answer differently? <a href="#" id="retake">Retake the quiz</a>.</p>
     </div>
   </section>
 
@@ -256,10 +256,8 @@ p{margin:0 0 12px}
     $("r-title").textContent = res.main === "L" ? "No single cause stands out" : "Your main cause: " + GROUPS[res.main].name.toLowerCase();
     $("r-meaning").textContent = t.meaning;
     $("r-first").textContent = t.first;
-    var nx = $("r-next"); nx.textContent = t.next + " ";
-    var a = document.createElement("a"); a.className = "btn"; a.textContent = "See the Career Clarity guide";
-    a.href = "/?src=quiz#guide-career-clarity"; a.style.marginTop = "12px"; a.style.display = "inline-block";
-    nx.appendChild(document.createElement("br")); nx.appendChild(a);
+    $("r-next").textContent = t.next.replace(/ below/g, "");
+    try { localStorage.setItem("nc_quiz", JSON.stringify({ scores: res.scores, main: res.main, second: res.second })); } catch (x) {}
     var bars = $("r-bars"); bars.innerHTML = "";
     ["A", "B", "C", "D"].forEach(function (g) {
       var d = document.createElement("div"); d.className = "bar" + (g === res.main ? " main" : "");
@@ -337,9 +335,10 @@ p{margin:0 0 12px}
     err.textContent = "";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em) || em.length > 120) { err.textContent = "Please enter a valid email address."; $("email").focus(); return; }
     if (e.target.company.value) return; // honeypot
+    if (!$("tips").checked) { err.textContent = "Please tick the box so we know you want the emails."; return; }
     var btn = $("go"); btn.disabled = true; btn.textContent = "Sending...";
     var cid = (window.NCTrack && NCTrack.cid) || null, src = (window.NCTrack && NCTrack.source) || null;
-    var body = JSON.stringify({ email: em, scores: res.scores, main: res.main, second: res.second, tips: $("tips").checked, cid: cid, source: src });
+    var body = JSON.stringify({ email: em, scores: res.scores, main: res.main, second: res.second, tips: true, cid: cid, source: src });
     fetch(LEAD_URL, { method: "POST", headers: { "content-type": "text/plain" }, body: body })
       .then(function (r) { if (!r.ok) throw new Error("save"); return r.json(); })
       .then(function () {
@@ -347,7 +346,7 @@ p{margin:0 0 12px}
         $("lead-card").hidden = true; $("done").hidden = false; track("lead");
         $("done").scrollIntoView({ behavior: "smooth", block: "center" });
       })
-      .catch(function () { err.textContent = "Sorry, that did not go through. Please check your connection and try again."; btn.disabled = false; btn.textContent = "Download my result sheet"; });
+      .catch(function () { err.textContent = "Sorry, that did not go through. Please check your connection and try again."; btn.disabled = false; btn.textContent = "Email me my result and download the sheet"; });
   });
 })();
 </script>

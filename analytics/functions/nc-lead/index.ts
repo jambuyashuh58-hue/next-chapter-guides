@@ -24,7 +24,15 @@ Deno.serve(async (req) => {
     scores: b?.scores ? sc : null, consent_tips: b?.tips === true,
     cid: s(b?.cid, 64), source: s(b?.source, 60), country: s(req.headers.get("cf-ipcountry"), 2),
   };
-  const { error } = await sb.from("nc_leads").upsert(row, { onConflict: "email,quiz" });
-  if (error) return new Response(JSON.stringify({ ok: false }), { status: 500, headers: J });
+  const { data: lead, error } = await sb.from("nc_leads").upsert(row, { onConflict: "email,quiz" }).select("id,unsubscribed_at").single();
+  if (error || !lead) return new Response(JSON.stringify({ ok: false }), { status: 500, headers: J });
+  // The email series starts only for quiz takers who ticked the consent box. Waitlists get no emails yet.
+  if (row.quiz === "hate-my-job" && row.consent_tips) {
+    // A fresh, explicit opt-in clears an old unsubscribe.
+    if (lead.unsubscribed_at) await sb.from("nc_leads").update({ unsubscribed_at: null }).eq("id", lead.id);
+    const t0 = Date.now(), H1 = 3600e3, D = 24 * H1;
+    const plan: [string, number][] = [["welcome", 0], ["calc1", H1], ["calc2", D], ["blog1", 3 * D], ["blog2", 7 * D], ["blog3", 14 * D], ["blog4", 21 * D], ["offer", 30 * D]];
+    await sb.from("nc_mail_queue").upsert(plan.map(([step, d]) => ({ lead_id: lead.id, step, send_at: new Date(t0 + d).toISOString() })), { onConflict: "lead_id,step", ignoreDuplicates: true });
+  }
   return new Response(JSON.stringify({ ok: true }), { headers: J });
 });

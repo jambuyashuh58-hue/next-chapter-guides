@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unsubscribe | Next Chapter Guides</title>
+<meta name="description" content="Stop the Next Chapter Guides emails.">
+<link rel="canonical" href="https://next-chapter-guides.vercel.app/unsubscribe">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F1E3D">
+<meta name="robots" content="noindex,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@600;700&display=swap">
+<link rel="stylesheet" href="/funnel.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="/">Next Chapter</a>
+  <a class="back" href="/">All guides</a>
+</header>
+
+<main class="wrap">
+  <section class="card" id="box">
+    <h1 style="margin:0 0 12px">Unsubscribe</h1>
+    <p id="msg">Press the button to stop all emails from Next Chapter Guides. It takes effect straight away.</p>
+    <button class="btn" id="go" type="button">Stop my emails</button>
+    <p class="fine" id="note"></p>
+  </section>
+</main>
+<script>
+(function(){
+  var t=new URLSearchParams(location.search).get("t")||"";
+  var go=document.getElementById("go"),msg=document.getElementById("msg"),note=document.getElementById("note");
+  if(!/^[0-9a-f-]{36}$/i.test(t)){msg.textContent="This link is not complete. Please use the unsubscribe link from the bottom of one of our emails.";go.hidden=true;return}
+  go.addEventListener("click",function(){
+    go.disabled=true;go.textContent="Working...";
+    fetch("https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/nc-unsub?t="+encodeURIComponent(t),{method:"POST"})
+      .then(function(r){if(!r.ok)throw 0;return r.json()})
+      .then(function(){msg.textContent="You are unsubscribed. We will not email you again.";go.hidden=true;note.textContent="If this was a mistake, take the quiz again and tick the box."})
+      .catch(function(){msg.textContent="Sorry, that did not work. Please try again in a minute.";go.disabled=false;go.textContent="Stop my emails"});
+  });
+})();
+</script>
+</body>
+</html>

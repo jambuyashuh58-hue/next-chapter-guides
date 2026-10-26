@@ -22,11 +22,11 @@ Deno.serve(async (req) => {
   }
 
   // per-visitor state
-  type V = { src: string; post: string | null; blog: boolean; store: boolean; read50: boolean; read90: boolean; cta: boolean; guide: boolean; buy: boolean; country: string | null; device: string | null; first: string };
+  type V = { src: string; post: string | null; blog: boolean; store: boolean; read50: boolean; read90: boolean; cta: boolean; guide: boolean; buy: boolean; q: Record<string, boolean>; country: string | null; device: string | null; first: string };
   const vis = new Map<string, V>();
   const get = (r: any): V => {
     let v = vis.get(r.cid);
-    if (!v) { v = { src: r.ft_source || r.source || "direct", post: r.ft_post || null, blog: false, store: false, read50: false, read90: false, cta: false, guide: false, buy: false, country: r.country, device: r.device, first: r.ts }; vis.set(r.cid, v); }
+    if (!v) { v = { src: r.ft_source || r.source || "direct", post: r.ft_post || null, blog: false, store: false, read50: false, read90: false, cta: false, guide: false, buy: false, q: {}, country: r.country, device: r.device, first: r.ts }; vis.set(r.cid, v); }
     return v;
   };
   const art = new Map<string, any>(); const A = (s: string) => { let a = art.get(s); if (!a) { a = { slug: s, views: 0, vis: new Set(), read50: new Set(), read90: new Set(), cta: new Set(), clicks: 0, ctaBy: {} as Record<string, number>, buyVis: new Set(), orders: 0, revenue: 0 }; art.set(s, a); } return a; };
@@ -34,6 +34,7 @@ Deno.serve(async (req) => {
   const daily = new Map<string, any>(); const D = (t: string) => { const k = day(t); let d = daily.get(k); if (!d) { d = { day: k, pageviews: 0, vis: new Set(), cta: 0, buy: 0, orders: 0, revenue: 0 }; daily.set(k, d); } return d; };
   const srcRev = new Map<string, { orders: number; revenue: number }>();
   const ctaTotals: Record<string, number> = {};
+  const waitlist: Record<string, number> = {};
   let orders = 0, revenue = 0, free = 0, refunds = 0, refundValue = 0, unattributed = 0, lastEvent: string | null = null, lastPurchase: string | null = null;
   const currency = rows.find((r) => r.currency)?.currency || "USD";
 
@@ -58,7 +59,10 @@ Deno.serve(async (req) => {
     if (r.event === "pageview") {
       d.pageviews++;
       if (r.host === "blog") { v.blog = true; if (r.post_slug) { const a = A(r.post_slug); a.views++; a.vis.add(r.cid); } }
-      if (r.host === "store") v.store = true;
+      if (r.host === "store") { v.store = true; if (/^\/quiz\/?$/.test(r.path || "")) v.q.page = true; }
+    } else if (["quiz_start", "quiz_complete", "lead", "calculator_view", "calculator_download", "options_view", "waitlist"].includes(r.event)) {
+      v.q[r.event] = true;
+      if (r.event === "waitlist") { const w = r.product || "waitlist"; waitlist[w] = (waitlist[w] || 0) + 1; }
     } else if (r.event === "scroll_50") { v.read50 = true; if (r.post_slug) A(r.post_slug).read50.add(r.cid); }
     else if (r.event === "scroll_90") { v.read90 = true; if (r.post_slug) A(r.post_slug).read90.add(r.cid); }
     else if (r.event === "cta_click") {
@@ -90,6 +94,36 @@ Deno.serve(async (req) => {
       { k: "Purchased", n: orders },
     ],
   };
+  // The quiz funnel: each step counts visitors who did that step. A step counts a visitor even if an earlier step was missed (for example, an ad blocker).
+  const q = (k: string) => n((v) => !!v.q[k]);
+  const quizFunnel = [
+    { k: "Opened the quiz page", n: Math.max(q("page"), q("quiz_start")) },
+    { k: "Started the quiz", n: q("quiz_start") },
+    { k: "Finished the quiz", n: q("quiz_complete") },
+    { k: "Left their email", n: q("lead") },
+    { k: "Opened the calculator page", n: q("calculator_view") },
+    { k: "Downloaded the calculator", n: q("calculator_download") },
+    { k: "Saw the three options", n: q("options_view") },
+    { k: "Clicked the guide or joined a waitlist", n: n((v) => !!(v.q.options_view && (v.q.waitlist || v.buy || v.guide))) },
+  ];
+  const quizSources = new Map<string, any>();
+  for (const v of V) {
+    if (!(v.q.page || v.q.quiz_start)) continue;
+    const s = quizSources.get(v.src) || { source: v.src, opened: 0, started: 0, finished: 0, leads: 0, calculator: 0 };
+    s.opened++; if (v.q.quiz_start) s.started++; if (v.q.quiz_complete) s.finished++; if (v.q.lead) s.leads++; if (v.q.calculator_view) s.calculator++;
+    quizSources.set(v.src, s);
+  }
+  // Email list and queue (private tables, read with the service key).
+  const mail: any = { leads: 0, unsubscribed: 0, byStep: {} as Record<string, Record<string, number>>, waiting: 0 };
+  {
+    const { count: lc } = await sb.from("nc_leads").select("id", { count: "exact", head: true }).eq("quiz", "hate-my-job");
+    const { count: uc } = await sb.from("nc_leads").select("id", { count: "exact", head: true }).eq("quiz", "hate-my-job").not("unsubscribed_at", "is", null);
+    mail.leads = lc || 0; mail.unsubscribed = uc || 0;
+    const { data: qs } = await sb.from("nc_mail_queue").select("step,status").limit(20000);
+    for (const r of qs || []) { const m = (mail.byStep[r.step] ||= {}); m[r.status] = (m[r.status] || 0) + 1; }
+    const { count: wc } = await sb.from("nc_mail_queue").select("id", { count: "exact", head: true }).eq("status", "pending").lte("send_at", new Date().toISOString());
+    mail.waiting = wc || 0;
+  }
   const sources = new Map<string, any>();
   for (const v of V) {
     const s = sources.get(v.src) || { source: v.src, visitors: 0, read: 0, toStore: 0, buyers: 0 };
@@ -106,7 +140,7 @@ Deno.serve(async (req) => {
   return new Response(JSON.stringify({
     generated: new Date().toISOString(), days, currency, events: rows.length, visitors: V.length, lastEvent, lastPurchase,
     totals: { visitors: V.length, orders, revenue, free, refunds, refundValue, unattributed, buyers: n((v) => v.buy), ctaClicks: Object.values(ctaTotals).reduce((a, b) => a + b, 0) },
-    funnel, sources: [...sources.values()].sort((a, b) => b.visitors - a.visitors), ctaTotals, articles, products,
+    funnel, quizFunnel, quizSources: [...quizSources.values()].sort((a, b) => b.opened - a.opened), mail, waitlist, sources: [...sources.values()].sort((a, b) => b.visitors - a.visitors), ctaTotals, articles, products,
     daily: [...daily.values()].sort((a, b) => a.day.localeCompare(b.day)).map((d) => ({ day: d.day, pageviews: d.pageviews, visitors: d.vis.size, cta: d.cta, buy: d.buy, orders: d.orders, revenue: d.revenue })),
     countries: countBy((v) => v.country).slice(0, 12), devices: countBy((v) => v.device), recent,
   }), { headers: H });

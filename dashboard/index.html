@@ -58,6 +58,11 @@ svg text{fill:var(--ink2);font-size:10px}
   <div class="grid kpis" id="kpis"></div>
   <div class="card"><h2>Where the gaps are</h2><div class="sub">Worked out automatically from the numbers below. Fix the red ones first.</div><div class="gaps" id="gaps"></div></div>
   <section class="grid two">
+    <div class="card"><h2>Quiz to next step</h2><div class="sub">Where quiz visitors stop: quiz, email, free calculator, options</div><div class="fn" id="fnQuiz"></div></div>
+    <div class="card"><h2>Email series</h2><div class="sub" id="mailSub"></div><div class="tw" id="mail"></div></div>
+  </section>
+  <section class="card"><h2>Quiz traffic by source</h2><div class="sub">Which source sends people who finish the quiz and reach the calculator</div><div class="tw" id="quizSrc"></div></section>
+  <section class="grid two">
     <div class="card"><h2>Blog funnel</h2><div class="sub">From a blog visit to the store</div><div class="fn" id="fnBlog"></div></div>
     <div class="card"><h2>Store funnel</h2><div class="sub">From the store to a sale</div><div class="fn" id="fnStore"></div></div>
   </section>
@@ -142,7 +147,17 @@ function render(d){
   const toStore=d.funnel.blog[3].n, storeV=d.funnel.store[0].n;
   $("#kpis").innerHTML=[[t.visitors,"Visitors"],[toStore,"Clicked to the store"],[t.buyers,"Clicked Buy"],[t.orders,"Orders"],[money(t.revenue,cur),"Revenue"],[pct(t.orders,t.visitors),"Visitor → order"]]
     .map(k=>`<div class="card kpi"><div class="n">${typeof k[0]==="number"?nf(k[0]):k[0]}</div><div class="l">${k[1]}</div></div>`).join("");
-  const fb=funnel($("#fnBlog"),d.funnel.blog),fs=funnel($("#fnStore"),d.funnel.store);
+  const fb=funnel($("#fnBlog"),d.funnel.blog),fs=funnel($("#fnStore"),d.funnel.store),fq=funnel($("#fnQuiz"),d.quizFunnel);
+  const SN={welcome:"1. Welcome + result (now)",calc1:"2. Calculator (1 hour)",calc2:"3. Calculator again (next day)",blog1:"4. Article 1 (day 3)",blog2:"5. Article 2 (day 7)",blog3:"6. Article 3 (day 14)",blog4:"7. Article 4 (day 21)",offer:"8. Options email (day 30)"};
+  const m=d.mail;
+  $("#mailSub").textContent=`${nf(m.leads)} quiz email${m.leads===1?"":"s"} saved · ${nf(m.unsubscribed)} unsubscribed · ${nf(m.waiting)} due now and not yet sent`;
+  $("#mail").innerHTML=table([
+    {h:"Email",f:r=>esc(SN[r.k]||r.k)},{h:"Sent",n:1,f:r=>nf(r.sent)},{h:"Waiting",n:1,f:r=>nf(r.pending)},{h:"Skipped",n:1,f:r=>nf(r.skipped)},{h:"Failed",n:1,f:r=>nf(r.failed)}
+  ],Object.keys(SN).filter(k=>m.byStep[k]).map(k=>({k,sent:m.byStep[k].sent||0,pending:m.byStep[k].pending||0,skipped:m.byStep[k].skipped||0,failed:m.byStep[k].failed||0})),"No emails are queued yet. They appear when someone finishes the quiz and ticks the box.");
+  $("#quizSrc").innerHTML=table([
+    {h:"Source",f:r=>`<b>${esc(r.source)}</b>`},{h:"Opened quiz",n:1,f:r=>nf(r.opened)},{h:"Started",n:1,f:r=>nf(r.started)+" · "+pct(r.started,r.opened)},
+    {h:"Finished",n:1,f:r=>nf(r.finished)+" · "+pct(r.finished,r.started)},{h:"Left email",n:1,f:r=>nf(r.leads)+" · "+pct(r.leads,r.finished)},{h:"Reached calculator",n:1,f:r=>nf(r.calculator)+" · "+pct(r.calculator,r.leads)}
+  ],d.quizSources,"No one has opened the quiz yet.");
   trend(d.daily);
 
   // sources
@@ -179,7 +194,7 @@ function render(d){
   const mini=(el,a)=>$(el).innerHTML=a.length?a.map(x=>`<div><span>${esc(x.k)}</span><b>${nf(x.n)}</b></div>`).join(""):'<div class="empty">No data yet.</div>';
   mini("#countries",d.countries);mini("#devices",d.devices);
 
-  const EV={pageview:"Page view",scroll_50:"Read half",scroll_90:"Read to end",cta_click:"Store link click",guide_view:"Opened a guide",buy_click:"Clicked Buy",purchase:"PURCHASE",free_claim:"Free guide claimed",refund:"Refund"};
+  const EV={pageview:"Page view",scroll_50:"Read half",scroll_90:"Read to end",cta_click:"Store link click",guide_view:"Opened a guide",quiz_start:"Started the quiz",quiz_complete:"Finished the quiz",lead:"Left email",calculator_view:"Opened the calculator",calculator_download:"Downloaded the calculator",options_view:"Saw the options",waitlist:"Joined a waitlist",buy_click:"Clicked Buy",purchase:"PURCHASE",free_claim:"Free guide claimed",refund:"Refund"};
   $("#feed").innerHTML=table([
     {h:"When",f:r=>new Date(r.ts).toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})},
     {h:"What",f:r=>`<b>${esc(EV[r.event]||r.event)}</b>`},{h:"Where",f:r=>esc((r.host||"")+(r.post?" · "+title(r.post):r.path?" · "+r.path:""))},
@@ -205,6 +220,8 @@ function render(d){
     else if(t.buyers>t.orders&&t.orders>0)G.push(["",`${nf(t.buyers-t.orders)} Buy clicks did not turn into an order`,`That is ${pct(t.buyers-t.orders,t.buyers)} of Buy clicks lost at checkout. Look at the checkout page: price, payment methods, trust.`]);
     if(t.unattributed>0)G.push(["",`${t.unattributed} order${t.unattributed>1?"s have":" has"} no source`,"The buyer did not come through a tracked Buy button, so the source is unknown."]);
   }
+  if(d.quizFunnel[0].n>0&&fq.worst>0&&fq.steps[fq.worst-1].n>0){const p=fq.steps[fq.worst-1].n,s2=fq.steps[fq.worst];G.push([p>=20?"bad":"",`Biggest quiz leak: "${fq.steps[fq.worst-1].k}" → "${s2.k}"`,`${nf(p-s2.n)} of ${nf(p)} (${pct(p-s2.n,p)}) stop here.${p<20?" Small numbers, so treat this as a hint, not a fact.":""}`])}
+  if(m.waiting>0)G.push(["bad","Emails are due but not being sent",`${nf(m.waiting)} email${m.waiting>1?"s are":" is"} past the send time. The mail account (RESEND_API_KEY and MAIL_FROM) is probably not connected yet.`]);
   if(!G.length)G.push(["ok","No obvious leak yet","Keep collecting data. The picture gets clearer after a few hundred visitors."]);
   $("#gaps").innerHTML=G.map(g=>`<div class="gap ${g[0]}"><b>${esc(g[1])}</b>${esc(g[2])}</div>`).join("");
 
