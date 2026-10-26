@@ -48,6 +48,36 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "destination": "https://shop.nextchaptergide.site/",
+      "permanent": false
+    },
+    {
+      "source": "/quiz",
+      "destination": "https://shop.nextchaptergide.site/quiz",
+      "permanent": false
+    },
+    {
+      "source": "/app",
+      "destination": "https://shop.nextchaptergide.site/app",
+      "permanent": false
+    },
+    {
+      "source": "/calculator",
+      "destination": "https://shop.nextchaptergide.site/calculator",
+      "permanent": false
+    },
+    {
+      "source": "/choose",
+      "destination": "https://shop.nextchaptergide.site/choose",
+      "permanent": false
+    },
+    {
+      "source": "/privacy",
+      "destination": "https://shop.nextchaptergide.site/privacy",
+      "permanent": false
+    },
+    {
       "source": "/blog",
       "destination": "https://nextchaptergide.site/",
       "permanent": true
