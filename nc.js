@@ -159,7 +159,7 @@
         return null;
       };
       document.addEventListener("click", function (e) {
-        var a = e.target.closest && e.target.closest("a[href*='lemonsqueezy.com']"); if (!a) return;
+        var a = e.target.closest && e.target.closest("a[href*='lemonsqueezy.com'],a[href*='whop.com']"); if (!a) return;
         var p = productFor(a.href) || { slug: "unknown", price: null };
         var x = {}; x["checkout[custom][nc_cid]"] = cid; x["checkout[custom][nc_src]"] = ft.src; if (ft.post) x["checkout[custom][nc_post]"] = ft.post; x["checkout[custom][nc_product]"] = p.slug;
         try { var u = new URL(a.href); for (var k in x) u.searchParams.set(k, x[k]); a.href = u.toString(); } catch (er) {}
