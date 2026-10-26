@@ -216,7 +216,7 @@ function render(d){
     if(nb.length)G.push(["bad","Traffic that never reaches the store",nb.map(s=>`${s.source} (${s.visitors} visitors)`).join(" · ")+". These visitors read but never click through."]);
     const nv=d.products.filter(p=>p.views>=10&&p.buyers===0);
     if(nv.length)G.push(["",`${nv.length} guide${nv.length>1?"s are":" is"} viewed but never bought`,nv.slice(0,5).map(p=>pn(p.product)+" ("+p.views+" views)").join(" · ")+". Look at its page: price, promise, preview."]);
-    if(t.buyers>0&&t.orders===0)G.push(["bad","People click Buy but no sale is recorded",`${nf(t.buyers)} visitors clicked Buy and there are 0 orders. Either checkout is failing or Lemon Squeezy is not connected to this dashboard yet. Test a checkout yourself.`]);
+    if(t.buyers>0&&t.orders===0)G.push(["bad","People click Buy but no sale is recorded",`${nf(t.buyers)} visitors clicked Buy and there are 0 orders. Either checkout is failing or Whop is not connected to this dashboard yet. Test a checkout yourself.`]);
     else if(t.buyers>t.orders&&t.orders>0)G.push(["",`${nf(t.buyers-t.orders)} Buy clicks did not turn into an order`,`That is ${pct(t.buyers-t.orders,t.buyers)} of Buy clicks lost at checkout. Look at the checkout page: price, payment methods, trust.`]);
     if(t.unattributed>0)G.push(["",`${t.unattributed} order${t.unattributed>1?"s have":" has"} no source`,"The buyer did not come through a tracked Buy button, so the source is unknown."]);
   }
@@ -225,7 +225,7 @@ function render(d){
   if(!G.length)G.push(["ok","No obvious leak yet","Keep collecting data. The picture gets clearer after a few hundred visitors."]);
   $("#gaps").innerHTML=G.map(g=>`<div class="gap ${g[0]}"><b>${esc(g[1])}</b>${esc(g[2])}</div>`).join("");
 
-  $("#health").innerHTML=`Data health: last event ${ago(d.lastEvent)} · last paid order ${d.lastPurchase?ago(d.lastPurchase):"none yet (Lemon Squeezy webhook not connected or no sales)"} · free-guide claims ${nf(t.free)} · refunds ${nf(t.refunds)}. Your own visits are excluded if you open any page once with <code>?nc_off=1</code> on the end of its address.`;
+  $("#health").innerHTML=`Data health: last event ${ago(d.lastEvent)} · last paid order ${d.lastPurchase?ago(d.lastPurchase):"none yet (Whop sales not connected or no sales)"} · free-guide claims ${nf(t.free)} · refunds ${nf(t.refunds)}. Your own visits are excluded if you open any page once with <code>?nc_off=1</code> on the end of its address.`;
 }
 
 $("#go").onclick=()=>{key=$("#key").value.trim();if(!key)return;try{sessionStorage.setItem("nc_dash_key",key)}catch(e){};$("#key").value="";load()};

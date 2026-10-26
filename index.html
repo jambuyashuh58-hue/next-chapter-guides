@@ -664,26 +664,24 @@ footer .logo b{color:var(--band-k)}
 /* ===== STORE SETTINGS — fill these in to enable purchases =====
    currency: symbol shown before prices, e.g. "$" or "£" or "₹"
    price:    number (e.g. 19) or null to show "Price coming soon"
-   checkout: full https link to the product's checkout page (Gumroad, Lemon Squeezy, Payhip, Stripe Payment Link…)
+   checkout: full https link to the product's checkout page (Gumroad, Whop, Payhip, Stripe Payment Link…)
              The provider stores the PDF and emails the download link after payment. Never link the PDF itself. */
 const STORE = {
   currency: "$",
   products: {
     "age-calculator":   { price: 0,  checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/0da79191-6f90-42ea-affd-02f8ff6538b9" },
     "career-clarity":   { price: 24, checkout: "https://whop.com/next-chapter-15f2/career-clarity-workbook" },
-    "test-drive":       { price: 17, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/8737dca2-c4fb-4f19-b720-041abc4083d3" },
-    "retraining-route": { price: 17, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/43f2c7bb-bb8b-4c0a-9d16-7dc802dd0222" },
-    "money-planner":    { price: 12, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/fad94c6e-632e-4e0e-a504-cab130dfc43e" },
-    "cv-translator":    { price: 17, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/7debc22c-64d7-45ac-93a7-713d3891eb37" },
-    "foot-in-door":     { price: 17, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/c4e9e80f-b432-463b-8636-8fbceedc6f01" },
-    "planner-90":       { price: 12, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/8316896b-144a-4cdb-b7dc-f355e4f810c1" },
-    "teacher-exit":     { price: 17, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/74750028-95f1-4d2b-93e6-dc05c8126b38" },
-    "life-after-ward":  { price: 17, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/4d282b29-8c03-43f5-bf34-a243ea37d1bc" }
+    "test-drive":       { price: 17, checkout: "https://whop.com/next-chapter-15f2/30-day-career-test-drive" },
+    "retraining-route": { price: 17, checkout: "https://whop.com/next-chapter-15f2/retraining-route-decision-kit" },
+    "money-planner":    { price: 12, checkout: "https://whop.com/next-chapter-15f2/career-change-money-planner" },
+    "cv-translator":    { price: 17, checkout: "https://whop.com/next-chapter-15f2/cv-linkedin-translator" },
+    "foot-in-door":     { price: 17, checkout: "https://whop.com/next-chapter-15f2/foot-in-the-door-playbook" },
+    "planner-90":       { price: 12, checkout: "https://whop.com/next-chapter-15f2/90-day-career-change-planner" },
+    "teacher-exit":     { price: 17, checkout: "https://whop.com/next-chapter-15f2/teacher-exit-kit" },
+    "life-after-ward":  { price: 17, checkout: "https://whop.com/next-chapter-15f2/life-after-the-ward" }
   },
   bundles: [
-    { id: "direction", name: "Find your direction", blurb: "Work out what to do next, then test it before you commit.", items: ["career-clarity","test-drive"], price: 34, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/f1f0c63f-d831-4516-b3f9-3dd90aef195c" },
-    { id: "everything", name: "The Complete Career Change Program", blurb: "All 9 guides in order, plus a 12-week plan that tells you what to do each week.", items: ["career-clarity","test-drive","retraining-route","money-planner","cv-translator","foot-in-door","planner-90","teacher-exit","life-after-ward"], extras: ["A 12-week roadmap: the topic, the task and what to prepare each week","Win log and weekly review sheets"], price: 97, checkout: "" /* paste the Lemon Squeezy link here to switch the waitlist to a Buy button */, waitlist: "waitlist-bundle", best: true },
-    { id: "land", name: "Land the role", blurb: "Rewrite your CV for the new field and get your first yes.", items: ["cv-translator","foot-in-door"], price: 29, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/cb3c2545-299d-4c0b-9c16-6257dbd7f1cb" }
+    { id: "everything", name: "The Complete Career Change Program", blurb: "All 9 guides in order, plus a 12-week plan that tells you what to do each week.", items: ["career-clarity","test-drive","retraining-route","money-planner","cv-translator","foot-in-door","planner-90","teacher-exit","life-after-ward"], extras: ["A 12-week roadmap: the topic, the task and what to prepare each week","Win log and weekly review sheets"], price: 97, checkout: "" /* paste the Whop link here to switch the waitlist to a Buy button */, waitlist: "waitlist-bundle", best: true },
   ]
 };
 
@@ -822,7 +820,7 @@ $("#grid").innerHTML = P.map((p,i)=>`
 </article>`).join("");
 
 
-/* waitlist form (used until a Lemon Squeezy link exists) */
+/* waitlist form (used until a Whop link exists) */
 const LEAD_URL = "https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/nc-lead";
 let wlN = 0;
 function wlForm(list, label, btnText, consent){
@@ -851,7 +849,7 @@ document.addEventListener("submit", e=>{
 });
 
 /* bundles */
-const GUIDED = { checkoutOnce: "", checkoutMonthly: "" /* paste the two Lemon Squeezy links to switch the waitlist to Buy buttons */ };
+const GUIDED = { checkoutOnce: "", checkoutMonthly: "" /* paste the two Whop links to switch the waitlist to Buy buttons */ };
 const fullPrice = b => b.items.reduce((t,s)=>t+(STORE.products[s].price||0),0);
 $("#bundleGrid").innerHTML = STORE.bundles.map(b=>{
   const full = fullPrice(b), save = full - b.price;
