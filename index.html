@@ -338,6 +338,15 @@ footer .threads{color:var(--on-band);font-weight:600;text-decoration:none}
 .thumbs{display:flex;flex-wrap:wrap;gap:6px}
 .thumbs img{width:46px;height:46px;border-radius:10px;object-fit:cover;border:2px solid var(--glass-line)}
 .bundle ul{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:.86rem;color:var(--muted)}
+.guided-card{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:28px;align-items:start;margin-top:8px}
+.guided-card .g-main{display:flex;flex-direction:column;gap:12px}
+.guided-card .g-buy{border-left:1px solid var(--glass-line);padding-left:28px;display:flex;flex-direction:column;gap:10px}
+@media (max-width:760px){.guided-card{grid-template-columns:1fr}.guided-card .g-buy{border-left:0;border-top:1px solid var(--glass-line);padding:18px 0 0}}
+.wlf{display:grid;gap:8px}.hpw{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.wl-in{font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--glass-line);background:var(--glass-strong);color:inherit;width:100%}
+.wl-chk{display:flex;gap:8px;align-items:flex-start;font-size:.82rem}.wl-chk input{margin-top:3px}
+.wl-err{color:#C2362F;font-size:.84rem;margin:0;min-height:1em}
+.bundle.best .wl-in{color:#0F1E3D;background:#fff}.bundle.best .wl-err{color:#FFD7D2}
 .bundle ul li::before{content:"✓ ";color:var(--accent);font-weight:800}
 .bundle.best ul li::before{color:#fff}
 .bundle .prices{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:auto}
@@ -538,8 +547,28 @@ footer .logo b{color:var(--band-k)}
         <div class="filters" id="filters" role="group" aria-label="Filter guides"></div>
       </div>
       <div class="grid" id="grid"></div>
-      <div class="sec-head rv" id="bundles" style="margin-top:clamp(48px,7vw,80px)"><div><div class="eyebrow">Bundles</div><h2>Save when you buy together</h2></div><p>Each bundle includes every guide's full PDF, in both US Letter and A4 paper sizes, in one download.</p></div>
+      <div class="sec-head rv" id="bundles" style="margin-top:clamp(48px,7vw,80px)"><div><div class="eyebrow">Bundles and the full program</div><h2>Save when you buy together</h2></div><p>Each bundle includes every guide's full PDF, in both US Letter and A4 paper sizes, in one download.</p></div>
       <div class="bundles" id="bundleGrid"></div>
+
+      <div class="sec-head rv" id="guided" style="margin-top:clamp(48px,7vw,80px)"><div><div class="eyebrow">Work with me</div><h2>Guided help, step by step</h2></div><p>If you would rather not do it alone, I work through the program with you, one person at a time.</p></div>
+      <article class="bundle rv guided-card">
+        <div class="g-main">
+          <span class="tag" style="background:var(--accent);color:#fff">3 places a month</span>
+          <h3>Career Change Guided Program</h3>
+          <p>Twelve weeks with a person alongside you, so you finish what you start.</p>
+          <ul>
+            <li>2 calls a week for 12 weeks (24 calls)</li>
+            <li>The complete program: all 9 guides and the 12-week plan</li>
+            <li>After each call: what to do, and what to bring to the next one</li>
+          </ul>
+          <p class="msg">Career guidance only. It does not promise a job, and it is not counselling or therapy. Places are limited to 3 new people a month so every call gets proper attention.</p>
+        </div>
+        <div class="g-buy">
+          <div class="prices"><span class="now">$150</span><span class="was" style="text-decoration:none">once</span></div>
+          <p class="msg" style="margin:0 0 6px">or <b>3 monthly payments of $55</b> ($165 in total)</p>
+          <div id="guidedForm"></div>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -653,7 +682,7 @@ const STORE = {
   },
   bundles: [
     { id: "direction", name: "Find your direction", blurb: "Work out what to do next, then test it before you commit.", items: ["career-clarity","test-drive"], price: 34, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/f1f0c63f-d831-4516-b3f9-3dd90aef195c" },
-    { id: "everything", name: "The complete career change library", blurb: "All 9 paid guides, from first idea to first offer, including the teacher and nurse kits.", items: ["career-clarity","test-drive","retraining-route","money-planner","cv-translator","foot-in-door","planner-90","teacher-exit","life-after-ward"], price: 79, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/c17cac9a-4fe7-4fec-a753-5a49b5439f7e", best: true },
+    { id: "everything", name: "The Complete Career Change Program", blurb: "All 9 guides in order, plus a 12-week plan that tells you what to do each week.", items: ["career-clarity","test-drive","retraining-route","money-planner","cv-translator","foot-in-door","planner-90","teacher-exit","life-after-ward"], extras: ["A 12-week roadmap: the topic, the task and what to prepare each week","Win log and weekly review sheets"], price: 97, checkout: "" /* paste the Lemon Squeezy link here to switch the waitlist to a Buy button */, waitlist: "waitlist-bundle", best: true },
     { id: "land", name: "Land the role", blurb: "Rewrite your CV for the new field and get your first yes.", items: ["cv-translator","foot-in-door"], price: 29, checkout: "https://next-chapter.lemonsqueezy.com/checkout/buy/cb3c2545-299d-4c0b-9c16-6257dbd7f1cb" }
   ]
 };
@@ -793,20 +822,54 @@ $("#grid").innerHTML = P.map((p,i)=>`
 </article>`).join("");
 
 
+/* waitlist form (used until a Lemon Squeezy link exists) */
+const LEAD_URL = "https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/nc-lead";
+let wlN = 0;
+function wlForm(list, label, btnText, consent){
+  const id = "wl" + (++wlN);
+  return `<form class="wlf" data-list="${list}" novalidate><label class="hpw" aria-hidden="true">Leave blank <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+    <label for="${id}"><b>${label}</b></label>
+    <input class="wl-in" id="${id}" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+    <label class="wl-chk"><input type="checkbox" name="ok"><span>${consent}</span></label>
+    <p class="wl-err" role="alert"></p>
+    <button class="btn btn-primary" type="submit">${btnText}</button></form>`;
+}
+document.addEventListener("submit", e=>{
+  const f = e.target.closest && e.target.closest("form.wlf"); if(!f) return;
+  e.preventDefault();
+  const err = f.querySelector(".wl-err"), em = f.email.value.trim(), btn = f.querySelector("button");
+  err.textContent = "";
+  if (f.company.value) return;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em) || em.length > 120) { err.textContent = "Please enter a valid email address."; return; }
+  if (!f.ok.checked) { err.textContent = "Please tick the box so we know you want the email."; return; }
+  const list = f.getAttribute("data-list"), old = btn.textContent;
+  btn.disabled = true; btn.textContent = "Saving...";
+  fetch(LEAD_URL, {method:"POST", headers:{"content-type":"text/plain"}, body: JSON.stringify({email:em, quiz:list, tips:true, cid:(window.NCTrack&&NCTrack.cid)||null, source:(window.NCTrack&&NCTrack.source)||null})})
+    .then(r=>{ if(!r.ok) throw 0; return r.json(); })
+    .then(()=>{ try{ NCTrack.track("waitlist",{product:list}); }catch(_){} f.innerHTML = '<p class="msg" style="font-weight:700">You are on the list. We will email you once, when it opens.</p>'; })
+    .catch(()=>{ err.textContent = "Sorry, that did not go through. Please try again."; btn.disabled = false; btn.textContent = old; });
+});
+
 /* bundles */
+const GUIDED = { checkoutOnce: "", checkoutMonthly: "" /* paste the two Lemon Squeezy links to switch the waitlist to Buy buttons */ };
 const fullPrice = b => b.items.reduce((t,s)=>t+(STORE.products[s].price||0),0);
 $("#bundleGrid").innerHTML = STORE.bundles.map(b=>{
   const full = fullPrice(b), save = full - b.price;
-  const btn = b.checkout ? `<a class="btn btn-primary" href="${esc(b.checkout)}" target="_blank" rel="noopener">Get the bundle · ${STORE.currency}${b.price}</a>`
+  const btn = b.checkout ? `<a class="btn btn-primary" href="${esc(b.checkout)}" target="_blank" rel="noopener">Get the ${b.extras?"program":"bundle"} · ${STORE.currency}${b.price}</a>`
+                         : b.waitlist ? wlForm(b.waitlist, "Email me when it opens", "Join the waitlist", "Yes, email me once when this opens. I can unsubscribe at any time.")
                          : `<button class="btn btn-primary" data-soon="bundle-${b.id}">Get the bundle</button><p class="msg" hidden>Checkout for this bundle is being set up and opens soon.</p>`;
   const list = b.items.length > 3 ? `<p style="font-size:.86rem">Includes: ${b.items.map(s=>esc(bySlug[s].title)).join(", ")}.</p>` : `<ul>${b.items.map(s=>`<li>${esc(bySlug[s].title)}</li>`).join("")}</ul>`;
   return `<article class="bundle rv${b.best?" best":""}">${b.best?'<span class="tag">Best value</span>':""}
     <h3>${esc(b.name)}</h3><p>${esc(b.blurb)}</p>
     <div class="thumbs">${b.items.map(s=>`<img src="assets/${s}.svg" alt="" loading="lazy" title="${esc(bySlug[s].title)}">`).join("")}</div>
-    ${list}
+    ${list}${b.extras?`<ul>${b.extras.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
     <div class="prices"><span class="now">${STORE.currency}${b.price}</span><span class="was">${STORE.currency}${full}</span><span class="save">Save ${STORE.currency}${save}</span></div>
     ${btn}</article>`;
 }).join("");
+
+$("#guidedForm").innerHTML = (GUIDED.checkoutOnce && GUIDED.checkoutMonthly)
+  ? `<a class="btn btn-primary" href="${esc(GUIDED.checkoutOnce)}" target="_blank" rel="noopener">Pay once · $150</a><a class="btn btn-ghost" style="margin-top:8px" href="${esc(GUIDED.checkoutMonthly)}" target="_blank" rel="noopener">3 payments of $55</a>`
+  : wlForm("waitlist-consulting", "Email me when places open", "Join the waitlist", "Yes, email me once when places open. I can unsubscribe at any time.");
 
 /* journey map stops (labels sit under each island) + mobile list */
 // label placement per stop: [x%, y%, "b" = top edge at y (below island) | "a" = bottom edge at y (above island)]
@@ -851,7 +914,7 @@ function openDetail(slug){
       <div><h3>You’ll finish with</h3><ul class="outcomes">${p.outcomes.map(o=>`<li>${esc(o)}</li>`).join("")}</ul></div>
     </div>
     <aside class="side">
-      <div class="buybox">${priceHTML(p.slug)}${buyHTML(p.slug,true)}<p class="msg">${p.free?"Free instant PDF download · just enter your email at checkout, no card needed":"Instant PDF download · same guide in 2 paper sizes: US Letter (USA &amp; Canada) and A4 (rest of world)"}</p>${p.free?"":`<a class="msg" href="#bundles" style="font-weight:700;color:var(--cta)">Or get all 9 guides for ${STORE.currency}${STORE.bundles.find(b=>b.best).price} →</a>`}</div>
+      <div class="buybox">${priceHTML(p.slug)}${buyHTML(p.slug,true)}<p class="msg">${p.free?"Free instant PDF download · just enter your email at checkout, no card needed":"Instant PDF download · same guide in 2 paper sizes: US Letter (USA &amp; Canada) and A4 (rest of world)"}</p>${p.free?"":`<a class="msg" href="#bundles" style="font-weight:700;color:var(--cta)">Or see the complete program (all 9 guides + a 12-week plan) for ${STORE.currency}${STORE.bundles.find(b=>b.best).price} →</a>`}</div>
       <dl class="facts" style="margin:0">
         <div><dt>Pages</dt><dd>${p.pages}</dd></div>
         <div><dt>Worksheets</dt><dd>${p.worksheets}</dd></div>
