@@ -998,13 +998,11 @@ const NEWSLETTER = { action: "", field: "email_address" };
     e.preventDefault();
     btn.disabled = true; say("Saving…");
     try {
-      const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
-      if (!db || !user) throw new Error("unavailable");
-      const id = await user.id();
-      await db.doc("signups/" + id).set({ email: v, consent: true, source: "free-guide:is-it-too-late", at: new Date().toISOString() });
-      form.reset(); say("You’re on the list. The guide will arrive by email once the newsletter goes live.", true);
+      const res = await fetch("https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/nc-lead", {method:"POST", headers:{"content-type":"text/plain"}, body: JSON.stringify({email:v, quiz:"newsletter", tips:true, cid:(window.NCTrack&&NCTrack.cid)||null, source:"free-guide:is-it-too-late"})});
+      if (!res.ok) throw new Error("save failed");
+      form.reset(); say("You’re on the list. Check your inbox for a welcome email.", true);
     } catch (err) {
-      say("Sign-ups open when the newsletter launches. Please check back soon.");
+      say("Sorry, that did not save. Please try again in a moment.");
     } finally { btn.disabled = false; }
   });
 })();
