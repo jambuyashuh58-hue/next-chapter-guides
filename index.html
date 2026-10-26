@@ -681,7 +681,7 @@ const STORE = {
     "life-after-ward":  { price: 17, checkout: "https://whop.com/next-chapter-15f2/life-after-the-ward" }
   },
   bundles: [
-    { id: "everything", name: "The Complete Career Change Program", blurb: "All 9 guides in order, plus a 12-week plan that tells you what to do each week.", items: ["career-clarity","test-drive","retraining-route","money-planner","cv-translator","foot-in-door","planner-90","teacher-exit","life-after-ward"], extras: ["A 12-week roadmap: the topic, the task and what to prepare each week","Win log and weekly review sheets"], price: 97, checkout: "" /* paste the Whop link here to switch the waitlist to a Buy button */, waitlist: "waitlist-bundle", best: true },
+    { id: "everything", name: "The Complete Career Change Program", blurb: "All 9 guides in order, plus a 12-week plan that tells you what to do each week.", items: ["career-clarity","test-drive","retraining-route","money-planner","cv-translator","foot-in-door","planner-90","teacher-exit","life-after-ward"], extras: ["A 12-week roadmap: the topic, the task and what to prepare each week","Win log and weekly review sheets"], price: 97, checkout: "https://whop.com/next-chapter-15f2/complete-career-change-program/", waitlist: "waitlist-bundle", best: true },
   ]
 };
 
@@ -849,7 +849,7 @@ document.addEventListener("submit", e=>{
 });
 
 /* bundles */
-const GUIDED = { checkoutOnce: "", checkoutMonthly: "" /* paste the two Whop links to switch the waitlist to Buy buttons */ };
+const GUIDED = { checkoutOnce: "https://whop.com/next-chapter-15f2/guided-career-change-help/", checkoutMonthly: "https://whop.com/next-chapter-15f2/guided-career-change-help/" /* one Whop page: the buyer picks $150 once or 3 x $55 at checkout */ };
 const fullPrice = b => b.items.reduce((t,s)=>t+(STORE.products[s].price||0),0);
 $("#bundleGrid").innerHTML = STORE.bundles.map(b=>{
   const full = fullPrice(b), save = full - b.price;
