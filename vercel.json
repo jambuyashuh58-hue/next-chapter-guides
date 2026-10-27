@@ -48,11 +48,6 @@
   ],
   "redirects": [
     {
-      "source": "/",
-      "destination": "https://shop.nextchaptergide.site/",
-      "permanent": false
-    },
-    {
       "source": "/quiz",
       "destination": "https://shop.nextchaptergide.site/quiz",
       "permanent": false
@@ -101,6 +96,12 @@
       "source": "/side-quest-crew/(.*)",
       "destination": "https://sidequestcrew.space/",
       "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/home-v2/index.html"
     }
   ]
 }
