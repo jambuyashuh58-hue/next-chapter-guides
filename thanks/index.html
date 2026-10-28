@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>You are in: Next Chapter</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#2563EB">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&family=Lora:wght@600;700&display=swap">
+<style>
+body{margin:0;background:#F8FAFC;font-family:Inter,system-ui,sans-serif;color:#0F1E3D;line-height:1.6}
+a{color:#0F1E3D}img{max-width:100%}
+.w{max-width:760px;margin:0 auto;padding:0 24px}
+.k{font:500 12px 'JetBrains Mono',monospace;letter-spacing:.08em;color:#0F766E}
+h1{margin:10px 0 12px;font-size:clamp(30px,7vw,44px);line-height:1.08;font-weight:800;letter-spacing:-.03em;text-wrap:balance}
+h2{margin:8px 0 10px;font-size:clamp(22px,5.6vw,28px);line-height:1.15;font-weight:800;letter-spacing:-.02em}
+p{margin:0 0 12px;color:#334155}
+.card{background:#fff;border:1px solid #D7DEEA;border-radius:16px;padding:24px;margin:0 0 20px}
+.btn{display:inline-block;background:#2563EB;color:#fff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:10px}
+.btn2{display:inline-block;background:#fff;color:#0F1E3D;text-decoration:none;font-weight:600;padding:13px 20px;border-radius:10px;border:1px solid #D7DEEA;cursor:pointer;font:inherit;font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+ol{margin:0 0 14px;padding-left:20px;color:#334155;display:flex;flex-direction:column;gap:6px}
+.note{font-family:Caveat,cursive;font-size:24px;color:#334155}
+</style>
+</head>
+<body>
+<header style="border-bottom:1px solid #D7DEEA"><div class="w" style="max-width:1100px;padding:14px 24px"><a href="/" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-family:Lora,Georgia,serif;font-weight:700;font-size:23px;line-height:1;color:#0F1E3D"><img src="/assets/logo.svg" alt="" style="width:36px;height:36px;border-radius:10px;box-shadow:0 0 0 1px #D7DEEA">Next<b style="color:#0F766E">Chapter.</b></a></div></header>
+
+<main class="w" style="padding-top:48px;padding-bottom:56px">
+<div class="k">PAYMENT RECEIVED</div>
+<h1>You are in. Here is how to get started.</h1>
+<p style="font-size:18px">Thank you. Whop has emailed you a receipt. This page tells you where to go next.</p>
+
+<section class="card" style="margin-top:24px">
+<div class="k">STEP 1</div>
+<h2>Open the Tracker</h2>
+<ol>
+<li>Open the Tracker with the button below.</li>
+<li>Log in with the <b style="color:#0F1E3D">same email you used at checkout</b>.</li>
+<li>Do the first stop of the journey. It takes about ten minutes.</li>
+</ol>
+<div class="row"><a class="btn" href="https://next-chapter-career-guides.whop.site/app">Open the Tracker &rarr;</a><span class="note">Start with stop one</span></div>
+<p style="margin:14px 0 0;font-size:14px;color:#5B6478">Cannot log in? Reply to your Whop receipt email and I will sort it out.</p>
+</section>
+
+<section class="card">
+<div class="k">YOUR PLAN</div>
+<h2>Keep it your way</h2>
+<p>If you started the $1 trial, it continues at $12 a month after 7 days unless you cancel, in one click, from your Whop account. Do the first week. If it has not given you a clear next step, email me within 14 days and I will refund you.</p>
+<p>Prefer to pay once? You can switch to the <b style="color:#0F1E3D">$97 one-time lifetime plan</b> and stop monthly payments.</p>
+<a class="btn2" href="https://whop.com/next-chapter-15f2/next-chapter-tracker/">See the $97 lifetime plan</a>
+</section>
+
+<section class="card">
+<div class="k">WANT SOMEONE ALONGSIDE YOU?</div>
+<h2>Guided help, one to one</h2>
+<p>I work through the 12 weeks with you, one person at a time. Only 3 new places a month. It is career guidance only. It is not therapy, and it does not promise a job or a salary.</p>
+<div class="row"><a class="btn2" href="https://whop.com/next-chapter-15f2/guided-career-change-help/">See Guided help</a></div>
+</section>
+
+<section class="card">
+<div class="k">KNOW SOMEONE WHO HATES THEIR JOB?</div>
+<h2>Send them the free quiz</h2>
+<p>Do you know three people who feel stuck at work? Send them the quiz. It is free, and it takes about three minutes.</p>
+<div class="row"><button class="btn2" id="copy" type="button">Copy the quiz link</button><span id="copied" role="status" style="font-size:14px;color:#0F766E"></span></div>
+</section>
+</main>
+
+<footer style="background:#0F1E3D;color:#B8C4D9"><div class="w" style="max-width:1100px;padding:28px 24px;font-size:13px">General information, not financial, legal or medical advice. &copy; 2026 Next Chapter Guides. <a href="/privacy" style="color:#F1F5FF">Privacy</a></div></footer>
+
+<script>
+(function(){
+  var b=document.getElementById("copy"),m=document.getElementById("copied"),u="https://next-chapter-guides.vercel.app/";
+  b.addEventListener("click",function(){
+    function ok(){m.textContent="Copied.";}
+    function no(){m.textContent="Copy this link: "+u;}
+    try{navigator.clipboard.writeText(u).then(ok,no);}catch(e){no();}
+  });
+})();
+</script>
+<script src="/nc.js" data-site="store" defer></script>
+</body>
+</html>
