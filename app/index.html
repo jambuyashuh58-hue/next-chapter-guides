@@ -321,6 +321,28 @@ table.t select{padding:6px 8px;font-size:13px}
 .gd .gopen{background:var(--grad);color:#fff;border-radius:18px;padding:18px 20px;margin:30px 0 14px}.gd .gopen h2{margin:4px 0;color:#fff}.gd .gopen p{margin:6px 0 0;color:rgba(255,255,255,.9)}.gd .gk{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
 .gd .sources{font-size:13px;color:var(--muted)}.gd .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
 .ended .chk{pointer-events:none;opacity:.55}.ended textarea,.ended input[type=text],.ended input[type=date]{pointer-events:none}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:90}
+#win{position:fixed;left:50%;bottom:20px;transform:translate(-50%,140%);z-index:95;display:flex;align-items:center;gap:12px;background:#0F1E3D;color:#fff;border-radius:20px;padding:10px 20px 10px 12px;box-shadow:0 20px 50px -12px rgba(15,30,61,.55);max-width:min(92vw,420px);transition:transform .45s cubic-bezier(.2,1.3,.4,1)}
+#win.show{transform:translate(-50%,0)}#win img{width:64px;height:64px;flex:none}#win b{display:block;font-size:16px}#win span{display:block;font-size:13px;opacity:.8;margin-top:2px}
+@media (prefers-reduced-motion:reduce){#win{transition:none}}
+
+/* daily workbook */
+.gbar.sm{height:6px;margin-top:6px;width:120px}.gbar.sm i{height:6px}
+.wkd{border:1px solid var(--line);border-radius:14px;margin:12px 0;background:var(--surface)}.wkd>summary{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 14px;cursor:pointer;list-style:none;font-size:15px}.wkd>summary::-webkit-details-marker{display:none}.wkd>summary span{font-size:13px;color:var(--muted)}.wkd[open]>summary{border-bottom:1px solid var(--line)}
+.tasks.days{padding:6px 8px 10px;gap:8px}
+.day{border:1px solid var(--line);border-radius:14px;padding:4px 6px;background:var(--surface)}.day.today{border-color:var(--cta);box-shadow:0 0 0 3px var(--cta-soft)}.day.done{background:var(--surface-2)}
+.day.lk{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;opacity:.65}.dlk{font-weight:700;font-size:14px}
+.dl{display:flex!important}.dl .dsm{font-size:12px;color:var(--muted);margin-bottom:2px}.dl .dtt{display:block;font-size:15.5px;line-height:1.45;font-weight:600}
+.tasks small.hw{margin-top:3px}.tasks small.dsm{font-weight:600}
+.dh{margin:2px 6px 8px 44px}.dh>summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--cta);list-style:none;display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--cta-soft)}.dh>summary::-webkit-details-marker{display:none}.dh[open]>summary{margin-bottom:10px}
+.dh.pg{margin:0 0 14px}.dh.pg>summary{display:flex;border-radius:12px;padding:10px 14px}
+.chap{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}.chap img{width:46px;height:46px;flex:none}.chap.solo{margin:0 0 14px}
+.bub{position:relative;background:var(--cta-soft);border-radius:14px;padding:10px 14px;font-size:14.5px;line-height:1.5;min-width:0}.bub::before{content:"";position:absolute;left:-7px;top:16px;border:7px solid transparent;border-left:0;border-right-color:var(--cta-soft)}
+.bub p{margin:0 0 6px}.bub p:last-child{margin:0}.bub .why{color:var(--muted);font-size:13.5px}.bub .ex{font-size:13.5px;font-style:italic;color:var(--ink-2)}
+.wsl{display:inline-block;margin:0 0 10px;font-size:13.5px;font-weight:700;color:var(--cta)}
+.dh textarea{width:100%;box-sizing:border-box;min-height:56px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:15px;background:var(--surface);color:var(--ink)}.dh textarea:focus{outline:2px solid var(--cta);outline-offset:1px}
+.ws-flash{animation:wsf 2.4s ease}@keyframes wsf{0%,60%{box-shadow:0 0 0 4px var(--cta)}100%{box-shadow:0 0 0 0 transparent}}
+@media (max-width:640px){.dh{margin-left:8px}.chap img{width:38px;height:38px}}
 </style>
 </head>
 <body>
@@ -592,25 +614,58 @@ function monthState(i){
 const pkey = (s,i) => s+"."+i;
 const pdone = k => !!(S.plan && S.plan.done && S.plan.done[k]);
 const isEnded = () => MODE==="ended";
+function dayInMonth(mi){ return effDay() - monthUnlockDay(mi); }   // 0 = first day of that month's workbook
+function dayOpen(mi,i){ return allOpen() || (monthState(mi).open && i <= dayInMonth(mi)); }
 function planSteps(){   // flat list of all steps in order, with lock state
   const tr = planTrack(); if(!tr) return [];
-  const out = tr.week1.map((x,i)=>({ k:pkey("w1",i), t:x.t, why:x.why, grp:"w1", day:i+1, open:true }));
-  tr.months.forEach((m,mi)=>{ const st = monthState(mi); m.tasks.forEach((x,i)=>out.push({ k:pkey("m"+(mi+1),i), t:x.t, w:x.w, grp:"m"+(mi+1), open:st.open })); });
+  const out = tr.week1.map((x,i)=>({ k:pkey("w1",i), t:x.t, why:x.why, how:x.how, ex:x.ex, grp:"w1", day:i+1, open:true }));
+  tr.months.forEach((m,mi)=>{ (m.days||[]).forEach((x,i)=>out.push({ k:pkey("d"+(mi+1),i), t:x.t, how:x.how, ex:x.ex, ref:x.ref, mins:x.m, grp:"d"+(mi+1), mi, day:i+1, open:dayOpen(mi,i) })); });
   return out;
 }
 function planProgress(){ const all = planSteps(); return { total: all.length, done: all.filter(x=>pdone(x.k)).length }; }
 function nextPlanStep(){ const all = planSteps(); return all.find(x=>x.open && !pdone(x.k)) || null; }
-function weekSteps(){   // up to 3 undone open steps for "this week"
+function weekSteps(){   // up to 3 undone open steps for "today": the newest first, older ones are catch-up
   const tr = planTrack(); if(!tr) return [];
   const d = planDay(), out = [];
-  if (d < PLAN.trialDays){ tr.week1.forEach((x,i)=>{ if(i<=d && !pdone(pkey("w1",i))) out.push({ k:pkey("w1",i), t:x.t }); }); return out.slice(-3); }
-  const mi = Math.min(2, Math.max(0, Math.floor((d-PLAN.trialDays)/PLAN.monthDays))), wk = Math.min(4, Math.floor(((d-PLAN.trialDays)%PLAN.monthDays)/7)+1);
-  for (let m=mi; m>=0 && out.length<3; m--){ if(!monthState(m).open) continue; tr.months[m].tasks.forEach((x,i)=>{ if(out.length<3 && x.w<=(m===mi?wk:99) && !pdone(pkey("m"+(m+1),i))) out.push({ k:pkey("m"+(m+1),i), t:x.t }); }); }
+  if (d < PLAN.trialDays){ tr.week1.forEach((x,i)=>{ if(i<=d && !pdone(pkey("w1",i))) out.push({ k:pkey("w1",i), t:x.t, how:x.how, day:i+1 }); }); return out.slice(-3); }
+  const cur = Math.min(2, Math.max(0, Math.floor((effDay()-PLAN.trialDays)/PLAN.monthDays)));
+  for (let m=cur; m>=0 && out.length<3; m--){ if(!monthState(m).open) continue; const top = Math.min(29, dayInMonth(m)), days = tr.months[m].days||[];
+    for (let i=top; i>=0 && out.length<3; i--){ if(days[i] && !pdone(pkey("d"+(m+1),i))) out.unshift({ k:pkey("d"+(m+1),i), t:days[i].t, how:days[i].how, day:i+1, mo:m+1 }); } }
   return out;
 }
 function goalDate(){ return S.goal.date ? parse(S.goal.date) : addDays(planStart(), 90); }
 function weekOfPlan(){ const st = monday(parse(S.profile.start || today())); const k = Math.floor((monday(new Date()) - st) / (7*864e5)) + 1; return k; }
 function getWeek(key){ if(!S.weeks[key]) S.weeks[key] = { actions:[{t:"",day:"Any day",done:""},{t:"",day:"Any day",done:""},{t:"",day:"Any day",done:""}], ifthen:"", energy:0, review:"" }; return S.weeks[key]; }
+
+
+/* =================== CELEBRATE A WIN =================== */
+const CHEERS = ["Nice one! That is a real step.","You did it. Small steps add up.","Done. I am proud of you.","Yes! One more off the list.","That is progress you can see.","Look at you go.","Boom. Another win saved.","That took effort. Well done."];
+function confetti(big){
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = document.createElement("canvas"); c.className="confetti"; c.width = innerWidth; c.height = innerHeight; document.body.appendChild(c);
+  const x = c.getContext("2d"), cols = ["#2563EB","#14B8A6","#F59E0B","#0F766E","#60A5FA","#F472B6"], n = big?140:60;
+  const ps = Array.from({length:n},()=>({ x:c.width/2+(Math.random()-.5)*(big?c.width*.6:160), y:c.height*.62, vx:(Math.random()-.5)*(big?16:9), vy:-(Math.random()*(big?18:12)+6), s:5+Math.random()*6, r:Math.random()*6, vr:(Math.random()-.5)*.4, c:cols[Math.random()*cols.length|0] }));
+  let f = 0; (function tick(){ x.clearRect(0,0,c.width,c.height); ps.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=.45; p.vx*=.99; p.r+=p.vr; x.save(); x.translate(p.x,p.y); x.rotate(p.r); x.fillStyle=p.c; x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); x.restore(); }); if (++f<95) requestAnimationFrame(tick); else c.remove(); })();
+}
+let toastT = null;
+function celebrate(msg, sub, big){
+  confetti(!!big);
+  let el = $("#win"); if (!el){ el = document.createElement("div"); el.id="win"; el.setAttribute("role","status"); document.body.appendChild(el); }
+  el.innerHTML = `<img src="/assets/chap/cheer.svg" alt=""><div><b>${esc(msg)}</b>${sub?`<span>${esc(sub)}</span>`:""}</div>`;
+  el.classList.remove("show"); void el.offsetWidth; el.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove("show"), big?5200:3600);
+}
+function planWinCheck(key){
+  if (!PLAN) return celebrate(CHEERS[Math.random()*CHEERS.length|0]);
+  const pr = planProgress(), tdy = today(), todayN = Object.values((S.plan&&S.plan.done)||{}).filter(d=>d===tdy).length;
+  const [grp] = key.split("."), tr = planTrack();
+  if (pr.done === pr.total) return celebrate("You finished the whole plan!","Every single step. Take a moment to feel that.",true);
+  if (grp!=="w1" && tr){ const mi = +grp.slice(1)-1, m = tr.months[mi], days = m.days||[], dn = days.filter((_,i)=>pdone(pkey(grp,i))).length; if (days.length && dn===days.length) return celebrate("Month "+(mi+1)+" complete!","You finished "+m.title.replace(/^Month \d · /,"")+". Huge.",true); }
+  if (grp!=="w1" && tr){ const mi = +grp.slice(1)-1, di = +key.split(".")[1], wk = Math.floor(di/7), blk = (tr.months[mi].days||[]).map((_,i)=>i).filter(i=>Math.floor(i/7)===wk); if (blk.length>=5 && blk.every(i=>pdone(pkey(grp,i)))) return celebrate("Week "+(wk+1)+" of workbook "+(mi+1)+" is done!","That is "+blk.length+" days in a row of small wins.",true); }
+  if (grp==="w1"){ const n = tr.week1.filter((_,i)=>pdone(pkey("w1",i))).length; if (n===7) return celebrate("Your first 7 days are done!","That is how habits start.",true); }
+  const sub = todayN>1 ? todayN+" steps today · "+pr.done+" of "+pr.total+" done" : pr.done+" of "+pr.total+" plan steps done";
+  celebrate(pr.done===1 ? "Your first step is done!" : CHEERS[Math.random()*CHEERS.length|0], sub, pr.done===1);
+}
 
 /* =================== SAVE =================== */
 function setSave(t, cls){ const el = $("#saveState"); el.textContent = t; el.className = "save " + (cls||""); }
@@ -661,27 +716,54 @@ function goalCard(){
 }
 function weekCard(){
   const ws = weekSteps(); if(!PLAN) return "";
-  return `<div class="card"><div class="card-head"><h3>This week</h3><a class="btn ghost sm" href="#plan">Full plan</a></div>
-   ${ws.length? `<ul class="tasks">${ws.map(x=>`<li><label><input type="checkbox" class="chk" data-ptask="${x.k}"><span>${esc(x.t)}</span></label></li>`).join("")}</ul>` : `<p class="muted small">You’re all caught up for this week. Nice. Open the full plan to look ahead.</p>`}</div>`;
+  return `<div class="card"><div class="card-head"><h3>Today with Chap</h3><a class="btn ghost sm" href="#plan">Full plan</a></div>
+   ${ws.length? `<ul class="tasks">${ws.map(x=>`<li><label><input type="checkbox" class="chk" data-ptask="${x.k}"><span><small class="dsm">${x.mo?`Workbook ${x.mo} · day ${x.day}`:`Day ${x.day}`}</small>${esc(x.t)}${x.how?`<small class="hw">${esc(x.how)}</small>`:""}</span></label></li>`).join("")}</ul>` : `<p class="muted small">You’re all caught up for today. Nice. Open the full plan to look ahead.</p>`}</div>`;
+}
+const OPENS = {};   // remembers which <details> the person opened, across re-renders
+const wsLink = ref => { if(!ref) return ""; const [slug,ws] = ref.split(":"), g = bySlug[slug]; return g ? `<a class="wsl" href="#guide-${slug}~${ws}">Open worksheet ${ws} in “${esc(g.title)}” →</a>` : ""; };
+function dayLi(s, opts){
+  opts = opts || {};
+  const done = pdone(s.k), note = (S.plan && S.plan.notes && S.plan.notes[s.k]) || "";
+  if (!s.open) return `<li class="day lk"><span class="dlk">Day ${s.day}</span><span class="muted small">opens in ${opts.wait} day${opts.wait===1?"":"s"}</span></li>`;
+  const dk = "dh."+s.k, isOpen = dk in OPENS ? OPENS[dk] : (opts.today && !done);
+  return `<li class="day ${done?"done":""} ${opts.today?"today":""}">
+    <label class="dl"><input type="checkbox" class="chk" data-ptask="${s.k}" ${done?"checked":""}><span><small class="dsm">Day ${s.day}${s.mins?` · about ${s.mins} min`:""}${opts.today?` · <b>today</b>`:""}</small><span class="dtt ${done?"done-t":""}">${esc(s.t)}</span></span></label>
+    ${(s.how||s.why)?`<details class="dh" data-k="${dk}" ${isOpen?"open":""}><summary>Chap’s help</summary>
+      <div class="chap"><img src="/assets/chap/face.svg" alt="Chap"><div class="bub">${s.how?`<p><b>What to do:</b> ${esc(s.how)}</p>`:""}${s.why?`<p class="why">${esc(s.why)}</p>`:""}${s.ex?`<p class="ex">${esc(s.ex)}</p>`:""}</div></div>
+      ${wsLink(s.ref)}
+      <textarea data-pnote="${s.k}" rows="2" placeholder="Write your answer or notes here. It saves on its own.">${esc(note)}</textarea></details>`:""}
+  </li>`;
 }
 function vPlan(){
   const tr = planTrack(); if(!tr) return `<div class="card"><p class="muted">Loading your plan…</p></div>`;
   const d = planDay(), pr = planProgress(), inTrial = d < PLAN.trialDays, free = allOpen();
-  const chk = (s,done) => `<li><label><input type="checkbox" class="chk" data-ptask="${s.k}" ${done?"checked":""}><span><span class="${done?"done-t":""}">${esc(s.t)}</span>${s.why?`<small>${esc(s.why)}</small>`:""}</span></label></li>`;
-  const w1 = `<details class="stop pl" ${inTrial?"open":""}><summary><div style="min-width:0"><div class="eyebrow">Days 1–7 · your trial</div><h3>Your first 7 days</h3><div class="q">One small step a day.</div></div><div class="meter"><b class="tnum">${tr.week1.filter((_,i)=>pdone(pkey("w1",i))).length}/7 steps</b></div></summary>
-    <div class="stop-body"><ul class="tasks" style="grid-column:1/-1">${tr.week1.map((x,i)=>chk({k:pkey("w1",i),t:`Day ${i+1}: ${x.t}`,why:x.why},pdone(pkey("w1",i)))).join("")}</ul></div></details>`;
+  const steps = planSteps(), byK = {}; steps.forEach(x=>byK[x.k]=x);
+  const w1done = tr.week1.filter((_,i)=>pdone(pkey("w1",i))).length;
+  const w1k = "w1blk", w1open = w1k in OPENS ? OPENS[w1k] : inTrial;
+  const w1 = `<details class="stop pl" data-k="${w1k}" ${w1open?"open":""}><summary><div style="min-width:0"><div class="eyebrow">Days 1–7 · your trial</div><h3>Your first 7 days</h3><div class="q">One small step a day. Chap shows you how.</div></div><div class="meter"><b class="tnum">${w1done}/7 days</b><div class="gbar sm"><i style="width:${Math.round(w1done/7*100)}%"></i></div></div></summary>
+    <div class="stop-body" style="display:block"><ul class="tasks days">${tr.week1.map((x,i)=>dayLi(byK[pkey("w1",i)],{today: inTrial && i===d})).join("")}</ul></div></details>`;
   const months = tr.months.map((m,mi)=>{
-    const st = monthState(mi), cur = st.open && (mi===2 || !monthState(mi+1).open), nd = m.tasks.filter((_,i)=>pdone(pkey("m"+(mi+1),i))).length;
-    const head = `<div style="min-width:0"><div class="eyebrow">${esc(m.title)}${st.open?"":" · locked"}</div><h3>${esc(m.goal)}</h3></div><div class="meter"><b class="tnum">${st.open? nd+"/"+m.tasks.length+" steps" : "🔒 "+st.daysLeft+" days"}</b></div>`;
-    if(!st.open) return `<details class="stop pl lockd"><summary>${head}</summary><div class="stop-body"><p class="muted" style="grid-column:1/-1;margin:0">${st.stopped?`Month ${mi+1} was not unlocked before your plan ended. Rejoin to open it.`:`Month ${mi+1} opens ${addDays(planStart(), monthUnlockDay(mi)).toLocaleDateString(undefined,{day:"numeric",month:"long"})}, when your ${mi===0?"trial ends and your first monthly payment goes through":"next monthly payment goes through"}.`} You will get ${m.tasks.length} steps and a short guide: <b>${esc(m.guide.title)}</b>.</p></div></details>`;
-    const byW = [1,2,3,4].map(w=>({ w, items:m.tasks.map((x,i)=>({...x,i})).filter(x=>x.w===w) })).filter(g=>g.items.length);
-    return `<details class="stop pl" ${cur&&!inTrial?"open":""}><summary>${head}</summary><div class="stop-body" style="display:block">
-      <div class="pguide"><span class="pill">Guide</span><h4>${esc(m.guide.title)}</h4>${m.guide.html}</div>
-      ${byW.map(g=>`<h4 class="wkh">Week ${g.w}</h4><ul class="tasks">${g.items.map(x=>chk({k:pkey("m"+(mi+1),x.i),t:x.t},pdone(pkey("m"+(mi+1),x.i)))).join("")}</ul>`).join("")}</div></details>`;
+    const st = monthState(mi), dim = dayInMonth(mi), isCur = st.open && !free ? (mi===2 || !monthState(mi+1).open) : false, days = m.days||[];
+    const nd = days.filter((_,i)=>pdone(pkey("d"+(mi+1),i))).length, pct = days.length ? Math.round(nd/days.length*100) : 0;
+    const head = `<div style="min-width:0"><div class="eyebrow">Workbook ${mi+1} · ${esc(m.title.replace(/^Month \d · /,""))}${st.open?"":" · locked"}</div><h3>${esc(m.goal)}</h3></div><div class="meter">${st.open? `<b class="tnum">${nd}/${days.length} days</b><div class="gbar sm"><i style="width:${pct}%"></i></div>` : `<b class="tnum">🔒 opens in ${st.daysLeft} days</b>`}</div>`;
+    if(!st.open) return `<details class="stop pl lockd"><summary>${head}</summary><div class="stop-body"><p class="muted" style="grid-column:1/-1;margin:0">${st.stopped?`Workbook ${mi+1} was not unlocked before your plan ended. Rejoin to open it.`:`Workbook ${mi+1} opens ${addDays(planStart(), monthUnlockDay(mi)).toLocaleDateString(undefined,{day:"numeric",month:"long"})}, when your ${mi===0?"trial ends and your first monthly payment goes through":"next monthly payment goes through"}.`} Inside: ${days.length} daily tasks, each with Chap’s help, plus a short guide: <b>${esc(m.guide.title)}</b>.</p></div></details>`;
+    const wk0 = Math.min(4, Math.floor(Math.max(0,dim)/7));
+    const weeks = [0,1,2,3,4].map(w=>{
+      const idx = days.map((_,i)=>i).filter(i=>Math.floor(i/7)===w); if(!idx.length) return "";
+      const wd = idx.filter(i=>pdone(pkey("d"+(mi+1),i))).length, wk = "wk"+mi+"."+w, wopen = wk in OPENS ? OPENS[wk] : (isCur && w===wk0);
+      return `<details class="wkd" data-k="${wk}" ${wopen?"open":""}><summary><b>Week ${w+1}</b> · days ${idx[0]+1}${idx.length>1?"–"+(idx[idx.length-1]+1):""}<span class="tnum">${wd}/${idx.length}</span></summary>
+        <ul class="tasks days">${idx.map(i=>dayLi(byK[pkey("d"+(mi+1),i)],{today: isCur && i===Math.min(29,dim), wait: i-dim})).join("")}</ul></details>`;
+    }).join("");
+    const gk = "gd"+mi;
+    return `<details class="stop pl" data-k="wb${mi}" ${("wb"+mi) in OPENS ? (OPENS["wb"+mi]?"open":"") : (isCur&&!inTrial?"open":"")}><summary>${head}</summary><div class="stop-body" style="display:block">
+      <div class="chap solo"><img src="/assets/chap/face.svg" alt="Chap"><div class="bub"><p>This is your month ${mi+1} workbook: one small task a day for 30 days. Finish it, and the next workbook opens when you renew. Open “Chap’s help” on any day and I will tell you what to write and where to look.</p></div></div>
+      <details class="dh pg" data-k="${gk}" ${gk in OPENS && OPENS[gk] ? "open":""}><summary>Read this month’s short guide: ${esc(m.guide.title)}</summary><div class="pguide">${m.guide.html}</div></details>
+      ${weeks}</div></details>`;
   }).join("");
   return `<div class="card"><div class="card-head"><h3>${esc(tr.name)}</h3><span class="pill">${pr.done}/${pr.total} done</span></div>
     <p class="muted" style="margin:0 0 6px">${esc(tr.tagline)}</p>
-    <p class="small muted" style="margin:0">${free?"All three months are open for you.":"Your 7-day trial has the first week. Each month unlocks when you pay for it: Month 1 on day 8, Month 2 on day 38, Month 3 on day 68."} Based on your <a href="/quiz">quiz result</a>.</p></div>
+    <p class="small muted" style="margin:0">${free?"All three workbooks are open for you.":"Your 7-day trial has the first week. After that, each month is one workbook of 30 daily tasks. It opens when you pay: Workbook 1 on day 8, Workbook 2 on day 38, Workbook 3 on day 68."} Based on your <a href="/quiz">quiz result</a>.</p>
+    <div class="gbar" style="margin-top:12px"><i style="width:${pr.total?Math.round(pr.done/pr.total*100):0}%"></i></div></div>
     <div class="stops" style="margin-top:18px">${w1}${months}</div>`;
 }
 function vDash(){
@@ -698,7 +780,7 @@ function vDash(){
       <div class="kick">Stop ${pad(bySlug[cur.slug].n)} · ${STAGES[cur.stage]}</div>
       <h2>${greet()}, ${esc(name)}!</h2>
       <p>${pct>=100 ? "You’ve completed every step of your journey. Time to plan your next 90 days." : `Chap here. You’re ${pct}% of the way through your journey${S.profile.target? ` to <b>${esc(S.profile.target)}</b>`:""}. Here is your next small step, and I am right here while you do it.`}</p>
-      ${np ? `<label class="next"><input type="checkbox" class="chk" data-ptask="${np.k}"><span><small>Your next step${np.grp==="w1"?` · day ${np.day}`:""}</small>${esc(np.t)}</span></label>` : (nt ? `<label class="next"><input type="checkbox" class="chk" data-task="${nt.s.slug}.${nt.i}"><span><small>Your next step</small>${esc(nt.t[0])}</span></label>` : "")}
+      ${np ? `<label class="next"><input type="checkbox" class="chk" data-ptask="${np.k}"><span><small>Your next step${np.grp==="w1"?` · day ${np.day}`:` · workbook ${np.mi+1}, day ${np.day}`}</small>${esc(np.t)}</span></label>` : (nt ? `<label class="next"><input type="checkbox" class="chk" data-task="${nt.s.slug}.${nt.i}"><span><small>Your next step</small>${esc(nt.t[0])}</span></label>` : "")}
       <a class="btn white" href="#plan">Open my plan →</a>
     </div>
     <div class="hero-art"><img src="/assets/${cur.slug}.svg" alt=""></div>
@@ -847,7 +929,7 @@ function vGuide(slug){
     <div class="gh-b"><span class="pill" id="gCount"></span><button class="btn ghost sm" type="button" data-gdl="pdf">Download PDF</button><button class="btn ghost sm" type="button" data-gdl="txt">Download my answers</button></div></div>
     <div class="card gd" id="gwrap" data-slug="${slug}"><p class="muted">Opening your guide…</p></div>`;
 }
-async function loadGuide(slug){
+async function loadGuide(slug, ws){
   const box = $("#gwrap"); if(!box) return;
   if (MODE==="demo"){ box.innerHTML = `<p style="margin:0">The guides are for members. Start your 7-day trial to open this one and fill it in.</p>`; return; }
   try{
@@ -860,6 +942,7 @@ async function loadGuide(slug){
     const vals = (S.guides && S.guides[slug]) || {};
     box.querySelectorAll("textarea[data-gf]").forEach(ta => { ta.value = vals[ta.dataset.gf] || ""; autosize(ta); });
     const c = $("#gCount"); if (c) c.textContent = gCount(slug)+" of "+g.fields+" filled";
+    if (ws){ const hit = Array.from(box.querySelectorAll(".worksheet")).find(w=>{ const id = w.querySelector(".ws-id"); return id && id.textContent.trim()===ws; }); if (hit){ hit.classList.add("ws-flash"); setTimeout(()=>hit.scrollIntoView({block:"start",behavior:"smooth"}),80); setTimeout(()=>hit.classList.remove("ws-flash"),2600); return; } }
     if (S.last && S.last.slug===slug && S.last.f){ const el = box.querySelector(`[data-gf="${S.last.f}"]`); if (el){ setTimeout(()=>{ el.scrollIntoView({block:"center"}); },60); } }
   }catch(e){ box.innerHTML = `<p style="margin:0">Couldn’t open the guide just now. Check your connection and <a href="#guide-${slug}" onclick="setTimeout(route,0)">try again</a>. If you have just paid, wait a minute and refresh.</p>`; }
 }
@@ -908,7 +991,8 @@ function vSettings(){
 /* =================== RENDER + ROUTER =================== */
 function route(){
   const h = (location.hash||"#dash").slice(1);
-  const [v, sub] = h.startsWith("journey-") ? ["journey", h.slice(8)] : h.startsWith("guide-") ? ["guide", h.slice(6)] : [h, null];
+  let [v, sub] = h.startsWith("journey-") ? ["journey", h.slice(8)] : h.startsWith("guide-") ? ["guide", h.slice(6)] : [h, null];
+  let wsAnchor = null; if (v==="guide" && sub && sub.indexOf("~")>0){ const q = sub.split("~"); sub = q[0]; wsAnchor = q[1]; }
   const VS = MODE==="ended" ? VIEWS.filter(x=>["plan","settings"].includes(x[0])) : VIEWS;
   const view = (v==="guide" && bySlug[sub] && MODE!=="ended") || VS.find(x=>x[0]===v) ? v : (MODE==="ended" ? "plan" : "dash");
   const navOn = view==="guide" ? "guides" : view;
@@ -917,7 +1001,7 @@ function route(){
   document.body.classList.toggle("ended", MODE==="ended");
   $("#view").innerHTML = view==="guide" ? vGuide(sub) : ({dash:vDash,plan:vPlan,journey:vJourney,week:vWeek,people:vPeople,money:vMoney,guides:vGuides,settings:vSettings})[view]();
   if (MODE==="ended") $("#view").innerHTML = `<div class="card" style="margin-bottom:18px;border-left:4px solid #D97706"><b>Your membership has ended.</b><p class="muted" style="margin:6px 0 12px">The months you paid for stay open to read here. The guides and any new month need an active plan. Your answers are kept.</p><a class="btn" href="${CFG.plans[0].checkout}" target="_blank" rel="noopener">Rejoin the Tracker</a></div>` + $("#view").innerHTML;
-  if (view==="guide"){ loadGuide(sub); if(MODE!=="demo"){ S.last = Object.assign({}, S.last&&S.last.slug===sub?S.last:{}, {slug:sub}); } }
+  if (view==="guide"){ loadGuide(sub, wsAnchor); if(MODE!=="demo"){ S.last = Object.assign({}, S.last&&S.last.slug===sub?S.last:{}, {slug:sub}); } }
   const p = S.profile; $("#avatar").textContent = (p.name||"?").trim().charAt(0).toUpperCase() || "?";
   $("#meName").textContent = p.name ? p.name : "Welcome"; $("#meTarget").textContent = p.target || "Set your target role";
   $("#side").classList.remove("open"); $("#scrim").classList.remove("open");
@@ -938,9 +1022,9 @@ function bindExtras(){
 /* one delegated listener for every input */
 document.addEventListener("change", e => {
   const t = e.target;
-  if (t.dataset.ptask){ if(!S.plan) S.plan={done:{},start:""}; if(!S.plan.done) S.plan.done={}; if (t.checked) S.plan.done[t.dataset.ptask] = today(); else delete S.plan.done[t.dataset.ptask]; save(); rerender(); return; }
-  if (t.dataset.task){ if (t.checked) S.tasks[t.dataset.task] = today(); else delete S.tasks[t.dataset.task]; save(); rerender(); return; }
-  if (t.dataset.act !== undefined){ getWeek(weekCursor).actions[+t.dataset.act].done = t.checked ? today() : ""; save(); rerender(); return; }
+  if (t.dataset.ptask){ if(!S.plan) S.plan={done:{},start:""}; if(!S.plan.done) S.plan.done={}; if (t.checked) S.plan.done[t.dataset.ptask] = today(); else delete S.plan.done[t.dataset.ptask]; save(); rerender(); if (t.checked) planWinCheck(t.dataset.ptask); return; }
+  if (t.dataset.task){ if (t.checked) S.tasks[t.dataset.task] = today(); else delete S.tasks[t.dataset.task]; save(); rerender(); if (t.checked){ const sl=t.dataset.task.split(".")[0], st=bySlug[sl]; if (st && stopDone(st)===st.tasks.length) celebrate("Stop complete: "+st.title,"You finished every step here.",true); else celebrate(CHEERS[Math.random()*CHEERS.length|0], journeyPct()+"% of your journey done"); } return; }
+  if (t.dataset.act !== undefined){ getWeek(weekCursor).actions[+t.dataset.act].done = t.checked ? today() : ""; save(); rerender(); if (t.checked) celebrate(CHEERS[Math.random()*CHEERS.length|0],"Weekly action done"); return; }
   if (t.dataset.actd !== undefined){ getWeek(weekCursor).actions[+t.dataset.actd].day = t.value; save(); return; }
   if (t.dataset.app && t.dataset.f){ const a = S.apps.find(x=>x.id===t.dataset.app); if (a){ a[t.dataset.f] = t.value; save(); } return; }
   if (t.name === "track"){ S.profile.track = t.value; save(); return; }
@@ -950,6 +1034,7 @@ document.addEventListener("change", e => {
 document.addEventListener("input", e => {
   const t = e.target;
   if (t.dataset.gf){ const slug=t.closest('#gwrap').dataset.slug; if(!S.guides) S.guides={}; if(!S.guides[slug]) S.guides[slug]={}; S.guides[slug][t.dataset.gf]=t.value; S.last={slug,f:t.dataset.gf}; autosize(t); const c=$('#gCount'); if(c&&GCUR) c.textContent=gCount(slug)+' of '+GCUR.fields+' filled'; save(); }
+  else if (t.dataset.pnote){ if(!S.plan) S.plan={done:{},start:""}; if(!S.plan.notes) S.plan.notes={}; S.plan.notes[t.dataset.pnote] = t.value; autosize(t); save(); }
   else if (t.dataset.note){ S.notes[t.dataset.note] = t.value; save(); }
   else if (t.dataset.actt !== undefined){ getWeek(weekCursor).actions[+t.dataset.actt].t = t.value; save(); }
   else if (t.dataset.wf){ getWeek(weekCursor)[t.dataset.wf] = t.value; save(); }
@@ -966,6 +1051,7 @@ document.addEventListener("click", e => {
   else if (t.dataset.energy){ const w = getWeek(weekCursor); w.energy = w.energy===+t.dataset.energy ? 0 : +t.dataset.energy; save(); rerender(); }
   else if (t.dataset.del){ S.apps = S.apps.filter(a=>a.id!==t.dataset.del); save(); rerender(); }
 });
+document.addEventListener("toggle", e => { const d = e.target; if (d && d.tagName==="DETAILS" && d.dataset && d.dataset.k) OPENS[d.dataset.k] = d.open; }, true);
 window.addEventListener("hashchange", () => { if (MODE==="member"||MODE==="demo"||MODE==="ended") route(); });
 $("#menuBtn").onclick = () => { $("#side").classList.add("open"); $("#scrim").classList.add("open"); };
 $("#scrim").onclick = () => { $("#side").classList.remove("open"); $("#scrim").classList.remove("open"); };

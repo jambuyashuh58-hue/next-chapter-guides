@@ -1,5 +1,5 @@
 {
- "version": 1,
+ "version": 2,
  "trialDays": 7,
  "monthDays": 30,
  "tracks": {
@@ -9,31 +9,45 @@
    "week1": [
     {
      "t": "Write down 3 moments from this month that drained you.",
-     "why": "Specific moments tell you more than a vague feeling."
+     "why": "Specific moments tell you more than a vague feeling.",
+     "how": "Think of the last 4 weeks. Pick moments where you felt tired, tense or low after work. Check your calendar and chat history to help you remember.",
+     "ex": "Example: \"Tuesday meeting. My idea was ignored.\""
     },
     {
      "t": "Next to each moment, write who was there and what happened just before.",
-     "why": "You are looking for what sets it off."
+     "why": "You are looking for what sets it off.",
+     "how": "Write it next to each moment: who was there, and what happened in the 10 minutes before.",
+     "ex": "Example: \"Dev and Sam. Dev interrupted me twice.\""
     },
     {
      "t": "Look at your three moments. Is it one person, one team, or the whole place?",
-     "why": "This is the most useful question this week."
+     "why": "This is the most useful question this week.",
+     "how": "Look at your three notes. Count the names. If one name shows up more than once, that is a clue.",
+     "ex": "Example: \"Dev is in two of three moments.\""
     },
     {
      "t": "Write one sentence for each person or team: what you wish they would do differently.",
-     "why": "A clear wish is easier to act on than a general complaint."
+     "why": "A clear wish is easier to act on than a general complaint.",
+     "how": "Write one sentence per person or team: \"I wish they would ...\". Keep it about actions, not character.",
+     "ex": "Example: \"I wish Dev would let me finish.\""
     },
     {
      "t": "Name one person at work you like working with. Write why it feels different.",
-     "why": "It shows what good looks like for you."
+     "why": "It shows what good looks like for you.",
+     "how": "Think of the easiest colleague. What do they do that helps? Write two things.",
+     "ex": "Example: \"She asks before she decides.\""
     },
     {
      "t": "Ask yourself: if the people changed but the work stayed the same, would I still want to leave? Write yes or no, and why.",
-     "why": "Your honest answer decides what you do next."
+     "why": "Your honest answer decides what you do next.",
+     "how": "Imagine the same work with kind people. Write yes or no and one reason. Be honest.",
+     "ex": "Example: \"Yes, I would stay. The work is fine.\""
     },
     {
      "t": "Choose one conversation to have this month (a manager, a colleague or HR). Write the first sentence you would say.",
-     "why": "A first sentence makes it much easier to start."
+     "why": "A first sentence makes it much easier to start.",
+     "how": "Pick who you will talk to and write one calm opening sentence. Do not rush to send it.",
+     "ex": "Example: \"Could we talk about how meetings run?\""
     }
    ],
    "months": [
@@ -77,7 +91,190 @@
      "guide": {
       "title": "Is it the people or the job?",
       "html": "<p>Many people who say they hate their job really mean they hate how it feels to be there. This guide helps you separate the people from the work, so you do not leave a job you could have fixed.</p><h4>Try the swap test</h4><p>Picture the exact same job with a kind boss and a friendly team. Would you still want to leave? If you would stay, the people are your problem. If you would still want out, the work is part of it too.</p><h4>Look for the pattern</h4><ul><li>One person in most of your drain moments: this is often fixed by distance, boundaries or a move to another team.</li><li>Many people and the same feeling: it may be the culture or the way the team is run.</li><li>No pattern, only dread on Sunday night: read your log again and look at the work itself.</li></ul><h4>This month</h4><p>Keep a short log for two weeks. One line a day. At the end, count. The count will tell you more than your memory does, because bad moments feel bigger than they were.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Start your drain log. Write one line about today: what happened, who was there, how you felt (1 to 5).",
+       "how": "Use your phone notes or the box here. Keep it to one line. Do it at the end of the workday.",
+       "ex": "Example: \"Team meeting. Dev talked over me. Felt small. 2/5.\"",
+       "m": 5
+      },
+      {
+       "t": "Log today. Add what you did right after it happened.",
+       "how": "Right after the moment is when you remember best. Did you speak, stay quiet or leave?",
+       "ex": "Example: \"I stayed quiet and said nothing.\"",
+       "m": 5
+      },
+      {
+       "t": "Log today. Also write one thing that went fine.",
+       "how": "Good moments count too. They show you where the problem is not.",
+       "ex": "Example: \"Lunch with Ana was easy.\"",
+       "m": 5
+      },
+      {
+       "t": "Log today. Mark any moment that involved the same person again.",
+       "how": "Put a star next to the name if it is the same person as before.",
+       "ex": "Example: \"* Dev again.\"",
+       "m": 5
+      },
+      {
+       "t": "Log today.",
+       "how": "One line is enough. Keep going even on boring days.",
+       "ex": "Example: \"Quiet day. 4/5.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Write one line: how did the week feel overall?",
+       "how": "Do not look back at the log yet. Just write your gut feeling.",
+       "ex": "Example: \"Heavy on Monday, better by Friday.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend: write one thing you did that you enjoyed.",
+       "how": "It does not have to be about work. Just notice what gives you energy.",
+       "ex": "Example: \"A walk with music.\"",
+       "m": 5
+      },
+      {
+       "t": "Log today. This is week 2, so also write what you wish had happened instead.",
+       "how": "Write the better version in one sentence.",
+       "ex": "Example: \"I wish he had asked me before deciding.\"",
+       "m": 5
+      },
+      {
+       "t": "Log today.",
+       "how": "Keep it short. You are building a picture, not a story.",
+       "ex": "Example: \"Friction in the 3pm call. 2/5.\"",
+       "m": 5
+      },
+      {
+       "t": "Log today. Write how long the bad feeling lasted after.",
+       "how": "Minutes, hours or the whole evening? This tells you how big the problem is.",
+       "ex": "Example: \"Two hours.\"",
+       "m": 5
+      },
+      {
+       "t": "Log today.",
+       "how": "One line. Include who was there.",
+       "ex": "Example: \"Project review. Sam and Dev. 3/5.\"",
+       "m": 5
+      },
+      {
+       "t": "Log today.",
+       "how": "Add what you did to cope.",
+       "ex": "Example: \"Went for a walk at lunch.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Write one line: what did you notice this week?",
+       "how": "Patterns show up when you look back, not when you are in the middle of them.",
+       "ex": "Example: \"Most bad moments are in meetings.\"",
+       "m": 5
+      },
+      {
+       "t": "Read this month's guide intro (10 minutes) and underline anything that sounds like you.",
+       "how": "Open the guide from the plan. You do not need to finish it. Read the first part only.",
+       "ex": "Example: \"The part about being talked over is me.\"",
+       "m": 10,
+       "ref": "career-clarity:W1"
+      },
+      {
+       "t": "Count your log: how many drain moments involved the same person?",
+       "how": "Count the stars. Write the number.",
+       "ex": "Example: \"7 out of 11 involved Dev.\"",
+       "m": 10
+      },
+      {
+       "t": "Write which kind of people problem you have: one person, a team habit, or the manager.",
+       "how": "Pick the one that fits best. If two fit, write both.",
+       "ex": "Example: \"One person, plus a team habit of interrupting.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what you do that makes it worse and what makes it better.",
+       "how": "Be kind to yourself. This is not blame, it is information.",
+       "ex": "Example: \"Worse: I go quiet. Better: I speak first.\"",
+       "m": 15
+      },
+      {
+       "t": "Ask one trusted colleague how they deal with the same person or situation.",
+       "how": "Pick someone calm. Ask: \"How do you handle it when X happens?\"",
+       "ex": "Example: \"I notice Dev does that to everyone. How do you handle it?\"",
+       "m": 15
+      },
+      {
+       "t": "Write down what your colleague said, in their words.",
+       "how": "Write the advice you would actually use, and the advice you would not.",
+       "ex": "Example: \"Use: ask him to wait. Not use: avoid him.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line about your energy this week.",
+       "how": "1 to 5 and why.",
+       "ex": "Example: \"3/5. Better after I talked to Ana.\"",
+       "m": 5
+      },
+      {
+       "t": "Look at 3 other teams or roles at your employer. Write what you would want to know about each.",
+       "how": "Check the intranet or ask a friend in another team. You are only gathering questions.",
+       "ex": "Example: \"How big is the team? Who is the manager?\"",
+       "m": 20
+      },
+      {
+       "t": "Write what a better team would look like, in 3 lines.",
+       "how": "Think about people, workload and how decisions get made.",
+       "ex": "Example: \"Calm manager, clear goals, no interrupting.\"",
+       "m": 15
+      },
+      {
+       "t": "Choose the conversation you want to have and write who it is with.",
+       "how": "Pick the smallest useful one. It does not have to be the biggest problem.",
+       "ex": "Example: \"A 10-minute chat with Dev about meetings.\"",
+       "m": 10
+      },
+      {
+       "t": "Write your first two sentences for that conversation.",
+       "how": "Start with the effect on the work, not on blame.",
+       "ex": "Example: \"When we talk over each other, we miss good ideas. Can we try one person at a time?\"",
+       "m": 15
+      },
+      {
+       "t": "Practise those two sentences out loud, once, alone.",
+       "how": "Say them in front of a mirror or in the car.",
+       "ex": "Example: Time yourself: under 20 seconds.",
+       "m": 5
+      },
+      {
+       "t": "Have the conversation, or a smaller version of it.",
+       "how": "Choose a calm moment. If it feels too big, send a short message first.",
+       "ex": "Example: \"Do you have 10 minutes this week?\"",
+       "m": 20
+      },
+      {
+       "t": "Write what was said right after.",
+       "how": "Write exactly what each of you said, as best you remember.",
+       "ex": "Example: \"He said he did not notice.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: what changed after the conversation, even if nothing?",
+       "how": "\"Nothing yet\" is a fine answer. You tried.",
+       "ex": "Example: \"He nodded. It was less tense.\"",
+       "m": 5
+      },
+      {
+       "t": "Look at your whole log and circle the 3 hardest moments. Write what they have in common.",
+       "how": "Read from top to bottom. Look for the same place, time or person.",
+       "ex": "Example: \"All three were in group meetings.\"",
+       "m": 15
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month and what you want to do next month.",
+       "how": "Count your log days and the conversation you had.",
+       "ex": "Example: \"20 log days, one real talk, clearer picture.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 2 · Ask for the change",
@@ -119,7 +316,189 @@
      "guide": {
       "title": "How to ask for a change at work",
       "html": "<p>A good request is short, specific and easy to say yes to. It is not a complaint. It is a plan.</p><h4>Use this order</h4><ul><li><b>The facts.</b> Say what is happening, with one example, without blaming anyone.</li><li><b>The effect.</b> Say how it affects the work (missed deadlines, slow decisions), not only how you feel.</li><li><b>The ask.</b> Say exactly what you want: a different team, a change in how you work together, a clearer schedule.</li><li><b>The offer.</b> Say what you will do, and offer a trial: &ldquo;Can we try it for a month?&rdquo;</li></ul><h4>After the meeting</h4><p>Write a two-line email: what you talked about and what happens next. It keeps things fair for both sides and gives you a record.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Write your ask in 3 sentences: what you want, why it helps the work, and what you will do in return.",
+       "how": "Keep it small and specific. Use the problem you found last month.",
+       "ex": "Example: \"I would like meetings to have an agenda. It helps us finish faster. I will write the agenda.\"",
+       "m": 20
+      },
+      {
+       "t": "Read this month's guide intro and rewrite your ask using its steps.",
+       "how": "Open the guide from the plan. Use its structure to tighten your three sentences.",
+       "ex": "Example: Remove blame words like \"always\" and \"never\".",
+       "m": 20
+      },
+      {
+       "t": "Write the reason it helps the work, not just you.",
+       "how": "Managers say yes when it helps the work. List two ways it does.",
+       "ex": "Example: \"Fewer repeated discussions. Better decisions.\"",
+       "m": 10
+      },
+      {
+       "t": "List what you could offer in return.",
+       "how": "Think about small things you can do.",
+       "ex": "Example: \"I will take notes and share them.\"",
+       "m": 10
+      },
+      {
+       "t": "Decide who to ask: your manager, HR or a more senior colleague.",
+       "how": "Pick the person who can say yes. If unsure, start with your manager.",
+       "ex": "Example: \"My manager. He can change the meeting rules.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: how do I feel about asking?",
+       "how": "Nervous is normal. Write it down so it gets smaller.",
+       "ex": "Example: \"Nervous but ready.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend: take a walk or do something you enjoy. Write it down.",
+       "how": "Rest is part of the plan.",
+       "ex": "Example: \"Walk and tea.\"",
+       "m": 5
+      },
+      {
+       "t": "Book a meeting with your manager or HR. Put it in your calendar.",
+       "how": "Send a short message. Say it is about how the team works.",
+       "ex": "Example: \"Could we find 20 minutes this week to talk about how our team works?\"",
+       "m": 10
+      },
+      {
+       "t": "Write the three facts you will share.",
+       "how": "Facts are harder to argue with than feelings. Use your drain log.",
+       "ex": "Example: \"7 of 11 bad moments were in meetings.\"",
+       "m": 15
+      },
+      {
+       "t": "Practise your first two sentences out loud, once, alone.",
+       "how": "Say them out loud. If they sound stiff, shorten them.",
+       "ex": "Example: Say it as if to a friend.",
+       "m": 10
+      },
+      {
+       "t": "Practise again, then write one question you will ask them.",
+       "how": "Listen to their view too.",
+       "ex": "Example: \"What would make this easier for you?\"",
+       "m": 10
+      },
+      {
+       "t": "Write what you will do if they say no.",
+       "how": "Having a next step makes the meeting less scary.",
+       "ex": "Example: \"Ask what would need to change for a yes.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: what am I proud of this week?",
+       "how": "Even preparing is a win.",
+       "ex": "Example: \"I booked the meeting.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Do one small thing you enjoy.",
+       "how": "Reset before the big day.",
+       "ex": "Example: \"Called a friend.\"",
+       "m": 5
+      },
+      {
+       "t": "Make the ask. Afterwards, write down exactly what was said.",
+       "how": "Stay calm and short. Listen. Then write it down within an hour.",
+       "ex": "Example: \"He said he would try an agenda for a month.\"",
+       "m": 30
+      },
+      {
+       "t": "Send a short written follow-up so there is a record of what was agreed.",
+       "how": "Thank them, repeat what was agreed in one or two lines.",
+       "ex": "Example: \"Thanks for today. As agreed, we will try agendas for a month.\"",
+       "m": 10
+      },
+      {
+       "t": "Write how you feel after the ask.",
+       "how": "Relief, worry, hope? Write it down.",
+       "ex": "Example: \"Relieved. Still a bit unsure.\"",
+       "m": 5
+      },
+      {
+       "t": "Note the next steps and who does what.",
+       "how": "Write each person's task and the date.",
+       "ex": "Example: \"I write the first agenda. He sends it Monday.\"",
+       "m": 10
+      },
+      {
+       "t": "Check open internal roles. Note any that move you away from the problem.",
+       "how": "Look at your employer's job board. You are only looking.",
+       "ex": "Example: \"Two roles in other teams look interesting.\"",
+       "m": 20
+      },
+      {
+       "t": "Write what you noticed this week at work.",
+       "how": "Any change, even small?",
+       "ex": "Example: \"Meeting started with an agenda.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: is the change working so far?",
+       "how": "It is early. Just note it.",
+       "ex": "Example: \"A bit better. Early days.\"",
+       "m": 5
+      },
+      {
+       "t": "Do the fix for the first week. Write one thing that went well.",
+       "how": "Keep your log going in one line a day.",
+       "ex": "Example: \"Meeting ended early.\"",
+       "m": 10
+      },
+      {
+       "t": "Log: what is better and what is not?",
+       "how": "One line each.",
+       "ex": "Example: \"Better: meetings. Not better: side comments.\"",
+       "m": 5
+      },
+      {
+       "t": "Log: one thing you did to help the change work.",
+       "how": "Small actions count.",
+       "ex": "Example: \"I wrote the notes.\"",
+       "m": 5
+      },
+      {
+       "t": "Log: how did you feel about work today? 1 to 5.",
+       "how": "Compare to last month.",
+       "ex": "Example: \"3/5, last month 2/5.\"",
+       "m": 5
+      },
+      {
+       "t": "Log: is the other person helping or blocking?",
+       "how": "Just observe.",
+       "ex": "Example: \"He tried hard this week.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Write one line about how you feel.",
+       "how": "No pressure.",
+       "ex": "Example: \"A little lighter.\"",
+       "m": 5
+      },
+      {
+       "t": "Decide: try the fix for 30 days. Write the date you will review it.",
+       "how": "Put the date in your calendar.",
+       "ex": "Example: \"Review on the 3rd.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what you learned from asking, in two lines.",
+       "how": "What would you say differently next time?",
+       "ex": "Example: \"I should have asked sooner.\"",
+       "m": 10
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month.",
+       "how": "You asked. That took courage.",
+       "ex": "Example: \"I asked, I followed up, I stuck with it.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 3 · Decide",
@@ -161,7 +540,193 @@
      "guide": {
       "title": "Stay, move or go: a simple way to decide",
       "html": "<p>You now have a month of notes and one real conversation. That is more than most people have when they decide.</p><h4>Three questions</h4><ul><li>Did the change you asked for happen, even in part?</li><li>On the best day this month, did the job feel okay?</li><li>Can you picture a year of this, and is that a year you want?</li></ul><h4>How to read your answers</h4><ul><li>Mostly yes: stay, and keep your boundaries.</li><li>Mixed: look for a move inside the company first. It is the cheapest way to change the people.</li><li>Mostly no: leave, but go with a plan, and ask about the team and the boss in every interview.</li></ul><p>Whichever you pick, write down why. On a hard day, your reason will help.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Open your Month 1 drain log and read it from the top.",
+       "how": "Do not judge. Just read. Notice how the days felt.",
+       "ex": "Example: \"A lot of 2s in the first week.\"",
+       "m": 10
+      },
+      {
+       "t": "Compare it with this month. Write what changed.",
+       "how": "Look at moods, people and moments. Write 3 lines.",
+       "ex": "Example: \"Fewer 2s. Meetings are calmer.\"",
+       "m": 15
+      },
+      {
+       "t": "Read this month's guide and answer its three questions in writing.",
+       "how": "Open the guide from the plan. Write short answers in the boxes.",
+       "ex": "Example: One or two lines each.",
+       "m": 25
+      },
+      {
+       "t": "Write what is still not fixed.",
+       "how": "Be honest. List up to three things.",
+       "ex": "Example: \"Dev still interrupts. Workload is high.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what has improved, even a little.",
+       "how": "List up to three things. Small wins count.",
+       "ex": "Example: \"Meetings have agendas.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: do I feel hopeful, stuck or somewhere between?",
+       "how": "No wrong answer.",
+       "ex": "Example: \"Somewhere between.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend: do one thing you enjoy. Write what.",
+       "how": "Rest keeps you clear for the decision.",
+       "ex": "Example: \"Cooked a favourite meal.\"",
+       "m": 5
+      },
+      {
+       "t": "Find 2 people who moved teams or left your employer.",
+       "how": "Ask a friend, search LinkedIn, or check your staff directory.",
+       "ex": "Example: \"Maya moved to Finance. Raj left last year.\"",
+       "m": 15
+      },
+      {
+       "t": "Message both and ask for 15 minutes.",
+       "how": "Keep it friendly. Say you are thinking about your options.",
+       "ex": "Example: \"Would you have 15 minutes to tell me how the move went?\"",
+       "m": 15
+      },
+      {
+       "t": "Talk to the first person. Ask what they would do again and what they would change.",
+       "how": "Take notes while they talk.",
+       "ex": "Example: \"She said she would have moved sooner.\"",
+       "m": 20
+      },
+      {
+       "t": "Talk to the second person.",
+       "how": "Ask the same questions so you can compare.",
+       "ex": "Example: \"He said the new team was calmer but busier.\"",
+       "m": 20
+      },
+      {
+       "t": "Write what you learned from both.",
+       "how": "Write three lines. What would you copy? What would you avoid?",
+       "ex": "Example: \"Copy: asked for a trial. Avoid: leaving without a plan.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: how do the stories change how I think?",
+       "how": "Notice what moved you.",
+       "ex": "Example: \"Moving looks less scary.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Do something kind for yourself.",
+       "how": "Choose anything small.",
+       "ex": "Example: \"Slept in.\"",
+       "m": 5
+      },
+      {
+       "t": "Write the best case and worst case of staying.",
+       "how": "Be specific. Think about people, pay, health and time.",
+       "ex": "Example: \"Best: things stay calm. Worst: it gets bad again.\"",
+       "m": 15
+      },
+      {
+       "t": "Write the best case and worst case of moving inside your employer.",
+       "how": "Think about team, manager, pay and what you would miss.",
+       "ex": "Example: \"Best: new manager. Worst: same problems.\"",
+       "m": 15
+      },
+      {
+       "t": "Write the best case and worst case of leaving.",
+       "how": "Think about money, time, risk and what you would gain.",
+       "ex": "Example: \"Best: better fit. Worst: gap between jobs.\"",
+       "m": 15
+      },
+      {
+       "t": "Score each choice 1 to 5 on: people, money, energy, growth.",
+       "how": "A simple table helps. Add up each row.",
+       "ex": "Example: Stay 12, Move 14, Leave 11.",
+       "m": 15,
+       "ref": "planner-90:S1"
+      },
+      {
+       "t": "Choose your direction and write it in one sentence.",
+       "how": "There is no perfect choice. Pick the best one you can see today.",
+       "ex": "Example: \"I will try a move inside the company first.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Sleep on your decision. Write one line about how it feels.",
+       "how": "Relief or doubt? Both are information.",
+       "ex": "Example: \"Calm. It feels right.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Tell one trusted person your decision.",
+       "how": "Saying it out loud makes it real.",
+       "ex": "Example: \"I told my sister.\"",
+       "m": 10
+      },
+      {
+       "t": "Write your plan for the next 90 days.",
+       "how": "Three months, three goals. Keep each small and specific.",
+       "ex": "Example: \"Month 1 apply internally. Month 2 test. Month 3 decide.\"",
+       "m": 25,
+       "ref": "planner-90:S2"
+      },
+      {
+       "t": "Write the first step for each month.",
+       "how": "Make each step something you can do in one afternoon.",
+       "ex": "Example: \"Month 1: talk to the hiring manager.\"",
+       "m": 15
+      },
+      {
+       "t": "Put the first three steps in your calendar.",
+       "how": "Pick real dates and times.",
+       "ex": "Example: Tue 7pm, Thu 7pm, Sat 10am.",
+       "m": 10
+      },
+      {
+       "t": "If you are leaving: update your CV.",
+       "how": "Use the CV guide. Add results, not just duties.",
+       "ex": "Example: \"Led weekly team planning.\"",
+       "m": 30,
+       "ref": "cv-translator:C4"
+      },
+      {
+       "t": "If you are leaving: list 10 employers whose teams you could ask about in interviews.",
+       "how": "Look for companies known for good teams. Ask what the team is like.",
+       "ex": "Example: \"Company A, B, C...\"",
+       "m": 20,
+       "ref": "foot-in-door:F5"
+      },
+      {
+       "t": "If you are staying or moving inside: write who you will talk to first.",
+       "how": "Pick one person.",
+       "ex": "Example: \"HR partner for the Finance team.\"",
+       "m": 10
+      },
+      {
+       "t": "Write your support list: who will help you and how.",
+       "how": "Name people and what they can do.",
+       "ex": "Example: \"Ana: listens. Sam: reads my CV.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write 3 things you are proud of from the last 3 months.",
+       "how": "You did a lot.",
+       "ex": "Example: \"I asked. I listened. I decided.\"",
+       "m": 10
+      },
+      {
+       "t": "Pick your first step for next week and put it in your calendar.",
+       "how": "Choose one small step.",
+       "ex": "Example: \"Book a call with HR on Monday.\"",
+       "m": 10
+      }
+     ]
     }
    ]
   },
@@ -171,31 +736,45 @@
    "week1": [
     {
      "t": "List the tasks from last week. Mark each one: like, neutral or dread.",
-     "why": "The pattern in these marks is the start of your answer."
+     "why": "The pattern in these marks is the start of your answer.",
+     "how": "Open your calendar and sent emails from last week. List each task. Mark L (like), N (neutral) or D (dread).",
+     "ex": "Example: \"Writing reports - L. Status meetings - D.\""
     },
     {
      "t": "Pick the three tasks you liked most. For each, write what you liked: the problem, the people or the result.",
-     "why": "The reason matters more than the task."
+     "why": "The reason matters more than the task.",
+     "how": "Look at your L tasks. Ask: was it the problem, the people or the result that I liked? Write one reason each.",
+     "ex": "Example: \"I liked solving the problem.\""
     },
     {
      "t": "Pick the three you dreaded most. Write why.",
-     "why": "This shows what to avoid in your next role."
+     "why": "This shows what to avoid in your next role.",
+     "how": "Look at your D tasks. Write the reason in one line. This is what to avoid.",
+     "ex": "Example: \"I dislike repeating the same thing.\""
     },
     {
      "t": "Write two times in your life (any job, hobby or school) when time passed quickly.",
-     "why": "Time flying is a good clue."
+     "why": "Time flying is a good clue.",
+     "how": "Think about hobbies, school or old jobs. Which moments made you lose track of time? Write two.",
+     "ex": "Example: \"Planning my cousin's wedding.\""
     },
     {
      "t": "Write ten jobs or fields that come to mind. Do not judge them yet.",
-     "why": "Ideas first, opinions later."
+     "why": "Ideas first, opinions later.",
+     "how": "Set a 5-minute timer. Write every job or field that comes to mind. No judging, no editing.",
+     "ex": "Example: \"Teacher, designer, nurse, trainer, writer ...\""
     },
     {
      "t": "Cross out any idea that matches your dread list. Circle three that touch your like list.",
-     "why": "This is your first shortlist."
+     "why": "This is your first shortlist.",
+     "how": "Cross out anything that matches your D list. Circle three that touch your L list.",
+     "ex": "Example: Circle \"trainer\", \"designer\", \"writer\"."
     },
     {
      "t": "Pick one circled idea. Write one person you could talk to about it this month.",
-     "why": "One real conversation beats hours of reading."
+     "why": "One real conversation beats hours of reading.",
+     "how": "Pick one circled idea. Think of one person who knows about it (a friend, a friend of a friend, someone on LinkedIn). Write the name.",
+     "ex": "Example: \"Priya, cousin's friend, works in training.\""
     }
    ],
    "months": [
@@ -239,7 +818,213 @@
      "guide": {
       "title": "How to choose a direction without guessing",
       "html": "<p>You do not need to be sure to start. You need a short list and a cheap way to test it.</p><h4>Score each idea from 1 to 5</h4><ul><li><b>Interest.</b> Does it match the tasks you liked?</li><li><b>Money.</b> Could you live on what it pays, now or after a few years?</li><li><b>Effort to enter.</b> How much training or time does it need?</li><li><b>Fit with your life.</b> Hours, place, stress, family.</li></ul><h4>Pick three, not one</h4><p>Choosing one idea too early puts too much pressure on it. Three ideas keep you curious. Next month you will test one in the real world, which is the only way to know.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Write 10 things people come to you for help with at work or in life.",
+       "how": "Scroll your sent emails, chats and thank-you messages from the last month. Note what people asked you for or thanked you for.",
+       "ex": "Example: \"Sorting out messy spreadsheets\", \"Calming upset customers\", \"Explaining hard things simply\".",
+       "m": 20,
+       "ref": "career-clarity:W6"
+      },
+      {
+       "t": "Turn your 3 best items into plain skills. Write each as a verb plus a result.",
+       "how": "Ask yourself: what would a stranger call this skill on a job advert?",
+       "ex": "Example: \"Explains complex rules so people act correctly\".",
+       "m": 15,
+       "ref": "career-clarity:W6"
+      },
+      {
+       "t": "Choose the 10 values that matter most to you right now (for example freedom, security, helping, learning).",
+       "how": "Open the values list in the guide and circle the words that make you nod. Do not think too long.",
+       "ex": "Example: \"Learning, calm, fairness, time with family, steady income\".",
+       "m": 20,
+       "ref": "career-clarity:W4a"
+      },
+      {
+       "t": "Cut your values down to the top five and put them in order.",
+       "how": "Cross out one value at a time until five are left. Ask: if I could only keep one, which?",
+       "ex": "Example: 1 Calm, 2 Learning, 3 Fairness, 4 Time at home, 5 Steady income.",
+       "m": 15,
+       "ref": "career-clarity:W4"
+      },
+      {
+       "t": "Write one achievement story: a time you were proud of your work. Use Situation, Task, Action, Result.",
+       "how": "Think of a time something went well and you made it happen. Write what you did, step by step, not what the team did.",
+       "ex": "Example: \"Our system crashed on Friday. I... The result was...\"",
+       "m": 25,
+       "ref": "career-clarity:W5"
+      },
+      {
+       "t": "Weekend check: take a walk or rest. Then write one line: what did I notice about myself this week?",
+       "how": "You do not need to find an answer. Just write the first honest sentence.",
+       "ex": "Example: \"I light up when I am teaching someone, not when I am doing reports.\"",
+       "m": 5
+      },
+      {
+       "t": "Look back over days 1 to 5. Circle the three words you wrote most often.",
+       "how": "Read your notes once, slowly. Words that repeat are clues to your direction.",
+       "ex": "Example: \"people, fixing, learning\".",
+       "m": 10
+      },
+      {
+       "t": "Write your non-negotiables: the pay, hours and place you need to say yes to a new job.",
+       "how": "Start with the monthly money you need. Then your hours and how far you can travel.",
+       "ex": "Example: \"At least X a month, no weekends, under 45 minutes from home\".",
+       "m": 20,
+       "ref": "career-clarity:W8"
+      },
+      {
+       "t": "Work out what you really need each month to live. Add your essential bills.",
+       "how": "Open your bank app and add rent or mortgage, food, bills, transport and debt payments for last month.",
+       "ex": "Example: Essentials 1,800 a month. This is your minimum.",
+       "m": 20,
+       "ref": "money-planner:M1"
+      },
+      {
+       "t": "Do the free Interest Profiler at mynextmove.org (it takes about 10 minutes). Write your top three interest types.",
+       "how": "Search \"Interest Profiler My Next Move\" and answer the 60 questions. It is a free US government tool and works anywhere.",
+       "ex": "Example: \"Social, Investigative, Artistic\".",
+       "m": 20,
+       "ref": "career-clarity:W7"
+      },
+      {
+       "t": "Compare your interest result with your energy notes from the trial week. Where do they match?",
+       "how": "Put the two lists next to each other and underline what appears in both.",
+       "ex": "Example: \"Both say I like helping people solve problems\".",
+       "m": 15,
+       "ref": "career-clarity:W7"
+      },
+      {
+       "t": "Build your work profile on one page: values, skills, interests and non-negotiables.",
+       "how": "Copy your top items from days 1 to 11 into the profile sheet. It should fit on one page.",
+       "ex": "Example: Values: calm, learning. Skills: explaining. Interests: Social.",
+       "m": 25,
+       "ref": "career-clarity:W9"
+      },
+      {
+       "t": "Weekend rest. Write one line: what surprised me about my profile?",
+       "how": "Read the page once. Notice what you did not expect.",
+       "ex": "Example: \"I did not know money mattered less than learning to me.\"",
+       "m": 5
+      },
+      {
+       "t": "Look at your profile and ask: which parts of my current job fit it, and which do not?",
+       "how": "Draw a line down a page: Keeps on the left, Loses on the right.",
+       "ex": "Example: Keep: helping customers. Lose: late shifts.",
+       "m": 15,
+       "ref": "career-clarity:W2"
+      },
+      {
+       "t": "Write 15 jobs or fields that match your profile. Do not judge them yet.",
+       "how": "Use the profile as a search: type your skills into a job site and note job titles that appear. Ask two friends what they would suggest.",
+       "ex": "Example: \"Training coordinator, customer success, buyer\".",
+       "m": 25,
+       "ref": "career-clarity:W10"
+      },
+      {
+       "t": "Add 5 wild ideas. Jobs you would never admit you want.",
+       "how": "Write them fast and do not edit. Wild ideas often hold the real wish.",
+       "ex": "Example: \"Run a small bakery, work on a boat\".",
+       "m": 15,
+       "ref": "career-clarity:W10"
+      },
+      {
+       "t": "Cross out ideas that break a non-negotiable. Count what is left.",
+       "how": "Check each idea against your day 8 list. Cross it out only if it clearly breaks a rule.",
+       "ex": "Example: Cross out \"night shifts\" if you need evenings free.",
+       "m": 15,
+       "ref": "career-clarity:W10"
+      },
+      {
+       "t": "Pick the 6 ideas that still excite you. Give each a score from 1 to 5 on values fit and energy fit.",
+       "how": "Use the scoring matrix. Score fast, then wait one hour and change anything that feels wrong.",
+       "ex": "Example: Training coordinator: values 4, energy 5.",
+       "m": 25,
+       "ref": "career-clarity:W13"
+      },
+      {
+       "t": "Weekend rest. Write one line: which idea am I most curious about?",
+       "how": "Curious is a good signal. It is not the same as sure.",
+       "ex": "Example: \"I keep thinking about the training idea.\"",
+       "m": 5
+      },
+      {
+       "t": "Look at your scores. Write the top three ideas and one reason for each.",
+       "how": "Add up the matrix. Write the winners and why they won.",
+       "ex": "Example: 1 Training coordinator: fits skills and values.",
+       "m": 10,
+       "ref": "career-clarity:W13"
+      },
+      {
+       "t": "Write three futures: a one-line story of a typical Tuesday in year two for each of your top three.",
+       "how": "Imagine you already do the job. Where are you at 11 am? Who do you talk to? What do you finish?",
+       "ex": "Example: \"I run a morning workshop, then plan the next one.\"",
+       "m": 25,
+       "ref": "career-clarity:W11"
+      },
+      {
+       "t": "Read two day-in-the-life descriptions for your first idea.",
+       "how": "Search \"day in the life of a [job title]\" on YouTube or a careers site. Pick real people, not adverts.",
+       "ex": "Example: Note one thing you liked and one thing you did not.",
+       "m": 20,
+       "ref": "career-clarity:W12"
+      },
+      {
+       "t": "Do the same for your second idea.",
+       "how": "Same search. Watch or read one full day. Write what surprised you.",
+       "ex": "Example: \"They spend half the day in meetings. That would drain me.\"",
+       "m": 20,
+       "ref": "career-clarity:W12"
+      },
+      {
+       "t": "Do the same for your third idea. Then fill in a fact sheet for each.",
+       "how": "Fill in job titles, daily tasks and typical pay. Look pay up on a national job site and write a range, not one number.",
+       "ex": "Example: \"Entry pay roughly X to Y in my area\".",
+       "m": 30,
+       "ref": "career-clarity:W12"
+      },
+      {
+       "t": "Weekend rest. Write one line: which idea lost its shine, and why?",
+       "how": "It is fine to drop ideas. Dropping is progress.",
+       "ex": "Example: \"Idea 2 needs a long degree. I do not want that.\"",
+       "m": 5
+      },
+      {
+       "t": "Run the premortem: imagine you tried your top idea and it failed. Write why.",
+       "how": "List five reasons it could go wrong. Then circle the ones you could fix.",
+       "ex": "Example: \"I could not afford a pay cut\" (fix: save more or go part-time).",
+       "m": 20,
+       "ref": "career-clarity:W17"
+      },
+      {
+       "t": "Choose one direction to test next month. Write it in one sentence.",
+       "how": "Pick the one you feel curious about and could test cheaply.",
+       "ex": "Example: \"I will test training coordinator work.\"",
+       "m": 10,
+       "ref": "career-clarity:W19"
+      },
+      {
+       "t": "Write what would make you drop it. Name two warning signs.",
+       "how": "Write them now so you can spot them early.",
+       "ex": "Example: \"If three people say the work is mostly admin, I drop it.\"",
+       "m": 10,
+       "ref": "career-clarity:W19"
+      },
+      {
+       "t": "Write your two-sentence story: what you are leaving, and what you are moving toward.",
+       "how": "Start with \"I am leaving...\" then \"I am moving toward...\". This is your answer to \"why are you changing?\".",
+       "ex": "Example: \"I am leaving work that drains me. I am moving toward teaching others.\"",
+       "m": 15,
+       "ref": "career-clarity:W21"
+      },
+      {
+       "t": "Month check-in: read your story, then write 3 wins from this month.",
+       "how": "Page back through your notes. Wins can be small. Day 5 counts.",
+       "ex": "Example: \"I know my values. I have three ideas. I have a story.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 2 · Test it cheaply",
@@ -281,7 +1066,214 @@
      "guide": {
       "title": "How to test a new career before you quit",
       "html": "<p>A test is small, cheap and fast. Its job is to show you the daily reality, not the job title.</p><h4>Three ways to test</h4><ul><li><b>Talk.</b> Three conversations with people in the role. Ask what they do on a normal day and what they would change.</li><li><b>Try.</b> One small real task. If you want to be a designer, design something small. If you want to work in care, volunteer for one afternoon.</li><li><b>Look.</b> Shadow someone, or go to one event where people in the field talk.</li></ul><h4>How to know</h4><p>After each test, write two lines: what you liked and what you did not. After three tests, look at the lines. If the dislikes are things you could live with, go on. If they are the same things you hate now, drop it and test your next idea. Dropping an idea early is a win. It saved you a year.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Write your career hypothesis: the job you are testing and what you believe a normal day looks like.",
+       "how": "Use the direction you chose last month. Write what you think you would enjoy and what you think would be hard.",
+       "ex": "Example: \"I believe training work means planning sessions and helping people learn.\"",
+       "m": 20,
+       "ref": "test-drive:T1"
+      },
+      {
+       "t": "Write 5 questions to ask someone who does the job.",
+       "how": "Include \"What does a normal week look like?\" and \"What do you wish you knew before you started?\"",
+       "ex": "Example: \"What is the best part? What is the worst part?\"",
+       "m": 15,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "List 10 people who might know someone in the field: friends, old colleagues, family, classmates.",
+       "how": "Open your phone contacts and LinkedIn connections. Search the job title or the industry name.",
+       "ex": "Example: \"Sam (cousin's friend works in HR training)\".",
+       "m": 20,
+       "ref": "test-drive:T2"
+      },
+      {
+       "t": "Find 3 people who actually do the job. Write their names and how you will reach them.",
+       "how": "Search LinkedIn for the job title and your city. Look for \"2nd connection\" people you could be introduced to.",
+       "ex": "Example: \"Priya, Learning Lead at X. Ask Sam for an introduction.\"",
+       "m": 25,
+       "ref": "test-drive:T2"
+      },
+      {
+       "t": "Send your first message to someone in the role. Keep it short and specific.",
+       "how": "Say who you are, why you are asking, and ask for 15 minutes. Do not ask for a job.",
+       "ex": "Example: \"Hi Priya, I am exploring training roles. Could I ask you three questions for 15 minutes?\"",
+       "m": 20,
+       "ref": "career-clarity:W14"
+      },
+      {
+       "t": "Weekend rest. Write one line: how did it feel to reach out?",
+       "how": "Most people feel nervous. Write it down so it gets smaller.",
+       "ex": "Example: \"Scary, but easier than I thought.\"",
+       "m": 5
+      },
+      {
+       "t": "Send two more messages. Keep a list of who you asked.",
+       "how": "Aim for different people, not three at the same company.",
+       "ex": "Example: Message one friend and one stranger.",
+       "m": 15,
+       "ref": "test-drive:T2"
+      },
+      {
+       "t": "Book your first conversation in your calendar. Prepare by reading their profile for 10 minutes.",
+       "how": "Note two things you want to ask about their path.",
+       "ex": "Example: \"Ask how Priya moved from teaching into training.\"",
+       "m": 15,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Have conversation 1 (or send follow-ups if nobody replied yet). Take notes during the call.",
+       "how": "Ask your 5 questions. Write what they said in their words, not yours.",
+       "ex": "Example: Write \"best part\", \"worst part\", \"normal week\".",
+       "m": 30,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Right after the call: write your notes and send a thank-you message.",
+       "how": "Do this the same day while you remember. Thank them for one specific thing.",
+       "ex": "Example: \"Thanks for telling me about the weekly planning. That was helpful.\"",
+       "m": 15,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Weekend rest. Write one line: what surprised me in the conversation?",
+       "how": "Surprises are the data you came for.",
+       "ex": "Example: \"I did not know so much of the job is writing.\"",
+       "m": 5
+      },
+      {
+       "t": "Look for conversation 2. Reply to anyone who answered and book the time.",
+       "how": "Offer two time options. Keep the time short.",
+       "ex": "Example: \"Would Tuesday or Thursday at 6 pm work?\"",
+       "m": 15,
+       "ref": "test-drive:T2"
+      },
+      {
+       "t": "Have conversation 2. Ask the same questions so you can compare.",
+       "how": "Listen for what is the same and what is different from conversation 1.",
+       "ex": "Example: Write both answers side by side.",
+       "m": 30,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Write notes and a thank-you for conversation 2.",
+       "how": "Same day. Add one new thing you learned.",
+       "ex": "Example: \"Different team, same long meetings.\"",
+       "m": 15,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Weekend rest. Write one line: what do I now believe that I did not believe two weeks ago?",
+       "how": "Compare to your day 1 hypothesis.",
+       "ex": "Example: \"It is more about people than I thought.\"",
+       "m": 5
+      },
+      {
+       "t": "Pick a mini-project: one small task from the field you can finish in a week.",
+       "how": "Ask someone in the role: \"What is a small task a beginner could try?\" Or search for free beginner tasks online.",
+       "ex": "Example: \"Design a one-hour workshop outline on a topic I know.\"",
+       "m": 20,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Write what finished looks like, then block the time in your calendar.",
+       "how": "Choose 3 sessions of 30 to 45 minutes this week.",
+       "ex": "Example: Tue, Thu and Sat, 7 pm.",
+       "m": 15,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Mini-project session 1.",
+       "how": "Work for the full block. Do not aim for perfect. Aim for done.",
+       "ex": "Example: Outline the first half.",
+       "m": 30,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Mini-project session 2.",
+       "how": "Keep going. Note when you lose track of time and when you want to stop.",
+       "ex": "Example: \"I lost track of time writing the examples.\"",
+       "m": 30,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Mini-project session 3. Finish it.",
+       "how": "Finish a rough version. Written down is better than perfect in your head.",
+       "ex": "Example: One page outline.",
+       "m": 30,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Weekend: write how the mini-project felt. What did you enjoy, and what did you avoid?",
+       "how": "Be honest. Avoiding is useful data.",
+       "ex": "Example: \"I enjoyed the thinking. I did not like checking details.\"",
+       "m": 10,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Show your mini-project to one person in the field and ask for feedback.",
+       "how": "Send it to someone from your conversations. Ask: \"What is one thing I could improve?\"",
+       "ex": "Example: \"Could you look at this for five minutes?\"",
+       "m": 15,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Optional: shadow someone for an hour or attend one talk or event in the field.",
+       "how": "Search local events, webinars or meetups for the job title. Many are free.",
+       "ex": "Example: A free webinar on training design.",
+       "m": 45,
+       "ref": "test-drive:T4"
+      },
+      {
+       "t": "Log what you observed: tasks you saw and how you felt.",
+       "how": "Write it down while it is fresh.",
+       "ex": "Example: \"People asked many questions. I felt interested.\"",
+       "m": 15,
+       "ref": "test-drive:T4"
+      },
+      {
+       "t": "Fill in the fit scorecard: what you liked, did not like, and what surprised you.",
+       "how": "Use your notes from the conversations, the project and the event. Score each part 1 to 5.",
+       "ex": "Example: Conversations 5, Project 4, Daily tasks 3.",
+       "m": 25,
+       "ref": "test-drive:T7"
+      },
+      {
+       "t": "Check your hypothesis: what was right and what was wrong?",
+       "how": "Compare day 1 with your scorecard.",
+       "ex": "Example: \"Right: I like helping. Wrong: I thought there was less admin.\"",
+       "m": 15,
+       "ref": "test-drive:T6"
+      },
+      {
+       "t": "Decide: go, adjust or drop. Write the reason in one sentence.",
+       "how": "There is no wrong answer. Dropping an idea after a cheap test is a win.",
+       "ex": "Example: \"Go. I like the work and the people.\"",
+       "m": 15,
+       "ref": "test-drive:T8"
+      },
+      {
+       "t": "Plan follow-ups: thank everyone and keep the door open.",
+       "how": "Write one line to each person. Say what you decided.",
+       "ex": "Example: \"I am going to keep exploring. Can I stay in touch?\"",
+       "m": 15,
+       "ref": "test-drive:T9"
+      },
+      {
+       "t": "Write what you will carry into next month: the direction, the people and one open question.",
+       "how": "Look back at your scorecard and your notes. Pick the three things that matter most.",
+       "ex": "Example: \"Direction: training. People: Priya and Sam. Question: do I need a course?\"",
+       "m": 15
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month.",
+       "how": "Count your conversations, your mini-project and your decision.",
+       "ex": "Example: \"3 conversations, one project, one decision.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 3 · Make your move plan",
@@ -323,7 +1315,217 @@
      "guide": {
       "title": "Your move plan: CV, money and first applications",
       "html": "<p>Moving is easier when it is three small jobs instead of one big scary one.</p><h4>1. Money</h4><p>Count your savings, then your monthly gap: what you spend minus what you earn. Savings divided by the gap is how many months you can last. Many people choose a bridge, such as part-time work, instead of leaping.</p><h4>2. Your CV</h4><p>Keep your old experience, but change the first lines so a reader sees what you can do for the new field. Use their words from real job posts.</p><h4>3. Outreach</h4><p>Applications work better with a message to a real person. Ask for advice, not a job. Ten honest messages this month is a strong start.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Check your money: write your savings, your monthly essentials and what you earn.",
+       "how": "Use your bank app. Add up savings you could use and last month's essentials.",
+       "ex": "Example: Savings 6,000. Essentials 1,800. Income 2,400.",
+       "m": 20,
+       "ref": "money-planner:M2"
+      },
+      {
+       "t": "Work out your runway: how many months can you cover?",
+       "how": "Divide the savings you can use by the monthly gap. The money page in the Tracker will help.",
+       "ex": "Example: Savings 6,000 / gap 600 = 10 months.",
+       "m": 20,
+       "ref": "money-planner:M2"
+      },
+      {
+       "t": "Set your pay floor: the lowest offer you would say yes to.",
+       "how": "Start from your essentials, then add a little for saving and fun.",
+       "ex": "Example: \"Not less than 2,000 a month take-home\".",
+       "m": 15,
+       "ref": "money-planner:M3"
+      },
+      {
+       "t": "Write your move plan in 5 lines: what, why, when, how you will pay, who will help.",
+       "how": "Keep it short. If you cannot say it in 5 lines, it is still too big.",
+       "ex": "Example: \"Move into training within 6 months. Keep my job while I apply.\"",
+       "m": 20,
+       "ref": "planner-90:S1"
+      },
+      {
+       "t": "Check the requirements: save 5 job adverts for your target job and list what they ask for.",
+       "how": "Search job sites for your job title. Copy the \"requirements\" section of 5 adverts.",
+       "ex": "Example: \"Experience with presenting, planning, tools\".",
+       "m": 25,
+       "ref": "retraining-route:R2"
+      },
+      {
+       "t": "Weekend rest. Write one line: what do I already have from that list?",
+       "how": "Mark what you already do. You may have more than you think.",
+       "ex": "Example: \"I already present and plan every week.\"",
+       "m": 5
+      },
+      {
+       "t": "Count the gaps: which requirements are missing and which are real blockers?",
+       "how": "Ask someone in the job which items truly matter.",
+       "ex": "Example: \"Certificate is nice, portfolio matters more\".",
+       "m": 15,
+       "ref": "retraining-route:R2"
+      },
+      {
+       "t": "Write your translation: take your old job title and tasks and re-describe them in the new field's words.",
+       "how": "Use words from the adverts. Do not lie. Re-describe what you really did.",
+       "ex": "Example: \"Ran a classroom\" becomes \"Designed and delivered training sessions\".",
+       "m": 25,
+       "ref": "cv-translator:C3"
+      },
+      {
+       "t": "Collect keywords: list 15 words that appear in your target adverts.",
+       "how": "Count which words appear in 3 or more adverts.",
+       "ex": "Example: \"stakeholders, planning, delivery\".",
+       "m": 15,
+       "ref": "cv-translator:C2"
+      },
+      {
+       "t": "Write 6 CV bullets with numbers or results where you can.",
+       "how": "Use: what you did, how, and what changed. Use real numbers only.",
+       "ex": "Example: \"Trained 30 colleagues, cutting onboarding time by a week\".",
+       "m": 30,
+       "ref": "cv-translator:C4"
+      },
+      {
+       "t": "Write your headline and a 3-line profile.",
+       "how": "Lead with your target job, then your top 3 strengths.",
+       "ex": "Example: \"Learning and training professional with classroom and customer experience\".",
+       "m": 25,
+       "ref": "cv-translator:C5"
+      },
+      {
+       "t": "Weekend rest. Read your CV out loud once. Mark anything that sounds like old jargon.",
+       "how": "Cut jargon your new field would not know.",
+       "ex": "Example: Replace \"pupil progress\" with \"learner results\".",
+       "m": 10,
+       "ref": "cv-translator:C3"
+      },
+      {
+       "t": "Update your LinkedIn headline and About section to match.",
+       "how": "Use the same words as your CV. Keep it honest and simple.",
+       "ex": "Example: One headline, one short About section.",
+       "m": 25,
+       "ref": "cv-translator:C7"
+      },
+      {
+       "t": "Ask one person from your conversations to read your CV and tell you one thing to fix.",
+       "how": "Send it with a polite message. Ask for one thing only.",
+       "ex": "Example: \"Could you tell me if this reads like a training CV?\"",
+       "m": 15,
+       "ref": "cv-translator:C9"
+      },
+      {
+       "t": "Write your bridge story for interviews: past, present, future in 30 seconds.",
+       "how": "Past: what you did. Present: why you are changing. Future: what you will bring.",
+       "ex": "Example: \"I taught for 8 years. Now I want to design learning for adults.\"",
+       "m": 20,
+       "ref": "cv-translator:C8"
+      },
+      {
+       "t": "Write a message you can send to people in the field asking for advice.",
+       "how": "Short, specific, friendly. Reuse the one from last month and improve it.",
+       "ex": "Example: \"I am moving into X. Could I ask you two questions?\"",
+       "m": 15,
+       "ref": "foot-in-door:F4"
+      },
+      {
+       "t": "Map your contacts: who do you know, and who might know someone?",
+       "how": "List names in three groups: close, friendly, distant.",
+       "ex": "Example: Close: Sam. Friendly: Priya. Distant: old manager.",
+       "m": 20,
+       "ref": "foot-in-door:F4"
+      },
+      {
+       "t": "Weekend rest. Pick 5 people you will message this week.",
+       "how": "Choose a mix of warm contacts and new ones.",
+       "ex": "Example: Sam, Priya, an old colleague, 2 new people.",
+       "m": 5,
+       "ref": "foot-in-door:F4"
+      },
+      {
+       "t": "Send 3 messages to people in the field.",
+       "how": "Short and specific. Ask for advice, not a job.",
+       "ex": "Example: One line asking for 15 minutes.",
+       "m": 20,
+       "ref": "foot-in-door:F4"
+      },
+      {
+       "t": "Send 2 more messages and log all five.",
+       "how": "Track name, date and whether they replied.",
+       "ex": "Example: Use the application tracker.",
+       "m": 15,
+       "ref": "foot-in-door:F7"
+      },
+      {
+       "t": "Find 3 stepping-stone roles: jobs that are a bridge into the new field.",
+       "how": "Look for roles with \"assistant\", \"junior\", \"coordinator\" or \"associate\".",
+       "ex": "Example: \"Learning coordinator\" before \"Learning designer\".",
+       "m": 25,
+       "ref": "foot-in-door:F5"
+      },
+      {
+       "t": "Pick one proof project that shows you can do the work.",
+       "how": "Choose something you can finish in two to three weeks.",
+       "ex": "Example: \"Design and run one free workshop for a local group.\"",
+       "m": 20,
+       "ref": "foot-in-door:F2"
+      },
+      {
+       "t": "Weekend rest. Write the first three steps of the proof project.",
+       "how": "Keep each step small enough to do in one sitting.",
+       "ex": "Example: \"1 Choose a topic. 2 Outline it. 3 Ask a friend to be the audience.\"",
+       "m": 10,
+       "ref": "foot-in-door:F2"
+      },
+      {
+       "t": "Send 2 applications or reach-outs to stepping-stone roles.",
+       "how": "Use your new CV and message. Log them.",
+       "ex": "Example: Send one application and one message.",
+       "m": 30,
+       "ref": "foot-in-door:F7"
+      },
+      {
+       "t": "Line up one bridge: a short course, a reference or a project that makes your move easier.",
+       "how": "Choose one. Check the real cost and time first.",
+       "ex": "Example: A 6-week evening course or a reference from your mini-project.",
+       "m": 20,
+       "ref": "retraining-route:R6"
+      },
+      {
+       "t": "Follow up on every message and application from this month.",
+       "how": "One polite sentence, a week after you first wrote.",
+       "ex": "Example: \"Just checking you saw my message. Thank you.\"",
+       "m": 20,
+       "ref": "foot-in-door:F9"
+      },
+      {
+       "t": "Write your next 90 days: three monthly goals and the first step for next week.",
+       "how": "Look at your plan, your money and your pipeline.",
+       "ex": "Example: Month 1 conversations, month 2 project, month 3 applications.",
+       "m": 25,
+       "ref": "planner-90:S2"
+      },
+      {
+       "t": "Weekend rest. Look at your pipeline: who replied, who did not, what is next.",
+       "how": "Open your tracker. Do not fix anything today, just look.",
+       "ex": "Example: \"2 replies, 3 waiting, 1 interview idea.\"",
+       "m": 10,
+       "ref": "foot-in-door:F7"
+      },
+      {
+       "t": "Practise your bridge story out loud, then say it to one friend.",
+       "how": "Ask them to tell you which part was unclear.",
+       "ex": "Example: Say it in 30 seconds and time it.",
+       "m": 15,
+       "ref": "cv-translator:C8"
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month and one thing to keep doing.",
+       "how": "Count your messages, your CV and your plan.",
+       "ex": "Example: \"5 messages, a new CV, a clear plan.\"",
+       "m": 15
+      }
+     ]
     }
    ]
   },
@@ -333,31 +1535,45 @@
    "week1": [
     {
      "t": "Write what you earn and the hours you work in a normal week, including travel time.",
-     "why": "You cannot fix what you have not counted."
+     "why": "You cannot fix what you have not counted.",
+     "how": "Open your payslip and your calendar. Write monthly pay after tax, weekly hours, and daily travel time.",
+     "ex": "Example: \"2,600 a month. 45 hours. 1 hour travel.\""
     },
     {
      "t": "Write the pay and hours that would make you stay. Give a number and a range.",
-     "why": "A clear target beats a vague wish."
+     "why": "A clear target beats a vague wish.",
+     "how": "Write a number and a range. Ask: what would make me stay?",
+     "ex": "Example: \"2,900, range 2,800 to 3,100.\""
     },
     {
      "t": "Write what you would give up to get them, such as a title, a longer commute or a day in the office.",
-     "why": "Everyone has a trade-off. Knowing yours helps you negotiate."
+     "why": "Everyone has a trade-off. Knowing yours helps you negotiate.",
+     "how": "List what you could give up: title, location, days in office. Choose two.",
+     "ex": "Example: \"A longer commute for one day at home.\""
     },
     {
      "t": "Look up 5 similar jobs at other employers. Note their pay and hours.",
-     "why": "This is your market check."
+     "why": "This is your market check.",
+     "how": "Search job sites for your title in your city. Save 5 similar jobs. Write pay and hours for each.",
+     "ex": "Example: \"Analyst, 2,900, 40 hours.\""
     },
     {
      "t": "Compare: is your job below, at or above what you found? Write what you see.",
-     "why": "It tells you whether you are asking for something fair."
+     "why": "It tells you whether you are asking for something fair.",
+     "how": "Look at your 5 jobs. Is your pay below, at or above the middle? Write one line.",
+     "ex": "Example: \"I am about 300 below the middle.\""
     },
     {
      "t": "List 3 results from the last year that you are proud of.",
-     "why": "Results are your strongest argument."
+     "why": "Results are your strongest argument.",
+     "how": "Look at emails, reviews and projects from the last year. Write 3 results with a number if you can.",
+     "ex": "Example: \"Saved the team 5 hours a week.\""
     },
     {
      "t": "Write the first sentence of the conversation: “I would like to talk about my pay (or hours).”",
-     "why": "The first sentence is the hardest. Now it is done."
+     "why": "The first sentence is the hardest. Now it is done.",
+     "how": "Write one calm opening sentence. Keep it short. Do not send it yet.",
+     "ex": "Example: \"I would like to talk about my pay.\""
     }
    ],
    "months": [
@@ -401,7 +1617,193 @@
      "guide": {
       "title": "How to find out what you are worth",
       "html": "<p>You are worth what the market pays for your skills, not what you earn today. Ten job posts will tell you more than a guess.</p><h4>How to check</h4><ul><li>Save 10 posts for jobs like yours, at similar employers and places.</li><li>Write the pay and hours from each one. Some posts show only a range. That is fine, use the middle.</li><li>Find the middle of your list, then compare it with your pay.</li></ul><h4>Build your evidence</h4><p>List what you did in the last year that helped the business: money saved, time saved, problems solved, praise received. Numbers help (&ldquo;cut the wait time from five days to two&rdquo;), but only use numbers you can show.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Write your monthly income after tax and where it goes.",
+       "how": "Open your bank statement. Use last month. Add income in one box and costs in another.",
+       "ex": "Example: Income 2,600. Rent 900. Food 400. Transport 150.",
+       "m": 20,
+       "ref": "money-planner:M1"
+      },
+      {
+       "t": "Write your essential costs: rent, food, bills, transport, debts.",
+       "how": "List only what you must pay. Skip nice-to-haves.",
+       "ex": "Example: Essentials 1,850.",
+       "m": 15,
+       "ref": "money-planner:M1"
+      },
+      {
+       "t": "Find the gap or surplus: income minus essentials.",
+       "how": "Do the sum. Write the number.",
+       "ex": "Example: 2,600 minus 1,850 = 750.",
+       "m": 5,
+       "ref": "money-planner:M2"
+      },
+      {
+       "t": "Write what you would like your pay to be and why.",
+       "how": "Say a number or range. Say why it is fair.",
+       "ex": "Example: \"I want 2,900 because the role has grown.\"",
+       "m": 10,
+       "ref": "money-planner:M3"
+      },
+      {
+       "t": "Read this month's guide intro and save 3 job posts that match yours.",
+       "how": "Search for your job title. Save links or screenshots.",
+       "ex": "Example: Three posts in your city.",
+       "m": 20
+      },
+      {
+       "t": "Weekend rest. Write one line: how do I feel about my pay?",
+       "how": "Honest, no filter.",
+       "ex": "Example: \"Underpaid and tired.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend: do something that costs nothing and feels good.",
+       "how": "You are doing hard maths. Rest.",
+       "ex": "Example: \"Walk with a friend.\"",
+       "m": 5
+      },
+      {
+       "t": "Save 4 more job posts that match yours. You need 10 in total.",
+       "how": "Use at least two job sites. Pick posts with pay shown.",
+       "ex": "Example: Mix of local and remote.",
+       "m": 20
+      },
+      {
+       "t": "Write pay and hours from each of the 10 posts in one list.",
+       "how": "Make a simple table: title, pay, hours, city.",
+       "ex": "Example: \"Analyst, 2,800, 40h, Pune.\"",
+       "m": 20
+      },
+      {
+       "t": "Mark which posts are close to your level and which are above.",
+       "how": "Only compare similar jobs.",
+       "ex": "Example: \"5 are similar, 3 are senior.\"",
+       "m": 10
+      },
+      {
+       "t": "Find the middle of your list. Write whether you are below or above it.",
+       "how": "Sort pay low to high and pick the middle.",
+       "ex": "Example: \"Middle is 2,900. I am 300 below.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what the middle tells you.",
+       "how": "Short and plain.",
+       "ex": "Example: \"I am paid less than similar roles.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Write one line about what you learned.",
+       "how": "One line.",
+       "ex": "Example: \"I thought I was paid fairly.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Do something you enjoy.",
+       "how": "No work today.",
+       "ex": "Example: \"Reading.\"",
+       "m": 5
+      },
+      {
+       "t": "Find out how pay reviews work at your employer: when, who decides, what they look at.",
+       "how": "Check the staff handbook or ask HR. Write the answer.",
+       "ex": "Example: \"Reviews in March. Manager and HR decide.\"",
+       "m": 20
+      },
+      {
+       "t": "Write who you could ask about pay.",
+       "how": "Name the person who can make the decision.",
+       "ex": "Example: \"My manager.\"",
+       "m": 5
+      },
+      {
+       "t": "Write your evidence list: results, extra work, new skills, good feedback.",
+       "how": "Look at emails, reviews, project notes. List 5.",
+       "ex": "Example: \"Took on two new clients. Trained a new hire.\"",
+       "m": 25
+      },
+      {
+       "t": "Add numbers to your evidence where you can.",
+       "how": "Use real numbers only.",
+       "ex": "Example: \"Saved 5 hours a week.\"",
+       "m": 15
+      },
+      {
+       "t": "Ask yourself: what would a good manager say about my work?",
+       "how": "Write 2 lines.",
+       "ex": "Example: \"Reliable. Helps others.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: am I ready to ask?",
+       "how": "Yes, no or not yet.",
+       "ex": "Example: \"Nearly.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Do something kind for yourself.",
+       "how": "Anything small.",
+       "ex": "Example: \"Slept in.\"",
+       "m": 5
+      },
+      {
+       "t": "Choose your ask: a number, a range, or a change in hours.",
+       "how": "Be specific. Use your list from this month.",
+       "ex": "Example: \"A 10 percent rise, or one remote day.\"",
+       "m": 15
+      },
+      {
+       "t": "Write your reason in two lines.",
+       "how": "Link it to the work, not to your needs.",
+       "ex": "Example: \"My role has grown and the market pays more.\"",
+       "m": 10
+      },
+      {
+       "t": "Choose your fallback: what you will do if the answer is no.",
+       "how": "Think about timing, learning and options.",
+       "ex": "Example: \"Ask what I need to show for a raise in six months.\"",
+       "m": 15
+      },
+      {
+       "t": "Write your minimum: the lowest answer you would accept.",
+       "how": "This protects you.",
+       "ex": "Example: \"Not less than 2,750.\"",
+       "m": 10
+      },
+      {
+       "t": "List three things you could do if the answer stays no.",
+       "how": "Think about upskilling, a new role, or a move.",
+       "ex": "Example: \"Ask for a new title, look elsewhere, learn a skill.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Read your notes once and relax.",
+       "how": "You have done a lot.",
+       "ex": "Example: Re-read your evidence list.",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: what do I believe I deserve?",
+       "how": "Say it clearly.",
+       "ex": "Example: \"A fair rise.\"",
+       "m": 5
+      },
+      {
+       "t": "Write your summary: income, gap, market middle, ask, fallback.",
+       "how": "Put it on one page.",
+       "ex": "Example: Five short lines.",
+       "m": 15
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month.",
+       "how": "Count your numbers, your list and your ask.",
+       "ex": "Example: \"I know my gap, I have evidence, I have an ask.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 2 · Make the ask",
@@ -443,7 +1845,189 @@
      "guide": {
       "title": "How to ask for more pay or better hours",
       "html": "<p>The best asks are calm, clear and about the work. They are not about being unhappy.</p><h4>Use this order</h4><ul><li><b>Say what you do.</b> Two or three results, in plain words.</li><li><b>Say what you found.</b> &ldquo;Similar roles pay about this much.&rdquo; Do not name other people in the company.</li><li><b>Make the ask.</b> A number or a clear change in hours. Then stop talking and let them answer.</li><li><b>Agree a next step.</b> If they say &ldquo;not now&rdquo;, ask: &ldquo;What would I need to show, and when can we talk again?&rdquo;</li></ul><p>After the meeting, send a two-line email with what you agreed. It makes the next conversation easier.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Write your script: the facts, your evidence, your ask, your offer.",
+       "how": "Use four short parts. One or two lines each.",
+       "ex": "Example: \"Facts: market pays 2,900. Evidence: two new clients. Ask: 2,900. Offer: lead the training.\"",
+       "m": 25
+      },
+      {
+       "t": "Read this month's guide intro and shorten your script to one page.",
+       "how": "Cut anything that sounds like a complaint. Keep what is fair and clear.",
+       "ex": "Example: Remove \"I deserve it\". Use \"The market pays this.\"",
+       "m": 20
+      },
+      {
+       "t": "Write your first two sentences.",
+       "how": "Start with the work and the result, then the ask.",
+       "ex": "Example: \"I have taken on more this year. I would like to talk about my pay.\"",
+       "m": 10
+      },
+      {
+       "t": "Write answers to three likely replies: \"No budget\", \"Not now\", \"Let me think\".",
+       "how": "Prepare one calm sentence for each.",
+       "ex": "Example: \"Could we agree on a date to review this?\"",
+       "m": 20
+      },
+      {
+       "t": "Check your numbers one more time.",
+       "how": "Compare your list and your evidence. Fix any mistakes.",
+       "ex": "Example: Double-check the market middle.",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: how do I feel about the ask?",
+       "how": "Nervous is normal.",
+       "ex": "Example: \"Nervous but clear.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Do something calming.",
+       "how": "Walk, music, tea.",
+       "ex": "Example: \"Evening walk.\"",
+       "m": 5
+      },
+      {
+       "t": "Book the meeting. Put it in your calendar.",
+       "how": "Send a short message. Say it is about your role and pay.",
+       "ex": "Example: \"Could we find 20 minutes this week to talk about my role?\"",
+       "m": 10
+      },
+      {
+       "t": "Practise out loud, once, alone.",
+       "how": "Say the script to the mirror. Time it.",
+       "ex": "Example: Under 3 minutes.",
+       "m": 10
+      },
+      {
+       "t": "Practise with a friend or record yourself.",
+       "how": "Ask for one tip.",
+       "ex": "Example: \"Slow down and breathe.\"",
+       "m": 15
+      },
+      {
+       "t": "Write what you will do if they say yes.",
+       "how": "Ask for the date and put it in writing.",
+       "ex": "Example: \"Thank them and ask for a confirmation email.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what you will do if they say no or not now.",
+       "how": "Ask what you would need to show and by when.",
+       "ex": "Example: \"What would need to change in six months?\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Read your notes once.",
+       "how": "Then close the page.",
+       "ex": "Example: Short read.",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Sleep well.",
+       "how": "Early night.",
+       "ex": "Example: \"Bed by ten.\"",
+       "m": 5
+      },
+      {
+       "t": "Prepare your meeting notes: one page and a pen.",
+       "how": "Bring your numbers and evidence.",
+       "ex": "Example: A printed page.",
+       "m": 10
+      },
+      {
+       "t": "Make the ask. Afterwards, write down exactly what was said.",
+       "how": "Stay calm. Say your script. Listen. Write everything down within the hour.",
+       "ex": "Example: \"She said she will check the budget.\"",
+       "m": 30
+      },
+      {
+       "t": "Send a short written follow-up.",
+       "how": "Thank them, repeat what was agreed, add the date.",
+       "ex": "Example: \"Thanks for today. As agreed, we will talk again on the 15th.\"",
+       "m": 10
+      },
+      {
+       "t": "Write how you feel and what you noticed in the room.",
+       "how": "Notes help you learn.",
+       "ex": "Example: \"She listened. She did not say no.\"",
+       "m": 10
+      },
+      {
+       "t": "Note the answer and the date of the next review.",
+       "how": "Put the date in your calendar.",
+       "ex": "Example: \"Next review: 15th.\"",
+       "m": 10
+      },
+      {
+       "t": "Write whether the answer is fair.",
+       "how": "Compare with your numbers.",
+       "ex": "Example: \"Partly. The rise is smaller than I asked.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line about how you feel.",
+       "how": "Relief, worry, anger? All fine.",
+       "ex": "Example: \"Relief. Still thinking.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Do something enjoyable.",
+       "how": "You did a brave thing.",
+       "ex": "Example: \"Favourite meal.\"",
+       "m": 5
+      },
+      {
+       "t": "If the answer was yes: write the new pay or hours and when it starts.",
+       "how": "Ask for it in writing.",
+       "ex": "Example: \"New pay from the 1st.\"",
+       "m": 10
+      },
+      {
+       "t": "If the answer was no or partly: write what they said you must show.",
+       "how": "Write the exact words.",
+       "ex": "Example: \"Show leadership on two projects.\"",
+       "m": 10
+      },
+      {
+       "t": "Write a plan for what you will do in the next month.",
+       "how": "Small, specific steps.",
+       "ex": "Example: \"Lead one project. Update my CV.\"",
+       "m": 15
+      },
+      {
+       "t": "Update your evidence list with anything new.",
+       "how": "Keep it ready.",
+       "ex": "Example: \"Added feedback from the client.\"",
+       "m": 10
+      },
+      {
+       "t": "Check your numbers: has anything changed?",
+       "how": "Do the maths again.",
+       "ex": "Example: \"Gap is now 450.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: what did I learn about asking?",
+       "how": "One line.",
+       "ex": "Example: \"Asking is easier than waiting.\"",
+       "m": 5
+      },
+      {
+       "t": "Write what you would do differently next time you ask for something.",
+       "how": "Look at your notes from the meeting.",
+       "ex": "Example: \"Ask for a date in the first five minutes.\"",
+       "m": 10
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month.",
+       "how": "You made the ask. That is brave.",
+       "ex": "Example: \"I wrote a script, I asked, I followed up.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 3 · Decide with the answer",
@@ -485,7 +2069,197 @@
      "guide": {
       "title": "If the answer is no",
       "html": "<p>A no is information. It tells you what this employer will pay, and it is better to know than to wonder.</p><h4>Three situations</h4><ul><li><b>Yes or partly yes.</b> Get it in writing, set a review date, and keep your evidence list going.</li><li><b>Not now.</b> Ask what you need to show and by when. If they give a clear answer, you have a plan. If the answer is vague, treat it as a no.</li><li><b>A clear no.</b> Look at what you found in your market check. If other employers pay more or offer better hours, apply there. You do not need to change careers. You need a better offer.</li></ul><h4>Compare offers fairly</h4><p>Count pay, hours, travel time and how you would feel on a Monday. A little more pay with a longer commute is not always a better deal.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Write the answer you got and what it means for your numbers.",
+       "how": "Be plain. Include the date.",
+       "ex": "Example: \"Rise of 150. New gap is 600.\"",
+       "m": 15
+      },
+      {
+       "t": "Read this month's guide intro and choose which situation you are in.",
+       "how": "Three options: yes, partly, no.",
+       "ex": "Example: \"Partly. They offered half.\"",
+       "m": 20
+      },
+      {
+       "t": "Write what you are happy with and what you are not.",
+       "how": "Two short lists.",
+       "ex": "Example: \"Happy: recognition. Not: money.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what you can do about each item you are not happy with.",
+       "how": "One small action each.",
+       "ex": "Example: \"Ask for a six-month review.\"",
+       "m": 10
+      },
+      {
+       "t": "If yes: write the new pay or hours and the date of your next review.",
+       "how": "Put the next review date in your calendar.",
+       "ex": "Example: \"Next review in March.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: how do I feel about the answer?",
+       "how": "Honest, no judgement.",
+       "ex": "Example: \"Relieved but still thinking.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Do something you enjoy.",
+       "how": "Reset.",
+       "ex": "Example: \"Coffee with a friend.\"",
+       "m": 5
+      },
+      {
+       "t": "If no or partly: write what they said you must show, and by when.",
+       "how": "Write exact words and the date.",
+       "ex": "Example: \"Lead two projects by June.\"",
+       "m": 15
+      },
+      {
+       "t": "Break that into three small steps.",
+       "how": "Each step should be doable in a week.",
+       "ex": "Example: \"1 Ask for projects. 2 Plan one. 3 Share results.\"",
+       "m": 15
+      },
+      {
+       "t": "Put the first step in your calendar.",
+       "how": "Pick a real date.",
+       "ex": "Example: Tuesday, 9am.",
+       "m": 5
+      },
+      {
+       "t": "Look for 5 better-paid or better-hours roles in your field.",
+       "how": "Search job sites. Note title, pay and hours.",
+       "ex": "Example: \"Analyst, 3,100, remote 2 days.\"",
+       "m": 25
+      },
+      {
+       "t": "Save the job posts and write one line on each.",
+       "how": "What is better? What is worse?",
+       "ex": "Example: \"Better pay. Longer commute.\"",
+       "m": 15
+      },
+      {
+       "t": "Weekend rest. Write one line: how would a move feel?",
+       "how": "Exciting, scary, both?",
+       "ex": "Example: \"Exciting.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Do something kind for yourself.",
+       "how": "Anything small.",
+       "ex": "Example: \"Slow breakfast.\"",
+       "m": 5
+      },
+      {
+       "t": "Update your CV with your latest results.",
+       "how": "Use numbers where you can.",
+       "ex": "Example: \"Led two projects, saved 5 hours a week.\"",
+       "m": 30,
+       "ref": "cv-translator:C4"
+      },
+      {
+       "t": "Update your LinkedIn headline.",
+       "how": "Use the same words as your CV.",
+       "ex": "Example: \"Analyst - reports and process improvement\".",
+       "m": 15,
+       "ref": "cv-translator:C7"
+      },
+      {
+       "t": "Reach out to 2 people who work at the roles you saved.",
+       "how": "Ask for advice, not a job.",
+       "ex": "Example: \"Could I ask you two questions about your team?\"",
+       "m": 20,
+       "ref": "foot-in-door:F4"
+      },
+      {
+       "t": "Reach out to 3 more people or apply to 2 roles.",
+       "how": "Use your CV and message.",
+       "ex": "Example: One application and two messages.",
+       "m": 25,
+       "ref": "foot-in-door:F7"
+      },
+      {
+       "t": "Log everything in your tracker.",
+       "how": "Name, date, status.",
+       "ex": "Example: \"Priya, sent 12th, waiting\".",
+       "m": 10,
+       "ref": "foot-in-door:F7"
+      },
+      {
+       "t": "Follow up on messages from earlier in the month.",
+       "how": "One polite line.",
+       "ex": "Example: \"Just checking you saw my message. Thank you.\"",
+       "m": 10,
+       "ref": "foot-in-door:F9"
+      },
+      {
+       "t": "Weekend rest. Write one line: how many answers have I got?",
+       "how": "Count them.",
+       "ex": "Example: \"Three replies.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Do something enjoyable.",
+       "how": "Rest.",
+       "ex": "Example: \"Film night.\"",
+       "m": 5
+      },
+      {
+       "t": "Compare any offers or ideas on pay, hours, commute and growth, not only pay.",
+       "how": "Make a simple table. Score each 1 to 5.",
+       "ex": "Example: Pay 4, Hours 3, Commute 2, Growth 5.",
+       "m": 20
+      },
+      {
+       "t": "Write what you would need to feel good about staying.",
+       "how": "List up to three.",
+       "ex": "Example: \"A clear review date. A small rise. Fewer late nights.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what you would need to feel good about moving.",
+       "how": "List up to three.",
+       "ex": "Example: \"Higher pay. A calm manager. Clear hours.\"",
+       "m": 10
+      },
+      {
+       "t": "Decide: stay, stay with a deadline, or move. Write your reason in one sentence.",
+       "how": "Choose the best one you can see today.",
+       "ex": "Example: \"Stay with a deadline: review in June.\"",
+       "m": 15,
+       "ref": "planner-90:S1"
+      },
+      {
+       "t": "Write your next 90 days.",
+       "how": "Three monthly goals and the first step.",
+       "ex": "Example: \"Month 1 lead a project. Month 2 review. Month 3 decide.\"",
+       "m": 25,
+       "ref": "planner-90:S2"
+      },
+      {
+       "t": "Put the first step for next week in your calendar.",
+       "how": "Pick a real day and time.",
+       "ex": "Example: Monday, 9am.",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: what am I proud of this quarter?",
+       "how": "Look back at where you started.",
+       "ex": "Example: \"I know my numbers now.\"",
+       "m": 5
+      },
+      {
+       "t": "Month check-in: write 3 wins from this quarter.",
+       "how": "Count your numbers, your ask and your decision.",
+       "ex": "Example: \"I know my worth, I asked, I decided.\"",
+       "m": 15
+      }
+     ]
     }
    ]
   },
@@ -495,31 +2269,45 @@
    "week1": [
     {
      "t": "Each morning this week, write how many hours you slept and how you feel from 1 to 5.",
-     "why": "Numbers show patterns that feelings hide."
+     "why": "Numbers show patterns that feelings hide.",
+     "how": "Keep your phone by the bed. Each morning write hours slept and a feeling from 1 to 5.",
+     "ex": "Example: \"6 hours. Energy 2.\""
     },
     {
      "t": "Pick one thing to drop or delay this week. Only one.",
-     "why": "One small cut is enough to start."
+     "why": "One small cut is enough to start.",
+     "how": "Look at your week. Pick one thing you can drop or delay. Only one.",
+     "ex": "Example: \"Delay the monthly report by two days.\""
     },
     {
      "t": "Take a 20-minute break away from screens and work. Note how you feel afterwards.",
-     "why": "It shows what actually helps."
+     "why": "It shows what actually helps.",
+     "how": "Put your phone in another room. Step outside or sit somewhere quiet for 20 minutes. Then rate how you feel 1 to 5.",
+     "ex": "Example: \"Before 2. After 3.\""
     },
     {
      "t": "Write who or what gives you a little energy, even small things.",
-     "why": "These are worth protecting."
+     "why": "These are worth protecting.",
+     "how": "List the people, places or things that give you a little energy. Small things count.",
+     "ex": "Example: \"A walk, a call with my sister, tea.\""
     },
     {
      "t": "Look at next week. Protect one evening with nothing planned.",
-     "why": "Rest does not happen unless it is in the calendar."
+     "why": "Rest does not happen unless it is in the calendar.",
+     "how": "Open your calendar. Pick one evening next week. Block it as busy. Nothing planned.",
+     "ex": "Example: \"Thursday evening: free.\""
     },
     {
      "t": "If this tiredness has lasted for weeks or feels heavy, plan to talk to a doctor or counsellor. Write the day you will call.",
-     "why": "They can help in ways a plan cannot."
+     "why": "They can help in ways a plan cannot.",
+     "how": "If this tiredness has lasted for weeks or feels heavy, plan to see a doctor or counsellor. Write the day you will call.",
+     "ex": "Example: \"I will call on Monday morning.\""
     },
     {
      "t": "Look back at the week. What helped? Decide nothing big. Write one thing to keep doing.",
-     "why": "Small keeps beat big plans when you are tired."
+     "why": "Small keeps beat big plans when you are tired.",
+     "how": "Read your notes from the week. Write one thing that helped and one thing to keep. Decide nothing big.",
+     "ex": "Example: \"Keep: 20-minute break.\""
     }
    ],
    "months": [
@@ -563,7 +2351,189 @@
      "guide": {
       "title": "Rest first, decide later",
       "html": "<p>When you are very tired, everything looks worse, including your job. That is why this path starts with rest, not with big choices.</p><h4>Keep it small</h4><ul><li>Pick two changes you can keep, such as a fixed bedtime and one evening off.</li><li>Do not start a new project this month.</li><li>Notice what lifts your energy, even a little, and do more of it.</li></ul><h4>When to get help</h4><p>If you have felt this way for several weeks, or it feels heavy, please talk to a doctor or counsellor. A career plan cannot tell you what is behind tiredness, and they can.</p><p class=\"small muted\">This is general career guidance, not medical, legal or counselling advice.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Start your daily note. Write: hours slept, energy 1 to 5, and one thing that helped or hurt.",
+       "how": "Use your phone notes. Do it at the same time each day, like before bed.",
+       "ex": "Example: \"6 hours. Energy 2. Hurt: back-to-back meetings.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note. Also write what you ate or drank that you think affected you.",
+       "how": "Do not judge. Just notice.",
+       "ex": "Example: \"Three coffees. Skipped lunch.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note. Add one thing that gave you energy today.",
+       "how": "Even a small thing counts.",
+       "ex": "Example: \"A short walk.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note. Add one thing that drained you.",
+       "how": "Be specific.",
+       "ex": "Example: \"A long email thread.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note. Write how you felt when you woke up.",
+       "how": "1 to 5.",
+       "ex": "Example: \"2. Heavy.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Daily note. Do one thing you enjoy.",
+       "how": "Rest counts.",
+       "ex": "Example: \"Music and tea.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend. Daily note. Write how your energy changes on a day off.",
+       "how": "Compare with workdays.",
+       "ex": "Example: \"Better by afternoon.\"",
+       "m": 5
+      },
+      {
+       "t": "Read this month's guide and choose two small changes to try.",
+       "how": "Pick changes that take less than 10 minutes. Write them down.",
+       "ex": "Example: \"Phone off 30 minutes before bed. A 10-minute walk after lunch.\"",
+       "m": 20
+      },
+      {
+       "t": "Try change 1. Write how it went.",
+       "how": "Keep your daily note too.",
+       "ex": "Example: \"Phone off at 10. Slept a bit better.\"",
+       "m": 5
+      },
+      {
+       "t": "Try change 1 again.",
+       "how": "Same time, same way.",
+       "ex": "Example: \"Phone off again.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note. Protect one evening with nothing planned.",
+       "how": "Mark it in your calendar as busy.",
+       "ex": "Example: \"Thursday evening is free.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note. Say no to, or delay, one thing at work or home.",
+       "how": "Start small. Say \"I can do it next week.\"",
+       "ex": "Example: \"I will send it on Monday.\"",
+       "m": 10
+      },
+      {
+       "t": "Daily note.",
+       "how": "One line.",
+       "ex": "Example: \"6.5 hours. Energy 3.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Daily note. Do one slow thing.",
+       "how": "Slow breakfast, slow walk.",
+       "ex": "Example: \"Slow breakfast.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend. Daily note. Plan one thing you will enjoy next week, for no reason.",
+       "how": "Put it in your calendar.",
+       "ex": "Example: \"Coffee with a friend on Wednesday.\"",
+       "m": 10
+      },
+      {
+       "t": "Try change 2. Write how it went.",
+       "how": "Keep your daily note too.",
+       "ex": "Example: \"Walked 10 minutes after lunch.\"",
+       "m": 5
+      },
+      {
+       "t": "Try change 2 again.",
+       "how": "Same time, same way.",
+       "ex": "Example: \"Walked again.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note. Protect a second evening with nothing planned.",
+       "how": "Mark it in your calendar.",
+       "ex": "Example: \"Tuesday evening.\"",
+       "m": 5
+      },
+      {
+       "t": "Talk to your manager or someone you trust about your workload, if it feels safe.",
+       "how": "Say how it affects your work, not just how you feel. If it does not feel safe, skip this step.",
+       "ex": "Example: \"I am stretched. Can we look at priorities?\"",
+       "m": 20
+      },
+      {
+       "t": "Write what they said and what you will do next.",
+       "how": "Short notes.",
+       "ex": "Example: \"He will move one task. I will check back Friday.\"",
+       "m": 10
+      },
+      {
+       "t": "Daily note.",
+       "how": "One line.",
+       "ex": "Example: \"7 hours. Energy 3.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Daily note. Do one thing that feels good.",
+       "how": "Anything small.",
+       "ex": "Example: \"Called my sister.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend. Daily note. Plan something you enjoy for next week.",
+       "how": "Put it in your calendar.",
+       "ex": "Example: \"Friday walk.\"",
+       "m": 5
+      },
+      {
+       "t": "Look at your notes. Write what raised your energy and what lowered it.",
+       "how": "Read all two weeks. Write two lists.",
+       "ex": "Example: \"Raised: walks, sleep. Lowered: late emails.\"",
+       "m": 20
+      },
+      {
+       "t": "Write what surprised you.",
+       "how": "One or two lines.",
+       "ex": "Example: \"Late-night phone made my sleep worse.\"",
+       "m": 10
+      },
+      {
+       "t": "Keep what worked. Write your short list.",
+       "how": "Choose 3 habits.",
+       "ex": "Example: \"Phone off by 10. Walk after lunch. One free evening.\"",
+       "m": 15
+      },
+      {
+       "t": "Check: is your tiredness getting better, staying the same, or getting worse?",
+       "how": "Be honest. If it is getting worse or you feel very low, please talk to a doctor.",
+       "ex": "Example: \"A bit better.\"",
+       "m": 5
+      },
+      {
+       "t": "Write one thing you will keep doing next month.",
+       "how": "Keep it small.",
+       "ex": "Example: \"Walk after lunch.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Write one line: how do I feel?",
+       "how": "No pressure.",
+       "ex": "Example: \"A bit lighter.\"",
+       "m": 5
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month.",
+       "how": "Count your notes and your changes.",
+       "ex": "Example: \"Two weeks of notes. Two changes. One free evening.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 2 · Find the cause",
@@ -605,7 +2575,189 @@
      "guide": {
       "title": "Find the cause of the tiredness",
       "html": "<p>Tiredness has different causes, and each one needs a different answer.</p><h4>Three common causes</h4><ul><li><b>Too much work.</b> More tasks than hours. The fix is usually fewer tasks or more help.</li><li><b>The wrong work.</b> Even a small load feels heavy when you dislike it. The fix is a change in the kind of work.</li><li><b>Life outside work.</b> Caring, health, money worries or poor sleep. The fix is outside the job.</li></ul><h4>Find yours</h4><p>For one week, end each day with a mark for the cause that felt biggest. At the end, count the marks. The cause that wins is where to look first.</p><p class=\"small muted\">This is general career guidance, not medical, legal or counselling advice.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Write the three possible causes in your own words: workload, the work itself, life outside work.",
+       "how": "Read this month's guide intro first. Then write one line for each cause.",
+       "ex": "Example: \"Workload: too many tasks. Work itself: I am bored. Life: not sleeping.\"",
+       "m": 20
+      },
+      {
+       "t": "Mark today: workload, the work itself, or life outside work?",
+       "how": "Pick the one that took the most energy today. Also write energy 1 to 5.",
+       "ex": "Example: \"Workload. 2/5.\"",
+       "m": 5
+      },
+      {
+       "t": "Mark today.",
+       "how": "Same question. One word.",
+       "ex": "Example: \"Work itself.\"",
+       "m": 5
+      },
+      {
+       "t": "Mark today.",
+       "how": "Same question. One word.",
+       "ex": "Example: \"Life.\"",
+       "m": 5
+      },
+      {
+       "t": "Mark today.",
+       "how": "Same question. One word.",
+       "ex": "Example: \"Workload.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Mark today.",
+       "how": "Is it different on a day off?",
+       "ex": "Example: \"Life.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend. Mark today.",
+       "how": "Same question.",
+       "ex": "Example: \"Life.\"",
+       "m": 5
+      },
+      {
+       "t": "Mark today.",
+       "how": "Keep going.",
+       "ex": "Example: \"Workload.\"",
+       "m": 5
+      },
+      {
+       "t": "Mark today.",
+       "how": "Keep going.",
+       "ex": "Example: \"Workload.\"",
+       "m": 5
+      },
+      {
+       "t": "Mark today.",
+       "how": "Keep going.",
+       "ex": "Example: \"Work itself.\"",
+       "m": 5
+      },
+      {
+       "t": "Mark today.",
+       "how": "Keep going.",
+       "ex": "Example: \"Workload.\"",
+       "m": 5
+      },
+      {
+       "t": "Mark today.",
+       "how": "Keep going.",
+       "ex": "Example: \"Workload.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Mark today.",
+       "how": "Rest and notice.",
+       "ex": "Example: \"Life.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend. Mark today.",
+       "how": "Last day of marking.",
+       "ex": "Example: \"Life.\"",
+       "m": 5
+      },
+      {
+       "t": "Count which cause shows up most.",
+       "how": "Count the marks. Write the numbers.",
+       "ex": "Example: \"Workload 8, Work 3, Life 3.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what the count tells you.",
+       "how": "Short and plain.",
+       "ex": "Example: \"Workload is the main cause.\"",
+       "m": 10
+      },
+      {
+       "t": "Write one change for the biggest cause.",
+       "how": "Make it specific and small.",
+       "ex": "Example: \"Ask to move one deadline. Say no to one extra request.\"",
+       "m": 15
+      },
+      {
+       "t": "Write what would tell you it is working.",
+       "how": "One sign you can notice.",
+       "ex": "Example: \"I finish work by 6.\"",
+       "m": 10
+      },
+      {
+       "t": "Plan when you will start the change.",
+       "how": "Put it in your calendar.",
+       "ex": "Example: \"Starting tomorrow.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend rest. Write one line: how do I feel about the cause?",
+       "how": "Relief? Worry?",
+       "ex": "Example: \"Relief. Now I know.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend. Do something you enjoy.",
+       "how": "Rest.",
+       "ex": "Example: \"Long breakfast.\"",
+       "m": 5
+      },
+      {
+       "t": "Try the change. Write how it went.",
+       "how": "Keep it small.",
+       "ex": "Example: \"I asked to move a deadline.\"",
+       "m": 10
+      },
+      {
+       "t": "Try the change again.",
+       "how": "Same way.",
+       "ex": "Example: \"Said no to an extra request.\"",
+       "m": 5
+      },
+      {
+       "t": "Try the change. Write energy 1 to 5.",
+       "how": "One line.",
+       "ex": "Example: \"3/5.\"",
+       "m": 5
+      },
+      {
+       "t": "Talk to someone about what you found: a friend, your manager or a counsellor.",
+       "how": "Choose someone you trust. Tell them what you noticed.",
+       "ex": "Example: \"I realised workload is the main cause.\"",
+       "m": 20
+      },
+      {
+       "t": "Write what they said and what you will try.",
+       "how": "One line each.",
+       "ex": "Example: \"She said ask for help. I will ask on Monday.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: what is better?",
+       "how": "Notice small changes.",
+       "ex": "Example: \"Sunday evenings are calmer.\"",
+       "m": 5
+      },
+      {
+       "t": "Write what is better and what is not.",
+       "how": "Two short lists.",
+       "ex": "Example: \"Better: sleep. Not: meetings.\"",
+       "m": 15
+      },
+      {
+       "t": "Decide whether you are ready to look at the job question.",
+       "how": "Yes, no or not yet. No pressure.",
+       "ex": "Example: \"Not yet. I want to try more first.\"",
+       "m": 10
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month.",
+       "how": "Count your marks, your change and your talk.",
+       "ex": "Example: \"I found my main cause, tried a change, talked to someone.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 3 · Choose your path",
@@ -647,7 +2799,190 @@
      "guide": {
       "title": "Retake the quiz and pick your path",
       "html": "<p>After two months of rest and notes, your answers may be different. That is a good sign. It means you can see more clearly.</p><h4>Compare</h4><ul><li>If your main cause is now <b>the people</b>, <b>the work</b> or <b>pay and hours</b>, you are ready to work on that.</li><li>If it is still <b>exhaustion</b>, keep your routines and talk to a doctor or counsellor if you have not yet.</li><li>If <b>no single cause</b> stands out, that can mean you are doing better. Keep what works.</li></ul><p>There is no rush. A clear small step is better than a big plan that you cannot keep.</p><p class=\"small muted\">This is general career guidance, not medical, legal or counselling advice.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Retake the quiz (3 minutes). Write your new main cause.",
+       "how": "Open the quiz from the plan. Write what it says.",
+       "ex": "Example: \"Main cause: exhaustion.\"",
+       "m": 5
+      },
+      {
+       "t": "Read this month's guide and compare the two results.",
+       "how": "Look at the old and new results side by side.",
+       "ex": "Example: \"Before: pay. Now: exhaustion.\"",
+       "m": 20
+      },
+      {
+       "t": "Write what changed since the first quiz.",
+       "how": "Two or three lines.",
+       "ex": "Example: \"My answers on energy are better.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what has not changed.",
+       "how": "Be honest.",
+       "ex": "Example: \"I still dread Mondays.\"",
+       "m": 10
+      },
+      {
+       "t": "If your cause changed, open the plan for the new cause and read its Week 1.",
+       "how": "Use the plan switcher. Read only the first week.",
+       "ex": "Example: \"Moved to pay and hours.\"",
+       "m": 20
+      },
+      {
+       "t": "Weekend rest. Write one line: how do I feel about the result?",
+       "how": "Honest.",
+       "ex": "Example: \"A little relieved.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend. Do something you enjoy.",
+       "how": "Rest.",
+       "ex": "Example: \"Reading.\"",
+       "m": 5
+      },
+      {
+       "t": "If it did not change, write one more change to try for exhaustion.",
+       "how": "Make it small and specific.",
+       "ex": "Example: \"Stop checking email after 7.\"",
+       "m": 15
+      },
+      {
+       "t": "Try the change. Write how it went.",
+       "how": "One line.",
+       "ex": "Example: \"Email off at 7. Calmer.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note: energy 1 to 5 and one thing that helped.",
+       "how": "Quick one.",
+       "ex": "Example: \"3/5. Walk.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note.",
+       "how": "Quick one.",
+       "ex": "Example: \"3/5. Slept well.\"",
+       "m": 5
+      },
+      {
+       "t": "Daily note.",
+       "how": "Quick one.",
+       "ex": "Example: \"4/5. Friend call.\"",
+       "m": 5
+      },
+      {
+       "t": "Write what you want to keep from the last 8 weeks.",
+       "how": "Look at the habits and changes that worked.",
+       "ex": "Example: \"Walks, free evenings.\"",
+       "m": 15
+      },
+      {
+       "t": "Weekend rest. Write 3 things you are proud of.",
+       "how": "Anything counts.",
+       "ex": "Example: \"I kept notes. I talked to someone. I rested.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what you want to change in the next 90 days.",
+       "how": "Think about work, rest, people.",
+       "ex": "Example: \"Fewer late nights. A clearer role.\"",
+       "m": 15
+      },
+      {
+       "t": "Write what stands in your way.",
+       "how": "Be honest.",
+       "ex": "Example: \"Workload and deadlines.\"",
+       "m": 10
+      },
+      {
+       "t": "Write who can help you with each one.",
+       "how": "Name people.",
+       "ex": "Example: \"Manager: workload. Friend: rest.\"",
+       "m": 10
+      },
+      {
+       "t": "Score your life 1 to 5 on: sleep, energy, work, people, joy.",
+       "how": "A simple row of five numbers.",
+       "ex": "Example: \"3, 3, 2, 4, 3.\"",
+       "m": 10
+      },
+      {
+       "t": "Pick the lowest score. Write one small step for it.",
+       "how": "Small and specific.",
+       "ex": "Example: \"Work: ask about role clarity.\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Do something kind for yourself.",
+       "how": "Anything small.",
+       "ex": "Example: \"Slow morning.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend. Plan something to look forward to next month.",
+       "how": "Put it in your calendar.",
+       "ex": "Example: \"Day trip.\"",
+       "m": 10
+      },
+      {
+       "t": "Write what a good day looks like for you.",
+       "how": "Describe it in 5 lines.",
+       "ex": "Example: \"Wake rested, work focused, evening free.\"",
+       "m": 15
+      },
+      {
+       "t": "Write what a good week looks like.",
+       "how": "Describe it in 5 lines.",
+       "ex": "Example: \"Two walks, one free evening, one coffee with a friend.\"",
+       "m": 15
+      },
+      {
+       "t": "Choose your next 90 days: three monthly goals.",
+       "how": "Look at your notes and scores.",
+       "ex": "Example: \"Month 1 sleep. Month 2 workload. Month 3 role.\"",
+       "m": 20,
+       "ref": "planner-90:S2"
+      },
+      {
+       "t": "Write the first step for each month.",
+       "how": "Make each step small.",
+       "ex": "Example: \"Month 1: phone off at 10.\"",
+       "m": 15
+      },
+      {
+       "t": "If you are ready to look at the job question, write the first question you want to answer.",
+       "how": "If not, write when you will look at it again.",
+       "ex": "Example: \"What would a better job look like?\"",
+       "m": 10
+      },
+      {
+       "t": "Weekend rest. Write one line: what am I grateful for?",
+       "how": "One thing.",
+       "ex": "Example: \"My friend's calls.\"",
+       "m": 5
+      },
+      {
+       "t": "Weekend. Do something you enjoy.",
+       "how": "Rest.",
+       "ex": "Example: \"Evening walk.\"",
+       "m": 5
+      },
+      {
+       "t": "Pick one small step for next week and put it in your calendar.",
+       "how": "Choose a real day and time.",
+       "ex": "Example: \"Monday 6pm: plan the week.\"",
+       "m": 10
+      },
+      {
+       "t": "Month check-in: write 3 wins from this quarter.",
+       "how": "Count your notes, changes and plan.",
+       "ex": "Example: \"I learned my main cause. I rested more. I have a plan.\"",
+       "m": 15
+      }
+     ]
     }
    ]
   },
@@ -657,31 +2992,45 @@
    "week1": [
     {
      "t": "Write what you were feeling when you decided to take the quiz.",
-     "why": "That sentence usually shows what it is really about."
+     "why": "That sentence usually shows what it is really about.",
+     "how": "Think back to the day you took the quiz. What happened? Write it in one or two sentences.",
+     "ex": "Example: \"I was tired after a long meeting.\""
     },
     {
      "t": "Write what a good week would look like for you, in 5 lines.",
-     "why": "It shows what is missing."
+     "why": "It shows what is missing.",
+     "how": "Describe a good week from Monday to Friday in 5 short lines. Include work, rest and people.",
+     "ex": "Example: \"Calm mornings. A project I like. Home by 6.\""
     },
     {
      "t": "List three things at work that are fine or good.",
-     "why": "It stops everything from looking bad at once."
+     "why": "It stops everything from looking bad at once.",
+     "how": "List three things at work that are fine or good. Small ones are fine.",
+     "ex": "Example: \"My desk. Lunch with Ana. The new tool.\""
     },
     {
      "t": "List three things that bother you. Mark each: people, work, pay and hours, or tiredness.",
-     "why": "The marks show where to look."
+     "why": "The marks show where to look.",
+     "how": "List three things that bother you. Next to each write P (people), W (work), M (pay and hours) or T (tiredness).",
+     "ex": "Example: \"Long meetings - W.\""
     },
     {
      "t": "Talk to one friend. Ask what they notice when you talk about work.",
-     "why": "Other people see patterns you cannot."
+     "why": "Other people see patterns you cannot.",
+     "how": "Pick a friend who knows you well. Ask: \"What do you notice when I talk about work?\" Write what they say.",
+     "ex": "Example: \"She says I sound tired.\""
     },
     {
      "t": "Retake the quiz (3 minutes) and compare with last time.",
-     "why": "Answers can shift after a week of thinking."
+     "why": "Answers can shift after a week of thinking.",
+     "how": "Retake the quiz. Write whether the main cause is the same or different.",
+     "ex": "Example: \"Before: unsure. Now: the work itself.\""
     },
     {
      "t": "Choose which of the four causes to look at first.",
-     "why": "One focus is enough for now."
+     "why": "One focus is enough for now.",
+     "how": "Look at your notes. Pick the cause that showed up most. Write it as your focus.",
+     "ex": "Example: \"I will start with the work itself.\""
     }
    ],
    "months": [
@@ -725,7 +3074,213 @@
      "guide": {
       "title": "How to choose a direction without guessing",
       "html": "<p>You do not need to be sure to start. You need a short list and a cheap way to test it.</p><h4>Score each idea from 1 to 5</h4><ul><li><b>Interest.</b> Does it match the tasks you liked?</li><li><b>Money.</b> Could you live on what it pays, now or after a few years?</li><li><b>Effort to enter.</b> How much training or time does it need?</li><li><b>Fit with your life.</b> Hours, place, stress, family.</li></ul><h4>Pick three, not one</h4><p>Choosing one idea too early puts too much pressure on it. Three ideas keep you curious. Next month you will test one in the real world, which is the only way to know.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Write 10 things people come to you for help with at work or in life.",
+       "how": "Scroll your sent emails, chats and thank-you messages from the last month. Note what people asked you for or thanked you for.",
+       "ex": "Example: \"Sorting out messy spreadsheets\", \"Calming upset customers\", \"Explaining hard things simply\".",
+       "m": 20,
+       "ref": "career-clarity:W6"
+      },
+      {
+       "t": "Turn your 3 best items into plain skills. Write each as a verb plus a result.",
+       "how": "Ask yourself: what would a stranger call this skill on a job advert?",
+       "ex": "Example: \"Explains complex rules so people act correctly\".",
+       "m": 15,
+       "ref": "career-clarity:W6"
+      },
+      {
+       "t": "Choose the 10 values that matter most to you right now (for example freedom, security, helping, learning).",
+       "how": "Open the values list in the guide and circle the words that make you nod. Do not think too long.",
+       "ex": "Example: \"Learning, calm, fairness, time with family, steady income\".",
+       "m": 20,
+       "ref": "career-clarity:W4a"
+      },
+      {
+       "t": "Cut your values down to the top five and put them in order.",
+       "how": "Cross out one value at a time until five are left. Ask: if I could only keep one, which?",
+       "ex": "Example: 1 Calm, 2 Learning, 3 Fairness, 4 Time at home, 5 Steady income.",
+       "m": 15,
+       "ref": "career-clarity:W4"
+      },
+      {
+       "t": "Write one achievement story: a time you were proud of your work. Use Situation, Task, Action, Result.",
+       "how": "Think of a time something went well and you made it happen. Write what you did, step by step, not what the team did.",
+       "ex": "Example: \"Our system crashed on Friday. I... The result was...\"",
+       "m": 25,
+       "ref": "career-clarity:W5"
+      },
+      {
+       "t": "Weekend check: take a walk or rest. Then write one line: what did I notice about myself this week?",
+       "how": "You do not need to find an answer. Just write the first honest sentence.",
+       "ex": "Example: \"I light up when I am teaching someone, not when I am doing reports.\"",
+       "m": 5
+      },
+      {
+       "t": "Look back over days 1 to 5. Circle the three words you wrote most often.",
+       "how": "Read your notes once, slowly. Words that repeat are clues to your direction.",
+       "ex": "Example: \"people, fixing, learning\".",
+       "m": 10
+      },
+      {
+       "t": "Write your non-negotiables: the pay, hours and place you need to say yes to a new job.",
+       "how": "Start with the monthly money you need. Then your hours and how far you can travel.",
+       "ex": "Example: \"At least X a month, no weekends, under 45 minutes from home\".",
+       "m": 20,
+       "ref": "career-clarity:W8"
+      },
+      {
+       "t": "Work out what you really need each month to live. Add your essential bills.",
+       "how": "Open your bank app and add rent or mortgage, food, bills, transport and debt payments for last month.",
+       "ex": "Example: Essentials 1,800 a month. This is your minimum.",
+       "m": 20,
+       "ref": "money-planner:M1"
+      },
+      {
+       "t": "Do the free Interest Profiler at mynextmove.org (it takes about 10 minutes). Write your top three interest types.",
+       "how": "Search \"Interest Profiler My Next Move\" and answer the 60 questions. It is a free US government tool and works anywhere.",
+       "ex": "Example: \"Social, Investigative, Artistic\".",
+       "m": 20,
+       "ref": "career-clarity:W7"
+      },
+      {
+       "t": "Compare your interest result with your energy notes from the trial week. Where do they match?",
+       "how": "Put the two lists next to each other and underline what appears in both.",
+       "ex": "Example: \"Both say I like helping people solve problems\".",
+       "m": 15,
+       "ref": "career-clarity:W7"
+      },
+      {
+       "t": "Build your work profile on one page: values, skills, interests and non-negotiables.",
+       "how": "Copy your top items from days 1 to 11 into the profile sheet. It should fit on one page.",
+       "ex": "Example: Values: calm, learning. Skills: explaining. Interests: Social.",
+       "m": 25,
+       "ref": "career-clarity:W9"
+      },
+      {
+       "t": "Weekend rest. Write one line: what surprised me about my profile?",
+       "how": "Read the page once. Notice what you did not expect.",
+       "ex": "Example: \"I did not know money mattered less than learning to me.\"",
+       "m": 5
+      },
+      {
+       "t": "Look at your profile and ask: which parts of my current job fit it, and which do not?",
+       "how": "Draw a line down a page: Keeps on the left, Loses on the right.",
+       "ex": "Example: Keep: helping customers. Lose: late shifts.",
+       "m": 15,
+       "ref": "career-clarity:W2"
+      },
+      {
+       "t": "Write 15 jobs or fields that match your profile. Do not judge them yet.",
+       "how": "Use the profile as a search: type your skills into a job site and note job titles that appear. Ask two friends what they would suggest.",
+       "ex": "Example: \"Training coordinator, customer success, buyer\".",
+       "m": 25,
+       "ref": "career-clarity:W10"
+      },
+      {
+       "t": "Add 5 wild ideas. Jobs you would never admit you want.",
+       "how": "Write them fast and do not edit. Wild ideas often hold the real wish.",
+       "ex": "Example: \"Run a small bakery, work on a boat\".",
+       "m": 15,
+       "ref": "career-clarity:W10"
+      },
+      {
+       "t": "Cross out ideas that break a non-negotiable. Count what is left.",
+       "how": "Check each idea against your day 8 list. Cross it out only if it clearly breaks a rule.",
+       "ex": "Example: Cross out \"night shifts\" if you need evenings free.",
+       "m": 15,
+       "ref": "career-clarity:W10"
+      },
+      {
+       "t": "Pick the 6 ideas that still excite you. Give each a score from 1 to 5 on values fit and energy fit.",
+       "how": "Use the scoring matrix. Score fast, then wait one hour and change anything that feels wrong.",
+       "ex": "Example: Training coordinator: values 4, energy 5.",
+       "m": 25,
+       "ref": "career-clarity:W13"
+      },
+      {
+       "t": "Weekend rest. Write one line: which idea am I most curious about?",
+       "how": "Curious is a good signal. It is not the same as sure.",
+       "ex": "Example: \"I keep thinking about the training idea.\"",
+       "m": 5
+      },
+      {
+       "t": "Look at your scores. Write the top three ideas and one reason for each.",
+       "how": "Add up the matrix. Write the winners and why they won.",
+       "ex": "Example: 1 Training coordinator: fits skills and values.",
+       "m": 10,
+       "ref": "career-clarity:W13"
+      },
+      {
+       "t": "Write three futures: a one-line story of a typical Tuesday in year two for each of your top three.",
+       "how": "Imagine you already do the job. Where are you at 11 am? Who do you talk to? What do you finish?",
+       "ex": "Example: \"I run a morning workshop, then plan the next one.\"",
+       "m": 25,
+       "ref": "career-clarity:W11"
+      },
+      {
+       "t": "Read two day-in-the-life descriptions for your first idea.",
+       "how": "Search \"day in the life of a [job title]\" on YouTube or a careers site. Pick real people, not adverts.",
+       "ex": "Example: Note one thing you liked and one thing you did not.",
+       "m": 20,
+       "ref": "career-clarity:W12"
+      },
+      {
+       "t": "Do the same for your second idea.",
+       "how": "Same search. Watch or read one full day. Write what surprised you.",
+       "ex": "Example: \"They spend half the day in meetings. That would drain me.\"",
+       "m": 20,
+       "ref": "career-clarity:W12"
+      },
+      {
+       "t": "Do the same for your third idea. Then fill in a fact sheet for each.",
+       "how": "Fill in job titles, daily tasks and typical pay. Look pay up on a national job site and write a range, not one number.",
+       "ex": "Example: \"Entry pay roughly X to Y in my area\".",
+       "m": 30,
+       "ref": "career-clarity:W12"
+      },
+      {
+       "t": "Weekend rest. Write one line: which idea lost its shine, and why?",
+       "how": "It is fine to drop ideas. Dropping is progress.",
+       "ex": "Example: \"Idea 2 needs a long degree. I do not want that.\"",
+       "m": 5
+      },
+      {
+       "t": "Run the premortem: imagine you tried your top idea and it failed. Write why.",
+       "how": "List five reasons it could go wrong. Then circle the ones you could fix.",
+       "ex": "Example: \"I could not afford a pay cut\" (fix: save more or go part-time).",
+       "m": 20,
+       "ref": "career-clarity:W17"
+      },
+      {
+       "t": "Choose one direction to test next month. Write it in one sentence.",
+       "how": "Pick the one you feel curious about and could test cheaply.",
+       "ex": "Example: \"I will test training coordinator work.\"",
+       "m": 10,
+       "ref": "career-clarity:W19"
+      },
+      {
+       "t": "Write what would make you drop it. Name two warning signs.",
+       "how": "Write them now so you can spot them early.",
+       "ex": "Example: \"If three people say the work is mostly admin, I drop it.\"",
+       "m": 10,
+       "ref": "career-clarity:W19"
+      },
+      {
+       "t": "Write your two-sentence story: what you are leaving, and what you are moving toward.",
+       "how": "Start with \"I am leaving...\" then \"I am moving toward...\". This is your answer to \"why are you changing?\".",
+       "ex": "Example: \"I am leaving work that drains me. I am moving toward teaching others.\"",
+       "m": 15,
+       "ref": "career-clarity:W21"
+      },
+      {
+       "t": "Month check-in: read your story, then write 3 wins from this month.",
+       "how": "Page back through your notes. Wins can be small. Day 5 counts.",
+       "ex": "Example: \"I know my values. I have three ideas. I have a story.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 2 · Test it cheaply",
@@ -767,7 +3322,214 @@
      "guide": {
       "title": "How to test a new career before you quit",
       "html": "<p>A test is small, cheap and fast. Its job is to show you the daily reality, not the job title.</p><h4>Three ways to test</h4><ul><li><b>Talk.</b> Three conversations with people in the role. Ask what they do on a normal day and what they would change.</li><li><b>Try.</b> One small real task. If you want to be a designer, design something small. If you want to work in care, volunteer for one afternoon.</li><li><b>Look.</b> Shadow someone, or go to one event where people in the field talk.</li></ul><h4>How to know</h4><p>After each test, write two lines: what you liked and what you did not. After three tests, look at the lines. If the dislikes are things you could live with, go on. If they are the same things you hate now, drop it and test your next idea. Dropping an idea early is a win. It saved you a year.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Write your career hypothesis: the job you are testing and what you believe a normal day looks like.",
+       "how": "Use the direction you chose last month. Write what you think you would enjoy and what you think would be hard.",
+       "ex": "Example: \"I believe training work means planning sessions and helping people learn.\"",
+       "m": 20,
+       "ref": "test-drive:T1"
+      },
+      {
+       "t": "Write 5 questions to ask someone who does the job.",
+       "how": "Include \"What does a normal week look like?\" and \"What do you wish you knew before you started?\"",
+       "ex": "Example: \"What is the best part? What is the worst part?\"",
+       "m": 15,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "List 10 people who might know someone in the field: friends, old colleagues, family, classmates.",
+       "how": "Open your phone contacts and LinkedIn connections. Search the job title or the industry name.",
+       "ex": "Example: \"Sam (cousin's friend works in HR training)\".",
+       "m": 20,
+       "ref": "test-drive:T2"
+      },
+      {
+       "t": "Find 3 people who actually do the job. Write their names and how you will reach them.",
+       "how": "Search LinkedIn for the job title and your city. Look for \"2nd connection\" people you could be introduced to.",
+       "ex": "Example: \"Priya, Learning Lead at X. Ask Sam for an introduction.\"",
+       "m": 25,
+       "ref": "test-drive:T2"
+      },
+      {
+       "t": "Send your first message to someone in the role. Keep it short and specific.",
+       "how": "Say who you are, why you are asking, and ask for 15 minutes. Do not ask for a job.",
+       "ex": "Example: \"Hi Priya, I am exploring training roles. Could I ask you three questions for 15 minutes?\"",
+       "m": 20,
+       "ref": "career-clarity:W14"
+      },
+      {
+       "t": "Weekend rest. Write one line: how did it feel to reach out?",
+       "how": "Most people feel nervous. Write it down so it gets smaller.",
+       "ex": "Example: \"Scary, but easier than I thought.\"",
+       "m": 5
+      },
+      {
+       "t": "Send two more messages. Keep a list of who you asked.",
+       "how": "Aim for different people, not three at the same company.",
+       "ex": "Example: Message one friend and one stranger.",
+       "m": 15,
+       "ref": "test-drive:T2"
+      },
+      {
+       "t": "Book your first conversation in your calendar. Prepare by reading their profile for 10 minutes.",
+       "how": "Note two things you want to ask about their path.",
+       "ex": "Example: \"Ask how Priya moved from teaching into training.\"",
+       "m": 15,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Have conversation 1 (or send follow-ups if nobody replied yet). Take notes during the call.",
+       "how": "Ask your 5 questions. Write what they said in their words, not yours.",
+       "ex": "Example: Write \"best part\", \"worst part\", \"normal week\".",
+       "m": 30,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Right after the call: write your notes and send a thank-you message.",
+       "how": "Do this the same day while you remember. Thank them for one specific thing.",
+       "ex": "Example: \"Thanks for telling me about the weekly planning. That was helpful.\"",
+       "m": 15,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Weekend rest. Write one line: what surprised me in the conversation?",
+       "how": "Surprises are the data you came for.",
+       "ex": "Example: \"I did not know so much of the job is writing.\"",
+       "m": 5
+      },
+      {
+       "t": "Look for conversation 2. Reply to anyone who answered and book the time.",
+       "how": "Offer two time options. Keep the time short.",
+       "ex": "Example: \"Would Tuesday or Thursday at 6 pm work?\"",
+       "m": 15,
+       "ref": "test-drive:T2"
+      },
+      {
+       "t": "Have conversation 2. Ask the same questions so you can compare.",
+       "how": "Listen for what is the same and what is different from conversation 1.",
+       "ex": "Example: Write both answers side by side.",
+       "m": 30,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Write notes and a thank-you for conversation 2.",
+       "how": "Same day. Add one new thing you learned.",
+       "ex": "Example: \"Different team, same long meetings.\"",
+       "m": 15,
+       "ref": "test-drive:T3"
+      },
+      {
+       "t": "Weekend rest. Write one line: what do I now believe that I did not believe two weeks ago?",
+       "how": "Compare to your day 1 hypothesis.",
+       "ex": "Example: \"It is more about people than I thought.\"",
+       "m": 5
+      },
+      {
+       "t": "Pick a mini-project: one small task from the field you can finish in a week.",
+       "how": "Ask someone in the role: \"What is a small task a beginner could try?\" Or search for free beginner tasks online.",
+       "ex": "Example: \"Design a one-hour workshop outline on a topic I know.\"",
+       "m": 20,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Write what finished looks like, then block the time in your calendar.",
+       "how": "Choose 3 sessions of 30 to 45 minutes this week.",
+       "ex": "Example: Tue, Thu and Sat, 7 pm.",
+       "m": 15,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Mini-project session 1.",
+       "how": "Work for the full block. Do not aim for perfect. Aim for done.",
+       "ex": "Example: Outline the first half.",
+       "m": 30,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Mini-project session 2.",
+       "how": "Keep going. Note when you lose track of time and when you want to stop.",
+       "ex": "Example: \"I lost track of time writing the examples.\"",
+       "m": 30,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Mini-project session 3. Finish it.",
+       "how": "Finish a rough version. Written down is better than perfect in your head.",
+       "ex": "Example: One page outline.",
+       "m": 30,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Weekend: write how the mini-project felt. What did you enjoy, and what did you avoid?",
+       "how": "Be honest. Avoiding is useful data.",
+       "ex": "Example: \"I enjoyed the thinking. I did not like checking details.\"",
+       "m": 10,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Show your mini-project to one person in the field and ask for feedback.",
+       "how": "Send it to someone from your conversations. Ask: \"What is one thing I could improve?\"",
+       "ex": "Example: \"Could you look at this for five minutes?\"",
+       "m": 15,
+       "ref": "test-drive:T5"
+      },
+      {
+       "t": "Optional: shadow someone for an hour or attend one talk or event in the field.",
+       "how": "Search local events, webinars or meetups for the job title. Many are free.",
+       "ex": "Example: A free webinar on training design.",
+       "m": 45,
+       "ref": "test-drive:T4"
+      },
+      {
+       "t": "Log what you observed: tasks you saw and how you felt.",
+       "how": "Write it down while it is fresh.",
+       "ex": "Example: \"People asked many questions. I felt interested.\"",
+       "m": 15,
+       "ref": "test-drive:T4"
+      },
+      {
+       "t": "Fill in the fit scorecard: what you liked, did not like, and what surprised you.",
+       "how": "Use your notes from the conversations, the project and the event. Score each part 1 to 5.",
+       "ex": "Example: Conversations 5, Project 4, Daily tasks 3.",
+       "m": 25,
+       "ref": "test-drive:T7"
+      },
+      {
+       "t": "Check your hypothesis: what was right and what was wrong?",
+       "how": "Compare day 1 with your scorecard.",
+       "ex": "Example: \"Right: I like helping. Wrong: I thought there was less admin.\"",
+       "m": 15,
+       "ref": "test-drive:T6"
+      },
+      {
+       "t": "Decide: go, adjust or drop. Write the reason in one sentence.",
+       "how": "There is no wrong answer. Dropping an idea after a cheap test is a win.",
+       "ex": "Example: \"Go. I like the work and the people.\"",
+       "m": 15,
+       "ref": "test-drive:T8"
+      },
+      {
+       "t": "Plan follow-ups: thank everyone and keep the door open.",
+       "how": "Write one line to each person. Say what you decided.",
+       "ex": "Example: \"I am going to keep exploring. Can I stay in touch?\"",
+       "m": 15,
+       "ref": "test-drive:T9"
+      },
+      {
+       "t": "Write what you will carry into next month: the direction, the people and one open question.",
+       "how": "Look back at your scorecard and your notes. Pick the three things that matter most.",
+       "ex": "Example: \"Direction: training. People: Priya and Sam. Question: do I need a course?\"",
+       "m": 15
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month.",
+       "how": "Count your conversations, your mini-project and your decision.",
+       "ex": "Example: \"3 conversations, one project, one decision.\"",
+       "m": 15
+      }
+     ]
     },
     {
      "title": "Month 3 · Make your move plan",
@@ -809,7 +3571,217 @@
      "guide": {
       "title": "Your move plan: CV, money and first applications",
       "html": "<p>Moving is easier when it is three small jobs instead of one big scary one.</p><h4>1. Money</h4><p>Count your savings, then your monthly gap: what you spend minus what you earn. Savings divided by the gap is how many months you can last. Many people choose a bridge, such as part-time work, instead of leaping.</p><h4>2. Your CV</h4><p>Keep your old experience, but change the first lines so a reader sees what you can do for the new field. Use their words from real job posts.</p><h4>3. Outreach</h4><p>Applications work better with a message to a real person. Ask for advice, not a job. Ten honest messages this month is a strong start.</p>"
-     }
+     },
+     "days": [
+      {
+       "t": "Check your money: write your savings, your monthly essentials and what you earn.",
+       "how": "Use your bank app. Add up savings you could use and last month's essentials.",
+       "ex": "Example: Savings 6,000. Essentials 1,800. Income 2,400.",
+       "m": 20,
+       "ref": "money-planner:M2"
+      },
+      {
+       "t": "Work out your runway: how many months can you cover?",
+       "how": "Divide the savings you can use by the monthly gap. The money page in the Tracker will help.",
+       "ex": "Example: Savings 6,000 / gap 600 = 10 months.",
+       "m": 20,
+       "ref": "money-planner:M2"
+      },
+      {
+       "t": "Set your pay floor: the lowest offer you would say yes to.",
+       "how": "Start from your essentials, then add a little for saving and fun.",
+       "ex": "Example: \"Not less than 2,000 a month take-home\".",
+       "m": 15,
+       "ref": "money-planner:M3"
+      },
+      {
+       "t": "Write your move plan in 5 lines: what, why, when, how you will pay, who will help.",
+       "how": "Keep it short. If you cannot say it in 5 lines, it is still too big.",
+       "ex": "Example: \"Move into training within 6 months. Keep my job while I apply.\"",
+       "m": 20,
+       "ref": "planner-90:S1"
+      },
+      {
+       "t": "Check the requirements: save 5 job adverts for your target job and list what they ask for.",
+       "how": "Search job sites for your job title. Copy the \"requirements\" section of 5 adverts.",
+       "ex": "Example: \"Experience with presenting, planning, tools\".",
+       "m": 25,
+       "ref": "retraining-route:R2"
+      },
+      {
+       "t": "Weekend rest. Write one line: what do I already have from that list?",
+       "how": "Mark what you already do. You may have more than you think.",
+       "ex": "Example: \"I already present and plan every week.\"",
+       "m": 5
+      },
+      {
+       "t": "Count the gaps: which requirements are missing and which are real blockers?",
+       "how": "Ask someone in the job which items truly matter.",
+       "ex": "Example: \"Certificate is nice, portfolio matters more\".",
+       "m": 15,
+       "ref": "retraining-route:R2"
+      },
+      {
+       "t": "Write your translation: take your old job title and tasks and re-describe them in the new field's words.",
+       "how": "Use words from the adverts. Do not lie. Re-describe what you really did.",
+       "ex": "Example: \"Ran a classroom\" becomes \"Designed and delivered training sessions\".",
+       "m": 25,
+       "ref": "cv-translator:C3"
+      },
+      {
+       "t": "Collect keywords: list 15 words that appear in your target adverts.",
+       "how": "Count which words appear in 3 or more adverts.",
+       "ex": "Example: \"stakeholders, planning, delivery\".",
+       "m": 15,
+       "ref": "cv-translator:C2"
+      },
+      {
+       "t": "Write 6 CV bullets with numbers or results where you can.",
+       "how": "Use: what you did, how, and what changed. Use real numbers only.",
+       "ex": "Example: \"Trained 30 colleagues, cutting onboarding time by a week\".",
+       "m": 30,
+       "ref": "cv-translator:C4"
+      },
+      {
+       "t": "Write your headline and a 3-line profile.",
+       "how": "Lead with your target job, then your top 3 strengths.",
+       "ex": "Example: \"Learning and training professional with classroom and customer experience\".",
+       "m": 25,
+       "ref": "cv-translator:C5"
+      },
+      {
+       "t": "Weekend rest. Read your CV out loud once. Mark anything that sounds like old jargon.",
+       "how": "Cut jargon your new field would not know.",
+       "ex": "Example: Replace \"pupil progress\" with \"learner results\".",
+       "m": 10,
+       "ref": "cv-translator:C3"
+      },
+      {
+       "t": "Update your LinkedIn headline and About section to match.",
+       "how": "Use the same words as your CV. Keep it honest and simple.",
+       "ex": "Example: One headline, one short About section.",
+       "m": 25,
+       "ref": "cv-translator:C7"
+      },
+      {
+       "t": "Ask one person from your conversations to read your CV and tell you one thing to fix.",
+       "how": "Send it with a polite message. Ask for one thing only.",
+       "ex": "Example: \"Could you tell me if this reads like a training CV?\"",
+       "m": 15,
+       "ref": "cv-translator:C9"
+      },
+      {
+       "t": "Write your bridge story for interviews: past, present, future in 30 seconds.",
+       "how": "Past: what you did. Present: why you are changing. Future: what you will bring.",
+       "ex": "Example: \"I taught for 8 years. Now I want to design learning for adults.\"",
+       "m": 20,
+       "ref": "cv-translator:C8"
+      },
+      {
+       "t": "Write a message you can send to people in the field asking for advice.",
+       "how": "Short, specific, friendly. Reuse the one from last month and improve it.",
+       "ex": "Example: \"I am moving into X. Could I ask you two questions?\"",
+       "m": 15,
+       "ref": "foot-in-door:F4"
+      },
+      {
+       "t": "Map your contacts: who do you know, and who might know someone?",
+       "how": "List names in three groups: close, friendly, distant.",
+       "ex": "Example: Close: Sam. Friendly: Priya. Distant: old manager.",
+       "m": 20,
+       "ref": "foot-in-door:F4"
+      },
+      {
+       "t": "Weekend rest. Pick 5 people you will message this week.",
+       "how": "Choose a mix of warm contacts and new ones.",
+       "ex": "Example: Sam, Priya, an old colleague, 2 new people.",
+       "m": 5,
+       "ref": "foot-in-door:F4"
+      },
+      {
+       "t": "Send 3 messages to people in the field.",
+       "how": "Short and specific. Ask for advice, not a job.",
+       "ex": "Example: One line asking for 15 minutes.",
+       "m": 20,
+       "ref": "foot-in-door:F4"
+      },
+      {
+       "t": "Send 2 more messages and log all five.",
+       "how": "Track name, date and whether they replied.",
+       "ex": "Example: Use the application tracker.",
+       "m": 15,
+       "ref": "foot-in-door:F7"
+      },
+      {
+       "t": "Find 3 stepping-stone roles: jobs that are a bridge into the new field.",
+       "how": "Look for roles with \"assistant\", \"junior\", \"coordinator\" or \"associate\".",
+       "ex": "Example: \"Learning coordinator\" before \"Learning designer\".",
+       "m": 25,
+       "ref": "foot-in-door:F5"
+      },
+      {
+       "t": "Pick one proof project that shows you can do the work.",
+       "how": "Choose something you can finish in two to three weeks.",
+       "ex": "Example: \"Design and run one free workshop for a local group.\"",
+       "m": 20,
+       "ref": "foot-in-door:F2"
+      },
+      {
+       "t": "Weekend rest. Write the first three steps of the proof project.",
+       "how": "Keep each step small enough to do in one sitting.",
+       "ex": "Example: \"1 Choose a topic. 2 Outline it. 3 Ask a friend to be the audience.\"",
+       "m": 10,
+       "ref": "foot-in-door:F2"
+      },
+      {
+       "t": "Send 2 applications or reach-outs to stepping-stone roles.",
+       "how": "Use your new CV and message. Log them.",
+       "ex": "Example: Send one application and one message.",
+       "m": 30,
+       "ref": "foot-in-door:F7"
+      },
+      {
+       "t": "Line up one bridge: a short course, a reference or a project that makes your move easier.",
+       "how": "Choose one. Check the real cost and time first.",
+       "ex": "Example: A 6-week evening course or a reference from your mini-project.",
+       "m": 20,
+       "ref": "retraining-route:R6"
+      },
+      {
+       "t": "Follow up on every message and application from this month.",
+       "how": "One polite sentence, a week after you first wrote.",
+       "ex": "Example: \"Just checking you saw my message. Thank you.\"",
+       "m": 20,
+       "ref": "foot-in-door:F9"
+      },
+      {
+       "t": "Write your next 90 days: three monthly goals and the first step for next week.",
+       "how": "Look at your plan, your money and your pipeline.",
+       "ex": "Example: Month 1 conversations, month 2 project, month 3 applications.",
+       "m": 25,
+       "ref": "planner-90:S2"
+      },
+      {
+       "t": "Weekend rest. Look at your pipeline: who replied, who did not, what is next.",
+       "how": "Open your tracker. Do not fix anything today, just look.",
+       "ex": "Example: \"2 replies, 3 waiting, 1 interview idea.\"",
+       "m": 10,
+       "ref": "foot-in-door:F7"
+      },
+      {
+       "t": "Practise your bridge story out loud, then say it to one friend.",
+       "how": "Ask them to tell you which part was unclear.",
+       "ex": "Example: Say it in 30 seconds and time it.",
+       "m": 15,
+       "ref": "cv-translator:C8"
+      },
+      {
+       "t": "Month check-in: write 3 wins from this month and one thing to keep doing.",
+       "how": "Count your messages, your CV and your plan.",
+       "ex": "Example: \"5 messages, a new CV, a clear plan.\"",
+       "m": 15
+      }
+     ]
     }
    ]
   }
