@@ -348,6 +348,7 @@ table.t select{padding:6px 8px;font-size:13px}
     <div class="gate-card" id="payCard" hidden>
       <div><span class="pill">Almost there</span></div>
       <h2>Choose a plan to unlock your dashboard</h2>
+      <div id="payQuiz"></div>
       <p class="msg">You’re logged in as <b id="payEmail"></b>. Pay with this same email and your dashboard unlocks automatically, usually within a minute.</p>
       <div class="price-row" id="priceRowB"></div>
       <button class="btn ghost" id="recheckBtn" type="button">I’ve paid, check again</button>
@@ -391,8 +392,8 @@ const CFG = {
   supabaseKey: "sb_publishable_WM7az_Nye-qOMmgWDOJRVg_vITL_Zse",   // publishable key: safe in the browser
   currency: "$",
   plans: [
-    { id:"monthly", label:"Monthly", price:9,  per:"/month", note:"Cancel any time", checkout: "https://whop.com/next-chapter-15f2/next-chapter-tracker/" },
-    { id:"yearly",  label:"Yearly",  price:79, per:"/year",  note:"2+ months free", checkout: "https://whop.com/next-chapter-15f2/next-chapter-tracker/", best:true }
+    { id:"monthly",  label:"Monthly", price:12, per:"/month", note:"First 7 days $1. Cancel any time", checkout: "https://whop.com/next-chapter-15f2/next-chapter-tracker/" },
+    { id:"lifetime", label:"Lifetime", price:97, per:" once", note:"No monthly charge", checkout: "https://whop.com/next-chapter-15f2/next-chapter-tracker/", best:true }
   ]
 };
 
@@ -613,6 +614,7 @@ function vDash(){
     </div>
     <div class="hero-art"><img src="/assets/${cur.slug}.svg" alt=""></div>
   </section>
+  ${MODE==="demo" ? "" : quizCard(S.quiz)}
 
   <div class="stats">
     ${stat("t1",ICON.flag,"Journey complete",pct+"%",`${activeStops().filter(s=>stopDone(s)===s.tasks.length).length} of ${activeStops().length} stops finished`)}
@@ -851,6 +853,7 @@ function showGate(which, email){
   $("#loginCard").hidden = which!=="login"; $("#payCard").hidden = which!=="pay";
   $("#priceRowA").innerHTML = plansHTML(""); $("#priceRowB").innerHTML = plansHTML(email||"");
   if (email) $("#payEmail").textContent = email;
+  $("#payQuiz").innerHTML = which==="pay" ? quizCard(readQuiz()).replace("margin-bottom:18px","margin:0 0 4px;box-shadow:none;border:1px solid var(--line)") : "";
   if (!CFG.plans.some(p=>p.checkout)) { const msg = which==="pay" ? $("#payMsg") : null; if (msg) msg.textContent = "Memberships open very soon."; }
 }
 function startApp(mode){
@@ -876,16 +879,28 @@ $("#loginForm").addEventListener("submit", async e => {
 $("#payOut").onclick = async () => { await SB.auth.signOut(); boot(); };
 $("#recheckBtn").onclick = async () => { $("#payMsg").textContent = "Checking…"; await enter(); if (MODE==="gate") $("#payMsg").textContent = "No active membership for this email yet. If you just paid, wait a minute and try again, and check you used the same email at checkout."; };
 
+const QG = { A:"The people", B:"The work itself", C:"Pay and hours", D:"Exhaustion" };
+function readQuiz(){ try{ const q = JSON.parse(localStorage.getItem("nc_quiz")||"null"); return q && q.scores && q.main ? q : null; }catch(_){ return null; } }
+function quizCard(q){
+  if (!q) return "";
+  const main = q.main==="L" ? "No single cause stands out" : "Your main cause: " + (QG[q.main]||"").toLowerCase();
+  const bars = ["A","B","C","D"].map(g => `<div style="display:flex;align-items:center;gap:10px;font-size:14px;${g===q.main?"font-weight:700":""}"><span style="width:110px;flex:none">${QG[g]}</span><span style="flex:1;height:8px;background:#E6ECF7;border-radius:4px"><i style="display:block;height:8px;width:${(q.scores[g]||0)/5*100}%;background:${g===q.main?"var(--cta)":"#8FA3C8"};border-radius:4px"></i></span><b class="tnum">${q.scores[g]||0}/5</b></div>`).join("");
+  return `<div class="card" style="margin-bottom:18px"><div class="card-head"><h3>${main}</h3><span class="pill">Your quiz result</span></div><div style="display:grid;gap:8px">${bars}</div><p class="small muted" style="margin:12px 0 0">This comes from the free quiz. <a href="/quiz">Retake it</a> any time.</p></div>`;
+}
 async function enter(){
   const { data:{ session } } = await SB.auth.getSession();
   if (!session){ showGate("login"); return; }
   USER = session.user;
   const [{ data:member }, { data:subRow }] = await Promise.all([ SB.rpc("is_member"), SB.from("subscriptions").select("*").maybeSingle() ]);
   SUB = subRow || null;
-  if (!member){ showGate("pay", USER.email); return; }
+  const lq = readQuiz();
+  if (!member){ if (!lq){ location.replace("/quiz?from=app"); return; } showGate("pay", USER.email); return; }
   const { data:row } = await SB.from("progress").select("data").eq("user_id", USER.id).maybeSingle();
   S = Object.assign(blank(), row?.data || {});
+  if (lq && JSON.stringify(S.quiz||null)!==JSON.stringify(lq)){ S.quiz = lq; }
+  if (!S.quiz){ location.replace("/quiz?from=app"); return; }
   startApp("member");
+  if (lq) save();
 }
 async function boot(){
   if (!window.supabase){ showGate("login"); $("#loginMsg").textContent = "Couldn’t load the login service. Check your connection and refresh."; return; }

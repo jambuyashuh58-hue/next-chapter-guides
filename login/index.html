@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Log in | Next Chapter</title>
+<meta name="description" content="Log in or start free. We email you a one-time link. No password.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&family=Lora:wght@600;700&display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F8FAFC;font-family:Inter,system-ui,sans-serif;color:#0F1E3D;line-height:1.6}
+a{color:#2563EB}
+.wrap{min-height:100vh;display:flex;flex-direction:column}
+header{padding:16px 24px}
+.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-family:Lora,Georgia,serif;font-weight:700;font-size:23px;color:#0F1E3D}
+.logo img{width:36px;height:36px;border-radius:10px;box-shadow:0 0 0 1px #D7DEEA}
+.logo b{color:#0F766E;font-weight:700}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:16px 24px 56px;background:linear-gradient(180deg,#EAF2FF 0%,#F8FAFC 60%)}
+.card{width:100%;max-width:460px;background:#fff;border:1px solid #D7DEEA;border-radius:20px;padding:32px 28px;box-shadow:0 24px 50px -28px rgba(15,30,61,.35)}
+.eyebrow{font:500 12px 'JetBrains Mono',monospace;letter-spacing:.08em;color:#0F766E}
+h1{margin:8px 0 8px;font-size:clamp(26px,6vw,32px);line-height:1.1;letter-spacing:-.02em}
+p{margin:0 0 16px;color:#334155}
+input{width:100%;padding:14px;font-size:16px;border:1px solid #D7DEEA;border-radius:12px;background:#F8FAFC;color:#0F1E3D;margin-bottom:12px}
+input:focus{outline:2px solid #2563EB;outline-offset:1px}
+button{width:100%;background:#2563EB;color:#fff;border:0;font:700 16px Inter,system-ui,sans-serif;padding:14px;border-radius:12px;cursor:pointer}
+button:disabled{opacity:.6;cursor:default}
+.msg{font-size:14px;margin:12px 0 0;min-height:20px}
+.ok{color:#0F766E}.err{color:#B91C1C}
+.steps{list-style:none;margin:22px 0 0;padding:18px 0 0;border-top:1px solid #D7DEEA;display:grid;gap:10px;font-size:14px;color:#334155}
+.steps li{display:flex;gap:12px;align-items:flex-start}
+.steps span{flex:none;width:26px;height:26px;border-radius:50%;background:#0F1E3D;color:#fff;font:600 12px 'JetBrains Mono',monospace;display:flex;align-items:center;justify-content:center}
+.fine{font-size:13px;color:#5B6478;margin:16px 0 0}
+</style>
+</head>
+<body><div class="wrap">
+<header><a class="logo" href="/"><img src="/assets/logo.svg" alt=""><span>Next<b>Chapter.</b></span></a></header>
+<main><div class="card">
+<div class="eyebrow">LOG IN OR START FREE</div>
+<h1>Welcome. Let us find your next step.</h1>
+<p>Enter your email and we will send you a one-time link. No password to remember.</p>
+<form id="f" novalidate>
+<label for="em" style="position:absolute;left:-9999px">Email</label>
+<input id="em" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+<button id="b" type="submit">Email me a login link</button>
+<div class="msg" id="m" role="status" aria-live="polite"></div>
+</form>
+<ol class="steps">
+<li><span>1</span><div><b>Log in</b> with the link in your email.</div></li>
+<li><span>2</span><div><b>Take the free quiz</b> (3 minutes) to find your main cause.</div></li>
+<li><span>3</span><div><b>See your dashboard</b> with your result, your journey and your weekly plan.</div></li>
+</ol>
+<p class="fine">Open the link on the same device and browser you are using now. <a href="/quiz?src=login">Just want the quiz? Take it without logging in.</a></p>
+</div></main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+  var URL_="https://ctezcrglzcjxdkagnoyy.supabase.co", KEY="sb_publishable_WM7az_Nye-qOMmgWDOJRVg_vITL_Zse";
+  var f=document.getElementById("f"), em=document.getElementById("em"), b=document.getElementById("b"), m=document.getElementById("m");
+  var SB=window.supabase&&window.supabase.createClient(URL_,KEY,{auth:{flowType:"pkce",detectSessionInUrl:false,persistSession:true}});
+  if(SB){SB.auth.getSession().then(function(r){ if(r.data&&r.data.session){ location.replace("/app"); } });}
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    var v=em.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){m.className="msg err";m.textContent="Please enter a valid email address.";em.focus();return;}
+    if(!SB){m.className="msg err";m.textContent="Could not load the login service. Check your connection and refresh.";return;}
+    b.disabled=true;m.className="msg";m.textContent="Sending…";
+    SB.auth.signInWithOtp({email:v,options:{emailRedirectTo:location.origin+"/app"}}).then(function(r){
+      b.disabled=false;
+      if(r.error){m.className="msg err";m.textContent=/rate/i.test(r.error.message)?"Too many login emails just now. Please wait a few minutes and try again.":"Could not send the email: "+r.error.message;}
+      else{m.className="msg ok";m.textContent="Check your inbox for the login link (and spam). Open it on this same device.";}
+    });
+  });
+})();
+</script>
+</body>
+</html>
