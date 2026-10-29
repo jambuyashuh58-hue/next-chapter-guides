@@ -20,13 +20,11 @@ details summary::-webkit-details-marker{display:none}
 .pl{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;color:#334155;font-size:15px}
 .pl li{display:flex;gap:10px;align-items:flex-start;line-height:1.45}
 .pl li::before{content:"\2713";color:#0F766E;font-weight:800;flex:none}
-.faq details{background:#FFFFFF;border:1px solid #D7DEEA;border-radius:14px;margin:0 0 10px}
-.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;font-weight:600;font-size:17px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";flex:none;font-size:24px;line-height:1;color:#2563EB;font-weight:500}
-.faq details[open] summary::after{content:"\2212"}
-.faq details[open]{border-color:#2563EB}
-.faq p{margin:0;padding:0 20px 18px;color:#334155;font-size:16px;line-height:1.6}
+.fq{font-family:Caveat,cursive;font-size:24px;color:#334155;border:1px solid #D7DEEA;border-radius:12px;padding:6px 14px;background:#FFFFFF;cursor:pointer;line-height:1.2}
+.fq:hover{border-color:#2563EB}
+.fq[aria-selected="true"]{background:#EFF5FF;border-color:#2563EB;color:#0F1E3D}
+.fq:focus-visible{outline:2px solid #2563EB;outline-offset:2px}
+.fa{margin:0;background:#FFFFFF;border:1px solid #D7DEEA;border-left:4px solid #2563EB;border-radius:12px;padding:18px 22px;color:#334155;font-size:17px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -219,13 +217,12 @@ details summary::-webkit-details-marker{display:none}
 </div></section>
 
 <!-- FAQ -->
-<section id="faq" style="padding:72px 0 24px"><div style="max-width:1100px;margin:0 auto;padding:0 24px;display:flex;flex-wrap:wrap;gap:32px 64px;align-items:flex-start">
-<div style="flex:1 1 280px;min-width:0">
+<section id="faq" style="padding:72px 0 24px"><div style="max-width:900px;margin:0 auto;padding:0 24px;text-align:center">
 <div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:0.08em;color:#0F766E">QUESTIONS</div>
 <h2 style="margin:10px 0 12px;font-size:clamp(26px,6.5vw,38px);line-height:1.1;font-weight:800;letter-spacing:-0.025em">Before you start</h2>
-<p style="margin:0;color:#334155;font-size:16px">Anything else? Reply to any email I send you, or message me on Threads, and I will answer.</p>
-</div>
-<div class="faq" style="flex:2 1 460px;min-width:0"><details><summary>Is the quiz really free?</summary><p>Yes. The quiz and the result on screen are free. You can also ask for a one-page PDF result sheet by email.</p></details><details><summary>What do I get for $1?</summary><p>Seven days of access to the Tracker and the PDF guides: previews and the first steps to take. Nothing is posted to you.</p></details><details><summary>Does the $1 trial renew?</summary><p>Yes. After 7 days it continues at $12 a month unless you cancel. You can cancel in one click, or pay $97 once to keep it for life.</p></details><details><summary>What if it does not help me?</summary><p>Do the first week. If it has not given you a clear next step, email me within 14 days of paying and I will refund you. This covers the Tracker and Guided help.</p></details><details><summary>Am I too old, or too busy?</summary><p>The quiz works at any age. It finds your problem first, and each step takes small slices of a week, not whole weekends.</p></details><details><summary>Tracker or Guided help?</summary><p>The Tracker is self-paced: you work through it on your own. Guided help adds two calls a week with me for 12 weeks, so someone keeps you moving. Most people should start with the $1 Tracker trial.</p></details><details><summary>Where should I start?</summary><p>With the free quiz. It takes about three minutes and shows you which of the four problems is yours.</p></details></div>
+<p style="margin:0 auto 28px;color:#334155;font-size:16px;max-width:560px">Tap a question. Anything else? Reply to any email I send you, or message me on Threads, and I will answer.</p>
+<div class="fqs" role="tablist" style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px"><button type="button" class="fq" role="tab" aria-selected="true" data-i="0">&ldquo;Is the quiz really free?&rdquo;</button><button type="button" class="fq" role="tab" aria-selected="false" data-i="1">&ldquo;What do I get for $1?&rdquo;</button><button type="button" class="fq" role="tab" aria-selected="false" data-i="2">&ldquo;Does the $1 trial renew?&rdquo;</button><button type="button" class="fq" role="tab" aria-selected="false" data-i="3">&ldquo;What if it does not help me?&rdquo;</button><button type="button" class="fq" role="tab" aria-selected="false" data-i="4">&ldquo;Am I too old, or too busy?&rdquo;</button><button type="button" class="fq" role="tab" aria-selected="false" data-i="5">&ldquo;Tracker or Guided help?&rdquo;</button><button type="button" class="fq" role="tab" aria-selected="false" data-i="6">&ldquo;Where should I start?&rdquo;</button></div>
+<div class="fas" style="margin-top:22px;text-align:left"><p class="fa" role="tabpanel" data-i="0">Yes. The quiz and the result on screen are free. You can also ask for a one-page PDF result sheet by email.</p><p class="fa" role="tabpanel" data-i="1" hidden>Seven days of access to the Tracker and the PDF guides: previews and the first steps to take. Nothing is posted to you.</p><p class="fa" role="tabpanel" data-i="2" hidden>Yes. After 7 days it continues at $12 a month unless you cancel. You can cancel in one click, or pay $97 once to keep it for life.</p><p class="fa" role="tabpanel" data-i="3" hidden>Do the first week. If it has not given you a clear next step, email me within 14 days of paying and I will refund you. This covers the Tracker and Guided help.</p><p class="fa" role="tabpanel" data-i="4" hidden>The quiz works at any age. It finds your problem first, and each step takes small slices of a week, not whole weekends.</p><p class="fa" role="tabpanel" data-i="5" hidden>The Tracker is self-paced: you work through it on your own. Guided help adds two calls a week with me for 12 weeks, so someone keeps you moving. Most people should start with the $1 Tracker trial.</p><p class="fa" role="tabpanel" data-i="6" hidden>With the free quiz. It takes about three minutes and shows you which of the four problems is yours.</p></div>
 </div></section>
 
 <!-- LATEST ARTICLES -->
@@ -300,5 +297,6 @@ document.querySelectorAll("[data-checkout]").forEach(a=>{ const u=CHECKOUT[a.dat
 })();
 </script>
 <script src="/nc.js" data-site="store" defer></script>
+<script>(function(){var t=document.querySelectorAll(".fq"),p=document.querySelectorAll(".fa");t.forEach(function(b){b.addEventListener("click",function(){t.forEach(function(x){x.setAttribute("aria-selected",x===b?"true":"false")});p.forEach(function(a){a.hidden=a.getAttribute("data-i")!==b.getAttribute("data-i")})})})})();</script>
 </body>
 </html>
