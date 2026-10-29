@@ -367,7 +367,7 @@ table.t select{padding:6px 8px;font-size:13px}
     <div class="upsell" id="sideUpsell">
       <b>Get all 9 guides</b>
       <p>Every worksheet behind these steps, as printable PDFs.</p>
-      <a class="btn white sm" href="/#bundles" target="_blank" rel="noopener">See the bundle</a>
+      <a class="btn white sm" href="https://whop.com/next-chapter-15f2/complete-career-change-program/" target="_blank" rel="noopener">See the bundle</a>
     </div>
   </aside>
   <div class="scrim" id="scrim"></div>
@@ -638,7 +638,7 @@ function vDash(){
     </div>
   </div>
 
-  <div class="banner"><div class="star">${ICON.star}</div><div><b>Want the full worksheets behind each stop?</b><span>Every step here comes from a Next Chapter guide. Get all 9 printable guides in one bundle.</span></div><a class="btn white" href="/#bundles" target="_blank" rel="noopener">Explore the guides</a></div>`;
+  <div class="banner"><div class="star">${ICON.star}</div><div><b>Want the full worksheets behind each stop?</b><span>Every step here comes from a Next Chapter guide. Get all 9 printable guides in one bundle.</span></div><a class="btn white" href="${BUNDLE_URL}" target="_blank" rel="noopener">Explore the guides</a></div>`;
 }
 
 function roadHTML(){
@@ -661,7 +661,7 @@ function vJourney(){
       <ul class="tasks">${s.tasks.map((t,j)=>{ const k=`${s.slug}.${j}`, on=!!S.tasks[k]; return `<li><label><input type="checkbox" class="chk" data-task="${k}" ${on?"checked":""}><span><span class="${on?"done-t":""}">${esc(t[0])}</span>${t[1]?`<small>${esc(t[1])}</small>`:""}${on?`<small>Done ${fmtShort(parse(S.tasks[k]))}</small>`:""}</span></label></li>`; }).join("")}</ul>
       <div class="stop-side">
         <label class="f">My notes for this stop<textarea data-note="${s.slug}" placeholder="What did you learn? What will you do next?">${esc(S.notes[s.slug]||"")}</textarea></label>
-        <a class="guide-link" href="/#guide-${s.slug}" target="_blank" rel="noopener"><div class="thumb"><img src="/assets/${s.slug}.svg" alt=""></div><div><b>${esc(s.title)}</b><span>${s.slug==="age-calculator"?"Free guide · get the worksheet":"The full worksheets for this stop"} →</span></div></a>
+        <a class="guide-link" href="${guideHref(s.slug)}" target="_blank" rel="noopener"><div class="thumb"><img src="/assets/${s.slug}.svg" alt=""></div><div><b>${esc(s.title)}</b><span>${s.slug==="age-calculator"?"Free guide · get the worksheet":"The full worksheets for this stop"} →</span></div></a>
       </div>
     </div></details>`; }).join("")}</div>`;
 }
@@ -739,14 +739,14 @@ function vMoney(){
     <div class="runway-bar"><i style="width:${pct}%"></i><b style="left:${mark}%" title="Your planned switch: ${tgt} months"></b></div>
     <p class="small muted" style="margin:0">The dark line marks your planned ${tgt}-month switch.</p>
     ${r!==null && r!==Infinity ? `<div class="kpi-row" style="margin-top:18px"><div class="kpi"><b class="tnum">${Math.max(0,net).toLocaleString()}</b><span>monthly gap to cover</span></div><div class="kpi"><b class="tnum">${r>=tgt?"On track":Math.ceil(gap).toLocaleString()}</b><span>${r>=tgt?"runway covers your plan":"extra savings needed"}</span></div><div class="kpi"><b class="tnum">${r>=tgt? (r-tgt).toFixed(1):"–"}</b><span>months of buffer</span></div></div>`:""}
-    <a class="guide-link" style="margin-top:18px" href="/#guide-money-planner" target="_blank" rel="noopener"><div class="thumb"><img src="/assets/money-planner.svg" alt=""></div><div><b>Career Change Money Planner</b><span>Spending tracker, bridge-income ideas and the full runway worksheet →</span></div></a>
+    <a class="guide-link" style="margin-top:18px" href="${guideHref('money-planner')}" target="_blank" rel="noopener"><div class="thumb"><img src="/assets/money-planner.svg" alt=""></div><div><b>Career Change Money Planner</b><span>Spending tracker, bridge-income ideas and the full runway worksheet →</span></div></a>
    </div></div>`;
 }
 
 function vGuides(){
   return `<p class="muted" style="margin:0 0 16px;max-width:60ch">Each stop in your tracker matches a Next Chapter guide. The guides hold the full worksheets, examples and sources; the tracker keeps you moving through them.</p>
-  <div class="guides">${STOPS.map((s,i)=>`<a class="gcard" href="/#guide-${s.slug}" target="_blank" rel="noopener"><div class="img"><img src="/assets/${s.slug}.svg" alt="" loading="lazy"></div><div class="b"><small>Stop ${pad(i+1)} · ${STAGES[s.stage]}</small><b>${esc(s.title)}</b><span>“${esc(s.q)}”</span><em>${s.slug==="age-calculator"?"Free →":"View guide →"}</em></div></a>`).join("")}</div>
-  <div class="banner"><div class="star">${ICON.star}</div><div><b>The Complete Career Change Library</b><span>All 9 paid guides in one download, in US Letter and A4.</span></div><a class="btn white" href="/#bundles" target="_blank" rel="noopener">See the bundle</a></div>`;
+  <div class="guides">${STOPS.map((s,i)=>`<a class="gcard" href="${guideHref(s.slug)}" target="_blank" rel="noopener"><div class="img"><img src="/assets/${s.slug}.svg" alt="" loading="lazy"></div><div class="b"><small>Stop ${pad(i+1)} · ${STAGES[s.stage]}</small><b>${esc(s.title)}</b><span>“${esc(s.q)}”</span><em>${s.slug==="age-calculator"?"Free →":"View guide →"}</em></div></a>`).join("")}</div>
+  <div class="banner"><div class="star">${ICON.star}</div><div><b>The Complete Career Change Library</b><span>All 9 paid guides in one download, in US Letter and A4.</span></div><a class="btn white" href="${BUNDLE_URL}" target="_blank" rel="noopener">See the bundle</a></div>`;
 }
 
 function vSettings(){
@@ -879,6 +879,9 @@ $("#loginForm").addEventListener("submit", async e => {
 $("#payOut").onclick = async () => { await SB.auth.signOut(); boot(); };
 $("#recheckBtn").onclick = async () => { $("#payMsg").textContent = "Checking…"; await enter(); if (MODE==="gate") $("#payMsg").textContent = "No active membership for this email yet. If you just paid, wait a minute and try again, and check you used the same email at checkout."; };
 
+const GUIDE_URL = {"age-calculator": "/calculator", "career-clarity": "https://whop.com/next-chapter-15f2/career-clarity-workbook", "test-drive": "https://whop.com/next-chapter-15f2/30-day-career-test-drive", "retraining-route": "https://whop.com/next-chapter-15f2/retraining-route-decision-kit", "money-planner": "https://whop.com/next-chapter-15f2/career-change-money-planner", "cv-translator": "https://whop.com/next-chapter-15f2/cv-linkedin-translator", "foot-in-door": "https://whop.com/next-chapter-15f2/foot-in-the-door-playbook", "planner-90": "https://whop.com/next-chapter-15f2/90-day-career-change-planner", "teacher-exit": "https://whop.com/next-chapter-15f2/teacher-exit-kit", "life-after-ward": "https://whop.com/next-chapter-15f2/life-after-the-ward"};
+const BUNDLE_URL = "https://whop.com/next-chapter-15f2/complete-career-change-program/";
+const guideHref = slug => GUIDE_URL[slug] || BUNDLE_URL;
 const QG = { A:"The people", B:"The work itself", C:"Pay and hours", D:"Exhaustion" };
 function readQuiz(){ try{ const q = JSON.parse(localStorage.getItem("nc_quiz")||"null"); return q && q.scores && q.main ? q : null; }catch(_){ return null; } }
 function quizCard(q){
