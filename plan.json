@@ -1,0 +1,817 @@
+{
+ "version": 1,
+ "trialDays": 7,
+ "monthDays": 30,
+ "tracks": {
+  "A": {
+   "name": "The people",
+   "tagline": "Your main cause looks like the people around the job. This path checks that first, because it is often fixable without changing careers.",
+   "week1": [
+    {
+     "t": "Write down 3 moments from this month that drained you.",
+     "why": "Specific moments tell you more than a vague feeling."
+    },
+    {
+     "t": "Next to each moment, write who was there and what happened just before.",
+     "why": "You are looking for what sets it off."
+    },
+    {
+     "t": "Look at your three moments. Is it one person, one team, or the whole place?",
+     "why": "This is the most useful question this week."
+    },
+    {
+     "t": "Write one sentence for each person or team: what you wish they would do differently.",
+     "why": "A clear wish is easier to act on than a general complaint."
+    },
+    {
+     "t": "Name one person at work you like working with. Write why it feels different.",
+     "why": "It shows what good looks like for you."
+    },
+    {
+     "t": "Ask yourself: if the people changed but the work stayed the same, would I still want to leave? Write yes or no, and why.",
+     "why": "Your honest answer decides what you do next."
+    },
+    {
+     "t": "Choose one conversation to have this month (a manager, a colleague or HR). Write the first sentence you would say.",
+     "why": "A first sentence makes it much easier to start."
+    }
+   ],
+   "months": [
+    {
+     "title": "Month 1 · Understand it",
+     "goal": "Know whether a new team, manager or set of boundaries would fix this.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Keep a drain log for two weeks: one line a day with what happened, who was there and how you felt."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then write which kind of people problem you have."
+      },
+      {
+       "w": 2,
+       "t": "Ask one trusted colleague how they deal with the same person or situation."
+      },
+      {
+       "w": 2,
+       "t": "Write down what you do that makes it worse and what makes it better."
+      },
+      {
+       "w": 3,
+       "t": "Look at 3 other teams or roles at your employer. Note what you would want to know about each."
+      },
+      {
+       "w": 3,
+       "t": "Count your log: how many drain moments involved the same person?"
+      },
+      {
+       "w": 4,
+       "t": "Have the conversation you chose in Week 1, or a smaller version of it."
+      },
+      {
+       "w": 4,
+       "t": "Write what changed after that conversation, even if the answer is nothing."
+      }
+     ],
+     "guide": {
+      "title": "Is it the people or the job?",
+      "html": "<p>Many people who say they hate their job really mean they hate how it feels to be there. This guide helps you separate the people from the work, so you do not leave a job you could have fixed.</p><h4>Try the swap test</h4><p>Picture the exact same job with a kind boss and a friendly team. Would you still want to leave? If you would stay, the people are your problem. If you would still want out, the work is part of it too.</p><h4>Look for the pattern</h4><ul><li>One person in most of your drain moments: this is often fixed by distance, boundaries or a move to another team.</li><li>Many people and the same feeling: it may be the culture or the way the team is run.</li><li>No pattern, only dread on Sunday night: read your log again and look at the work itself.</li></ul><h4>This month</h4><p>Keep a short log for two weeks. One line a day. At the end, count. The count will tell you more than your memory does, because bad moments feel bigger than they were.</p>"
+     }
+    },
+    {
+     "title": "Month 2 · Ask for the change",
+     "goal": "Make one clear, calm request and see what happens.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Write your ask in 3 sentences: what you want, why it helps the work, and what you will do in return."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month and rewrite your ask using its steps."
+      },
+      {
+       "w": 2,
+       "t": "Book a meeting with your manager or HR. Put it in your calendar."
+      },
+      {
+       "w": 2,
+       "t": "Practise your first two sentences out loud, once, alone."
+      },
+      {
+       "w": 3,
+       "t": "Make the ask. Afterwards, write down exactly what was said."
+      },
+      {
+       "w": 3,
+       "t": "Send a short written follow-up so there is a record of what was agreed."
+      },
+      {
+       "w": 4,
+       "t": "Check open internal roles. Note any that move you away from the problem."
+      },
+      {
+       "w": 4,
+       "t": "Decide: try the fix for 30 days. Write the date you will review it."
+      }
+     ],
+     "guide": {
+      "title": "How to ask for a change at work",
+      "html": "<p>A good request is short, specific and easy to say yes to. It is not a complaint. It is a plan.</p><h4>Use this order</h4><ul><li><b>The facts.</b> Say what is happening, with one example, without blaming anyone.</li><li><b>The effect.</b> Say how it affects the work (missed deadlines, slow decisions), not only how you feel.</li><li><b>The ask.</b> Say exactly what you want: a different team, a change in how you work together, a clearer schedule.</li><li><b>The offer.</b> Say what you will do, and offer a trial: &ldquo;Can we try it for a month?&rdquo;</li></ul><h4>After the meeting</h4><p>Write a two-line email: what you talked about and what happens next. It keeps things fair for both sides and gives you a record.</p>"
+     }
+    },
+    {
+     "title": "Month 3 · Decide",
+     "goal": "Stay, move inside, or leave for a better team, with a clear reason.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Compare your drain log from Month 1 with this month. Write what changed."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month and answer its three questions in writing."
+      },
+      {
+       "w": 2,
+       "t": "Talk to 2 people who moved teams or left. Ask what they would do again."
+      },
+      {
+       "w": 2,
+       "t": "Write the best and worst case of staying, moving inside, and leaving."
+      },
+      {
+       "w": 3,
+       "t": "Decide your direction and write it in one sentence."
+      },
+      {
+       "w": 3,
+       "t": "Write your plan for the next 90 days."
+      },
+      {
+       "w": 4,
+       "t": "If you are leaving: update your CV and list 10 employers whose teams you could ask about in interviews."
+      },
+      {
+       "w": 4,
+       "t": "Pick your first step for next week and put it in your calendar."
+      }
+     ],
+     "guide": {
+      "title": "Stay, move or go: a simple way to decide",
+      "html": "<p>You now have a month of notes and one real conversation. That is more than most people have when they decide.</p><h4>Three questions</h4><ul><li>Did the change you asked for happen, even in part?</li><li>On the best day this month, did the job feel okay?</li><li>Can you picture a year of this, and is that a year you want?</li></ul><h4>How to read your answers</h4><ul><li>Mostly yes: stay, and keep your boundaries.</li><li>Mixed: look for a move inside the company first. It is the cheapest way to change the people.</li><li>Mostly no: leave, but go with a plan, and ask about the team and the boss in every interview.</li></ul><p>Whichever you pick, write down why. On a hard day, your reason will help.</p>"
+     }
+    }
+   ]
+  },
+  "B": {
+   "name": "The work itself",
+   "tagline": "Your main cause looks like the work you do every day. A better boss or more pay probably will not fix it, so this path helps you find and test a new direction.",
+   "week1": [
+    {
+     "t": "List the tasks from last week. Mark each one: like, neutral or dread.",
+     "why": "The pattern in these marks is the start of your answer."
+    },
+    {
+     "t": "Pick the three tasks you liked most. For each, write what you liked: the problem, the people or the result.",
+     "why": "The reason matters more than the task."
+    },
+    {
+     "t": "Pick the three you dreaded most. Write why.",
+     "why": "This shows what to avoid in your next role."
+    },
+    {
+     "t": "Write two times in your life (any job, hobby or school) when time passed quickly.",
+     "why": "Time flying is a good clue."
+    },
+    {
+     "t": "Write ten jobs or fields that come to mind. Do not judge them yet.",
+     "why": "Ideas first, opinions later."
+    },
+    {
+     "t": "Cross out any idea that matches your dread list. Circle three that touch your like list.",
+     "why": "This is your first shortlist."
+    },
+    {
+     "t": "Pick one circled idea. Write one person you could talk to about it this month.",
+     "why": "One real conversation beats hours of reading."
+    }
+   ],
+   "months": [
+    {
+     "title": "Month 1 · Find the direction",
+     "goal": "Turn your like and dread lists into a shortlist of three directions.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "List your strengths: skills, knowledge and ways of working that you use without trying."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then score your ten ideas from Week 1 on its four questions."
+      },
+      {
+       "w": 2,
+       "t": "Write which three ideas scored best."
+      },
+      {
+       "w": 2,
+       "t": "Note what each of the three would need from you: time, money, training."
+      },
+      {
+       "w": 3,
+       "t": "Read two day-in-the-life descriptions for each of your three ideas."
+      },
+      {
+       "w": 3,
+       "t": "Write what surprised you, good or bad, for each one."
+      },
+      {
+       "w": 4,
+       "t": "Choose one direction to test in Month 2."
+      },
+      {
+       "w": 4,
+       "t": "Write what would make you drop it, so you can spot that early."
+      }
+     ],
+     "guide": {
+      "title": "How to choose a direction without guessing",
+      "html": "<p>You do not need to be sure to start. You need a short list and a cheap way to test it.</p><h4>Score each idea from 1 to 5</h4><ul><li><b>Interest.</b> Does it match the tasks you liked?</li><li><b>Money.</b> Could you live on what it pays, now or after a few years?</li><li><b>Effort to enter.</b> How much training or time does it need?</li><li><b>Fit with your life.</b> Hours, place, stress, family.</li></ul><h4>Pick three, not one</h4><p>Choosing one idea too early puts too much pressure on it. Three ideas keep you curious. Next month you will test one in the real world, which is the only way to know.</p>"
+     }
+    },
+    {
+     "title": "Month 2 · Test it cheaply",
+     "goal": "Learn what the work is really like before you risk anything.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Write 5 questions to ask someone who does the job. Include “what does a normal week look like?”"
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then find 3 people in the role through friends, colleagues or LinkedIn."
+      },
+      {
+       "w": 2,
+       "t": "Have your first conversation."
+      },
+      {
+       "w": 2,
+       "t": "Have your second and third conversations."
+      },
+      {
+       "w": 3,
+       "t": "Do one small real task or mini-project in the field (a sample, a short course lesson, a volunteer hour)."
+      },
+      {
+       "w": 3,
+       "t": "Shadow someone or attend one talk or event, if you can."
+      },
+      {
+       "w": 4,
+       "t": "Fill in a fit scorecard: what you liked, what you did not, and what surprised you."
+      },
+      {
+       "w": 4,
+       "t": "Decide: go, adjust or drop. Write the reason in one sentence."
+      }
+     ],
+     "guide": {
+      "title": "How to test a new career before you quit",
+      "html": "<p>A test is small, cheap and fast. Its job is to show you the daily reality, not the job title.</p><h4>Three ways to test</h4><ul><li><b>Talk.</b> Three conversations with people in the role. Ask what they do on a normal day and what they would change.</li><li><b>Try.</b> One small real task. If you want to be a designer, design something small. If you want to work in care, volunteer for one afternoon.</li><li><b>Look.</b> Shadow someone, or go to one event where people in the field talk.</li></ul><h4>How to know</h4><p>After each test, write two lines: what you liked and what you did not. After three tests, look at the lines. If the dislikes are things you could live with, go on. If they are the same things you hate now, drop it and test your next idea. Dropping an idea early is a win. It saved you a year.</p>"
+     }
+    },
+    {
+     "title": "Month 3 · Make your move plan",
+     "goal": "Have a CV, a money plan and your first real applications or outreach done.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Check your money runway: months of savings you have, and the monthly gap to cover."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then write your move plan in 5 lines."
+      },
+      {
+       "w": 2,
+       "t": "Rewrite your CV so your old experience points at the new direction."
+      },
+      {
+       "w": 2,
+       "t": "Write a short message you can send to people in the field to ask for advice."
+      },
+      {
+       "w": 3,
+       "t": "Send 5 messages or applications."
+      },
+      {
+       "w": 3,
+       "t": "Send 5 more."
+      },
+      {
+       "w": 4,
+       "t": "Line up one bridge: a short course, a project or a reference that makes your move easier."
+      },
+      {
+       "w": 4,
+       "t": "Write your next 90 days and the first step for next week."
+      }
+     ],
+     "guide": {
+      "title": "Your move plan: CV, money and first applications",
+      "html": "<p>Moving is easier when it is three small jobs instead of one big scary one.</p><h4>1. Money</h4><p>Count your savings, then your monthly gap: what you spend minus what you earn. Savings divided by the gap is how many months you can last. Many people choose a bridge, such as part-time work, instead of leaping.</p><h4>2. Your CV</h4><p>Keep your old experience, but change the first lines so a reader sees what you can do for the new field. Use their words from real job posts.</p><h4>3. Outreach</h4><p>Applications work better with a message to a real person. Ask for advice, not a job. Ten honest messages this month is a strong start.</p>"
+     }
+    }
+   ]
+  },
+  "C": {
+   "name": "Pay and hours",
+   "tagline": "Your main cause looks like pay, hours or travel. These are often fixable without a new career, so this path checks the easy answers first.",
+   "week1": [
+    {
+     "t": "Write what you earn and the hours you work in a normal week, including travel time.",
+     "why": "You cannot fix what you have not counted."
+    },
+    {
+     "t": "Write the pay and hours that would make you stay. Give a number and a range.",
+     "why": "A clear target beats a vague wish."
+    },
+    {
+     "t": "Write what you would give up to get them, such as a title, a longer commute or a day in the office.",
+     "why": "Everyone has a trade-off. Knowing yours helps you negotiate."
+    },
+    {
+     "t": "Look up 5 similar jobs at other employers. Note their pay and hours.",
+     "why": "This is your market check."
+    },
+    {
+     "t": "Compare: is your job below, at or above what you found? Write what you see.",
+     "why": "It tells you whether you are asking for something fair."
+    },
+    {
+     "t": "List 3 results from the last year that you are proud of.",
+     "why": "Results are your strongest argument."
+    },
+    {
+     "t": "Write the first sentence of the conversation: “I would like to talk about my pay (or hours).”",
+     "why": "The first sentence is the hardest. Now it is done."
+    }
+   ],
+   "months": [
+    {
+     "title": "Month 1 · Know your numbers",
+     "goal": "Know what you earn, what you need and what the market pays.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Write your monthly income and essential costs. Find the real gap or surplus."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then save 10 job posts that match yours."
+      },
+      {
+       "w": 2,
+       "t": "Write the pay and hours from each of the 10 posts in one list."
+      },
+      {
+       "w": 2,
+       "t": "Find the middle of your list. Write whether you are below or above it."
+      },
+      {
+       "w": 3,
+       "t": "Find out how pay reviews work at your employer: when, who decides, what they look at."
+      },
+      {
+       "w": 3,
+       "t": "Write your evidence list: results, extra work, new skills, good feedback."
+      },
+      {
+       "w": 4,
+       "t": "Choose your ask: a number, a range, or a change in hours."
+      },
+      {
+       "w": 4,
+       "t": "Choose your fallback: what you will do if the answer is no."
+      }
+     ],
+     "guide": {
+      "title": "How to find out what you are worth",
+      "html": "<p>You are worth what the market pays for your skills, not what you earn today. Ten job posts will tell you more than a guess.</p><h4>How to check</h4><ul><li>Save 10 posts for jobs like yours, at similar employers and places.</li><li>Write the pay and hours from each one. Some posts show only a range. That is fine, use the middle.</li><li>Find the middle of your list, then compare it with your pay.</li></ul><h4>Build your evidence</h4><p>List what you did in the last year that helped the business: money saved, time saved, problems solved, praise received. Numbers help (&ldquo;cut the wait time from five days to two&rdquo;), but only use numbers you can show.</p>"
+     }
+    },
+    {
+     "title": "Month 2 · Make the ask",
+     "goal": "Have one clear conversation about pay or hours.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Write your script: the facts, your evidence, your ask, your offer."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then shorten your script to one page."
+      },
+      {
+       "w": 2,
+       "t": "Book the meeting. Put it in your calendar."
+      },
+      {
+       "w": 2,
+       "t": "Practise out loud, once, alone."
+      },
+      {
+       "w": 3,
+       "t": "Make the ask. Afterwards, write down exactly what was said."
+      },
+      {
+       "w": 3,
+       "t": "Send a short written follow-up."
+      },
+      {
+       "w": 4,
+       "t": "Note the answer and the date of the next review."
+      },
+      {
+       "w": 4,
+       "t": "Write how you feel and whether the answer is fair."
+      }
+     ],
+     "guide": {
+      "title": "How to ask for more pay or better hours",
+      "html": "<p>The best asks are calm, clear and about the work. They are not about being unhappy.</p><h4>Use this order</h4><ul><li><b>Say what you do.</b> Two or three results, in plain words.</li><li><b>Say what you found.</b> &ldquo;Similar roles pay about this much.&rdquo; Do not name other people in the company.</li><li><b>Make the ask.</b> A number or a clear change in hours. Then stop talking and let them answer.</li><li><b>Agree a next step.</b> If they say &ldquo;not now&rdquo;, ask: &ldquo;What would I need to show, and when can we talk again?&rdquo;</li></ul><p>After the meeting, send a two-line email with what you agreed. It makes the next conversation easier.</p>"
+     }
+    },
+    {
+     "title": "Month 3 · Decide with the answer",
+     "goal": "Use the answer to choose: stay, stay with a plan, or move for better terms.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Write the answer you got and what it means for your numbers."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then choose which situation you are in."
+      },
+      {
+       "w": 2,
+       "t": "If yes: write the new pay or hours and the date of your next review."
+      },
+      {
+       "w": 2,
+       "t": "If no or partly: write what they said you must show, and by when."
+      },
+      {
+       "w": 3,
+       "t": "Apply to or reach out about 5 better-paid or better-hours roles in your field."
+      },
+      {
+       "w": 3,
+       "t": "Compare any offers on pay and hours together, not only pay."
+      },
+      {
+       "w": 4,
+       "t": "Decide: stay, stay with a deadline, or move. Write your reason."
+      },
+      {
+       "w": 4,
+       "t": "Write your next 90 days."
+      }
+     ],
+     "guide": {
+      "title": "If the answer is no",
+      "html": "<p>A no is information. It tells you what this employer will pay, and it is better to know than to wonder.</p><h4>Three situations</h4><ul><li><b>Yes or partly yes.</b> Get it in writing, set a review date, and keep your evidence list going.</li><li><b>Not now.</b> Ask what you need to show and by when. If they give a clear answer, you have a plan. If the answer is vague, treat it as a no.</li><li><b>A clear no.</b> Look at what you found in your market check. If other employers pay more or offer better hours, apply there. You do not need to change careers. You need a better offer.</li></ul><h4>Compare offers fairly</h4><p>Count pay, hours, travel time and how you would feel on a Monday. A little more pay with a longer commute is not always a better deal.</p>"
+     }
+    }
+   ]
+  },
+  "D": {
+   "name": "Exhaustion",
+   "tagline": "Your main cause looks like tiredness that rest has not fixed. Rest comes first, and big decisions can wait. This path is gentle on purpose.",
+   "week1": [
+    {
+     "t": "Each morning this week, write how many hours you slept and how you feel from 1 to 5.",
+     "why": "Numbers show patterns that feelings hide."
+    },
+    {
+     "t": "Pick one thing to drop or delay this week. Only one.",
+     "why": "One small cut is enough to start."
+    },
+    {
+     "t": "Take a 20-minute break away from screens and work. Note how you feel afterwards.",
+     "why": "It shows what actually helps."
+    },
+    {
+     "t": "Write who or what gives you a little energy, even small things.",
+     "why": "These are worth protecting."
+    },
+    {
+     "t": "Look at next week. Protect one evening with nothing planned.",
+     "why": "Rest does not happen unless it is in the calendar."
+    },
+    {
+     "t": "If this tiredness has lasted for weeks or feels heavy, plan to talk to a doctor or counsellor. Write the day you will call.",
+     "why": "They can help in ways a plan cannot."
+    },
+    {
+     "t": "Look back at the week. What helped? Decide nothing big. Write one thing to keep doing.",
+     "why": "Small keeps beat big plans when you are tired."
+    }
+   ],
+   "months": [
+    {
+     "title": "Month 1 · Recover",
+     "goal": "Feel a little less tired by changing what you can control.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Keep a daily note for two weeks: sleep hours, energy from 1 to 5, and one thing that helped or hurt."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then choose two small changes to try."
+      },
+      {
+       "w": 2,
+       "t": "Protect two evenings a week with nothing planned."
+      },
+      {
+       "w": 2,
+       "t": "Say no to, or delay, one thing at work or home."
+      },
+      {
+       "w": 3,
+       "t": "Talk to your manager or someone you trust about your workload, if it feels safe."
+      },
+      {
+       "w": 3,
+       "t": "Plan one thing each week that you enjoy for no reason."
+      },
+      {
+       "w": 4,
+       "t": "Look at your notes. Write what raised your energy and what lowered it."
+      },
+      {
+       "w": 4,
+       "t": "Keep what worked. Write your short list."
+      }
+     ],
+     "guide": {
+      "title": "Rest first, decide later",
+      "html": "<p>When you are very tired, everything looks worse, including your job. That is why this path starts with rest, not with big choices.</p><h4>Keep it small</h4><ul><li>Pick two changes you can keep, such as a fixed bedtime and one evening off.</li><li>Do not start a new project this month.</li><li>Notice what lifts your energy, even a little, and do more of it.</li></ul><h4>When to get help</h4><p>If you have felt this way for several weeks, or it feels heavy, please talk to a doctor or counsellor. A career plan cannot tell you what is behind tiredness, and they can.</p><p class=\"small muted\">This is general career guidance, not medical, legal or counselling advice.</p>"
+     }
+    },
+    {
+     "title": "Month 2 · Find the cause",
+     "goal": "Work out whether the tiredness comes from workload, the work itself or life outside work.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then write the three possible causes in your own words."
+      },
+      {
+       "w": 1,
+       "t": "For one week, mark each day: workload, the work itself, or life outside work."
+      },
+      {
+       "w": 2,
+       "t": "Count which cause shows up most."
+      },
+      {
+       "w": 2,
+       "t": "Write one change for the biggest cause."
+      },
+      {
+       "w": 3,
+       "t": "Try the change for two weeks."
+      },
+      {
+       "w": 3,
+       "t": "Talk to someone about what you found, such as a friend, your manager or a counsellor."
+      },
+      {
+       "w": 4,
+       "t": "Write what is better and what is not."
+      },
+      {
+       "w": 4,
+       "t": "Decide whether you are ready to look at the job question."
+      }
+     ],
+     "guide": {
+      "title": "Find the cause of the tiredness",
+      "html": "<p>Tiredness has different causes, and each one needs a different answer.</p><h4>Three common causes</h4><ul><li><b>Too much work.</b> More tasks than hours. The fix is usually fewer tasks or more help.</li><li><b>The wrong work.</b> Even a small load feels heavy when you dislike it. The fix is a change in the kind of work.</li><li><b>Life outside work.</b> Caring, health, money worries or poor sleep. The fix is outside the job.</li></ul><h4>Find yours</h4><p>For one week, end each day with a mark for the cause that felt biggest. At the end, count the marks. The cause that wins is where to look first.</p><p class=\"small muted\">This is general career guidance, not medical, legal or counselling advice.</p>"
+     }
+    },
+    {
+     "title": "Month 3 · Choose your path",
+     "goal": "Retake the quiz, see what changed, and choose a clear next 90 days.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Retake the quiz (3 minutes). Write your new main cause."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then compare the two results."
+      },
+      {
+       "w": 2,
+       "t": "If your cause changed, open the plan for the new cause and read its Week 1."
+      },
+      {
+       "w": 2,
+       "t": "If it did not, write one more change to try for exhaustion."
+      },
+      {
+       "w": 3,
+       "t": "Write what you want to keep from the last 8 weeks."
+      },
+      {
+       "w": 3,
+       "t": "Write what you want to change in the next 90 days."
+      },
+      {
+       "w": 4,
+       "t": "Pick one small step for next week."
+      },
+      {
+       "w": 4,
+       "t": "Put it in your calendar."
+      }
+     ],
+     "guide": {
+      "title": "Retake the quiz and pick your path",
+      "html": "<p>After two months of rest and notes, your answers may be different. That is a good sign. It means you can see more clearly.</p><h4>Compare</h4><ul><li>If your main cause is now <b>the people</b>, <b>the work</b> or <b>pay and hours</b>, you are ready to work on that.</li><li>If it is still <b>exhaustion</b>, keep your routines and talk to a doctor or counsellor if you have not yet.</li><li>If <b>no single cause</b> stands out, that can mean you are doing better. Keep what works.</li></ul><p>There is no rush. A clear small step is better than a big plan that you cannot keep.</p><p class=\"small muted\">This is general career guidance, not medical, legal or counselling advice.</p>"
+     }
+    }
+   ]
+  },
+  "L": {
+   "name": "No single cause",
+   "tagline": "No single cause stood out. That can mean your unhappiness is mild, mixed, or coming from somewhere other than the job. This week is for finding out which.",
+   "week1": [
+    {
+     "t": "Write what you were feeling when you decided to take the quiz.",
+     "why": "That sentence usually shows what it is really about."
+    },
+    {
+     "t": "Write what a good week would look like for you, in 5 lines.",
+     "why": "It shows what is missing."
+    },
+    {
+     "t": "List three things at work that are fine or good.",
+     "why": "It stops everything from looking bad at once."
+    },
+    {
+     "t": "List three things that bother you. Mark each: people, work, pay and hours, or tiredness.",
+     "why": "The marks show where to look."
+    },
+    {
+     "t": "Talk to one friend. Ask what they notice when you talk about work.",
+     "why": "Other people see patterns you cannot."
+    },
+    {
+     "t": "Retake the quiz (3 minutes) and compare with last time.",
+     "why": "Answers can shift after a week of thinking."
+    },
+    {
+     "t": "Choose which of the four causes to look at first.",
+     "why": "One focus is enough for now."
+    }
+   ],
+   "months": [
+    {
+     "title": "Month 1 · Find the direction",
+     "goal": "Turn your like and dread lists into a shortlist of three directions.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "List your strengths: skills, knowledge and ways of working that you use without trying."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then score your ten ideas from Week 1 on its four questions."
+      },
+      {
+       "w": 2,
+       "t": "Write which three ideas scored best."
+      },
+      {
+       "w": 2,
+       "t": "Note what each of the three would need from you: time, money, training."
+      },
+      {
+       "w": 3,
+       "t": "Read two day-in-the-life descriptions for each of your three ideas."
+      },
+      {
+       "w": 3,
+       "t": "Write what surprised you, good or bad, for each one."
+      },
+      {
+       "w": 4,
+       "t": "Choose one direction to test in Month 2."
+      },
+      {
+       "w": 4,
+       "t": "Write what would make you drop it, so you can spot that early."
+      }
+     ],
+     "guide": {
+      "title": "How to choose a direction without guessing",
+      "html": "<p>You do not need to be sure to start. You need a short list and a cheap way to test it.</p><h4>Score each idea from 1 to 5</h4><ul><li><b>Interest.</b> Does it match the tasks you liked?</li><li><b>Money.</b> Could you live on what it pays, now or after a few years?</li><li><b>Effort to enter.</b> How much training or time does it need?</li><li><b>Fit with your life.</b> Hours, place, stress, family.</li></ul><h4>Pick three, not one</h4><p>Choosing one idea too early puts too much pressure on it. Three ideas keep you curious. Next month you will test one in the real world, which is the only way to know.</p>"
+     }
+    },
+    {
+     "title": "Month 2 · Test it cheaply",
+     "goal": "Learn what the work is really like before you risk anything.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Write 5 questions to ask someone who does the job. Include “what does a normal week look like?”"
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then find 3 people in the role through friends, colleagues or LinkedIn."
+      },
+      {
+       "w": 2,
+       "t": "Have your first conversation."
+      },
+      {
+       "w": 2,
+       "t": "Have your second and third conversations."
+      },
+      {
+       "w": 3,
+       "t": "Do one small real task or mini-project in the field (a sample, a short course lesson, a volunteer hour)."
+      },
+      {
+       "w": 3,
+       "t": "Shadow someone or attend one talk or event, if you can."
+      },
+      {
+       "w": 4,
+       "t": "Fill in a fit scorecard: what you liked, what you did not, and what surprised you."
+      },
+      {
+       "w": 4,
+       "t": "Decide: go, adjust or drop. Write the reason in one sentence."
+      }
+     ],
+     "guide": {
+      "title": "How to test a new career before you quit",
+      "html": "<p>A test is small, cheap and fast. Its job is to show you the daily reality, not the job title.</p><h4>Three ways to test</h4><ul><li><b>Talk.</b> Three conversations with people in the role. Ask what they do on a normal day and what they would change.</li><li><b>Try.</b> One small real task. If you want to be a designer, design something small. If you want to work in care, volunteer for one afternoon.</li><li><b>Look.</b> Shadow someone, or go to one event where people in the field talk.</li></ul><h4>How to know</h4><p>After each test, write two lines: what you liked and what you did not. After three tests, look at the lines. If the dislikes are things you could live with, go on. If they are the same things you hate now, drop it and test your next idea. Dropping an idea early is a win. It saved you a year.</p>"
+     }
+    },
+    {
+     "title": "Month 3 · Make your move plan",
+     "goal": "Have a CV, a money plan and your first real applications or outreach done.",
+     "tasks": [
+      {
+       "w": 1,
+       "t": "Check your money runway: months of savings you have, and the monthly gap to cover."
+      },
+      {
+       "w": 1,
+       "t": "Read the guide for this month, then write your move plan in 5 lines."
+      },
+      {
+       "w": 2,
+       "t": "Rewrite your CV so your old experience points at the new direction."
+      },
+      {
+       "w": 2,
+       "t": "Write a short message you can send to people in the field to ask for advice."
+      },
+      {
+       "w": 3,
+       "t": "Send 5 messages or applications."
+      },
+      {
+       "w": 3,
+       "t": "Send 5 more."
+      },
+      {
+       "w": 4,
+       "t": "Line up one bridge: a short course, a project or a reference that makes your move easier."
+      },
+      {
+       "w": 4,
+       "t": "Write your next 90 days and the first step for next week."
+      }
+     ],
+     "guide": {
+      "title": "Your move plan: CV, money and first applications",
+      "html": "<p>Moving is easier when it is three small jobs instead of one big scary one.</p><h4>1. Money</h4><p>Count your savings, then your monthly gap: what you spend minus what you earn. Savings divided by the gap is how many months you can last. Many people choose a bridge, such as part-time work, instead of leaping.</p><h4>2. Your CV</h4><p>Keep your old experience, but change the first lines so a reader sees what you can do for the new field. Use their words from real job posts.</p><h4>3. Outreach</h4><p>Applications work better with a message to a real person. Ask for advice, not a job. Ten honest messages this month is a strong start.</p>"
+     }
+    }
+   ]
+  }
+ }
+}

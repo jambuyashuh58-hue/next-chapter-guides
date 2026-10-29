@@ -308,6 +308,10 @@ table.t select{padding:6px 8px;font-size:13px}
   .big-num{font-size:44px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.gbar{height:8px;background:var(--surface-2);border-radius:4px;margin-top:12px}.gbar i{display:block;height:8px;background:var(--cta);border-radius:4px}
+.gms{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px}.gms li.lk{opacity:.6}.gms em{font-style:normal;font-size:12px;color:var(--muted)}
+.pguide{background:var(--cta-soft);border-radius:16px;padding:16px 18px;margin-bottom:16px}.pguide h4{margin:8px 0 6px;font-size:18px}.pguide p,.pguide li{font-size:15px;line-height:1.55}
+.pl>summary{display:flex!important;flex-direction:column;align-items:stretch;gap:8px}.pl h3{font-size:18px;margin:2px 0}.pl .meter{width:auto}.wkh{margin:16px 0 6px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.lockd summary{opacity:.75}
 </style>
 </head>
 <body>
@@ -478,6 +482,7 @@ const weekKey = d => iso(monday(d));
 const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
 const fmtShort = d => d.toLocaleDateString(undefined,{day:"numeric",month:"short"});
 const uid = () => Math.random().toString(36).slice(2,10);
+const dayDiff = (a,b) => Math.floor((new Date(b.getFullYear(),b.getMonth(),b.getDate()) - new Date(a.getFullYear(),a.getMonth(),a.getDate()))/864e5);
 const num = v => { const n = parseFloat(String(v).replace(/[^0-9.\-]/g,"")); return isFinite(n) ? n : 0; };
 
 const ICON = {
@@ -488,6 +493,7 @@ const ICON = {
   money:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h15a3 3 0 0 1 3 3v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7l12-4 2 4M17 14h.01"/></svg>',
   guides:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h6"/></svg>',
   settings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+  plan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l1 2h3v14H5V6h3z"/><path d="M9 12l2 2 4-4"/></svg>',
   flag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>',
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
   fire:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-3-2-5-3-7-1 2-2 3-3 3 0-3-1-6-4-8 0 4-4 7-4 12 0 4 3 7 7 7z"/></svg>',
@@ -495,12 +501,12 @@ const ICON = {
   star:'<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>'
 };
 const VIEWS = [
-  ["dash","Dashboard"],["journey","My journey"],["week","Weekly plan"],["people","Applications"],["money","Money runway"],["guides","Guides"],["settings","Settings"]
+  ["dash","Dashboard"],["plan","My plan"],["journey","All 10 stops"],["week","Weekly plan"],["people","Applications"],["money","Money runway"],["guides","Guides"],["settings","Settings"]
 ];
 
 /* =================== STATE =================== */
-const blank = () => ({ v:1, profile:{ name:"", target:"", start:today(), track:"general" }, tasks:{}, notes:{}, goal:{ text:"", m:["","",""] }, weeks:{}, apps:[], money:{ savings:"", essentials:"", income:"", oneoff:"", target:"6" } });
-let S = blank(), MODE = "none", SB = null, USER = null, SUB = null, saveTimer = null;
+const blank = () => ({ v:1, profile:{ name:"", target:"", start:today(), track:"general" }, tasks:{}, notes:{}, goal:{ text:"", m:["","",""], date:"" }, plan:{ done:{}, start:"" }, weeks:{}, apps:[], money:{ savings:"", essentials:"", income:"", oneoff:"", target:"6" } });
+let PLAN = null, S = blank(), MODE = "none", SB = null, USER = null, SUB = null, saveTimer = null;
 
 function demoData(){
   const d = blank(), now = new Date();
@@ -557,6 +563,37 @@ function runway(){
   if (net <= 0) return Infinity;
   return Math.max(0, sav / net);
 }
+/* ---- 3-month plan: track, unlock, progress ---- */
+function planTrack(){ if(!PLAN) return null; const k = (S.quiz && S.quiz.main) || "L"; return PLAN.tracks[k] || PLAN.tracks.L; }
+function planStart(){ const s = (SUB && SUB.started_at) ? new Date(SUB.started_at) : (S.plan && S.plan.start ? parse(S.plan.start) : new Date()); return s; }
+function planDay(){ return Math.max(0, dayDiff(planStart(), new Date())); }   // 0 = first day
+function allOpen(){ return MODE==="demo" || !SUB || /life|97|once/i.test(SUB.plan||""); }
+function monthUnlockDay(i){ return PLAN.trialDays + PLAN.monthDays*i; }
+function monthState(i){
+  if (allOpen()) return { open:true, daysLeft:0 };
+  const ended = SUB && SUB.status==="cancelled" && SUB.ends_at && new Date(SUB.ends_at) < new Date();
+  const left = monthUnlockDay(i) - planDay();
+  return { open: left<=0 && !ended, daysLeft: Math.max(0,left), ended };
+}
+const pkey = (s,i) => s+"."+i;
+const pdone = k => !!(S.plan && S.plan.done && S.plan.done[k]);
+function planSteps(){   // flat list of all steps in order, with lock state
+  const tr = planTrack(); if(!tr) return [];
+  const out = tr.week1.map((x,i)=>({ k:pkey("w1",i), t:x.t, why:x.why, grp:"w1", day:i+1, open:true }));
+  tr.months.forEach((m,mi)=>{ const st = monthState(mi); m.tasks.forEach((x,i)=>out.push({ k:pkey("m"+(mi+1),i), t:x.t, w:x.w, grp:"m"+(mi+1), open:st.open })); });
+  return out;
+}
+function planProgress(){ const all = planSteps(); return { total: all.length, done: all.filter(x=>pdone(x.k)).length }; }
+function nextPlanStep(){ const all = planSteps(); return all.find(x=>x.open && !pdone(x.k)) || null; }
+function weekSteps(){   // up to 3 undone open steps for "this week"
+  const tr = planTrack(); if(!tr) return [];
+  const d = planDay(), out = [];
+  if (d < PLAN.trialDays){ tr.week1.forEach((x,i)=>{ if(i<=d && !pdone(pkey("w1",i))) out.push({ k:pkey("w1",i), t:x.t }); }); return out.slice(-3); }
+  const mi = Math.min(2, Math.max(0, Math.floor((d-PLAN.trialDays)/PLAN.monthDays))), wk = Math.min(4, Math.floor(((d-PLAN.trialDays)%PLAN.monthDays)/7)+1);
+  for (let m=mi; m>=0 && out.length<3; m--){ if(!monthState(m).open) continue; tr.months[m].tasks.forEach((x,i)=>{ if(out.length<3 && x.w<=(m===mi?wk:99) && !pdone(pkey("m"+(m+1),i))) out.push({ k:pkey("m"+(m+1),i), t:x.t }); }); }
+  return out;
+}
+function goalDate(){ return S.goal.date ? parse(S.goal.date) : addDays(planStart(), 90); }
 function weekOfPlan(){ const st = monday(parse(S.profile.start || today())); const k = Math.floor((monday(new Date()) - st) / (7*864e5)) + 1; return k; }
 function getWeek(key){ if(!S.weeks[key]) S.weeks[key] = { actions:[{t:"",day:"Any day",done:""},{t:"",day:"Any day",done:""},{t:"",day:"Any day",done:""}], ifthen:"", energy:0, review:"" }; return S.weeks[key]; }
 
@@ -595,8 +632,44 @@ function ring(pct, done){ const R=22,C=2*Math.PI*R; return `<svg class="ring" vi
 function stat(cls, icon, lab, val, sub){ return `<div class="stat ${cls}"><div class="ic">${icon}</div><div class="lab">${lab}</div><div class="val tnum">${val}</div><div class="sub">${sub}</div></div>`; }
 function greet(){ const h=new Date().getHours(); return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; }
 
+function goalCard(){
+  const pr = planProgress(), gd = goalDate(), left = Math.max(0, dayDiff(new Date(), gd)), tr = planTrack();
+  const pct = pr.total ? Math.round(pr.done/pr.total*100) : 0;
+  const ms = [0,1,2].map(i => (S.goal.m[i] || (tr ? tr.months[i].goal : "")) );
+  return `<div class="card goalcard"><div class="card-head"><h3>My 90-day goal</h3><span class="pill">${left} day${left===1?"":"s"} left</span></div>
+   <label class="f">By ${gd.toLocaleDateString(undefined,{day:"numeric",month:"long"})} I will have…<textarea data-goal="text" placeholder="Something within your control, e.g. spoken to 6 people, made a clear decision, asked for the change">${esc(S.goal.text)}</textarea></label>
+   <div class="gbar"><i style="width:${pct}%"></i></div>
+   <p class="small muted" style="margin:6px 0 12px"><b class="tnum">${pr.done}</b> of ${pr.total} plan steps done</p>
+   <ol class="gms">${ms.map((m,i)=>{ const st = PLAN?monthState(i):{open:true}; return `<li class="${st.open?"":"lk"}"><b>Month ${i+1}</b> ${esc(m)}${st.open?"":` <em>unlocks in ${st.daysLeft} days</em>`}</li>`; }).join("")}</ol>
+   <label class="f" style="margin-top:10px">Goal date<input type="date" data-gdate value="${iso(gd)}"></label></div>`;
+}
+function weekCard(){
+  const ws = weekSteps(); if(!PLAN) return "";
+  return `<div class="card"><div class="card-head"><h3>This week</h3><a class="btn ghost sm" href="#plan">Full plan</a></div>
+   ${ws.length? `<ul class="tasks">${ws.map(x=>`<li><label><input type="checkbox" class="chk" data-ptask="${x.k}"><span>${esc(x.t)}</span></label></li>`).join("")}</ul>` : `<p class="muted small">You’re all caught up for this week. Nice. Open the full plan to look ahead.</p>`}</div>`;
+}
+function vPlan(){
+  const tr = planTrack(); if(!tr) return `<div class="card"><p class="muted">Loading your plan…</p></div>`;
+  const d = planDay(), pr = planProgress(), inTrial = d < PLAN.trialDays, free = allOpen();
+  const chk = (s,done) => `<li><label><input type="checkbox" class="chk" data-ptask="${s.k}" ${done?"checked":""}><span><span class="${done?"done-t":""}">${esc(s.t)}</span>${s.why?`<small>${esc(s.why)}</small>`:""}</span></label></li>`;
+  const w1 = `<details class="stop pl" ${inTrial?"open":""}><summary><div style="min-width:0"><div class="eyebrow">Days 1–7 · your trial</div><h3>Your first 7 days</h3><div class="q">One small step a day.</div></div><div class="meter"><b class="tnum">${tr.week1.filter((_,i)=>pdone(pkey("w1",i))).length}/7 steps</b></div></summary>
+    <div class="stop-body"><ul class="tasks" style="grid-column:1/-1">${tr.week1.map((x,i)=>chk({k:pkey("w1",i),t:`Day ${i+1}: ${x.t}`,why:x.why},pdone(pkey("w1",i)))).join("")}</ul></div></details>`;
+  const months = tr.months.map((m,mi)=>{
+    const st = monthState(mi), cur = st.open && (mi===2 || !monthState(mi+1).open), nd = m.tasks.filter((_,i)=>pdone(pkey("m"+(mi+1),i))).length;
+    const head = `<div style="min-width:0"><div class="eyebrow">${esc(m.title)}${st.open?"":" · locked"}</div><h3>${esc(m.goal)}</h3></div><div class="meter"><b class="tnum">${st.open? nd+"/"+m.tasks.length+" steps" : "🔒 "+st.daysLeft+" days"}</b></div>`;
+    if(!st.open) return `<details class="stop pl lockd"><summary>${head}</summary><div class="stop-body"><p class="muted" style="grid-column:1/-1;margin:0">Month ${mi+1} opens ${addDays(planStart(), monthUnlockDay(mi)).toLocaleDateString(undefined,{day:"numeric",month:"long"})}, when your ${mi===0?"trial ends and your first monthly payment goes through":"next monthly payment goes through"}. You will get ${m.tasks.length} steps and a short guide: <b>${esc(m.guide.title)}</b>.</p></div></details>`;
+    const byW = [1,2,3,4].map(w=>({ w, items:m.tasks.map((x,i)=>({...x,i})).filter(x=>x.w===w) })).filter(g=>g.items.length);
+    return `<details class="stop pl" ${cur&&!inTrial?"open":""}><summary>${head}</summary><div class="stop-body" style="display:block">
+      <div class="pguide"><span class="pill">Guide</span><h4>${esc(m.guide.title)}</h4>${m.guide.html}</div>
+      ${byW.map(g=>`<h4 class="wkh">Week ${g.w}</h4><ul class="tasks">${g.items.map(x=>chk({k:pkey("m"+(mi+1),x.i),t:x.t},pdone(pkey("m"+(mi+1),x.i)))).join("")}</ul>`).join("")}</div></details>`;
+  }).join("");
+  return `<div class="card"><div class="card-head"><h3>${esc(tr.name)}</h3><span class="pill">${pr.done}/${pr.total} done</span></div>
+    <p class="muted" style="margin:0 0 6px">${esc(tr.tagline)}</p>
+    <p class="small muted" style="margin:0">${free?"All three months are open for you.":"Your 7-day trial has the first week. Each month unlocks when you pay for it: Month 1 on day 8, Month 2 on day 38, Month 3 on day 68."} Based on your <a href="/quiz">quiz result</a>.</p></div>
+    <div class="stops" style="margin-top:18px">${w1}${months}</div>`;
+}
 function vDash(){
-  const nt = nextTask(), cur = currentStop() || STOPS[0], pct = journeyPct(), wk = getWeek(weekKey(new Date()));
+  const np = PLAN ? nextPlanStep() : null, nt = nextTask(), cur = currentStop() || STOPS[0], pct = journeyPct(), wk = getWeek(weekKey(new Date()));
   const wDone = wk.actions.filter(a=>a.done).length, wc = weeklyCounts(8), last = wc[wc.length-1].n, prev = wc[wc.length-2].n;
   const rw = runway(), st = streak();
   const parts = Object.keys(STAGES).map(k=>({ l:STAGES[k], c:STAGE_COLOR[k], v: STOPS.filter(s=>s.stage===k).reduce((a,s)=>a+stopDone(s),0) }));
@@ -609,12 +682,13 @@ function vDash(){
       <div class="kick">Stop ${pad(bySlug[cur.slug].n)} · ${STAGES[cur.stage]}</div>
       <h2>${greet()}, ${esc(name)}!</h2>
       <p>${pct>=100 ? "You’ve completed every step of your journey. Time to plan your next 90 days." : `You’re ${pct}% of the way through your journey${S.profile.target? ` to <b>${esc(S.profile.target)}</b>`:""}. One small step today keeps the momentum going.`}</p>
-      ${nt ? `<label class="next"><input type="checkbox" class="chk" data-task="${nt.s.slug}.${nt.i}"><span><small>Your next step</small>${esc(nt.t[0])}</span></label>` : ""}
-      <a class="btn white" href="#journey">Continue my journey →</a>
+      ${np ? `<label class="next"><input type="checkbox" class="chk" data-ptask="${np.k}"><span><small>Your next step${np.grp==="w1"?` · day ${np.day}`:""}</small>${esc(np.t)}</span></label>` : (nt ? `<label class="next"><input type="checkbox" class="chk" data-task="${nt.s.slug}.${nt.i}"><span><small>Your next step</small>${esc(nt.t[0])}</span></label>` : "")}
+      <a class="btn white" href="#plan">Open my plan →</a>
     </div>
     <div class="hero-art"><img src="/assets/${cur.slug}.svg" alt=""></div>
   </section>
   ${MODE==="demo" ? "" : quizCard(S.quiz)}
+  ${PLAN ? `<div class="grid2">${goalCard()}${weekCard()}</div>` : ""}
 
   <div class="stats">
     ${stat("t1",ICON.flag,"Journey complete",pct+"%",`${activeStops().filter(s=>stopDone(s)===s.tasks.length).length} of ${activeStops().length} stops finished`)}
@@ -683,10 +757,7 @@ function vWeek(){
     <label class="f">What worked, and what will you change?<textarea data-wf="review">${esc(w.review)}</textarea></label></div>
    </div>
    <div style="display:grid;gap:18px;align-content:start">
-    <div class="card"><div class="card-head"><h3>My 90-day goal</h3></div>
-      <label class="f">By the end of 90 days I will have…<textarea data-goal="text" placeholder="Something within your control, e.g. finish a proof project, have 6 conversations, send 10 applications">${esc(S.goal.text)}</textarea></label>
-      <div style="display:grid;gap:10px;margin-top:12px">${["Month 1 · Foundation","Month 2 · Build","Month 3 · Launch"].map((m,i)=>`<label class="f">${m}<input type="text" data-ms="${i}" value="${esc(S.goal.m[i])}"></label>`).join("")}</div>
-    </div>
+    ${goalCard()}
     <div class="card"><div class="card-head"><h3>Your 13 weeks</h3><span class="small muted tnum">${total13}/39 actions</span></div>
       <div class="weeks-strip">${strip.join("")}</div>
       <p class="small muted" style="margin:10px 0 0">Darker squares mean more actions done. Plan start: ${parse(S.profile.start||today()).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})} (change it in Settings).</p>
@@ -777,7 +848,7 @@ function route(){
   const view = VIEWS.find(x=>x[0]===v) ? v : "dash";
   $("#nav").innerHTML = VIEWS.map(([k,l])=>`<a href="#${k}" class="${k===view?"on":""}">${ICON[k]}${l}</a>`).join("");
   $("#viewTitle").textContent = VIEWS.find(x=>x[0]===view)[1];
-  $("#view").innerHTML = ({dash:vDash,journey:vJourney,week:vWeek,people:vPeople,money:vMoney,guides:vGuides,settings:vSettings})[view]();
+  $("#view").innerHTML = ({dash:vDash,plan:vPlan,journey:vJourney,week:vWeek,people:vPeople,money:vMoney,guides:vGuides,settings:vSettings})[view]();
   const p = S.profile; $("#avatar").textContent = (p.name||"?").trim().charAt(0).toUpperCase() || "?";
   $("#meName").textContent = p.name ? p.name : "Welcome"; $("#meTarget").textContent = p.target || "Set your target role";
   $("#side").classList.remove("open"); $("#scrim").classList.remove("open");
@@ -798,11 +869,13 @@ function bindExtras(){
 /* one delegated listener for every input */
 document.addEventListener("change", e => {
   const t = e.target;
+  if (t.dataset.ptask){ if(!S.plan) S.plan={done:{},start:""}; if(!S.plan.done) S.plan.done={}; if (t.checked) S.plan.done[t.dataset.ptask] = today(); else delete S.plan.done[t.dataset.ptask]; save(); rerender(); return; }
   if (t.dataset.task){ if (t.checked) S.tasks[t.dataset.task] = today(); else delete S.tasks[t.dataset.task]; save(); rerender(); return; }
   if (t.dataset.act !== undefined){ getWeek(weekCursor).actions[+t.dataset.act].done = t.checked ? today() : ""; save(); rerender(); return; }
   if (t.dataset.actd !== undefined){ getWeek(weekCursor).actions[+t.dataset.actd].day = t.value; save(); return; }
   if (t.dataset.app && t.dataset.f){ const a = S.apps.find(x=>x.id===t.dataset.app); if (a){ a[t.dataset.f] = t.value; save(); } return; }
   if (t.name === "track"){ S.profile.track = t.value; save(); return; }
+  if (t.dataset.gdate !== undefined){ S.goal.date = t.value; save(); rerender(); return; }
   if (t.dataset.prof === "start"){ S.profile.start = t.value || today(); save(); return; }
 });
 document.addEventListener("input", e => {
@@ -811,6 +884,7 @@ document.addEventListener("input", e => {
   else if (t.dataset.actt !== undefined){ getWeek(weekCursor).actions[+t.dataset.actt].t = t.value; save(); }
   else if (t.dataset.wf){ getWeek(weekCursor)[t.dataset.wf] = t.value; save(); }
   else if (t.dataset.goal){ S.goal.text = t.value; save(); }
+  else if (t.dataset.gdate){ S.goal.date = t.value; save(); }
   else if (t.dataset.ms !== undefined){ S.goal.m[+t.dataset.ms] = t.value; save(); }
   else if (t.dataset.prof && t.dataset.prof !== "start"){ S.profile[t.dataset.prof] = t.value; save(); $("#meName").textContent = S.profile.name||"Welcome"; $("#meTarget").textContent = S.profile.target||"Set your target role"; $("#avatar").textContent=(S.profile.name||"?").charAt(0).toUpperCase(); }
   else if (t.dataset.money){ S.money[t.dataset.money] = t.value; save(); const card = $("#runwayCard"); if (card){ const tmp = document.createElement("div"); tmp.innerHTML = vMoney(); card.replaceWith(tmp.querySelector("#runwayCard")); } }
@@ -833,10 +907,12 @@ function onboard(){
     <label class="f">What are you moving towards?<input type="text" name="target" placeholder="A role, a field, or “still exploring”"></label>
     <div class="f">Your track<div class="track-opts">${[["general","Any career"],["teacher","Leaving teaching"],["nurse","Leaving nursing"]].map(([v,l],i)=>`<label><input type="radio" name="track" value="${v}" ${i===0?"checked":""}>${l}</label>`).join("")}</div></div>
     <label class="f">When does your 90-day plan start?<input type="date" name="start" value="${today()}"></label>
+    <label class="f">Your 90-day goal (optional)<input type="text" name="goal" placeholder="e.g. Have 6 conversations and decide my direction"></label>
     <button class="btn" type="submit">Start my journey →</button></form>`;
   m.hidden = false;
   $("#obForm").onsubmit = e => { e.preventDefault(); const d = new FormData(e.target);
     S.profile = { name:String(d.get("name")).trim(), target:String(d.get("target")||"").trim(), track:d.get("track")||"general", start:d.get("start")||today() };
+    if (String(d.get("goal")||"").trim()) S.goal.text = String(d.get("goal")).trim();
     m.hidden = true; save(); route(); };
 }
 
@@ -892,7 +968,7 @@ function quizCard(q){
   if (!q) return "";
   const main = q.main==="L" ? "No single cause stands out" : "Your main cause: " + (QG[q.main]||"").toLowerCase();
   const bars = ["A","B","C","D"].map(g => `<div style="display:flex;align-items:center;gap:10px;font-size:14px;${g===q.main?"font-weight:700":""}"><span style="width:110px;flex:none">${QG[g]}</span><span style="flex:1;height:8px;background:#E6ECF7;border-radius:4px"><i style="display:block;height:8px;width:${(q.scores[g]||0)/5*100}%;background:${g===q.main?"var(--cta)":"#8FA3C8"};border-radius:4px"></i></span><b class="tnum">${q.scores[g]||0}/5</b></div>`).join("");
-  return `<div class="card" style="margin-bottom:18px"><div class="card-head"><h3>${main}</h3><span class="pill">Your quiz result</span></div><div style="display:grid;gap:8px">${bars}</div><p class="small muted" style="margin:12px 0 0">This comes from the free quiz. <a href="/quiz">Retake it</a> any time.</p></div>`;
+  return `<div class="card" style="margin-bottom:18px"><div class="card-head"><h3>${main}</h3><span class="pill">Your quiz result</span></div><div style="display:grid;gap:8px">${bars}</div>${(typeof PLAN!=="undefined" && PLAN && PLAN.tracks[q.main]) ? `<p style="margin:12px 0 0"><b>Your plan:</b> ${esc(PLAN.tracks[q.main].name)}</p>` : ""}<p class="small muted" style="margin:12px 0 0">This comes from the free quiz. <a href="/quiz">Retake it</a> any time.</p></div>`;
 }
 async function enter(){
   const { data:{ session } } = await SB.auth.getSession();
@@ -906,8 +982,10 @@ async function enter(){
   S = Object.assign(blank(), row?.data || {});
   if (lq && JSON.stringify(S.quiz||null)!==JSON.stringify(lq)){ S.quiz = lq; }
   if (!S.quiz){ location.replace("/quiz?from=app"); return; }
+  try{ PLAN = await (await fetch("/plan.json")).json(); }catch(_){ PLAN = null; }
+  if (!S.plan) S.plan = {done:{},start:""}; if (!S.plan.start){ S.plan.start = today(); }
   startApp("member");
-  if (lq) save();
+  save();
 }
 async function boot(){
   if (!window.supabase){ showGate("login"); $("#loginMsg").textContent = "Couldn’t load the login service. Check your connection and refresh."; return; }
@@ -921,7 +999,7 @@ async function boot(){
   await enter();
   if (/[?&]code=/.test(location.search)) history.replaceState(null,"",location.pathname + (location.hash||"#dash"));
 }
-if (location.hash === "#demo") { S = demoData(); startApp("demo"); } else boot();
+if (location.hash === "#demo") { S = demoData(); S.quiz = {scores:{A:1,B:4,C:2,D:3},main:"B",second:"D"}; fetch("/plan.json").then(r=>r.json()).then(j=>{PLAN=j;}).catch(()=>{}).finally(()=>{ startApp("demo"); }); } else boot();
 </script>
 </body>
 </html>
