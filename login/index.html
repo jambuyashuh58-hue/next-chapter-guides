@@ -66,13 +66,12 @@ button:disabled{opacity:.6;cursor:default}
     e.preventDefault();
     var v=em.value.trim();
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){m.className="msg err";m.textContent="Please enter a valid email address.";em.focus();return;}
-    if(!SB){m.className="msg err";m.textContent="Could not load the login service. Check your connection and refresh.";return;}
     b.disabled=true;m.className="msg";m.textContent="Sending…";
-    SB.auth.signInWithOtp({email:v,options:{emailRedirectTo:location.origin+"/app"}}).then(function(r){
+    fetch("https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/nc-login",{method:"POST",headers:{"content-type":"text/plain"},body:JSON.stringify({email:v})}).then(function(r){
       b.disabled=false;
-      if(r.error){m.className="msg err";m.textContent=/rate/i.test(r.error.message)?"Too many login emails just now. Please wait a few minutes and try again.":"Could not send the email: "+r.error.message;}
-      else{m.className="msg ok";m.textContent="Check your inbox for the login link (and spam). Open it on this same device.";}
-    });
+      if(r.ok){m.className="msg ok";m.textContent="Check your inbox for the login link (and spam). Open it on this same device.";}
+      else{m.className="msg err";m.textContent=r.status===429?"Too many login emails just now. Please wait a minute and try again.":"Could not send the email. Please try again.";}
+    }).catch(function(){b.disabled=false;m.className="msg err";m.textContent="Could not send the email. Check your connection and try again.";});
   });
 })();
 </script>

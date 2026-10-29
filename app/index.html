@@ -871,10 +871,14 @@ $("#loginForm").addEventListener("submit", async e => {
   e.preventDefault(); const email = $("#loginEmail").value.trim(), msg = $("#loginMsg"), btn = $("#loginBtn");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ msg.className="msg err"; msg.textContent="Please enter a valid email address."; return; }
   btn.disabled = true; msg.className="msg"; msg.textContent="Sending…";
-  const { error } = await SB.auth.signInWithOtp({ email, options:{ emailRedirectTo: location.origin + location.pathname } });
+  let error = null;
+  try {
+    const r = await fetch("https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/nc-login",{ method:"POST", headers:{ "content-type":"text/plain" }, body: JSON.stringify({ email }) });
+    if (!r.ok){ const j = await r.json().catch(()=>({})); error = { message: j.error==="wait" ? "rate limit" : "send failed" }; }
+  } catch(_) { error = { message: "network" }; }
   btn.disabled = false;
-  if (error){ msg.className="msg err"; msg.textContent = /rate/i.test(error.message) ? "Too many login emails just now. Please wait a few minutes and try again." : "Couldn’t send the email: " + error.message; }
-  else { msg.className="msg ok"; msg.textContent = "Check your inbox for the login link. Open it on this same device and browser."; }
+  if (error){ msg.className="msg err"; msg.textContent = /rate/i.test(error.message) ? "Too many login emails just now. Please wait a minute and try again." : "Couldn’t send the email. Please check your connection and try again."; }
+  else { msg.className="msg ok"; msg.textContent = "Check your inbox for the login link (and spam). Open it on this same device and browser."; }
 });
 $("#payOut").onclick = async () => { await SB.auth.signOut(); boot(); };
 $("#recheckBtn").onclick = async () => { $("#payMsg").textContent = "Checking…"; await enter(); if (MODE==="gate") $("#payMsg").textContent = "No active membership for this email yet. If you just paid, wait a minute and try again, and check you used the same email at checkout."; };
@@ -908,6 +912,12 @@ async function enter(){
 async function boot(){
   if (!window.supabase){ showGate("login"); $("#loginMsg").textContent = "Couldn’t load the login service. Check your connection and refresh."; return; }
   if (!SB) SB = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey, { auth:{ flowType:"pkce", detectSessionInUrl:true, persistSession:true } });
+  const qs = new URLSearchParams(location.search);
+  if (qs.get("token_hash") && qs.get("type")){
+    const { error:vErr } = await SB.auth.verifyOtp({ token_hash: qs.get("token_hash"), type: qs.get("type") });
+    history.replaceState(null,"",location.pathname + (location.hash||""));
+    if (vErr){ showGate("login"); $("#loginMsg").className="msg err"; $("#loginMsg").textContent="That login link has expired or was already used. Enter your email to get a new one."; return; }
+  }
   await enter();
   if (/[?&]code=/.test(location.search)) history.replaceState(null,"",location.pathname + (location.hash||"#dash"));
 }
