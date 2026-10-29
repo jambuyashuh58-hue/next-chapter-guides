@@ -343,6 +343,13 @@ table.t select{padding:6px 8px;font-size:13px}
 .dh textarea{width:100%;box-sizing:border-box;min-height:56px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:15px;background:var(--surface);color:var(--ink)}.dh textarea:focus{outline:2px solid var(--cta);outline-offset:1px}
 .ws-flash{animation:wsf 2.4s ease}@keyframes wsf{0%,60%{box-shadow:0 0 0 4px var(--cta)}100%{box-shadow:0 0 0 0 transparent}}
 @media (max-width:640px){.dh{margin-left:8px}.chap img{width:38px;height:38px}}
+
+/* guide worksheets */
+.gd .gprog{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:var(--cta-soft);margin-bottom:18px;position:sticky;top:0;z-index:5}.gd .gprog b{display:block;font-size:15px}.gd .gprog img{width:44px;height:44px;flex:none}
+.gd .worksheet{border-left:5px solid var(--cta);position:relative}.gd .worksheet.wdone{border-left-color:#16A34A;background:var(--surface)}
+.gd .ws-head{align-items:center;flex-wrap:wrap}.gd .ws-title{font-size:17px}.gd .wcount{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:3px 10px;border-radius:999px}.gd .wdone .wcount{color:#15803D;border-color:#16A34A}
+.gd .wchap{display:flex;gap:10px;align-items:flex-start;margin:4px 0 12px}.gd .wchap img{width:48px;height:48px;flex:none}.gd .wchap .bub p{max-width:none}
+.gd .wsfoot{display:flex;justify-content:flex-end;margin-top:10px}.gd .wsdone{border:0;border-radius:999px;padding:9px 16px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;background:var(--cta);color:#fff}.gd .wdone .wsdone{background:#16A34A}
 </style>
 </head>
 <body>
@@ -913,6 +920,19 @@ function vMoney(){
    </div></div>`;
 }
 
+function gDoneMap(slug){ if(!S.gdone) S.gdone={}; if(!S.gdone[slug]) S.gdone[slug]={}; return S.gdone[slug]; }
+function decorateGuide(){
+  const box = $("#gwrap"); if(!box || !GCUR) return; const slug = box.dataset.slug, dm = gDoneMap(slug), sheets = box.querySelectorAll(".worksheet");
+  let nd = 0;
+  sheets.forEach(w=>{ const id = w.dataset.ws, tas = w.querySelectorAll("textarea[data-gf]"), f = Array.from(tas).filter(t=>t.value.trim()).length, done = !!dm[id]; if(done) nd++;
+    w.classList.toggle("wdone", done);
+    let c = w.querySelector(".wcount"); if(!c){ c = document.createElement("span"); c.className="wcount"; const hd = w.querySelector(".ws-head"); hd.appendChild(c); }
+    c.textContent = done ? "Done ✓" : (tas.length ? f+" of "+tas.length+" filled" : "");
+    const b = w.querySelector(".wsdone"); if(b) b.textContent = done ? "Done. Tap to undo" : "Mark this worksheet done"; });
+  let bar = box.querySelector(".gprog"); if(!bar){ bar = document.createElement("div"); bar.className="gprog"; box.prepend(bar); }
+  const n = sheets.length, pct = n ? Math.round(nd/n*100) : 0;
+  bar.innerHTML = `<img src="/assets/chap/face.svg" alt="Chap" width="44" height="44"><div><b>${nd} of ${n} worksheets done</b><div class="gbar sm" style="width:100%;max-width:340px"><i style="width:${pct}%"></i></div><span class="small muted">${nd===n&&n?"All done. I am so proud of you.":"Tap the Chap bubble on each worksheet if you get stuck."}</span></div>`;
+}
 function gCount(slug){ const g = S.guides && S.guides[slug]; return g ? Object.values(g).filter(v=>String(v).trim()).length : 0; }
 function vGuides(){
   const last = S.last && bySlug[S.last.slug];
@@ -942,6 +962,7 @@ async function loadGuide(slug, ws){
     const vals = (S.guides && S.guides[slug]) || {};
     box.querySelectorAll("textarea[data-gf]").forEach(ta => { ta.value = vals[ta.dataset.gf] || ""; autosize(ta); });
     const c = $("#gCount"); if (c) c.textContent = gCount(slug)+" of "+g.fields+" filled";
+    decorateGuide();
     if (ws){ const hit = Array.from(box.querySelectorAll(".worksheet")).find(w=>{ const id = w.querySelector(".ws-id"); return id && id.textContent.trim()===ws; }); if (hit){ hit.classList.add("ws-flash"); setTimeout(()=>hit.scrollIntoView({block:"start",behavior:"smooth"}),80); setTimeout(()=>hit.classList.remove("ws-flash"),2600); return; } }
     if (S.last && S.last.slug===slug && S.last.f){ const el = box.querySelector(`[data-gf="${S.last.f}"]`); if (el){ setTimeout(()=>{ el.scrollIntoView({block:"center"}); },60); } }
   }catch(e){ box.innerHTML = `<p style="margin:0">Couldn’t open the guide just now. Check your connection and <a href="#guide-${slug}" onclick="setTimeout(route,0)">try again</a>. If you have just paid, wait a minute and refresh.</p>`; }
@@ -959,8 +980,9 @@ function downloadGuide(kind){
   if(!GCUR) return; const box=$("#gwrap"), slug=box.dataset.slug, name=GCUR.title.replace(/[^\w]+/g,"-");
   if(kind==="txt"){ const b=new Blob([guideAnswersText()],{type:"text/plain"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=name+"-my-answers.txt"; a.click(); return; }
   const clone = box.cloneNode(true), vals=(S.guides&&S.guides[slug])||{};
+  clone.querySelectorAll(".wsdone,.gprog,.wcount").forEach(e=>e.remove()); clone.querySelectorAll("img").forEach(i=>{ i.src = location.origin + i.getAttribute("src"); });
   clone.querySelectorAll("textarea[data-gf]").forEach(ta=>{ const d=document.createElement("div"); d.className="ans"; d.textContent=vals[ta.dataset.gf]||""; ta.replaceWith(d); });
-  const css = "body{font:13px/1.5 Georgia,serif;color:#0F1E3D;margin:0}h1,h2,h3{font-family:Arial,sans-serif;break-after:avoid}h1{font-size:22px;margin:22px 0 8px}h2{font-size:17px;margin:16px 0 6px}table{border-collapse:collapse;width:100%;margin:8px 0}th,td{border:1px solid #9AA6BD;padding:6px 8px;text-align:left;vertical-align:top}th{background:#EFF5FF}.ws-head{display:flex;justify-content:space-between;background:#0F1E3D;color:#fff;padding:6px 10px;font:700 12px Arial}.worksheet{break-inside:avoid;margin:12px 0}.callout{border-left:4px solid #2563EB;background:#EFF5FF;padding:8px 12px;margin:10px 0}.label{font:700 11px Arial;text-transform:uppercase}.ans{white-space:pre-wrap;min-height:22px;border-bottom:1px solid #9AA6BD;padding:2px 0 6px}.gopen{background:#0F1E3D;color:#fff;padding:14px;margin:18px 0}.gopen h2{color:#fff;margin:2px 0}.gk{font:700 11px Arial;text-transform:uppercase;opacity:.8}.tw{overflow:visible}";
+  const css = "body{font:13px/1.5 Georgia,serif;color:#0F1E3D;margin:0}h1,h2,h3{font-family:Arial,sans-serif;break-after:avoid}h1{font-size:22px;margin:22px 0 8px}h2{font-size:17px;margin:16px 0 6px}table{border-collapse:collapse;width:100%;margin:8px 0}th,td{border:1px solid #9AA6BD;padding:6px 8px;text-align:left;vertical-align:top}th{background:#EFF5FF}.ws-head{display:flex;justify-content:space-between;background:#0F1E3D;color:#fff;padding:6px 10px;font:700 12px Arial}.worksheet{break-inside:avoid;margin:12px 0}.callout{border-left:4px solid #2563EB;background:#EFF5FF;padding:8px 12px;margin:10px 0}.label{font:700 11px Arial;text-transform:uppercase}.ans{white-space:pre-wrap;min-height:22px;border-bottom:1px solid #9AA6BD;padding:2px 0 6px}.gopen{background:#0F1E3D;color:#fff;padding:14px;margin:18px 0}.gopen h2{color:#fff;margin:2px 0}.gk{font:700 11px Arial;text-transform:uppercase;opacity:.8}.tw{overflow:visible}.wchap{display:flex;gap:8px;align-items:flex-start;margin:6px 0 10px;break-inside:avoid}.wchap img{width:40px;height:40px}.bub{background:#EFF5FF;border-radius:10px;padding:6px 10px;font:12px/1.45 Arial,sans-serif}.bub p{margin:0 0 3px}.ex{font-style:italic;color:#475569}.worksheet{border:1px solid #9AA6BD;border-radius:10px;padding:8px}";
   const f=document.createElement("iframe"); f.style.cssText="position:fixed;right:0;bottom:0;width:0;height:0;border:0"; document.body.appendChild(f);
   f.srcdoc = `<!doctype html><html><head><meta charset="utf-8"><title>${esc(GCUR.title)}</title><style>${css}</style></head><body><h1 style="font-size:26px">${esc(GCUR.title)}</h1>${clone.innerHTML}</body></html>`;
   f.onload = () => { try{ f.contentWindow.focus(); f.contentWindow.print(); }catch(_){} setTimeout(()=>f.remove(),60000); };
@@ -1033,7 +1055,7 @@ document.addEventListener("change", e => {
 });
 document.addEventListener("input", e => {
   const t = e.target;
-  if (t.dataset.gf){ const slug=t.closest('#gwrap').dataset.slug; if(!S.guides) S.guides={}; if(!S.guides[slug]) S.guides[slug]={}; S.guides[slug][t.dataset.gf]=t.value; S.last={slug,f:t.dataset.gf}; autosize(t); const c=$('#gCount'); if(c&&GCUR) c.textContent=gCount(slug)+' of '+GCUR.fields+' filled'; save(); }
+  if (t.dataset.gf){ const slug=t.closest('#gwrap').dataset.slug; if(!S.guides) S.guides={}; if(!S.guides[slug]) S.guides[slug]={}; S.guides[slug][t.dataset.gf]=t.value; S.last={slug,f:t.dataset.gf}; autosize(t); const c=$('#gCount'); if(c&&GCUR) c.textContent=gCount(slug)+' of '+GCUR.fields+' filled'; const wsEl=t.closest('.worksheet'); if(wsEl){ const cc=wsEl.querySelector('.wcount'), tas=wsEl.querySelectorAll('textarea[data-gf]'); if(cc&&!wsEl.classList.contains('wdone')) cc.textContent=Array.from(tas).filter(x=>x.value.trim()).length+' of '+tas.length+' filled'; } save(); }
   else if (t.dataset.pnote){ if(!S.plan) S.plan={done:{},start:""}; if(!S.plan.notes) S.plan.notes={}; S.plan.notes[t.dataset.pnote] = t.value; autosize(t); save(); }
   else if (t.dataset.note){ S.notes[t.dataset.note] = t.value; save(); }
   else if (t.dataset.actt !== undefined){ getWeek(weekCursor).actions[+t.dataset.actt].t = t.value; save(); }
@@ -1047,6 +1069,7 @@ document.addEventListener("input", e => {
 document.addEventListener("click", e => {
   const t = e.target.closest("button"); if (!t) return;
   if (t.dataset.gdl){ downloadGuide(t.dataset.gdl); return; }
+  if (t.dataset.wsdone){ const slug = $("#gwrap").dataset.slug, dm = gDoneMap(slug), id = t.dataset.wsdone; if (dm[id]) delete dm[id]; else { dm[id] = today(); const nd = Object.keys(dm).length, n = GCUR && GCUR.sheets; celebrate(nd===n ? "Every worksheet in this guide is done!" : "Worksheet done!", nd===n ? "That is a whole guide finished." : nd+" of "+n+" done in this guide", nd===n); } save(); decorateGuide(); return; }
   if (t.dataset.wk){ weekCursor = weekKey(addDays(parse(weekCursor), 7*(+t.dataset.wk))); rerender(); }
   else if (t.dataset.energy){ const w = getWeek(weekCursor); w.energy = w.energy===+t.dataset.energy ? 0 : +t.dataset.energy; save(); rerender(); }
   else if (t.dataset.del){ S.apps = S.apps.filter(a=>a.id!==t.dataset.del); save(); rerender(); }

@@ -13,5 +13,5 @@ module.exports = async (req, res) => {
     const ok = r.ok && (await r.json()) === true;
     if (!ok) return res.status(403).json({ error: "members only" });
   } catch (e) { return res.status(502).json({ error: "check failed" }); }
-  return res.status(200).json({ slug, title: G.meta[slug].title, fields: G.meta[slug].fields, html: G.html[slug] });
+  return res.status(200).json({ slug, title: G.meta[slug].title, fields: G.meta[slug].fields, sheets: G.meta[slug].sheets, html: G.html[slug] });
 };
