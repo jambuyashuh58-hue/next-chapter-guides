@@ -16,6 +16,18 @@ a{color:#0F1E3D}img,video{max-width:100%}
 details summary{cursor:pointer;list-style:none}
 details summary::-webkit-details-marker{display:none}
 </style>
+<style>
+.pl{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;color:#334155;font-size:15px}
+.pl li{display:flex;gap:10px;align-items:flex-start;line-height:1.45}
+.pl li::before{content:"\2713";color:#0F766E;font-weight:800;flex:none}
+.faq details{background:#FFFFFF;border:1px solid #D7DEEA;border-radius:14px;margin:0 0 10px}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;font-weight:600;font-size:17px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font-size:24px;line-height:1;color:#2563EB;font-weight:500}
+.faq details[open] summary::after{content:"\2212"}
+.faq details[open]{border-color:#2563EB}
+.faq p{margin:0;padding:0 20px 18px;color:#334155;font-size:16px;line-height:1.6}
+</style>
 </head>
 <body>
 
@@ -146,56 +158,47 @@ details summary::-webkit-details-marker{display:none}
 </div></section>
 
 <!-- PRICING -->
-<section id="pricing" style="padding:72px 0 24px"><div style="max-width:1000px;margin:0 auto;padding:0 24px">
+<section id="pricing" style="padding:72px 0 24px"><div style="max-width:1100px;margin:0 auto;padding:0 24px">
 <div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:0.08em;color:#0F766E;text-align:center">PRICING</div>
-<h2 style="margin:10px 0 8px;font-size:clamp(24px,6.2vw,32px);line-height:1.08;font-weight:800;letter-spacing:-0.02em;text-align:center">Cheaper than another year of dreading Monday.</h2>
-<p style="margin:0 0 32px;text-align:center;color:#334155">$1 for 7 days, then a plan. Cancel in one click.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:0 0 32px">
-<div style="background:#FFFFFF;border:1px solid #D7DEEA;border-radius:14px;padding:18px"><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:0.08em;color:#0F766E">NOT SURE?</div><div style="font-weight:700;margin:6px 0 4px">Is $1 the whole price?</div><div style="font-size:14px;color:#334155">No. $1 covers 7 days. Then it is $12 a month unless you cancel, in one click, or you can pay $97 once.</div></div>
-<div style="background:#FFFFFF;border:1px solid #D7DEEA;border-radius:14px;padding:18px"><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:0.08em;color:#0F766E">NOT SURE?</div><div style="font-weight:700;margin:6px 0 4px">Am I too old, or too busy?</div><div style="font-size:14px;color:#334155">The quiz works at any age. It finds your problem first, and each step takes small slices of a week.</div></div>
-<div style="background:#FFFFFF;border:1px solid #D7DEEA;border-radius:14px;padding:18px"><div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:0.08em;color:#0F766E">NOT SURE?</div><div style="font-weight:700;margin:6px 0 4px">What if it is not for me?</div><div style="font-size:14px;color:#334155">Do the first week. If you have no clear next step, email me within 14 days and I refund you.</div></div>
-</div>
-<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:stretch">
+<h2 style="margin:10px auto 10px;max-width:760px;font-size:clamp(26px,6.5vw,38px);line-height:1.1;font-weight:800;letter-spacing:-0.025em;text-align:center;text-wrap:balance">Cheaper than another year of dreading Monday.</h2>
+<p style="margin:0 auto 40px;max-width:560px;text-align:center;color:#334155;font-size:17px">Start with $1. Keep going if it helps, stop if it does not.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;align-items:stretch"><div style="position:relative;background:#FFFFFF;border:2px solid #2563EB;box-shadow:0 22px 50px -24px rgba(37,99,235,0.45);border-radius:18px;padding:32px 28px 28px;display:flex;flex-direction:column;gap:16px;min-width:0">
+<span style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#2563EB;color:#FFFFFF;font:600 11px 'JetBrains Mono',monospace;letter-spacing:0.08em;padding:6px 13px;border-radius:999px;white-space:nowrap">START HERE</span>
+<div><div style="font-size:21px;font-weight:700;letter-spacing:-0.01em">Try the Tracker</div><div style="color:#5B6478;font-size:14px;margin-top:4px">Self-paced, with the PDF guides.</div></div>
+<div><div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap"><span style="font-size:clamp(40px,9vw,52px);font-weight:800;letter-spacing:-0.03em;line-height:1">$1</span><span style="color:#5B6478;font-size:15px">for 7 days</span></div><div style="color:#334155;font-size:14px;margin-top:8px;min-height:42px">Then $12 a month. Cancel in one click, any time.</div></div>
+<hr style="border:0;border-top:1px solid #E6ECF7;margin:0">
+<ul class="pl"><li>The Tracker: 10-stop journey, weekly plan, money runway</li><li>PDF guide previews and first steps</li><li>Printable worksheets</li><li>Your one-page result sheet</li></ul>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:10px"><a href="#" data-checkout="trial" style="background:#2563EB;color:#FFFFFF;text-decoration:none;font-weight:700;padding:15px 22px;border-radius:10px;text-align:center">Start the 7-day trial for $1</a></div>
+</div><div style="position:relative;background:#FFFFFF;border:1px solid #D7DEEA;border-radius:18px;padding:32px 28px 28px;display:flex;flex-direction:column;gap:16px;min-width:0">
 
-<div style="flex:1 1 420px;min-width:0;background:#FFFFFF;border:1px solid #2563EB;border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:14px;position:relative">
-<span style="position:absolute;top:-12px;left:24px;background:#2563EB;color:#FFFFFF;font:600 11px 'JetBrains Mono',monospace;letter-spacing:0.08em;padding:5px 11px;border-radius:999px">START HERE</span>
-<div style="font-size:22px;font-weight:700">The Tracker</div>
-<div style="color:#5B6478;font-size:14px">The Tracker and all the PDF guides.</div>
-<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:0.08em;color:#5B6478">$1 FOR 7 DAYS, THEN</div>
-<div style="margin-top:-8px"><span style="font-size:clamp(36px,8.5vw,44px);font-weight:800;letter-spacing:-0.02em">$12</span><span style="color:#5B6478"> / month</span></div>
-<div style="color:#334155;font-size:15px">Or <a href="#" data-checkout="lifetime" style="color:#0F1E3D;font-weight:700">$97 one time</a>, yours for life.</div>
-<ul style="margin:0;padding-left:20px;color:#334155;font-size:15px;display:flex;flex-direction:column;gap:6px">
-<li>The Next Chapter Tracker: 10-stop journey, weekly plan, money runway</li><li>PDF guide previews and the first steps</li><li>Printable worksheets</li><li>Your one-page result sheet</li></ul>
-<div style="margin-top:auto;display:flex;align-items:flex-end;gap:6px"><span style="font-family:Caveat,cursive;font-size:22px;line-height:1;color:#334155">Try it for $1 first</span><svg width="46" height="40" viewBox="0 0 46 40" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3 C 6 25, 20 34, 40 30"/><path d="M32 22 L41 30 L31 36"/></svg></div>
-<a href="#" data-checkout="trial" style="background:#2563EB;color:#FFFFFF;text-decoration:none;font-weight:700;padding:15px 22px;border-radius:10px;text-align:center">Start the 7-day trial for $1</a>
-<span style="font-size:13px;color:#5B6478">$1 today. After 7 days it continues at $12 a month unless you cancel, in one click. Do the first week. If it has not given you a clear next step, email me within 14 days and I will refund you.</span>
-</div>
+<div><div style="font-size:21px;font-weight:700;letter-spacing:-0.01em">Tracker for life</div><div style="color:#5B6478;font-size:14px;margin-top:4px">Pay once, keep it for good.</div></div>
+<div><div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap"><span style="font-size:clamp(40px,9vw,52px);font-weight:800;letter-spacing:-0.03em;line-height:1">$97</span><span style="color:#5B6478;font-size:15px">one time</span></div><div style="color:#334155;font-size:14px;margin-top:8px;min-height:42px">No monthly charge. Everything in the Tracker plan.</div></div>
+<hr style="border:0;border-top:1px solid #E6ECF7;margin:0">
+<ul class="pl"><li>The Tracker and all the PDF guides</li><li>Yours to keep, with no monthly charge</li><li>Printable worksheets</li><li>Your one-page result sheet</li></ul>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:10px"><a href="#" data-checkout="lifetime" style="background:#FFFFFF;color:#0F1E3D;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:10px;text-align:center;border:1px solid #0F1E3D">Get lifetime access</a></div>
+</div><div style="position:relative;background:#FFFFFF;border:1px solid #D7DEEA;border-radius:18px;padding:32px 28px 28px;display:flex;flex-direction:column;gap:16px;min-width:0">
 
-<div style="flex:1 1 420px;min-width:0;background:#FFFFFF;border:1px solid #D7DEEA;border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:14px">
-<div style="font-size:22px;font-weight:700">Guided help</div>
-<div style="color:#5B6478;font-size:14px">Do the 12 weeks with me, one to one.</div>
-<div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:0.08em;color:#5B6478">3 MONTHLY PAYMENTS OF</div>
-<div style="margin-top:-8px"><span style="font-size:clamp(36px,8.5vw,44px);font-weight:800;letter-spacing:-0.02em">$55</span><span style="color:#5B6478"> / month</span></div>
-<div style="color:#334155;font-size:15px">Or <a href="#" data-checkout="guided-full" style="color:#0F1E3D;font-weight:700">$150 one time</a>, paid in full.</div>
-<p style="margin:0;color:#334155;font-size:15px">Two calls a week for 12 weeks, so you always know the next small thing to do. Only 3 places a month.</p>
-<ul style="margin:0;padding-left:20px;color:#334155;font-size:15px;display:flex;flex-direction:column;gap:6px">
-<li>Weeks 1 to 4: find your direction from your quiz result</li><li>Weeks 5 to 8: plan the move, check your money, translate your CV</li><li>Weeks 9 to 12: take action, with a weekly plan that sticks</li><li>24 calls in all, one clear next step after each</li><li>The Tracker and PDF guides to work from between calls</li></ul>
-<p style="margin:0;color:#5B6478;font-size:13px">Not therapy, and no promise of a job or salary. I am not a licensed career counsellor.</p>
-<a href="#" data-checkout="guided" style="margin-top:auto;background:#0F1E3D;color:#FFFFFF;text-decoration:none;font-weight:700;padding:15px 22px;border-radius:10px;text-align:center">Ask about a place</a>
-<span style="font-size:13px;color:#5B6478">Send a short message first. We check it is a good fit before you pay.</span>
+<div><div style="font-size:21px;font-weight:700;letter-spacing:-0.01em">Guided help</div><div style="color:#5B6478;font-size:14px;margin-top:4px">Do the 12 weeks with me, one to one.</div></div>
+<div><div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap"><span style="font-size:clamp(40px,9vw,52px);font-weight:800;letter-spacing:-0.03em;line-height:1">$150</span><span style="color:#5B6478;font-size:15px">once</span></div><div style="color:#334155;font-size:14px;margin-top:8px;min-height:42px">Or 3 monthly payments of $55 ($165 in total). Only 3 places a month.</div></div>
+<hr style="border:0;border-top:1px solid #E6ECF7;margin:0">
+<ul class="pl"><li>Two calls a week for 12 weeks (24 calls)</li><li>One clear next step after every call</li><li>Weeks 1 to 12: direction, plan, money, CV, action</li><li>The Tracker and PDF guides included</li></ul>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:10px"><a href="#" data-checkout="guided" style="background:#0F1E3D;color:#FFFFFF;text-decoration:none;font-weight:700;padding:15px 22px;border-radius:10px;text-align:center">Ask about a place</a><span style="font-size:13px;color:#5B6478">Send a short message first. We check it is a good fit before you pay. <a href="#" data-checkout="guided-full" style="color:#0F1E3D;font-weight:600">Pay $150 in full</a></span></div>
+</div></div>
+<div style="margin-top:28px;background:#FFFFFF;border:1px solid #D7DEEA;border-radius:16px;padding:20px 24px;display:flex;flex-wrap:wrap;gap:18px 32px;align-items:center;justify-content:space-between">
+<div style="flex:1 1 360px;min-width:0"><b>14-day refund promise.</b> <span style="color:#334155">Do the first week. If it has not given you a clear next step, email me within 14 days of paying and I will refund you. This covers the Tracker and Guided help.</span></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px;color:#334155"><span>&#10003; Cancel in one click</span><span>&#10003; No contract</span><span>&#10003; Nothing posted to you</span></div>
 </div>
-</div>
+<p style="margin:14px 0 0;text-align:center;color:#5B6478;font-size:13px">Guided help is career guidance only. It is not therapy, and it does not promise a job or a salary. I am not a licensed career counsellor.</p>
 </div></section>
 
 <!-- FAQ -->
-<section style="padding:72px 0 24px"><div style="max-width:820px;margin:0 auto;padding:0 24px">
+<section id="faq" style="padding:72px 0 24px"><div style="max-width:1100px;margin:0 auto;padding:0 24px;display:flex;flex-wrap:wrap;gap:32px 64px;align-items:flex-start">
+<div style="flex:1 1 280px;min-width:0">
 <div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:0.08em;color:#0F766E">QUESTIONS</div>
-<h2 style="margin:10px 0 18px;font-size:clamp(24px,6.2vw,32px);font-weight:800;letter-spacing:-0.02em">Before you start</h2>
-<details style="border-top:1px solid #D7DEEA;padding:18px 0"><summary style="font-weight:600;font-size:18px">Is the quiz really free?</summary><p style="margin:12px 0 0;color:#334155">Yes. The quiz and the result on screen are free. You can also ask for a one-page PDF result sheet by email.</p></details>
-<details style="border-top:1px solid #D7DEEA;padding:18px 0"><summary style="font-weight:600;font-size:18px">What do I get for $1?</summary><p style="margin:12px 0 0;color:#334155">Seven days of access to the Tracker and the PDF guides: previews and the first steps to take. Nothing is posted to you.</p></details>
-<details style="border-top:1px solid #D7DEEA;padding:18px 0"><summary style="font-weight:600;font-size:18px">Does the $1 trial renew?</summary><p style="margin:12px 0 0;color:#334155">Yes. After 7 days it continues at $12 a month unless you cancel. You can cancel in one click, or pay $97 once to keep it for life.</p></details>
-<details style="border-top:1px solid #D7DEEA;padding:18px 0"><summary style="font-weight:600;font-size:18px">What if it does not help me?</summary><p style="margin:12px 0 0;color:#334155">Do the first week. If it has not given you a clear next step, email me within 14 days of paying and I will refund you. This covers the Tracker and Guided help.</p></details>
-<details style="border-top:1px solid #D7DEEA;border-bottom:1px solid #D7DEEA;padding:18px 0"><summary style="font-weight:600;font-size:18px">Where should I start?</summary><p style="margin:12px 0 0;color:#334155">With the free quiz. It takes about three minutes and shows you which of the four problems is yours.</p></details>
+<h2 style="margin:10px 0 12px;font-size:clamp(26px,6.5vw,38px);line-height:1.1;font-weight:800;letter-spacing:-0.025em">Before you start</h2>
+<p style="margin:0;color:#334155;font-size:16px">Anything else? Reply to any email I send you, or message me on Threads, and I will answer.</p>
+</div>
+<div class="faq" style="flex:2 1 460px;min-width:0"><details><summary>Is the quiz really free?</summary><p>Yes. The quiz and the result on screen are free. You can also ask for a one-page PDF result sheet by email.</p></details><details><summary>What do I get for $1?</summary><p>Seven days of access to the Tracker and the PDF guides: previews and the first steps to take. Nothing is posted to you.</p></details><details><summary>Does the $1 trial renew?</summary><p>Yes. After 7 days it continues at $12 a month unless you cancel. You can cancel in one click, or pay $97 once to keep it for life.</p></details><details><summary>What if it does not help me?</summary><p>Do the first week. If it has not given you a clear next step, email me within 14 days of paying and I will refund you. This covers the Tracker and Guided help.</p></details><details><summary>Am I too old, or too busy?</summary><p>The quiz works at any age. It finds your problem first, and each step takes small slices of a week, not whole weekends.</p></details><details><summary>Tracker or Guided help?</summary><p>The Tracker is self-paced: you work through it on your own. Guided help adds two calls a week with me for 12 weeks, so someone keeps you moving. Most people should start with the $1 Tracker trial.</p></details><details><summary>Where should I start?</summary><p>With the free quiz. It takes about three minutes and shows you which of the four problems is yours.</p></details></div>
 </div></section>
 
 <!-- LATEST ARTICLES -->
