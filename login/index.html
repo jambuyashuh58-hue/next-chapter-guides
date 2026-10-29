@@ -38,7 +38,7 @@ button:disabled{opacity:.6;cursor:default}
 <header><a class="logo" href="/"><img src="/assets/logo.svg" alt=""><span>Next<b>Chapter.</b></span></a></header>
 <main><div class="card">
 <div class="eyebrow">LOG IN OR START FREE</div>
-<h1>Welcome. Let us find your next step.</h1>
+<h1 id="h">Welcome. Let us find your next step.</h1>
 <p>Enter your email and we will send you a one-time link. No password to remember.</p>
 <form id="f" novalidate>
 <label for="em" style="position:absolute;left:-9999px">Email</label>
@@ -58,6 +58,7 @@ button:disabled{opacity:.6;cursor:default}
 <script>
 (function(){
   var URL_="https://ctezcrglzcjxdkagnoyy.supabase.co", KEY="sb_publishable_WM7az_Nye-qOMmgWDOJRVg_vITL_Zse";
+  try{var pl=new URLSearchParams(location.search).get("plan");if(pl){document.getElementById("h").textContent=pl==="lifetime"?"Create your account first.":"Start your 7-day trial.";}}catch(_){}
   var f=document.getElementById("f"), em=document.getElementById("em"), b=document.getElementById("b"), m=document.getElementById("m");
   var SB=window.supabase&&window.supabase.createClient(URL_,KEY,{auth:{flowType:"pkce",detectSessionInUrl:false,persistSession:true}});
   if(SB){SB.auth.getSession().then(function(r){ if(r.data&&r.data.session){ location.replace("/app"); } });}

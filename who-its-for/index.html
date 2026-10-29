@@ -52,7 +52,7 @@ details summary::-webkit-details-marker{display:none}
 <header style="border-bottom:1px solid #D7DEEA;background:#FFFFFF;position:sticky;top:0;z-index:20"><div style="max-width:1100px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
 <a href="/" style="text-decoration:none;display:flex;align-items:center;gap:10px;font-family:Lora,Georgia,serif;font-weight:700;font-size:23px;line-height:1;letter-spacing:-0.01em;color:#0F1E3D"><img src="/assets/logo.svg" alt="" style="width:36px;height:36px;border-radius:10px;box-shadow:0 0 0 1px #D7DEEA"><span>Next<b style="color:#0F766E">Chapter.</b></span></a>
 <nav class="topnav" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px;font-size:14px"><a href="/features" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Features</a><a href="/how-it-works" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">How it works</a><a href="/pricing" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Pricing</a><a href="/who-its-for" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px" aria-current="page">Who it is for</a><a href="https://nextchaptergide.site" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Blog</a></nav>
-<div style="display:flex;align-items:center;gap:8px;font-size:14px"><a href="https://shop.nextchaptergide.site/login" style="color:#0F1E3D;text-decoration:none;font-weight:600;padding:9px 14px">Log in</a><a href="https://shop.nextchaptergide.site/login?src=nav" style="background:#0F1E3D;color:#FFFFFF;text-decoration:none;font-weight:600;padding:10px 18px;border-radius:999px">Start free</a></div>
+<div style="display:flex;align-items:center;gap:8px;font-size:14px"><a href="/login" style="color:#0F1E3D;text-decoration:none;font-weight:600;padding:9px 14px">Log in</a><a href="/login?src=nav" style="background:#0F1E3D;color:#FFFFFF;text-decoration:none;font-weight:600;padding:10px 18px;border-radius:999px">Start free</a></div>
 </div></header>
 
 <section style="padding:56px 0 8px;background:linear-gradient(180deg,#EAF2FF 0%,#F8FAFC 100%)"><div style="max-width:1100px;margin:0 auto;padding:0 24px">
@@ -81,10 +81,10 @@ details summary::-webkit-details-marker{display:none}
 <script>
 /* Checkout links. Interim: the existing Whop product pages. Replace with the new plan links when they exist. */
 const CHECKOUT = {
-  trial: "https://whop.com/next-chapter-15f2/next-chapter-tracker/",
-  lifetime: "https://whop.com/next-chapter-15f2/next-chapter-tracker/",
-  guided: "https://whop.com/next-chapter-15f2/guided-career-change-help/",
-  "guided-full": "https://whop.com/next-chapter-15f2/guided-career-change-help/"
+  trial: "/login?plan=trial",
+  lifetime: "/login?plan=lifetime",
+  guided: "https://whop.com/checkout/plan_QLxwH4af2c7Dm/",
+  "guided-full": "https://whop.com/checkout/plan_QODfgKo2JfBeA/"
 };
 document.querySelectorAll("[data-checkout]").forEach(a=>{ const u=CHECKOUT[a.dataset.checkout]; if(u) a.href=u; });
 (function(){

@@ -347,9 +347,9 @@ table.t select{padding:6px 8px;font-size:13px}
 
     <div class="gate-card" id="payCard" hidden>
       <div><span class="pill">Almost there</span></div>
-      <h2>Choose a plan to unlock your dashboard</h2>
+      <h2>Unlock your dashboard for $1</h2>
       <div id="payQuiz"></div>
-      <p class="msg">You’re logged in as <b id="payEmail"></b>. Pay with this same email and your dashboard unlocks automatically, usually within a minute.</p>
+      <p class="msg">You’re logged in as <b id="payEmail"></b>. Start your 7 days for $1 with this same email, then come back to this page. Your dashboard unlocks automatically, usually within a minute.</p>
       <div class="price-row" id="priceRowB"></div>
       <button class="btn ghost" id="recheckBtn" type="button">I’ve paid, check again</button>
       <p class="msg" id="payMsg" role="status" aria-live="polite"></p>
@@ -392,8 +392,8 @@ const CFG = {
   supabaseKey: "sb_publishable_WM7az_Nye-qOMmgWDOJRVg_vITL_Zse",   // publishable key: safe in the browser
   currency: "$",
   plans: [
-    { id:"monthly",  label:"Monthly", price:12, per:"/month", note:"First 7 days $1. Cancel any time", checkout: "https://whop.com/next-chapter-15f2/next-chapter-tracker/" },
-    { id:"lifetime", label:"Lifetime", price:97, per:" once", note:"No monthly charge", checkout: "https://whop.com/next-chapter-15f2/next-chapter-tracker/", best:true }
+    { id:"monthly",  label:"7-day trial", price:1,  per:" for 7 days", note:"Then $12 a month. Cancel any time", checkout: "https://whop.com/checkout/plan_7E84f9vnHPfwa/" },
+    { id:"lifetime", label:"Lifetime", price:97, per:" once", note:"No monthly charge", checkout: "https://whop.com/checkout/plan_5AarRirWlDfT6/", best:true }
   ]
 };
 
