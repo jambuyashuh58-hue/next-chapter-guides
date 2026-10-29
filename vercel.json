@@ -97,11 +97,5 @@
       "destination": "https://sidequestcrew.space/",
       "permanent": false
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/home-v2/index.html"
-    }
   ]
 }
