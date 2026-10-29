@@ -320,6 +320,7 @@ table.t select{padding:6px 8px;font-size:13px}
 .gd .callout{border-left:4px solid var(--cta);background:var(--cta-soft);border-radius:12px;padding:12px 16px;margin:16px 0}.gd .callout .label{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cta)}.gd .callout.warn{border-color:#D97706}.gd .callout.warn .label{color:#B45309}
 .gd .gopen{background:var(--grad);color:#fff;border-radius:18px;padding:18px 20px;margin:30px 0 14px}.gd .gopen h2{margin:4px 0;color:#fff}.gd .gopen p{margin:6px 0 0;color:rgba(255,255,255,.9)}.gd .gk{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
 .gd .sources{font-size:13px;color:var(--muted)}.gd .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.ended .chk{pointer-events:none;opacity:.55}.ended textarea,.ended input[type=text],.ended input[type=date]{pointer-events:none}
 </style>
 </head>
 <body>
@@ -577,14 +578,20 @@ function planStart(){ const s = (SUB && SUB.started_at) ? new Date(SUB.started_a
 function planDay(){ return Math.max(0, dayDiff(planStart(), new Date())); }   // 0 = first day
 function allOpen(){ return MODE==="demo" || !SUB || /life|97|once/i.test(SUB.plan||""); }
 function monthUnlockDay(i){ return PLAN.trialDays + PLAN.monthDays*i; }
+function effDay(){   // after cancelling, the clock stops at the end date: paid months stay open, new ones never unlock
+  const d = planDay();
+  if (SUB && SUB.status==="cancelled" && SUB.ends_at) return Math.min(d, Math.max(0, dayDiff(planStart(), new Date(SUB.ends_at))));
+  return d;
+}
 function monthState(i){
   if (allOpen()) return { open:true, daysLeft:0 };
-  const ended = SUB && SUB.status==="cancelled" && SUB.ends_at && new Date(SUB.ends_at) < new Date();
-  const left = monthUnlockDay(i) - planDay();
-  return { open: left<=0 && !ended, daysLeft: Math.max(0,left), ended };
+  const stopped = SUB && SUB.status==="cancelled" && SUB.ends_at;
+  const left = monthUnlockDay(i) - effDay();
+  return { open: left<=0, daysLeft: Math.max(0,left), stopped: !!stopped };
 }
 const pkey = (s,i) => s+"."+i;
 const pdone = k => !!(S.plan && S.plan.done && S.plan.done[k]);
+const isEnded = () => MODE==="ended";
 function planSteps(){   // flat list of all steps in order, with lock state
   const tr = planTrack(); if(!tr) return [];
   const out = tr.week1.map((x,i)=>({ k:pkey("w1",i), t:x.t, why:x.why, grp:"w1", day:i+1, open:true }));
@@ -608,6 +615,7 @@ function getWeek(key){ if(!S.weeks[key]) S.weeks[key] = { actions:[{t:"",day:"An
 /* =================== SAVE =================== */
 function setSave(t, cls){ const el = $("#saveState"); el.textContent = t; el.className = "save " + (cls||""); }
 function save(){
+  if (MODE === "ended"){ return; }
   if (MODE === "demo"){ setSave("Demo, not saved", "busy"); return; }
   clearTimeout(saveTimer); setSave("Saving…","busy");
   saveTimer = setTimeout(async () => {
@@ -665,7 +673,7 @@ function vPlan(){
   const months = tr.months.map((m,mi)=>{
     const st = monthState(mi), cur = st.open && (mi===2 || !monthState(mi+1).open), nd = m.tasks.filter((_,i)=>pdone(pkey("m"+(mi+1),i))).length;
     const head = `<div style="min-width:0"><div class="eyebrow">${esc(m.title)}${st.open?"":" · locked"}</div><h3>${esc(m.goal)}</h3></div><div class="meter"><b class="tnum">${st.open? nd+"/"+m.tasks.length+" steps" : "🔒 "+st.daysLeft+" days"}</b></div>`;
-    if(!st.open) return `<details class="stop pl lockd"><summary>${head}</summary><div class="stop-body"><p class="muted" style="grid-column:1/-1;margin:0">Month ${mi+1} opens ${addDays(planStart(), monthUnlockDay(mi)).toLocaleDateString(undefined,{day:"numeric",month:"long"})}, when your ${mi===0?"trial ends and your first monthly payment goes through":"next monthly payment goes through"}. You will get ${m.tasks.length} steps and a short guide: <b>${esc(m.guide.title)}</b>.</p></div></details>`;
+    if(!st.open) return `<details class="stop pl lockd"><summary>${head}</summary><div class="stop-body"><p class="muted" style="grid-column:1/-1;margin:0">${st.stopped?`Month ${mi+1} was not unlocked before your plan ended. Rejoin to open it.`:`Month ${mi+1} opens ${addDays(planStart(), monthUnlockDay(mi)).toLocaleDateString(undefined,{day:"numeric",month:"long"})}, when your ${mi===0?"trial ends and your first monthly payment goes through":"next monthly payment goes through"}.`} You will get ${m.tasks.length} steps and a short guide: <b>${esc(m.guide.title)}</b>.</p></div></details>`;
     const byW = [1,2,3,4].map(w=>({ w, items:m.tasks.map((x,i)=>({...x,i})).filter(x=>x.w===w) })).filter(g=>g.items.length);
     return `<details class="stop pl" ${cur&&!inTrial?"open":""}><summary>${head}</summary><div class="stop-body" style="display:block">
       <div class="pguide"><span class="pill">Guide</span><h4>${esc(m.guide.title)}</h4>${m.guide.html}</div>
@@ -901,11 +909,14 @@ function vSettings(){
 function route(){
   const h = (location.hash||"#dash").slice(1);
   const [v, sub] = h.startsWith("journey-") ? ["journey", h.slice(8)] : h.startsWith("guide-") ? ["guide", h.slice(6)] : [h, null];
-  const view = (v==="guide" && bySlug[sub]) || VIEWS.find(x=>x[0]===v) ? v : "dash";
+  const VS = MODE==="ended" ? VIEWS.filter(x=>["plan","settings"].includes(x[0])) : VIEWS;
+  const view = (v==="guide" && bySlug[sub] && MODE!=="ended") || VS.find(x=>x[0]===v) ? v : (MODE==="ended" ? "plan" : "dash");
   const navOn = view==="guide" ? "guides" : view;
-  $("#nav").innerHTML = VIEWS.map(([k,l])=>`<a href="#${k}" class="${k===navOn?"on":""}">${ICON[k]}${l}</a>`).join("");
+  $("#nav").innerHTML = VS.map(([k,l])=>`<a href="#${k}" class="${k===navOn?"on":""}">${ICON[k]}${l}</a>`).join("");
   $("#viewTitle").textContent = view==="guide" ? bySlug[sub].title : VIEWS.find(x=>x[0]===view)[1];
+  document.body.classList.toggle("ended", MODE==="ended");
   $("#view").innerHTML = view==="guide" ? vGuide(sub) : ({dash:vDash,plan:vPlan,journey:vJourney,week:vWeek,people:vPeople,money:vMoney,guides:vGuides,settings:vSettings})[view]();
+  if (MODE==="ended") $("#view").innerHTML = `<div class="card" style="margin-bottom:18px;border-left:4px solid #D97706"><b>Your membership has ended.</b><p class="muted" style="margin:6px 0 12px">The months you paid for stay open to read here. The guides and any new month need an active plan. Your answers are kept.</p><a class="btn" href="${CFG.plans[0].checkout}" target="_blank" rel="noopener">Rejoin the Tracker</a></div>` + $("#view").innerHTML;
   if (view==="guide"){ loadGuide(sub); if(MODE!=="demo"){ S.last = Object.assign({}, S.last&&S.last.slug===sub?S.last:{}, {slug:sub}); } }
   const p = S.profile; $("#avatar").textContent = (p.name||"?").trim().charAt(0).toUpperCase() || "?";
   $("#meName").textContent = p.name ? p.name : "Welcome"; $("#meTarget").textContent = p.target || "Set your target role";
@@ -955,7 +966,7 @@ document.addEventListener("click", e => {
   else if (t.dataset.energy){ const w = getWeek(weekCursor); w.energy = w.energy===+t.dataset.energy ? 0 : +t.dataset.energy; save(); rerender(); }
   else if (t.dataset.del){ S.apps = S.apps.filter(a=>a.id!==t.dataset.del); save(); rerender(); }
 });
-window.addEventListener("hashchange", () => { if (MODE==="member"||MODE==="demo") route(); });
+window.addEventListener("hashchange", () => { if (MODE==="member"||MODE==="demo"||MODE==="ended") route(); });
 $("#menuBtn").onclick = () => { $("#side").classList.add("open"); $("#scrim").classList.add("open"); };
 $("#scrim").onclick = () => { $("#side").classList.remove("open"); $("#scrim").classList.remove("open"); };
 
@@ -1038,6 +1049,16 @@ async function enter(){
   const [{ data:member }, { data:subRow }] = await Promise.all([ SB.rpc("is_member"), SB.from("subscriptions").select("*").maybeSingle() ]);
   SUB = subRow || null;
   const lq = readQuiz();
+  if (!member && SUB && SUB.started_at && SUB.status==="cancelled"){
+    const { data:row0 } = await SB.from("progress").select("data").eq("user_id", USER.id).maybeSingle();
+    if (row0 && row0.data && row0.data.quiz){
+      S = Object.assign(blank(), row0.data);
+      try{ PLAN = await (await fetch("/plan.json")).json(); }catch(_){ PLAN = null; }
+      MODE = "ended"; $("#gate").hidden = true; $("#app").hidden = false; $("#demoBar").hidden = true; $("#saveState").hidden = false; setSave("Read only","busy");
+      if (!location.hash || location.hash==="#" || location.hash==="#dash") history.replaceState(null,"","#plan");
+      route(); return;
+    }
+  }
   if (!member){ if (!lq){ location.replace("/quiz?from=app"); return; } showGate("pay", USER.email); return; }
   const { data:row } = await SB.from("progress").select("data").eq("user_id", USER.id).maybeSingle();
   S = Object.assign(blank(), row?.data || {});
