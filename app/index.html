@@ -346,7 +346,7 @@ table.t select{padding:6px 8px;font-size:13px}
     <div class="gate-card" id="loginCard">
       <div><span class="pill">Members</span></div>
       <h2>Log in or start your membership</h2>
-      <p class="msg">Enter your email and we’ll send you a one-time login link. No password needed.</p>
+      <p class="msg">Hi, I’m Chap. Enter your email and I’ll send you a one-time login link. No password needed.</p>
       <form id="loginForm" novalidate style="display:grid;gap:10px">
         <label class="sr" for="loginEmail">Email</label>
         <input id="loginEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
@@ -378,9 +378,9 @@ table.t select{padding:6px 8px;font-size:13px}
     <div class="me"><div class="avatar" id="avatar">?</div><div style="min-width:0"><b id="meName">Welcome</b><span id="meTarget">Set your target role</span></div></div>
     <nav class="nav" id="nav" aria-label="Dashboard"></nav>
     <div class="upsell" id="sideUpsell">
-      <b>Get all 9 guides</b>
-      <p>Every worksheet behind these steps, as printable PDFs.</p>
-      <a class="btn white sm" href="https://whop.com/next-chapter-15f2/complete-career-change-program/" target="_blank" rel="noopener">See the bundle</a>
+      <b>Want a person with you?</b>
+      <p>Guided help is 1-to-1 calls with Yashu. Your guides are already included.</p>
+      <a class="btn white sm" href="https://whop.com/checkout/plan_QLxwH4af2c7Dm/" target="_blank" rel="noopener">See Guided help</a>
     </div>
   </aside>
   <div class="scrim" id="scrim"></div>
@@ -697,7 +697,7 @@ function vDash(){
     <div>
       <div class="kick">Stop ${pad(bySlug[cur.slug].n)} · ${STAGES[cur.stage]}</div>
       <h2>${greet()}, ${esc(name)}!</h2>
-      <p>${pct>=100 ? "You’ve completed every step of your journey. Time to plan your next 90 days." : `You’re ${pct}% of the way through your journey${S.profile.target? ` to <b>${esc(S.profile.target)}</b>`:""}. One small step today keeps the momentum going.`}</p>
+      <p>${pct>=100 ? "You’ve completed every step of your journey. Time to plan your next 90 days." : `Chap here. You’re ${pct}% of the way through your journey${S.profile.target? ` to <b>${esc(S.profile.target)}</b>`:""}. Here is your next small step, and I am right here while you do it.`}</p>
       ${np ? `<label class="next"><input type="checkbox" class="chk" data-ptask="${np.k}"><span><small>Your next step${np.grp==="w1"?` · day ${np.day}`:""}</small>${esc(np.t)}</span></label>` : (nt ? `<label class="next"><input type="checkbox" class="chk" data-task="${nt.s.slug}.${nt.i}"><span><small>Your next step</small>${esc(nt.t[0])}</span></label>` : "")}
       <a class="btn white" href="#plan">Open my plan →</a>
     </div>
