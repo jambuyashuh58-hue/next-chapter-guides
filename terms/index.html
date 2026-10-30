@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Terms of use | Next Chapter Guides</title>
+<meta name="description" content="The terms for using Next Chapter Guides: what we sell, billing and cancelling, refunds, and what we do not promise.">
+<link rel="canonical" href="https://next-chapter-guides.vercel.app/terms">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0F1E3D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@600;700&display=swap">
+<style>
+:root{
+  --bg:#F8FAFC; --surface:#FFFFFF; --ink:#0F1E3D; --ink-2:#334155; --muted:#5B6478; --line:#D7DEEA; --soft:#EFF5FF;
+  --blue:#2563EB; --blue-d:#1D4ED8; --teal:#0F766E; --amber:#B45309; --navy:#0F1E3D; --on:#FFFFFF;
+  --font:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Lora",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0B1220; --surface:#131C30; --ink:#F1F5FF; --ink-2:#C9D3E6; --muted:#9AA8C2; --line:#27344F; --soft:#17233D; --blue:#6EA0FF; --blue-d:#8FB6FF; --teal:#5EEAD4; --amber:#F5B83D; --navy:#0A1428; --on:#0B1220}
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--font);font-size:16px;line-height:1.6;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px 56px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;max-width:680px;margin:0 auto}
+.logo{font-family:var(--serif);font-weight:700;font-size:1.25rem;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.top a.back{font-size:.9rem;color:var(--muted);text-decoration:none}
+.top a.back:hover{color:var(--ink)}
+h1,h2,h3{font-family:var(--serif);line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(1.9rem,6vw,2.5rem)}
+h2{font-size:1.5rem}
+p{margin:0 0 12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px 24px;box-shadow:0 14px 40px -28px rgba(15,30,61,.45)}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)}
+.lead{color:var(--ink-2);font-size:1.06rem}
+.btn{display:inline-block;border:0;cursor:pointer;font:inherit;font-weight:600;background:var(--blue);color:#fff;padding:13px 22px;border-radius:12px;text-decoration:none;min-height:46px}
+.btn:hover{background:var(--blue-d)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--soft)}
+.btn[disabled]{opacity:.55;cursor:default}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;color:var(--muted);font-size:.9rem;margin:18px 0 22px;padding:0;list-style:none}
+.meta li::before{content:"\2713\00a0";color:var(--teal);font-weight:700}
+.prog{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:8px}
+.prog i{display:block;height:100%;width:0;background:var(--blue);border-radius:99px;transition:width .25s}
+.count{font-size:.85rem;color:var(--muted);margin-bottom:22px;display:flex;justify-content:space-between}
+.qtext{font-family:var(--serif);font-size:clamp(1.3rem,4.6vw,1.65rem);line-height:1.3;margin:0 0 24px;min-height:4.2em}
+.answers{display:grid;gap:12px}
+.ans{font:inherit;font-weight:600;text-align:left;cursor:pointer;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:16px 18px;min-height:56px}
+.ans:hover,.ans:focus-visible{border-color:var(--blue);background:var(--soft);outline:none}
+.nav{margin-top:20px;display:flex;justify-content:space-between;align-items:center}
+.link{background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;padding:6px 0;text-decoration:underline}
+.link[hidden]{display:none}
+.bars{display:grid;gap:12px;margin:20px 0 6px}
+.bar{display:grid;grid-template-columns:132px 1fr 34px;gap:10px;align-items:center;font-size:.92rem}
+.bar .t{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar .t i{display:block;height:100%;border-radius:99px}
+.bar b{text-align:right;font-variant-numeric:tabular-nums}
+.bar.main span{font-weight:700}
+.tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:var(--soft);color:var(--blue)}
+.box{border-left:4px solid var(--blue);background:var(--soft);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0}
+.box h3{font-family:var(--font);font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+.care{border-left-color:var(--amber)}
+.sec{margin-top:26px}
+.form{display:grid;gap:12px;margin-top:12px}
+.in{font:inherit;width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);min-height:48px}
+.in:focus{outline:2px solid var(--blue);outline-offset:1px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;color:var(--ink-2)}
+.chk input{margin-top:4px;width:18px;height:18px;flex:none}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.fine{font-size:.8rem;color:var(--muted);margin-top:12px}
+.err{color:#B42318;font-size:.9rem;min-height:1.3em}
+@media (prefers-color-scheme:dark){.err{color:#FDA29B}}
+.ok{color:var(--teal);font-weight:600}
+[hidden]{display:none!important}
+@media (max-width:480px){.bar{grid-template-columns:104px 1fr 28px}.card{padding:22px 18px}}
+.prose h2{font-size:1.25rem;margin:30px 0 10px}.prose ul{margin:0 0 12px;padding-left:22px}.prose li{margin:0 0 6px}.prose a{color:var(--blue)}.upd{color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="/">Next Chapter</a>
+  <a class="back" href="/">All guides</a>
+</header>
+<main class="wrap prose">
+  <div class="card">
+    <h1>Terms of use</h1>
+    <p class="upd">Last updated 30 October 2026. This is a plain-language summary of how the store works, not legal advice.</p>
+    <h2>Who we are</h2>
+    <p>Next Chapter Guides is run by Yashu Jambu. By using the site, taking the quiz or buying a plan you agree to these terms.</p>
+    <h2>What we offer</h2>
+    <p>A free quiz that points to the main cause of job misery, a Tracker with weekly steps and ten guides you fill in online, and Guided help with calls. Prices and what each plan includes are shown on the pricing section of the home page.</p>
+    <h2>Billing and cancelling</h2>
+    <p>The Tracker costs $1 for the first 7 days and then $24 a month unless you cancel. You can cancel in one click. Tracker for life is a single $149 payment. Guided help is $75 a month for 3 months. Payments are handled by our payment provider.</p>
+    <h2>Refunds</h2>
+    <p>See the <a href="/refund">refund policy</a>.</p>
+    <h2>No guarantee of results</h2>
+    <p>This is general information and coaching-style guidance, not financial, legal, medical or professional advice. We cannot promise you a new job, a pay rise or any particular outcome. You decide what to do with your career and your money.</p>
+    <h2>Your use of the site</h2>
+    <p>Use your account for yourself only, do not copy or resell the guides, and do not misuse or attack the site. We may suspend access if these terms are broken.</p>
+    <h2>Your data</h2>
+    <p>See the <a href="/privacy">privacy policy</a>.</p>
+    <h2>Changes and contact</h2>
+    <p>We may update these terms and will change the date above when we do. Questions: message us on Threads at <a href="https://www.threads.com/@yashujambu" rel="noopener">@yashujambu</a>.</p>
+  </div>
+</main>
+</body>
+</html>
