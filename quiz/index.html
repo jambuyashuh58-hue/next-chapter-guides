@@ -79,7 +79,21 @@ p{margin:0 0 12px}
 @media (prefers-color-scheme:dark){.err{color:#FDA29B}}
 .ok{color:var(--teal);font-weight:600}
 [hidden]{display:none!important}
-@media (max-width:480px){.bar{grid-template-columns:104px 1fr 28px}.card{padding:22px 18px}}
+.why{margin-top:30px;padding-top:26px;border-top:1px solid var(--line)}
+.why h2{font-size:1.3rem;margin:6px 0 10px}
+.why .sub{color:var(--ink-2);margin:0 0 18px}
+.causes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 22px;padding:0;list-style:none}
+.cause{background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--c,var(--blue));border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.cause b{font-family:var(--serif);font-size:1.08rem;line-height:1.2}
+.cause p{font-size:.9rem;color:var(--ink-2);margin:0 0 4px;flex:1}
+.cause a{font-size:.88rem;font-weight:600;color:var(--blue);text-decoration:none}
+.cause a:hover{text-decoration:underline}
+.why .box p{font-size:.95rem;color:var(--ink-2)}
+.why .box strong{color:var(--ink)}
+.readfirst{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:18px;font-size:.85rem;color:var(--muted)}
+.readfirst a{color:var(--ink-2);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:6px 12px}
+.readfirst a:hover{background:var(--soft);color:var(--blue)}
+@media (max-width:480px){.causes{grid-template-columns:1fr}.bar{grid-template-columns:104px 1fr 28px}.card{padding:22px 18px}}
 </style>
 </head>
 <body>
@@ -98,18 +112,43 @@ p{margin:0 0 12px}
     <ul class="meta"><li>20 yes or no questions</li><li>About 3 minutes</li><li>Result shown straight away</li></ul>
     <button class="btn" id="start" type="button">Start the quiz</button>
     <p class="fine" style="margin-top:16px">Your individual answers stay in your browser. See our <a href="/privacy">privacy policy</a>.</p>
-    <div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(0,0,0,.08)">
-      <h2 style="font-size:1.15rem;margin:0 0 10px">The four reasons people hate their job</h2>
-      <p style="margin:0 0 12px">Most people who take this quiz find their unhappiness comes mainly from one of four places. Each needs a different fix, so it is worth knowing which one is yours before you decide whether to stay, ask for change or quit.</p>
-      <ul style="margin:0 0 14px;padding-left:20px;line-height:1.6">
-        <li><strong>The people.</strong> A boss or coworkers make the job miserable, even if the work is fine. <a href="https://nextchaptergide.site/2026/10/30/i-hate-my-boss/">I hate my boss: is it the boss or the job?</a></li>
-        <li><strong>The work itself.</strong> The tasks feel boring or pointless whoever you work for. <a href="https://nextchaptergide.site/2026/10/30/my-job-is-so-boring/">My job is so boring: what to do</a></li>
-        <li><strong>Pay and hours.</strong> The money or the schedule does not match what the job takes from you. <a href="https://nextchaptergide.site/2026/10/30/am-i-underpaid/">Am I underpaid? 5 checks</a></li>
-        <li><strong>Exhaustion.</strong> Rest no longer fixes how tired you feel, and Sundays fill you with dread. <a href="https://nextchaptergide.site/2026/10/30/job-burnout-quiz/">Job burnout quiz</a> and <a href="https://nextchaptergide.site/2026/10/30/sunday-scaries/">Sunday scaries</a></li>
+    <div class="why">
+      <div class="eyebrow">Know your cause</div>
+      <h2>The four reasons people hate their job</h2>
+      <p class="sub">Most people find their unhappiness comes mainly from one of four places. Each needs a different fix, so it is worth knowing which one is yours before you decide whether to stay, ask for change or quit.</p>
+      <ul class="causes">
+        <li class="cause" style="--c:var(--blue)">
+          <b>The people</b>
+          <p>A boss or coworkers make the job miserable, even if the work is fine.</p>
+          <a href="https://nextchaptergide.site/2026/10/30/i-hate-my-boss/">I hate my boss: is it the boss or the job? &rarr;</a>
+        </li>
+        <li class="cause" style="--c:var(--teal)">
+          <b>The work itself</b>
+          <p>The tasks feel boring or pointless, whoever you work for.</p>
+          <a href="https://nextchaptergide.site/2026/10/30/my-job-is-so-boring/">My job is so boring: what to do &rarr;</a>
+        </li>
+        <li class="cause" style="--c:var(--amber)">
+          <b>Pay and hours</b>
+          <p>The money or the schedule does not match what the job takes from you.</p>
+          <a href="https://nextchaptergide.site/2026/10/30/am-i-underpaid/">Am I underpaid? 5 checks &rarr;</a>
+        </li>
+        <li class="cause" style="--c:var(--ink-2)">
+          <b>Exhaustion</b>
+          <p>Rest no longer fixes how tired you feel, and Sundays fill you with dread.</p>
+          <a href="https://nextchaptergide.site/2026/10/30/job-burnout-quiz/">Job burnout quiz &rarr;</a>
+          <a href="https://nextchaptergide.site/2026/10/30/sunday-scaries/">Sunday scaries &rarr;</a>
+        </li>
       </ul>
-      <h2 style="font-size:1.15rem;margin:0 0 10px">Should I quit my job? Take this quiz first</h2>
-      <p style="margin:0 0 12px">Quitting fixes some of these problems and not others. If the people or the pay are the issue, the same job somewhere else may be enough. If it is the work itself, a change of direction is worth exploring. If it is exhaustion, rest comes before any big decision. This quiz shows you which one applies, in about three minutes, and gives you one small first move to try this week.</p>
-      <p class="fine" style="margin:0">Want to read first? Start with <a href="https://nextchaptergide.site/2026/10/29/why-do-i-hate-my-job/">Why do I hate my job? 7 common reasons</a> or <a href="https://nextchaptergide.site/2026/10/29/should-i-quit-my-job/">Should I quit my job? Clear signs</a>.</p>
+      <div class="box">
+        <h3>Should I quit my job?</h3>
+        <p style="margin:0 0 8px"><strong>Take this quiz first.</strong> Quitting fixes some of these problems and not others. If the people or the pay are the issue, the same job somewhere else may be enough. If it is the work itself, a change of direction is worth exploring. If it is exhaustion, rest comes before any big decision.</p>
+        <p style="margin:0">This quiz shows you which one applies, in about three minutes, and gives you one small first move to try this week.</p>
+      </div>
+      <div class="readfirst">
+        <span>Want to read first?</span>
+        <a href="https://nextchaptergide.site/2026/10/29/why-do-i-hate-my-job/">Why do I hate my job? 7 common reasons</a>
+        <a href="https://nextchaptergide.site/2026/10/29/should-i-quit-my-job/">Should I quit my job? Clear signs</a>
+      </div>
     </div>
   </section>
 
