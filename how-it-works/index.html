@@ -45,14 +45,31 @@ details summary::-webkit-details-marker{display:none}
 <style>.topnav a[aria-current="page"]{background:#EEF2F8;color:#0F1E3D;font-weight:600}
 .topnav a:hover{background:#EEF2F8}
 </style>
-</head>
+<style id="nc-mobile-header">
+.nc-mnav{display:none}
+html{scroll-padding-top:72px}
+[id]{scroll-margin-top:72px}
+@media(max-width:700px){
+header[style*="sticky"]>div{flex-wrap:nowrap!important;padding:8px 14px!important;gap:8px!important}
+header[style*="sticky"] .topnav,header[style*="sticky"] a[href^="/login"]:not([href*="src="]){display:none!important}
+header[style*="sticky"]>div>a:first-child{font-size:19px!important;gap:8px!important}
+header[style*="sticky"]>div>a:first-child img{width:30px!important;height:30px!important}
+header[style*="sticky"]>div>div:last-child{margin-left:auto}
+header[style*="sticky"]>div>div:last-child>a{padding:8px 14px!important;font-size:13px!important;white-space:nowrap}
+.nc-mnav{display:block;position:relative}
+.nc-mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:22px;color:#0F1E3D}
+.nc-mnav summary::-webkit-details-marker{display:none}
+.nc-mnav div{position:absolute;right:0;top:46px;background:#fff;border:1px solid #D7DEEA;border-radius:14px;box-shadow:0 12px 30px -12px rgba(15,30,61,.35);padding:6px;min-width:190px;z-index:30}
+.nc-mnav div a{display:block;padding:12px 14px;color:#0F1E3D;text-decoration:none;font-size:15px;border-radius:10px}
+}
+</style></head>
 <body>
 
 <div style="background:#F8FAFC;color:#0F1E3D;font-family:Inter,system-ui,sans-serif;font-size:16px;line-height:1.6">
 <header style="border-bottom:1px solid #D7DEEA;background:#FFFFFF;position:sticky;top:0;z-index:20"><div style="max-width:1100px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
 <a href="/" style="text-decoration:none;display:flex;align-items:center;gap:10px;font-family:Lora,Georgia,serif;font-weight:700;font-size:23px;line-height:1;letter-spacing:-0.01em;color:#0F1E3D"><img src="/assets/logo.svg" alt="" style="width:36px;height:36px;border-radius:10px;box-shadow:0 0 0 1px #D7DEEA"><span>Next<b style="color:#0F766E">Chapter.</b></span></a>
 <nav class="topnav" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px;font-size:14px"><a href="/features" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Features</a><a href="/how-it-works" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px" aria-current="page">How it works</a><a href="/pricing" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Pricing</a><a href="/who-its-for" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Who it is for</a><a href="https://nextchaptergide.site" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Blog</a></nav>
-<div style="display:flex;align-items:center;gap:8px;font-size:14px"><a href="/login" style="color:#0F1E3D;text-decoration:none;font-weight:600;padding:9px 14px">Log in</a><a href="/login?src=nav" style="background:#0F1E3D;color:#FFFFFF;text-decoration:none;font-weight:600;padding:10px 18px;border-radius:999px">Start free</a></div>
+<div style="display:flex;align-items:center;gap:8px;font-size:14px"><a href="/login" style="color:#0F1E3D;text-decoration:none;font-weight:600;padding:9px 14px">Log in</a><a href="/login?src=nav" style="background:#0F1E3D;color:#FFFFFF;text-decoration:none;font-weight:600;padding:10px 18px;border-radius:999px">Start free</a><details class="nc-mnav"><summary aria-label="Menu">&#9776;</summary><div><a href="/features">Features</a><a href="/how-it-works">How it works</a><a href="/pricing">Pricing</a><a href="/who-its-for">Who it is for</a><a href="https://nextchaptergide.site">Blog</a><a href="/login">Log in</a></div></details></div>
 </div></header>
 
 <section style="padding:56px 0 8px;background:linear-gradient(180deg,#EAF2FF 0%,#F8FAFC 100%)"><div style="max-width:1100px;margin:0 auto;padding:0 24px">
