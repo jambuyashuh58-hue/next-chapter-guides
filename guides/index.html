@@ -11,11 +11,61 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@600;700&display=swap">
 <link rel="stylesheet" href="/funnel.css">
-<style>section ul{margin:0 0 12px;padding-left:20px}section li{margin:3px 0}section ul.meta{padding:0}</style>
-</head>
+
+
+<style>section ul{margin:0 0 12px;padding-left:20px}section li{margin:3px 0}section ul.meta{padding:0}
+.topnav a:hover{background:#EEF2F8}
+.pl{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;color:#334155;font-size:15px}
+.pl li{display:flex;gap:10px;align-items:flex-start;line-height:1.45}
+.pl li::before{content:"\2713";color:#0F766E;font-weight:800;flex:none}
+.fq{font-family:Caveat,cursive;font-size:24px;color:#334155;border:1px solid #D7DEEA;border-radius:12px;padding:6px 14px;background:#FFFFFF;cursor:pointer;line-height:1.2}
+.fq:hover{border-color:#2563EB}
+.fq[aria-selected="true"]{background:#EFF5FF;border-color:#2563EB;color:#0F1E3D}
+.fq:focus-visible{outline:2px solid #2563EB;outline-offset:2px}
+.fa{margin:0;background:#FFFFFF;border:1px solid #D7DEEA;border-left:4px solid #2563EB;border-radius:12px;padding:18px 22px;color:#334155;font-size:17px;line-height:1.6}
+.pst{position:relative;max-width:820px;margin:40px auto 0;padding-bottom:30px;display:flex;flex-direction:column;align-items:center}
+.pch{position:relative;width:300px;height:220px;margin-bottom:6px;z-index:0}
+.sb{transition:all .2s}
+.sb path{transition:fill .2s}
+.sb.on path{fill:#2563EB}
+.sb.on text{fill:#FFFFFF}
+.pcards{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:16px;width:100%}
+.pcard{background:#FFFFFF;border:1px solid #D7DEEA;border-radius:16px;box-shadow:0 18px 40px -18px rgba(15,30,61,.28);padding:18px 20px;flex:1 1 300px;max-width:380px;min-width:0;text-align:left}
+.pcard.b{transform:translateY(26px)}
+.ppills_x{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin-top:56px;font-size:15px;color:#5B6478}
+.pp{font:600 15px Inter,system-ui,sans-serif;border:1px solid #D7DEEA;border-radius:999px;padding:7px 16px;background:#FFFFFF;color:#0F1E3D;cursor:pointer}
+.pp[aria-pressed="true"]{background:#2563EB;border-color:#2563EB;color:#FFFFFF}
+.pp:focus-visible{outline:2px solid #2563EB;outline-offset:2px}
+@media(max-width:720px){.plab{left:50%!important;top:-30px!important;transform:translateX(-50%) rotate(-4deg)!important}.pst{padding-top:30px}.pcard.b{transform:none}}
+.topnav a[aria-current="page"]{background:#EEF2F8;color:#0F1E3D;font-weight:600}
+.topnav a:hover{background:#EEF2F8}
+.gg .card{display:flex;flex-direction:column}.gg .card .btn{margin-top:auto;align-self:flex-start}.gg .card img{margin-top:4px}<style>.topnav a[aria-current="page"]{background:#EEF2F8;color:#0F1E3D;font-weight:600}
+.topnav a:hover{background:#EEF2F8}
+@media(max-width:820px){.chap-r{display:none}}
+.nc-mnav{display:none}
+html{scroll-padding-top:72px}
+[id]{scroll-margin-top:72px}
+@media(max-width:700px){
+header[style*="sticky"]>div{flex-wrap:nowrap!important;padding:8px 14px!important;gap:8px!important}
+header[style*="sticky"] .topnav,header[style*="sticky"] a[href^="/login"]:not([href*="src="]){display:none!important}
+header[style*="sticky"]>div>a:first-child{font-size:19px!important;gap:8px!important}
+header[style*="sticky"]>div>a:first-child img{width:30px!important;height:30px!important}
+header[style*="sticky"]>div>div:last-child{margin-left:auto}
+header[style*="sticky"]>div>div:last-child>a{padding:8px 14px!important;font-size:13px!important;white-space:nowrap}
+.nc-mnav{display:block;position:relative}
+.nc-mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:22px;color:#0F1E3D}
+.nc-mnav summary::-webkit-details-marker{display:none}
+.nc-mnav div{position:absolute;right:0;top:46px;background:#fff;border:1px solid #D7DEEA;border-radius:14px;box-shadow:0 12px 30px -12px rgba(15,30,61,.35);padding:6px;min-width:190px;z-index:30}
+.nc-mnav div a{display:block;padding:12px 14px;color:#0F1E3D;text-decoration:none;font-size:15px;border-radius:10px}
+}
+</style></head>
 <body>
-<header class="top"><a class="logo" href="/">Next Chapter</a><a class="back" href="/pricing">Pricing</a></header>
-<main class="wrap">
+<div style="background:#F8FAFC;color:#0F1E3D"><header style="border-bottom:1px solid #D7DEEA;background:#FFFFFF;position:sticky;top:0;z-index:20"><div style="max-width:1100px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+<a href="/" style="text-decoration:none;display:flex;align-items:center;gap:10px;font-family:Lora,Georgia,serif;font-weight:700;font-size:23px;line-height:1;letter-spacing:-0.01em;color:#0F1E3D"><img src="/assets/logo.svg" alt="" style="width:36px;height:36px;border-radius:10px;box-shadow:0 0 0 1px #D7DEEA"><span>Next<b style="color:#0F766E">Chapter.</b></span></a>
+<nav class="topnav" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px;font-size:14px"><a href="/features" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Features</a><a href="/how-it-works" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">How it works</a><a href="/course" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Video course</a><a href="/guides" aria-current="page" style="color:#0F1E3D;font-weight:600;text-decoration:none;padding:8px 14px;border-radius:999px">Guides</a><a href="/pricing" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Pricing</a><a href="/who-its-for" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Who it is for</a><a href="https://nextchaptergide.site" style="color:#334155;text-decoration:none;padding:8px 14px;border-radius:999px">Blog</a></nav>
+<div style="display:flex;align-items:center;gap:8px;font-size:14px"><a href="/login" style="color:#0F1E3D;text-decoration:none;font-weight:600;padding:9px 14px">Log in</a><a href="/login?src=nav" style="background:#0F1E3D;color:#FFFFFF;text-decoration:none;font-weight:600;padding:10px 18px;border-radius:999px">Start free</a><details class="nc-mnav"><summary aria-label="Menu">&#9776;</summary><div><a href="/features">Features</a><a href="/how-it-works">How it works</a><a href="/course">Video course</a><a href="/guides">Guides</a><a href="/pricing">Pricing</a><a href="/who-its-for">Who it is for</a><a href="https://nextchaptergide.site">Blog</a><a href="/login">Log in</a></div></details></div>
+</div></header></div>
+<main class="wrap" style="max-width:1100px;padding:28px 24px 56px">
 <section class="card" id="program">
 <div class="eyebrow">Best value</div>
 <h1 style="margin:6px 0 10px;font-size:1.8rem">The Complete Career Change Program</h1>
@@ -25,7 +75,8 @@
 </section>
 <h2 style="margin:30px 0 4px">Or pick one guide</h2>
 <p class="fine" style="color:var(--muted)">Each guide is a PDF with worksheets. General guidance only, not professional advice. Sold through Whop.</p>
-<section class="card" id="guide-age-calculator" style="margin-top:18px">
+<div class="gg" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:22px;align-items:stretch;margin-top:18px">
+<section class="card" id="guide-age-calculator">
 <div class="eyebrow">Getting started</div>
 <h2 style="margin:6px 0 8px">Is It Too Late?</h2>
 <p class="lead" style="margin:0 0 10px"><b>Career Change Age Calculator</b></p>
@@ -39,7 +90,7 @@
 <ul class="meta"><li>7 pages</li><li>3 worksheets</li><li>10 minutes</li></ul>
 <a class="btn" href="/calculator">Use the free calculator</a>
 </section>
-<section class="card" id="guide-career-clarity" style="margin-top:18px">
+<section class="card" id="guide-career-clarity">
 <div class="eyebrow">Choosing a direction</div>
 <h2 style="margin:6px 0 8px">Career Clarity Workbook</h2>
 <p class="lead" style="margin:0 0 10px"><b>From “I want out” to a clear direction</b></p>
@@ -53,7 +104,7 @@
 <ul class="meta"><li>58 pages</li><li>25 worksheets</li><li>About 4 weeks</li></ul>
 <a class="btn" href="https://whop.com/next-chapter-15f2/career-clarity-workbook" target="_blank" rel="noopener">Get this guide on Whop ($24)</a>
 </section>
-<section class="card" id="guide-test-drive" style="margin-top:18px">
+<section class="card" id="guide-test-drive">
 <div class="eyebrow">Choosing a direction</div>
 <h2 style="margin:6px 0 8px">30-Day Career Test Drive</h2>
 <p class="lead" style="margin:0 0 10px"><b>Try a career before you commit</b></p>
@@ -67,7 +118,7 @@
 <ul class="meta"><li>21 pages</li><li>9 worksheets</li><li>3–4 hours a week, 4 weeks</li></ul>
 <a class="btn" href="https://whop.com/next-chapter-15f2/30-day-career-test-drive" target="_blank" rel="noopener">Get this guide on Whop ($17)</a>
 </section>
-<section class="card" id="guide-retraining-route" style="margin-top:18px">
+<section class="card" id="guide-retraining-route">
 <div class="eyebrow">Planning the move</div>
 <h2 style="margin:6px 0 8px">Retraining Route Decision Kit</h2>
 <p class="lead" style="margin:0 0 10px"><b>Decide before you pay</b></p>
@@ -81,7 +132,7 @@
 <ul class="meta"><li>26 pages</li><li>8 worksheets</li><li>5–8 hours over 2 weeks</li></ul>
 <a class="btn" href="https://whop.com/next-chapter-15f2/retraining-route-decision-kit" target="_blank" rel="noopener">Get this guide on Whop ($17)</a>
 </section>
-<section class="card" id="guide-money-planner" style="margin-top:18px">
+<section class="card" id="guide-money-planner">
 <div class="eyebrow">Planning the move</div>
 <h2 style="margin:6px 0 8px">Career Change Money Planner</h2>
 <p class="lead" style="margin:0 0 10px"><b>Know your runway</b></p>
@@ -95,7 +146,7 @@
 <ul class="meta"><li>22 pages</li><li>8 worksheets</li><li>3–4 hours, then 15 min a month</li></ul>
 <a class="btn" href="https://whop.com/next-chapter-15f2/career-change-money-planner" target="_blank" rel="noopener">Get this guide on Whop ($12)</a>
 </section>
-<section class="card" id="guide-cv-translator" style="margin-top:18px">
+<section class="card" id="guide-cv-translator">
 <div class="eyebrow">Landing the role</div>
 <h2 style="margin:6px 0 8px">CV &amp; LinkedIn Translator</h2>
 <p class="lead" style="margin:0 0 10px"><b>Speak your new field’s language</b></p>
@@ -109,7 +160,7 @@
 <ul class="meta"><li>27 pages</li><li>9 worksheets</li><li>6–8 hours over a week</li></ul>
 <a class="btn" href="https://whop.com/next-chapter-15f2/cv-linkedin-translator" target="_blank" rel="noopener">Get this guide on Whop ($17)</a>
 </section>
-<section class="card" id="guide-foot-in-door" style="margin-top:18px">
+<section class="card" id="guide-foot-in-door">
 <div class="eyebrow">Landing the role</div>
 <h2 style="margin:6px 0 8px">Foot in the Door Playbook</h2>
 <p class="lead" style="margin:0 0 10px"><b>Get the first yes</b></p>
@@ -123,7 +174,7 @@
 <ul class="meta"><li>21 pages</li><li>9 worksheets</li><li>4–5 hours a week, 6–8 weeks</li></ul>
 <a class="btn" href="https://whop.com/next-chapter-15f2/foot-in-the-door-playbook" target="_blank" rel="noopener">Get this guide on Whop ($17)</a>
 </section>
-<section class="card" id="guide-planner-90" style="margin-top:18px">
+<section class="card" id="guide-planner-90">
 <div class="eyebrow">Planning the move</div>
 <h2 style="margin:6px 0 8px">90-Day Career Change Planner</h2>
 <p class="lead" style="margin:0 0 10px"><b>One week at a time</b></p>
@@ -137,7 +188,7 @@
 <ul class="meta"><li>27 pages</li><li>32 worksheets</li><li>20 minutes a week to plan</li></ul>
 <a class="btn" href="https://whop.com/next-chapter-15f2/90-day-career-change-planner" target="_blank" rel="noopener">Get this guide on Whop ($12)</a>
 </section>
-<section class="card" id="guide-teacher-exit" style="margin-top:18px">
+<section class="card" id="guide-teacher-exit">
 <div class="eyebrow">For teachers &amp; nurses</div>
 <h2 style="margin:6px 0 8px">Teacher Exit Kit</h2>
 <p class="lead" style="margin:0 0 10px"><b>Life after the classroom</b></p>
@@ -151,7 +202,7 @@
 <ul class="meta"><li>20 pages</li><li>9 worksheets</li><li>6–8 hours over 3–4 weeks</li></ul>
 <a class="btn" href="https://whop.com/next-chapter-15f2/teacher-exit-kit" target="_blank" rel="noopener">Get this guide on Whop ($17)</a>
 </section>
-<section class="card" id="guide-life-after-ward" style="margin-top:18px">
+<section class="card" id="guide-life-after-ward">
 <div class="eyebrow">For teachers &amp; nurses</div>
 <h2 style="margin:6px 0 8px">Life After the Ward</h2>
 <p class="lead" style="margin:0 0 10px"><b>For nurses moving on</b></p>
@@ -165,8 +216,14 @@
 <ul class="meta"><li>19 pages</li><li>9 worksheets</li><li>At your own pace</li></ul>
 <a class="btn" href="https://whop.com/next-chapter-15f2/life-after-the-ward" target="_blank" rel="noopener">Get this guide on Whop ($17)</a>
 </section>
-<p class="fine" style="margin-top:22px;color:var(--muted)">Prices are in US dollars. See our <a href="/privacy">privacy policy</a>, <a href="/terms">terms</a> and <a href="/refund">refund policy</a>.</p>
+</div>
+<p class="fine" style="margin-top:26px;color:var(--muted)">Prices are in US dollars. See our <a href="/privacy">privacy policy</a>, <a href="/terms">terms</a> and <a href="/refund">refund policy</a>.</p>
 </main>
+<footer style="background:#0F1E3D;color:#B8C4D9"><div style="max-width:1100px;margin:0 auto;padding:32px 24px;display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-start">
+<div style="max-width:380px"><span style="display:flex;align-items:center;gap:10px;font-family:Lora,Georgia,serif;font-weight:700;font-size:22px;line-height:1;color:#F1F5FF"><img src="/assets/logo.svg" alt="" style="width:30px;height:30px;border-radius:8px">Next<b style="color:#5EEAD4">Chapter.</b></span><div style="font-size:14px;color:#B8C4D9;margin-top:10px">Honest, practical help for changing careers at any age.</div></div>
+<nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:20px;font-size:14px"><a href="/features" style="color:#F1F5FF">Features</a><a href="/how-it-works" style="color:#F1F5FF">How it works</a><a href="/pricing" style="color:#F1F5FF">Pricing</a><a href="/who-its-for" style="color:#F1F5FF">Who it is for</a><a href="/about" style="color:#F1F5FF">About</a><a href="https://nextchaptergide.site" style="color:#F1F5FF">Blog</a><a href="/guides" style="color:#F1F5FF">Guides</a><a href="/privacy" style="color:#F1F5FF">Privacy</a><a href="https://www.threads.com/@yashujambu" style="color:#F1F5FF">Threads @yashujambu</a></nav>
+<div style="flex-basis:100%;font-size:12px;color:#B8C4D9">General information, not financial, legal or medical advice. © 2026 Next Chapter Guides.</div>
+</div></footer>
 <script src="/nc.js" data-site="store" defer></script>
 </body>
 </html>
