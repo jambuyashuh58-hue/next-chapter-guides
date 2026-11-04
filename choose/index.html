@@ -39,19 +39,12 @@
     </article>
 
     <article class="opt" id="opt-program">
-      <span class="badge">Coming soon</span>
+      <span class="badge">Video course + all PDFs</span>
       <h2>The Complete Career Change Program</h2>
-      <div class="price">$149 <small>one-time</small></div>
-      <p style="margin:0">The whole path in order, with a 12-week plan to follow.</p>
-      <ul><li>All 9 guides, from first idea to first offer</li><li>A 12-week roadmap: what to do each week</li><li>Win log and weekly review sheets</li></ul>
-      <form class="wl" data-list="waitlist-bundle" novalidate>
-        <label class="hp" aria-hidden="true">Leave blank <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
-        <label for="e1" style="font-weight:600">Email me when it opens</label>
-        <input class="in" id="e1" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-        <label class="chk"><input type="checkbox" name="ok" required><span>Yes, email me once when this opens. I can unsubscribe at any time.</span></label>
-        <div class="err" role="alert"></div>
-        <button class="btn" type="submit">Join the waitlist</button>
-      </form>
+      <div class="price">$29 <small>per month, 14-day refund</small></div>
+      <p style="margin:0">The whole path in order: a video course with every guide's PDF inside.</p>
+      <ul><li>11 modules, 22 narrated videos of about 8 minutes each</li><li>All the guides as PDFs, plus a 12-week roadmap</li><li>Win log and weekly review sheets</li></ul>
+      <a class="btn block" id="go-program" href="https://whop.com/next-chapter-15f2/complete-career-change-program/" target="_blank" rel="noopener">Get the program on Whop</a>
     </article>
 
     <article class="opt" id="opt-help">
@@ -78,6 +71,7 @@
   var URL="https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/nc-lead";
   function t(ev,x){try{if(window.NCTrack&&NCTrack.track)NCTrack.track(ev,x)}catch(e){}}
   window.addEventListener("load",function(){setTimeout(function(){t("options_view")},300)});
+  document.getElementById("go-program").addEventListener("click",function(){t("cta_click",{cta:"options_program",product:"bundle-everything"})});
   document.getElementById("go-guide").addEventListener("click",function(){t("cta_click",{cta:"options_guide",product:"career-clarity"})});
   document.querySelectorAll("form.wl").forEach(function(f){
     f.addEventListener("submit",function(e){
