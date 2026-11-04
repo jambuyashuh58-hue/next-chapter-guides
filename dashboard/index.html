@@ -44,6 +44,30 @@ svg text{fill:var(--ink2);font-size:10px}
 .pill{font-size:.72rem;border-radius:99px;padding:2px 9px;background:var(--pale);color:var(--ink2)}
 .empty{color:var(--ink2);font-size:.88rem;padding:8px 0}
 @media (max-width:560px){.step{grid-template-columns:1fr}.drop{padding-left:0}}
+
+:root{--violet:#7C5CD6}@media (prefers-color-scheme:dark){:root{--violet:#A78BFA}}
+.fbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;margin-bottom:12px;position:sticky;top:0;z-index:5}
+.fbar label{display:grid;gap:3px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
+.fbar select,.fbar input{font-weight:500;text-transform:none;letter-spacing:0;font-size:.88rem;padding:6px 10px;min-width:120px}
+.act{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 12px}
+.act button{font-size:.78rem;padding:3px 10px;border-radius:99px;background:var(--pale);color:var(--ink);font-weight:600}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px;border-bottom:1px solid var(--line)}
+.tabs button{border:0;border-radius:9px 9px 0 0;background:none;color:var(--ink2);padding:9px 16px;border-bottom:3px solid transparent;font-weight:700}
+.tabs button.on{color:var(--blue);border-bottom-color:var(--blue)}
+.chead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between;margin-bottom:6px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font-size:.78rem;padding:4px 11px;border-radius:99px;display:flex;align-items:center;gap:6px}
+.seg button i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.seg button[aria-pressed="false"]{opacity:.5}
+.kpi .d{font-size:.76rem;font-weight:700;margin-top:4px}.kpi .d.up{color:var(--teal)}.kpi .d.dn{color:var(--red)}.kpi .d.fl{color:var(--ink2)}
+.kpi svg{display:block;margin-top:6px}
+.ctip{position:absolute;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.78rem;box-shadow:0 6px 20px rgba(0,0,0,.14);z-index:4;min-width:130px}
+.ctip b{display:block;margin-bottom:3px}.ctip div{display:flex;justify-content:space-between;gap:12px}
+.hb{display:grid;gap:7px}.hb .r{display:grid;grid-template-columns:minmax(80px,150px) 1fr 52px;gap:10px;align-items:center;font-size:.84rem}
+.hb .t{height:16px;background:var(--pale);border-radius:6px;overflow:hidden}.hb .t i{display:block;height:100%;border-radius:6px}
+.hb .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.donut{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.donut .lg{display:grid;gap:6px;font-size:.85rem}.donut .lg b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px}
+[data-tab][hidden],#custom[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -51,11 +75,34 @@ svg text{fill:var(--ink2);font-size:10px}
   <header>
     <div><h1>Funnel dashboard</h1><div class="sub" id="status">Loading…</div></div>
     <div class="ctl">
-      <select id="range" aria-label="Date range"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option><option value="0">All time</option></select>
       <button id="refresh" class="pri">Refresh</button><button id="lockbtn">Lock</button>
     </div>
   </header>
-  <div class="grid kpis" id="kpis"></div>
+  <div class="card fbar" id="fbar">
+    <label>Period<select id="range"><option value="1">Last 24 hours</option><option value="7">Last 7 days</option><option value="14">Last 14 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option><option value="0">All time</option><option value="custom">Custom dates…</option></select></label>
+    <span id="custom" hidden style="display:flex;gap:8px;align-items:flex-end"><label>From<input type="date" id="from"></label><label>To<input type="date" id="to"></label></span>
+    <label>Site<select id="fHost"><option value="">All</option></select></label>
+    <label>Source<select id="fSource"><option value="">All sources</option></select></label>
+    <label>Device<select id="fDevice"><option value="">All devices</option></select></label>
+    <label>Country<select id="fCountry"><option value="">All countries</option></select></label>
+    <button id="reset">Reset filters</button>
+  </div>
+  <div class="act" id="active"></div>
+  <nav class="tabs" id="tabs"><button data-t="overview" class="on">Overview</button><button data-t="funnels">Funnels &amp; gaps</button><button data-t="content">Content &amp; sales</button><button data-t="activity">Activity</button></nav>
+  <div data-tab="overview">
+    <div class="grid kpis" id="kpis"></div>
+    <section class="card" style="position:relative"><div class="chead"><div><h2>Traffic over time</h2><div class="sub">Tap a metric to show or hide it. Hover the chart for exact numbers.</div></div><div class="seg" id="seg"></div></div><div id="chart"></div></section>
+    <section class="grid two">
+      <div class="card"><h2>Where visitors come from</h2><div class="sub">Visitors by first source</div><div class="hb" id="chSources"></div></div>
+      <div class="card"><h2>Blog vs store</h2><div class="sub">Page views by site</div><div class="donut" id="chSplit"></div></div>
+    </section>
+    <section class="grid two">
+      <div class="card"><h2>Devices</h2><div class="donut" id="chDevices"></div></div>
+      <div class="card"><h2>Countries</h2><div class="hb" id="chCountries"></div></div>
+    </section>
+    <section class="card"><h2>What people do</h2><div class="sub">Every tracked action in this period</div><div class="hb" id="chEvents"></div></section>
+  </div>
+  <div data-tab="funnels" hidden>
   <div class="card"><h2>Where the gaps are</h2><div class="sub">Worked out automatically from the numbers below. Fix the red ones first.</div><div class="gaps" id="gaps"></div></div>
   <section class="grid two">
     <div class="card"><h2>Quiz to next step</h2><div class="sub">Where quiz visitors stop: quiz, email, free calculator, options</div><div class="fn" id="fnQuiz"></div></div>
@@ -66,18 +113,18 @@ svg text{fill:var(--ink2);font-size:10px}
     <div class="card"><h2>Blog funnel</h2><div class="sub">From a blog visit to the store</div><div class="fn" id="fnBlog"></div></div>
     <div class="card"><h2>Store funnel</h2><div class="sub">From the store to a sale</div><div class="fn" id="fnStore"></div></div>
   </section>
-  <section class="card"><h2>Daily trend</h2><div class="legend"><span><b style="background:var(--blue)"></b>Visitors</span><span><b style="background:var(--teal)"></b>Store link clicks</span><span><b style="background:var(--amber)"></b>Buy clicks</span><span><b style="background:var(--red)"></b>Orders</span></div><div id="trend"></div></section>
+  </div>
+    <div data-tab="content" hidden>
   <section class="card"><h2>Traffic sources</h2><div class="sub">Where each visitor first came from, and how far they got</div><div class="tw" id="sources"></div></section>
   <section class="card"><h2>Articles</h2><div class="sub">Which articles pull people in, and which send them to the store</div><div class="tw" id="articles"></div></section>
   <section class="grid two">
     <div class="card"><h2>Which link on the page gets clicked</h2><div class="sub">Store links from blog articles, by position</div><div id="cta"></div></div>
     <div class="card"><h2>Guides</h2><div class="sub">Views, Buy clicks and sales per guide</div><div class="tw" id="products"></div></div>
   </section>
-  <section class="grid two">
-    <div class="card"><h2>Countries</h2><div class="mini" id="countries"></div></div>
-    <div class="card"><h2>Devices</h2><div class="mini" id="devices"></div></div>
-  </section>
+  </div>
+    <div data-tab="activity" hidden>
   <section class="card"><h2>Every click, latest first</h2><div class="sub">The newest 120 events. The last 5 letters identify one visitor.</div><div class="tw" id="feed"></div></section>
+  </div>
   <p class="sub" style="margin-top:18px" id="health"></p>
 </div>
 <div class="lock card" id="lock" hidden>
@@ -97,13 +144,18 @@ const pn=s=>PN[s]||s;
 const ago=t=>{if(!t)return "never";const m=Math.round((Date.now()-new Date(t))/60000);return m<1?"just now":m<60?m+" min ago":m<1440?Math.round(m/60)+" h ago":Math.round(m/1440)+" days ago"};
 const title=s=>s.replace(/-/g," ").replace(/^./,c=>c.toUpperCase());
 let key=null;
+const F={range:"30",from:"",to:"",host:"",source:"",device:"",country:""};
+function qs(){const p=new URLSearchParams();if(F.range==="custom"&&F.from){p.set("from",F.from);if(F.to)p.set("to",F.to)}else p.set("days",F.range==="custom"?"30":F.range);["host","source","device","country"].forEach(k=>{if(F[k])p.set(k,F[k])});return p.toString()}
+let TAB="overview",LAST=null,SHOW={visitors:1,pageviews:1,cta:0,buy:0,events:0};
+const MET=[["visitors","Visitors","var(--blue)"],["pageviews","Page views","var(--violet)"],["cta","Store clicks","var(--teal)"],["buy","Buy clicks","var(--amber)"],["events","All events","var(--ink2)"]];
+const EVN={pageview:"Page views",scroll_50:"Read half",scroll_90:"Read to end",cta_click:"Store link clicks",guide_view:"Guide opened",buy_click:"Buy clicks",quiz_start:"Quiz started",quiz_complete:"Quiz finished",lead:"Email left",calculator_view:"Calculator opened",calculator_download:"Calculator downloaded",options_view:"Options seen",waitlist:"Waitlist joins",purchase:"Orders",free_claim:"Free claims",refund:"Refunds"};
+const HOSTN={blog:"Blog",store:"Store website"};
 try{key=sessionStorage.getItem("nc_dash_key")}catch(e){}
 
 async function load(){
-  const days=$("#range").value;
   $("#status").textContent="Loading…";
   let r;
-  try{r=await fetch(API+"?days="+days,{headers:{"x-dash-key":key}});}catch(e){return fail("Could not reach the server. Check your connection and try again.")}
+  try{r=await fetch(API+"?"+qs(),{headers:{"x-dash-key":key}});}catch(e){return fail("Could not reach the server. Check your connection and try again.")}
   if(r.status===401){try{sessionStorage.removeItem("nc_dash_key")}catch(e){};key=null;return showLock("That key is not right.")}
   if(r.status===500){return fail("The dashboard key is not set up yet. Add NC_DASH_KEY in Supabase → Edge Functions → Secrets.")}
   if(!r.ok)return fail("Something went wrong ("+r.status+").");
@@ -123,6 +175,7 @@ function funnel(el,steps){
 }
 
 function trend(days){
+  if(!$("#trend"))return;
   if(!days.length){$("#trend").innerHTML='<div class="empty">No data yet.</div>';return}
   const W=1000,H=210,L=34,B=24,T=8,R=8,n=days.length;
   const max=Math.max(3,...days.map(d=>Math.max(d.visitors,d.cta,d.buy,d.orders)));
@@ -143,10 +196,8 @@ function table(cols,rows,empty){
 function render(d){
   $("#lock").hidden=true;$("#app").hidden=false;
   const t=d.totals,cur=d.currency;
-  $("#status").textContent=`${nf(d.events)} events · last one ${ago(d.lastEvent)} · ${d.days?("last "+d.days+" days"):"all time"}`;
-  const toStore=d.funnel.blog[3].n, storeV=d.funnel.store[0].n;
-  $("#kpis").innerHTML=[[t.visitors,"Visitors"],[toStore,"Clicked to the store"],[t.buyers,"Clicked Buy"],[t.orders,"Orders"],[money(t.revenue,cur),"Revenue"],[pct(t.orders,t.visitors),"Visitor → order"]]
-    .map(k=>`<div class="card kpi"><div class="n">${typeof k[0]==="number"?nf(k[0]):k[0]}</div><div class="l">${k[1]}</div></div>`).join("");
+  $("#status").textContent=`${nf(d.events)} events · last one ${ago(d.lastEvent)} · ${d.filters.from?(d.filters.from+" to "+(d.filters.to||"today")):d.days?(d.days===1?"last 24 hours":"last "+d.days+" days"):"all time"}`;
+  LAST=d;overview(d);
   const fb=funnel($("#fnBlog"),d.funnel.blog),fs=funnel($("#fnStore"),d.funnel.store),fq=funnel($("#fnQuiz"),d.quizFunnel);
   const SN={welcome:"1. Welcome + result (now)",calc1:"2. Calculator (1 hour)",calc2:"3. Calculator again (next day)",blog1:"4. Article 1 (day 3)",blog2:"5. Article 2 (day 7)",blog3:"6. Article 3 (day 14)",blog4:"7. Article 4 (day 21)",offer:"8. Options email (day 30)"};
   const m=d.mail;
@@ -191,8 +242,6 @@ function render(d){
     {h:"Guide",f:r=>esc(pn(r.product))},{h:"Viewed",n:1,f:r=>nf(r.views)},{h:"Clicked Buy",n:1,f:r=>nf(r.buyers)+" · "+pct(r.buyers,r.views)},{h:"Orders",n:1,f:r=>nf(r.orders)},{h:"Revenue",n:1,f:r=>money(r.revenue,cur)}
   ],d.products,"No guide views yet.");
 
-  const mini=(el,a)=>$(el).innerHTML=a.length?a.map(x=>`<div><span>${esc(x.k)}</span><b>${nf(x.n)}</b></div>`).join(""):'<div class="empty">No data yet.</div>';
-  mini("#countries",d.countries);mini("#devices",d.devices);
 
   const EV={pageview:"Page view",scroll_50:"Read half",scroll_90:"Read to end",cta_click:"Store link click",guide_view:"Opened a guide",quiz_start:"Started the quiz",quiz_complete:"Finished the quiz",lead:"Left email",calculator_view:"Opened the calculator",calculator_download:"Downloaded the calculator",options_view:"Saw the options",waitlist:"Joined a waitlist",buy_click:"Clicked Buy",purchase:"PURCHASE",free_claim:"Free guide claimed",refund:"Refund"};
   $("#feed").innerHTML=table([
@@ -225,12 +274,61 @@ function render(d){
   if(!G.length)G.push(["ok","No obvious leak yet","Keep collecting data. The picture gets clearer after a few hundred visitors."]);
   $("#gaps").innerHTML=G.map(g=>`<div class="gap ${g[0]}"><b>${esc(g[1])}</b>${esc(g[2])}</div>`).join("");
 
+  fillOptions(d);showTab(TAB);
   $("#health").innerHTML=`Data health: last event ${ago(d.lastEvent)} · last paid order ${d.lastPurchase?ago(d.lastPurchase):"none yet (Whop sales not connected or no sales)"} · free-guide claims ${nf(t.free)} · refunds ${nf(t.refunds)}. Your own visits are excluded if you open any page once with <code>?nc_off=1</code> on the end of its address.`;
 }
 
+function spark(vals,c){const n=vals.length;if(n<2)return"";const W=120,H=26,mx=Math.max(1,...vals);const p=vals.map((v,i)=>(i*W/(n-1)).toFixed(1)+","+(H-2-(H-6)*v/mx).toFixed(1)).join(" ");return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="26" preserveAspectRatio="none" aria-hidden="true"><polyline points="${p}" fill="none" stroke="${c}" stroke-width="1.8" stroke-linejoin="round"/></svg>`}
+function delta(cur,prev){if(prev==null)return"";if(prev===0&&cur===0)return `<div class="d fl">no change vs previous period</div>`;if(prev===0)return `<div class="d up">▲ new vs previous period</div>`;const p=100*(cur-prev)/prev;if(Math.abs(p)<0.5)return `<div class="d fl">► flat vs previous</div>`;return `<div class="d ${p>0?"up":"dn"}">${p>0?"▲":"▼"} ${Math.abs(p).toFixed(0)}% vs previous period</div>`}
+function overview(d){
+  const t=d.totals,P=d.prev,cur=d.currency,dl=d.daily;
+  const s=(k)=>dl.reduce((a,x)=>a+(x[k]||0),0);
+  const K=[["Visitors",t.visitors,P&&P.visitors,"visitors","var(--blue)"],["Page views",t.pageviews,P&&P.pageviews,"pageviews","var(--violet)"],["Store clicks",s("cta"),P&&P.cta,"cta","var(--teal)"],["Buy clicks",s("buy"),P&&P.buy,"buy","var(--amber)"],["Orders",t.orders,P&&P.orders,"orders","var(--teal)"],["Revenue",money(t.revenue,cur),P&&P.revenue,"revenue","var(--teal)",t.revenue]];
+  $("#kpis").innerHTML=K.map(k=>`<div class="card kpi"><div class="n">${typeof k[1]==="number"?nf(k[1]):k[1]}</div><div class="l">${k[0]}</div>${delta(k[5]!=null?k[5]:k[1],k[2])}${spark(dl.map(x=>x[k[3]]||0),k[4])}</div>`).join("");
+  // metric toggles
+  $("#seg").innerHTML=MET.map(m=>`<button data-m="${m[0]}" aria-pressed="${SHOW[m[0]]?"true":"false"}"><i style="background:${m[2]}"></i>${m[1]}</button>`).join("");
+  $("#seg").querySelectorAll("button").forEach(b=>b.onclick=()=>{SHOW[b.dataset.m]=SHOW[b.dataset.m]?0:1;if(!Object.values(SHOW).some(Boolean))SHOW[b.dataset.m]=1;overview(LAST)});
+  drawChart(dl);
+  hbars("#chSources",d.sources.slice(0,8).map(x=>({k:x.source,n:x.visitors})),"var(--blue)");
+  hbars("#chCountries",d.countries.map(x=>({k:x.k,n:x.n})),"var(--teal)");
+  const em=d.eventMix.filter(x=>x.k!=="pageview").slice(0,12);
+  hbars("#chEvents",d.eventMix.slice(0,12).map(x=>({k:EVN[x.k]||x.k,n:x.n})),"var(--violet)");
+  donut("#chDevices",d.devices.map(x=>({k:title(x.k),n:x.n})));
+  const blog=dl.reduce((a,x)=>a+(x.blogPv||0),0),store=dl.reduce((a,x)=>a+(x.storePv||0),0);
+  donut("#chSplit",[{k:"Blog",n:blog},{k:"Store website",n:store}].filter(x=>x.n>0));
+}
+function hbars(sel,a,c){const el=$(sel);if(!a.length){el.innerHTML='<div class="empty">No data for these filters.</div>';return}const mx=Math.max(1,...a.map(x=>x.n)),tot=a.reduce((s,x)=>s+x.n,0);el.innerHTML=a.map(x=>`<div class="r"><span title="${esc(x.k)}" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.k)}</span><div class="t"><i style="width:${Math.max(1.5,100*x.n/mx)}%;background:${c}"></i></div><span class="v" title="${pct(x.n,tot)}">${nf(x.n)}</span></div>`).join("")}
+function donut(sel,a){const el=$(sel);if(!a.length){el.innerHTML='<div class="empty">No data for these filters.</div>';return}const cols=["var(--blue)","var(--teal)","var(--amber)","var(--violet)","var(--red)","var(--ink2)"],tot=a.reduce((s,x)=>s+x.n,0),R=44,C=2*Math.PI*R;let off=0;const arcs=a.map((x,i)=>{const len=C*x.n/tot,o=`<circle r="${R}" cx="60" cy="60" fill="none" stroke="${cols[i%cols.length]}" stroke-width="20" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}" transform="rotate(-90 60 60)"/>`;off+=len;return o}).join("");el.innerHTML=`<svg viewBox="0 0 120 120" width="130" height="130" role="img"><title>Share</title>${arcs}<text x="60" y="64" text-anchor="middle" style="font-size:16px;font-weight:800;fill:var(--ink)">${nf(tot)}</text></svg><div class="lg">${a.map((x,i)=>`<div><b style="background:${cols[i%cols.length]}"></b>${esc(x.k)} · <b style="all:unset;font-weight:800">${nf(x.n)}</b> (${pct(x.n,tot)})</div>`).join("")}</div>`}
+function drawChart(dl){
+  const el=$("#chart");const act=MET.filter(m=>SHOW[m[0]]);
+  if(!dl.length){el.innerHTML='<div class="empty">No data for these filters.</div>';return}
+  const W=1000,H=300,L=40,B=26,T=10,R=12,n=dl.length;
+  const max=Math.max(3,...dl.map(d=>Math.max(...act.map(m=>d[m[0]]||0))));
+  const x=i=>L+(n===1?(W-L-R)/2:i*(W-L-R)/(n-1)),y=v=>T+(H-T-B)*(1-v/max);
+  let g="";for(let i=0;i<=4;i++){const v=max*i/4;g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${Math.round(v)}</text>`}
+  const step=Math.ceil(n/9);const xl=dl.map((d,i)=>i%step===0?`<text x="${x(i)}" y="${H-7}" text-anchor="middle">${d.day.slice(5)}</text>`:"").join("");
+  const series=act.map((m,si)=>{const pts=dl.map((d,i)=>x(i)+","+y(d[m[0]]||0)).join(" ");const area=si===0&&n>1?`<polygon points="${x(0)},${y(0)} ${pts} ${x(n-1)},${y(0)}" fill="${m[2]}" opacity=".12"/>`:"";return area+`<polyline fill="none" stroke="${m[2]}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" points="${pts}"/>`+dl.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d[m[0]]||0)}" r="${n>45?1.6:3}" fill="${m[2]}"/>`).join("")}).join("");
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Traffic over time" id="csvg">${g}${xl}${series}<line id="cx" x1="0" x2="0" y1="${T}" y2="${H-B}" stroke="var(--ink2)" stroke-dasharray="3 3" opacity="0"/></svg><div class="ctip" id="ctip" hidden></div>`;
+  const svg=$("#csvg"),tip=$("#ctip"),cx=$("#cx");
+  svg.onmousemove=svg.ontouchmove=e=>{const pt=e.touches?e.touches[0]:e,r=svg.getBoundingClientRect();const px=(pt.clientX-r.left)/r.width*W;let i=n===1?0:Math.round((px-L)/((W-L-R)/(n-1)));i=Math.max(0,Math.min(n-1,i));const d=dl[i];cx.setAttribute("x1",x(i));cx.setAttribute("x2",x(i));cx.setAttribute("opacity",".7");tip.hidden=false;tip.innerHTML=`<b>${d.day}</b>`+act.map(m=>`<div><span style="color:${m[2]}">● ${m[1]}</span><b style="display:inline">${nf(d[m[0]]||0)}</b></div>`).join("");const pr=svg.parentElement.getBoundingClientRect();let lx=pt.clientX-pr.left+14;if(lx>pr.width-170)lx=pt.clientX-pr.left-160;tip.style.left=lx+"px";tip.style.top="30px"};
+  svg.onmouseleave=()=>{tip.hidden=true;cx.setAttribute("opacity","0")};
+}
+function fillOptions(d){
+  const o=d.options||{},sets=[["#fHost","hosts","host",x=>HOSTN[x]||title(x),"All"],["#fSource","sources","source",x=>x,"All sources"],["#fDevice","devices","device",title,"All devices"],["#fCountry","countries","country",x=>x,"All countries"]];
+  for(const [sel,k,fk,lab,all] of sets){const list=[...(o[k]||[])];if(F[fk]&&!list.includes(F[fk]))list.unshift(F[fk]);$(sel).innerHTML=`<option value="">${all}</option>`+list.map(v=>`<option value="${esc(v)}"${F[fk]===v?" selected":""}>${esc(lab(v))}</option>`).join("")}
+  const chips=[];[["host","Site"],["source","Source"],["device","Device"],["country","Country"]].forEach(([k,l])=>{if(F[k])chips.push(`<button data-k="${k}">${l}: ${esc(k==="host"?(HOSTN[F[k]]||F[k]):F[k])} ✕</button>`)});
+  $("#active").innerHTML=chips.join("");$("#active").querySelectorAll("button").forEach(b=>b.onclick=()=>{F[b.dataset.k]="";load()});
+}
+function showTab(t){TAB=t;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));document.querySelectorAll("[data-tab]").forEach(s=>s.hidden=s.dataset.tab!==t);if(t==="overview"&&LAST)drawChart(LAST.daily)}
+
 $("#go").onclick=()=>{key=$("#key").value.trim();if(!key)return;try{sessionStorage.setItem("nc_dash_key",key)}catch(e){};$("#key").value="";load()};
 $("#key").addEventListener("keydown",e=>{if(e.key==="Enter")$("#go").click()});
-$("#refresh").onclick=load;$("#range").onchange=load;
+$("#refresh").onclick=load;
+$("#range").onchange=e=>{F.range=e.target.value;$("#custom").hidden=F.range!=="custom";load()};
+$("#from").onchange=e=>{F.from=e.target.value;load()};$("#to").onchange=e=>{F.to=e.target.value;load()};
+[["#fHost","host"],["#fSource","source"],["#fDevice","device"],["#fCountry","country"]].forEach(([s,k])=>$(s).onchange=e=>{F[k]=e.target.value;load()});
+$("#reset").onclick=()=>{Object.assign(F,{range:"30",from:"",to:"",host:"",source:"",device:"",country:""});$("#range").value="30";$("#from").value="";$("#to").value="";$("#custom").hidden=true;load()};
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>showTab(b.dataset.t));
 $("#lockbtn").onclick=()=>{try{sessionStorage.removeItem("nc_dash_key")}catch(e){};key=null;showLock("")};
 setInterval(()=>{if(key&&!document.hidden&&!$("#app").hidden)load()},60000);
 if(key)load();else showLock("");
