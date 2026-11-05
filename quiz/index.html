@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Why Do I Hate My Job? Free Quiz (Should I Quit?) | Next Chapter</title>
 <meta name="description" content="Answer 20 quick yes or no questions to find out what you really hate about your job: the people, the work, the pay and hours, or exhaustion. Free, with a personal result sheet.">
-<link rel="canonical" href="https://next-chapter-guides.vercel.app/quiz">
+<link rel="canonical" href="https://next-chapter-guides.netlify.app/quiz">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0F1E3D">
 <meta property="og:type" content="website">
@@ -377,7 +377,7 @@ p{margin:0 0 12px}
     block("Your first move (about 10 minutes)", t.first);
     if (res.second) block("A second cause is close behind", GROUPS[res.second].name + " scored " + res.scores[res.second] + ". " + TEXT[res.second].first);
     block("What to do next", t.next.replace(/ below/g, ""));
-    d.setFont("helvetica", "bold"); d.setFontSize(10.5); d.setTextColor(37, 99, 235); d.text("next-chapter-guides.vercel.app", M, y + 4);
+    d.setFont("helvetica", "bold"); d.setFontSize(10.5); d.setTextColor(37, 99, 235); d.text("next-chapter-guides.netlify.app", M, y + 4);
     d.setFont("helvetica", "normal"); d.setFontSize(8); d.setTextColor.apply(d, mute);
     var disc = d.splitTextToSize("This sheet is general career guidance, not medical, legal or counselling advice. It cannot diagnose any health condition, and it does not promise any job or result.", W - 2 * M);
     d.text(disc, M, 282);

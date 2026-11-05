@@ -1,6 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
-const SITE = "https://next-chapter-guides.vercel.app";
+const SITE = "https://next-chapter-guides.netlify.app";
 const BLOG = "https://nextchaptergide.site";
 const FN = (Deno.env.get("SUPABASE_URL") || "") + "/functions/v1";
 const J = { "content-type": "application/json" };

@@ -1,11 +1,11 @@
 /* Next Chapter first-party funnel tracker.
    One script for both sites: the blog (nextchaptergide.site) and the store (this site).
-   Load with:  <script src="https://next-chapter-guides.vercel.app/nc.js" data-site="blog|store" defer></script>
+   Load with:  <script src="https://next-chapter-guides.netlify.app/nc.js" data-site="blog|store" defer></script>
    No cookies, no personal data: a random visitor id, the traffic source, the page and the click. */
 (function () {
   try {
     var ENDPOINT = "https://ctezcrglzcjxdkagnoyy.supabase.co/functions/v1/track";
-    var STORE_HOST = "next-chapter-guides.vercel.app";
+    var STORE_HOST = "next-chapter-guides.netlify.app";
     var BLOG_HOSTS = ["nextchaptergide.site", "www.nextchaptergide.site"];
     var tag = document.currentScript;
     var SITE = (tag && tag.getAttribute("data-site")) || (BLOG_HOSTS.indexOf(location.hostname) > -1 ? "blog" : "store");
