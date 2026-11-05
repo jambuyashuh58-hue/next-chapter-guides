@@ -1,0 +1,56 @@
+# Netlify settings (the same site also works on Vercel via vercel.json).
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  included_files = ["api/_guides.js"]
+
+[[redirects]]
+  from = "/api/guide"
+  to = "/.netlify/functions/guide"
+  status = 200
+
+[[redirects]]
+  from = "/blog"
+  to = "https://nextchaptergide.site/"
+  status = 301
+[[redirects]]
+  from = "/blog/*"
+  to = "https://nextchaptergide.site/"
+  status = 301
+[[redirects]]
+  from = "/crew"
+  to = "https://sidequestcrew.space/"
+  status = 302
+[[redirects]]
+  from = "/crew/*"
+  to = "https://sidequestcrew.space/"
+  status = 302
+[[redirects]]
+  from = "/side-quest-crew/*"
+  to = "https://sidequestcrew.space/"
+  status = 302
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+[[headers]]
+  for = "/nc.js"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+[[headers]]
+  for = "/previews/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+[[headers]]
+  for = "/dashboard/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
