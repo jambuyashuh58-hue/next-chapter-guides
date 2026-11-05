@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://next-chapter-guides.netlify.app/sitemap.xml
