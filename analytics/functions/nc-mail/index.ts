@@ -57,7 +57,7 @@ function build(step: string, lead: Lead): { subject: string; paras: string[]; bu
   switch (step) {
     case "welcome": {
       const paras = [
-        "Hi, it's Yashu from Next Chapter Guides. Thank you for taking the quiz. Here is your result, so you have it in your inbox.",
+        "Hi, it's Maya from Next Chapter Guides. Thank you for taking the quiz. Here is your result, so you have it in your inbox.",
         "<b>Your main cause: " + esc(GROUP[cause]) + ".</b> " + esc(tx.meaning),
         "<b>Your first move (about 10 minutes):</b> " + esc(tx.first),
       ];
@@ -65,23 +65,23 @@ function build(step: string, lead: Lead): { subject: string; paras: string[]; bu
     }
     case "calc1":
       return { subject: "A free calculator: is it too late for you?", paras: [
-        "Hi, it's Yashu. When people tell me they hate their job, the next thing they say is usually: &ldquo;But am I too old to start over?&rdquo;",
+        "Hi, it's Maya. When people tell me they hate their job, the next thing they say is usually: &ldquo;But am I too old to start over?&rdquo;",
         "I made a free calculator for exactly that worry. It counts how many working years you really have left, compares them with how long people usually stay in a job, and names the real age worries so you can answer each one.",
         "You can do it in one sitting with a pen. Free. No payment and no extra sign-up.",
       ], button: ["Get the free calculator", calc] };
     case "calc2":
       return { subject: "Did you get the calculator?", paras: [
-        "Hi, it's Yashu again. This is just a gentle second nudge, in case my last email got buried.",
+        "Hi, it's Maya again. This is just a gentle second nudge, in case my last email got buried.",
         "The Career Change Age Calculator is still free. A worry is easier to carry once it is written down and answered, so it stops going round in your head.",
         "If you have already got it, thank you, and you can ignore this one.",
       ], button: ["Get the free calculator", calc] };
     case "blog1": case "blog2": case "blog3": case "blog4": {
       const art = SEQ[cause][blogIx];
       const intros = [
-        "Hi, it's Yashu. No calculator or sign-up this time, just one article I wrote that fits where you are.",
-        "Hi, it's Yashu. Here is another article that matches your quiz result.",
-        "Hi, it's Yashu. Here is one more that I think fits you.",
-        "Hi, it's Yashu. Here is the last article in this short set.",
+        "Hi, it's Maya. No calculator or sign-up this time, just one article I wrote that fits where you are.",
+        "Hi, it's Maya. Here is another article that matches your quiz result.",
+        "Hi, it's Maya. Here is one more that I think fits you.",
+        "Hi, it's Maya. Here is the last article in this short set.",
       ];
       return { subject: art[1], paras: [
         intros[blogIx],
@@ -91,7 +91,7 @@ function build(step: string, lead: Lead): { subject: string; paras: string[]; bu
     }
     case "offer":
       return { subject: "If you want more help, here are your options", paras: [
-        "Hi, it's Yashu. It has been a month since you took the quiz. I hope the articles and the calculator were useful.",
+        "Hi, it's Maya. It has been a month since you took the quiz. I hope the articles and the calculator were useful.",
         "I have given you the free parts first on purpose. If you want more help now, there are three ways to go. You can pick one or none, and the free articles stay free either way.",
         "<b>1. The Career Clarity Workbook ($24).</b> A guide for the question &ldquo;what would I do instead?&rdquo; It is the best place to start.",
         "<b>2. The Complete Career Change Program ($97).</b> The whole set of guides plus a 12-week plan. It is not open yet, and you can join the list to hear when it is.",
@@ -111,11 +111,11 @@ function render(step: string, lead: Lead) {
   const html = '<div style="font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6;color:#0F1E3D;max-width:560px;margin:0 auto;padding:8px">' +
     paras.map((p) => '<p style="margin:0 0 16px">' + p + "</p>").join("") + btn +
     (b.ps ? '<p style="margin:0 0 16px">P.S. ' + b.ps + "</p>" : "") +
-    '<p style="margin:24px 0 0">Yashu</p>' +
+    '<p style="margin:24px 0 0">Maya</p>' +
     '<hr style="border:0;border-top:1px solid #D7DEEA;margin:28px 0 14px">' +
     '<p style="font-size:12px;line-height:1.5;color:#5B6478;margin:0">You are getting this because you took the quiz at Next Chapter Guides and ticked the box for these emails. <a href="' + unsub + '" style="color:#5B6478">Unsubscribe</a> with one click.' + (addr ? "<br>" + esc(addr) : "") + "</p></div>";
   const text = paras.map((p) => p.replace(/<[^>]+>/g, "").replace(/&ldquo;|&rdquo;/g, '"').replace(/&amp;/g, "&")).join("\n\n") +
-    (b.button ? "\n\n" + b.button[0] + ": " + b.button[1] : "") + (b.ps ? "\n\nP.S. " + b.ps.replace(/<[^>]+>/g, "") : "") + "\n\nYashu\n\n--\nUnsubscribe: " + unsub;
+    (b.button ? "\n\n" + b.button[0] + ": " + b.button[1] : "") + (b.ps ? "\n\nP.S. " + b.ps.replace(/<[^>]+>/g, "") : "") + "\n\nMaya\n\n--\nUnsubscribe: " + unsub;
   return { subject: b.subject, html, text, unsub, cause };
 }
 
